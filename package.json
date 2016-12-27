@@ -1,0 +1,8 @@
+{
+  "name": "vue-portal",
+  "version": "0.1.0",
+  "description": "a Vue component to render elements  outside of a component's template, elsewhere in the DOM",
+  "main": "src/index.js",
+  "author": "Thorsten <t.luenborg@googlemail.com>",
+  "license": "MIT"
+}
