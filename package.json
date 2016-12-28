@@ -4,5 +4,46 @@
   "description": "a Vue component to render elements  outside of a component's template, elsewhere in the DOM",
   "main": "src/index.js",
   "author": "Thorsten <t.luenborg@googlemail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "build": "NODE_ENV=production node_modules/.bin/rollup -c build/rollup.conf.prod.js && uglifyjs dist/vue-portal.js -c -m > dist/vue-portal.min.js",
+    "dev": "NODE_ENV=development webpack-dev-server --watch --config build/webpack.conf.js --inline --hot",
+    "test:unit": "NODE_ENV=test node_modules/.bin/ava --verbose",
+    "test:unit:watch": "NODE_ENV=test node_modules/.bin/ava --verbose --watch"
+  },
+  "ava": {
+    "require": [
+      "babel-register",
+      "./test/unit/helpers/browser-env.js"
+    ],
+    "files": [
+      "test/unit/**/*.js"
+    ],
+    "source": [
+      "src/**/*.js"
+    ]
+  },
+  "babel": {
+    "presets": [
+      "es2015-node6",
+      "stage-2"
+    ]
+  },
+  "devDependencies": {
+    "ava": "^0.17.0",
+    "babel": "^6.5.2",
+    "browser-env": "^2.0.19",
+    "buble-loader": "^0.4.0",
+    "css-loader": "^0.26.1",
+    "parse5": "^2.1.0",
+    "rollup": "^0.38.0",
+    "rollup-plugin-buble": "^0.15.0",
+    "rollup-plugin-vue": "^2.2.14",
+    "testcafe": "^0.11.1",
+    "vue": "^2.1.7",
+    "vue-loader": "^10.0.2",
+    "vue-template-compiler": "^2.1.7",
+    "webpack": "beta",
+    "webpack-dev-server": "2.2.0-rc.0"
+  }
 }
