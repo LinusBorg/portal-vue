@@ -4,7 +4,6 @@ export default {
   props: {
     to: { type: String, required: true },
     mountTo: { type: String },
-    tag: {type: String, default: 'div'},
   },
   beforeMount() {
   	this.sendUpdate()
