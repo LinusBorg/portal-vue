@@ -16,6 +16,18 @@
       "babel-register",
       "./test/unit/helpers/browser-env.js"
     ],
+    "babel": {
+      "presets": [
+        "es2015", "stage-2"
+      ],
+      "plugins": [
+        "espower", "transform-runtime",
+        ["babel-plugin-webpack-loaders", {
+          "config": "./test/webpack.config.unit.js",
+          "verbose": false,
+        }]
+      ],
+    },
     "files": [
       "test/unit/**/*.js"
     ],
@@ -32,9 +44,11 @@
   "devDependencies": {
     "ava": "^0.17.0",
     "babel": "^6.5.2",
+    "babel-plugin-webpack-loaders": "^0.8.0",
     "browser-env": "^2.0.19",
     "buble-loader": "^0.4.0",
     "css-loader": "^0.26.1",
+    "inject-loader": "^3.0.0-beta2",
     "parse5": "^2.1.0",
     "rollup": "^0.38.0",
     "rollup-plugin-buble": "^0.15.0",
