@@ -11,30 +11,6 @@
     "test:unit": "NODE_ENV=test node_modules/.bin/ava --verbose",
     "test:unit:watch": "NODE_ENV=test node_modules/.bin/ava --verbose --watch"
   },
-  "ava": {
-    "require": [
-      "babel-register",
-      "./test/unit/helpers/browser-env.js"
-    ],
-    "babel": {
-      "presets": [
-        "es2015", "stage-2"
-      ],
-      "plugins": [
-        "espower", "transform-runtime",
-        ["babel-plugin-webpack-loaders", {
-          "config": "./test/webpack.config.unit.js",
-          "verbose": false,
-        }]
-      ],
-    },
-    "files": [
-      "test/unit/**/*.js"
-    ],
-    "source": [
-      "src/**/*.js"
-    ]
-  },
   "babel": {
     "presets": [
       "es2015-node6",
@@ -59,5 +35,34 @@
     "vue-template-compiler": "^2.1.7",
     "webpack": "beta",
     "webpack-dev-server": "2.2.0-rc.0"
+  },
+  "ava": {
+    "require": [
+      "babel-register",
+      "./test/unit/helpers/browser-env.js"
+    ],
+    "babel": {
+      "presets": [
+        "es2015",
+        "stage-2"
+      ],
+      "plugins": [
+        "espower",
+        "transform-runtime",
+        [
+          "babel-plugin-webpack-loaders",
+          {
+            "config": "./test/webpack.config.unit.js",
+            "verbose": false
+          }
+        ]
+      ]
+    },
+    "files": [
+      "test/unit/**/*.js"
+    ],
+    "source": [
+      "src/**/*.js"
+    ]
   }
 }
