@@ -8,10 +8,11 @@
   "scripts": {
     "build": "NODE_ENV=production node_modules/.bin/rollup -c build/rollup.conf.prod.js && uglifyjs dist/vue-portal.js -c -m > dist/vue-portal.min.js",
     "dev": "NODE_ENV=development webpack-dev-server --watch --config build/webpack.conf.js --inline --hot",
+    "test:e2e": "testcafe"
   },
   "babel": {
     "presets": [
-      "es2015-node6",
+      "es2015",
       "stage-2"
     ]
   },
