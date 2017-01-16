@@ -12,6 +12,13 @@ export default  {
   beforeDestroy() {
   	wormhole.$off(this.name, this.update)
   },
+	watch: {
+		name(newName, oldName) {
+			wormhole.$off(oldName, this.update)
+			wormhole.$on(newName, this.update)
+			this.checkWormhole()
+		}
+	}
   methods: {
 
 		checkWormhole() {
