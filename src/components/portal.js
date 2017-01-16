@@ -14,6 +14,12 @@ export default {
   updated() {
 		this.sendUpdate()
 	},
+	watch: {
+		to(newValue, oldValue) {
+			oldValue && wormhole.sendUpdate(oldValue, null)
+			this.sendUpdate()
+		}
+	},
   methods: {
   	sendUpdate() {
     	wormhole.sendUpdate(this.to, this.$slots.default)
