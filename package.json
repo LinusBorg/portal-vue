@@ -8,8 +8,6 @@
   "scripts": {
     "build": "NODE_ENV=production node_modules/.bin/rollup -c build/rollup.conf.prod.js && uglifyjs dist/vue-portal.js -c -m > dist/vue-portal.min.js",
     "dev": "NODE_ENV=development webpack-dev-server --watch --config build/webpack.conf.js --inline --hot",
-    "test:unit": "NODE_ENV=test node_modules/.bin/ava --verbose",
-    "test:unit:watch": "NODE_ENV=test node_modules/.bin/ava --verbose --watch"
   },
   "babel": {
     "presets": [
@@ -18,9 +16,7 @@
     ]
   },
   "devDependencies": {
-    "ava": "^0.17.0",
     "babel": "^6.5.2",
-    "babel-plugin-webpack-loaders": "^0.8.0",
     "browser-env": "^2.0.19",
     "buble-loader": "^0.4.0",
     "css-loader": "^0.26.1",
@@ -38,33 +34,5 @@
     "webpack": "beta",
     "webpack-dev-server": "2.2.0-rc.0"
   },
-  "ava": {
-    "require": [
-      "babel-register",
-      "./test/unit/helpers/browser-env.js"
-    ],
-    "babel": {
-      "presets": [
-        "es2015",
-        "stage-2"
-      ],
-      "plugins": [
-        "espower",
-        "transform-runtime",
-        [
-          "babel-plugin-webpack-loaders",
-          {
-            "config": "./test/webpack.config.unit.js",
-            "verbose": false
-          }
-        ]
-      ]
-    },
-    "files": [
-      "test/unit/**/*.js"
-    ],
-    "source": [
-      "src/**/*.js"
-    ]
   }
 }
