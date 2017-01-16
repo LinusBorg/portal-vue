@@ -53,7 +53,13 @@ const config = {
     hints: false
   },
   devServer: {
-    contentBase: 'example/'
+    contentBase: 'example/',
+    inline: true,
+    hot: true,
+    stats: {
+      colors: true,
+      chunks: false
+    }
   }
 }
 
