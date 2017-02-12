@@ -23,12 +23,25 @@ const config = {
       {
         test: /\.js$/,
         loader: 'buble-loader',
+        options: { objectAssign: 'Object.assign' },
         exclude: path.resolve(__dirname, "../node_modules")
       },
       {
         test: /\.css$/,
-        loader: 'style-loader!css-loader',
-        exclude: path.resolve(__dirname, "../node_modules")
+        exclude: path.resolve(__dirname, "../node_modules"),
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 1,
+            }
+          },
+          {
+            loader: 'postcss-loader',
+            options: {}
+          }
+        ]
       },
       {
         test: /\.vue$/,
@@ -48,7 +61,7 @@ const config = {
       name: 'vendor'
     })
   ],
-  devtool: 'source-map',
+  devtool: 'inline-source-map',
   performance: {
     hints: false
   },
