@@ -1,55 +1,33 @@
 <template>
   <div>
-    <div>
-      <ul class="controls">
-        <li class="controls--item">
-          <a href="#" class="controls--link" @click.prevent="showDestination = !showDestination">Toggle Destination</a>
-        </li>
-        <li class="controls--item">
-          <a href="#" class="controls--link" @click.prevent="showSource = !showSource">Toggle Source</a>
-        </li>
-      </ul>
-    </div>
-    <portal-destination v-if="showDestination"></portal-destination>
-    <portal-source v-if="showSource"></portal-source>
+
+    <toggle-example />
+
+    <target-switch />
+
+    <source-switch />
+
+    <mount-to-external />
   </div>
 
 </template>
 
 <script>
-  import portalSource from './source.vue'
-  import portalDestination from './destination.vue'
+  import ToggleExample from './toggle/toggle-example.vue'
+  import TargetSwitch from './target-switch/target-switch.vue'
+  import SourceSwitch from './source-switch/source-switch.vue'
+  import MountToExternal from './mount-to/mount-to-external.vue'
 
   export default {
-    data() {
-      return {
-        showDestination: true,
-        showSource: true,
-      }
-    },
     components: {
-      portalSource,
-      portalDestination
-    },
+      ToggleExample,
+      TargetSwitch,
+      SourceSwitch,
+      MountToExternal
+    }
   }
 </script>
 
 <style>
-  .controls {
-    list-style-type: none;
-    display: block;
-    border-bottom: 1px solid black;
-    margin-bottom: 30px;
-  }
-  .controls--item {
-    display: inline-block;
-    padding: 3px;
-  }
-  .controls--link {
-    text-decoration: none;
-    display: block;
-    border: 1px solid green;
-    border-radius: 2px;
-    padding: 5px;
-  }
+
 </style>

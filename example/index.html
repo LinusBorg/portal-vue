@@ -9,6 +9,15 @@
     <div id="app">
 
     </div>
+    <hr>
+    <h4>The following content is outside of the control of the Vue main instance</h4>
+    <p>But we can render stuff here nonetheless with the <i>mountTarget</i> Prop</p>
+    <div class="wrapper">
+      <div class="item destination">
+        <div id="external-target">
+        </div>
+      </div>
+    </div>
     <script src="vendor.build.js"></script>
     <script src="example.build.js"></script>
   </body>
