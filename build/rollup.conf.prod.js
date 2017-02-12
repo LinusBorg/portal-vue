@@ -12,10 +12,11 @@ export default {
   format: 'umd',
   moduleName: 'VuePortal',
   dest: './dist/vue-portal.js', // equivalent to --output
+  sourcemap: true,
   plugins: [
-    nodeResolve(module: true, jsnext: true),
-    commonjs()
-    buble(),
-    vue()
+    nodeResolve({ module: true, jsnext: true }),
+    commonjs(),
+    buble({ objectAssign: 'Object.assign' }),
+    vue(),
   ]
 };
