@@ -1,5 +1,6 @@
 var path = require('path')
 var webpack = require('webpack')
+var FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 
 const config = {
   entry: {
@@ -14,6 +15,7 @@ const config = {
     filename: '[name].build.js'
   },
   resolve: {
+    extensions: ['.js', '.json', '.vue'],
     alias: {
       'vue$': 'vue/dist/vue.common'
     }
@@ -50,6 +52,7 @@ const config = {
     ]
   },
   plugins: [
+    new FriendlyErrorsWebpackPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
@@ -68,6 +71,7 @@ const config = {
     contentBase: 'example/',
     inline: true,
     hot: true,
+    quiet: true,
     stats: {
       colors: true,
       chunks: false
