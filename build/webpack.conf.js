@@ -22,8 +22,7 @@ const config = {
     rules: [
       {
         test: /\.js$/,
-        loader: 'buble-loader',
-        options: { objectAssign: 'Object.assign' },
+        loader: 'babel-loader',
         exclude: path.resolve(__dirname, "../node_modules")
       },
       {
