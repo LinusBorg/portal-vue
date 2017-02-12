@@ -1,31 +1,73 @@
 import wormhole from './wormhole'
+import Target from './portal-target.js'
+import Vue from 'vue'
+
 export default {
 	name: 'portal',
   props: {
     to: { type: String, required: true },
-    mountTo: { type: String },
+    mountTarget: { type: String },
   },
-  beforeMount() {
+
+	beforeMount() {
+		if (this.mountTarget) {
+			this.mountToTarget()
+		}
   	this.sendUpdate()
   },
-  beforeDestroy() {
-    wormhole.clear(this.to)
-  },
-  updated() {
+  beforeUpdate() {
 		this.sendUpdate()
 	},
-	watch: {
-		to(newValue, oldValue) {
-			oldValue && wormhole.sendUpdate(oldValue, null)
-			this.sendUpdate()
+	beforeDestroy() {
+		wormhole.clear(this.to)
+		if (this.mountedComp) {
+			this.mountedComp.$destroy()
 		}
 	},
-  methods: {
-  	sendUpdate() {
-    	wormhole.sendUpdate(this.to, this.$slots.default)
+
+	watch: {
+		to (newValue, oldValue) {
+			oldValue && wormhole.sendUpdate(oldValue, null)
+			this.sendUpdate()
+		},
+		mountTarget (newValue, oldValue) {
+			this.mountToTarget()
+		}
+	},
+
+	methods: {
+
+		sendUpdate() {
+			if (this.to) {
+				wormhole.sendUpdate(this.to, this.$slots.default)
+			} else {
+				console.warn('[vue-portal]: You have to define a targte via the `to` prop.')
+			}
     },
+
+		mountToTarget() {
+			const el = document.querySelector(this.mountTarget)
+
+			if (el) {
+
+				const target = new Vue({
+					...Target,
+					propsData: {
+						name: this.to || Math.round(Math.random() * 10000),
+						id: this.mountTarget,
+						tag: el.tagName,
+					}
+				})
+				target.$mount(el)
+				this.mountedComp = target
+
+			} else {
+				console.warn('[vue-porta]: The specified mountTarget ' + this.mountTarget + ' was not found')
+			}
+		}
   },
-  render(h) {
+
+	render(h) {
   	return  null
   }
 }

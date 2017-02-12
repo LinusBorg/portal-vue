@@ -3,27 +3,32 @@ export default  {
 	name: 'portalTarget',
   props: {
     name: { type: String, required: true },
-    tag: {type: String, default: 'div' }
+		id: { type: String },
+    tag: { type: String, default: 'div' },
   },
-  beforeMount() {
+
+	beforeMount() {
 		this.checkWormhole()
   	wormhole.$on(this.name, this.update)
   },
   beforeDestroy() {
+		this.$el.innerHTML = ''
   	wormhole.$off(this.name, this.update)
   },
+
 	watch: {
 		name(newName, oldName) {
 			wormhole.$off(oldName, this.update)
 			wormhole.$on(newName, this.update)
 			this.checkWormhole()
 		}
-	}
-  methods: {
+	},
+
+	methods: {
 
 		checkWormhole() {
 			const passengers = wormhole.get(this.name)
-			passengers && this.update(passengers)
+			this.update(passengers)
 		},
 
 		update(passengers) {
@@ -36,9 +41,13 @@ export default  {
       this.$forceUpdate() // force re-render
     }
   },
-  render(h) {
+
+	render(h) {
   	return h(this.tag, {
-    	class: { 'vue-portal-target': true }
+    	class: { 'vue-portal-target': true },
+			attrs: {
+				id: this.id && this.id.substr(1) || false,
+			}
     }, this.passengers)
   }
 }
