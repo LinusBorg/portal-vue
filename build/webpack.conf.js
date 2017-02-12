@@ -45,7 +45,7 @@ const config = {
       {
         test: /\.vue$/,
         loader: 'vue-loader',
-        include: path.resolve(__dirname,"../example")
+        exclude: /node_modules/,
       }
     ]
   },
