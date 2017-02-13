@@ -8,21 +8,29 @@
 		props: {
 			to: { type: String, required: true },
 			mountTarget: { type: [String,Boolean], default: false },
+			disabled: { type: Boolean },
+			tag: { type: String, default: 'DIV'}
 		},
 
 		mounted() {
 			if (this.mountTarget) {
 				this.mountToTarget()
 			}
-			this.sendUpdate()
+			if (!this.disabled) {
+				this.sendUpdate()
+			}
 		},
 
-		beforeUpdate() {
-			this.sendUpdate()
+		updated() {
+			if (this.disabled) {
+				this.clear()
+			} else {
+				this.sendUpdate()
+			}
 		},
 
 		beforeDestroy() {
-			wormhole.clear(this.to)
+			this.clear()
 			if (this.mountedComp) {
 				this.mountedComp.$destroy()
 			}
@@ -30,7 +38,7 @@
 
 		watch: {
 			to (newValue, oldValue) {
-				oldValue && wormhole.clear(oldValue)
+				oldValue && this.clear(oldValue)
 				this.sendUpdate()
 			},
 			mountTarget (newValue, oldValue) {
@@ -48,6 +56,10 @@
 				} else {
 					console.warn('[vue-portal]: You have to define a targte via the `to` prop.')
 				}
+			},
+
+			clear(target) {
+				wormhole.clear(target || this.to)
 			},
 
 			mountToTarget() {
@@ -73,8 +85,22 @@
 		},
 
 		render(h) {
+      const children = this.$slots.default
 
-			return null
+
+			if (children.length && this.disabled){
+
+				const children = this.$slots.default
+
+				return children.length <= 1
+				  ? children[0] // TODO: does this work when that vnode is a component?
+					: h(this.tag, children)
+
+			} else {
+
+				return h(this.tag, { class: { 'v-portal': true }, style: { display: 'none' }, key: 'v-portal-placeholder' })
+
+			}
 		}
 	}
 </script>
