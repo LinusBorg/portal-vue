@@ -7,18 +7,20 @@
 		name: 'portal',
 		props: {
 			to: { type: String, required: true },
-			mountTarget: { type: String },
+			mountTarget: { type: [String,Boolean], default: false },
 		},
 
-		beforeMount() {
+		mounted() {
 			if (this.mountTarget) {
 				this.mountToTarget()
 			}
 			this.sendUpdate()
 		},
+
 		beforeUpdate() {
 			this.sendUpdate()
 		},
+
 		beforeDestroy() {
 			wormhole.clear(this.to)
 			if (this.mountedComp) {
@@ -28,7 +30,7 @@
 
 		watch: {
 			to (newValue, oldValue) {
-				oldValue && wormhole.sendUpdate(oldValue, null)
+				oldValue && wormhole.clear(oldValue)
 				this.sendUpdate()
 			},
 			mountTarget (newValue, oldValue) {
@@ -40,7 +42,9 @@
 
 			sendUpdate() {
 				if (this.to) {
-					wormhole.sendUpdate(this.to, this.$slots.default)
+
+					wormhole.sendUpdate(this.to, [...this.$slots.default])
+
 				} else {
 					console.warn('[vue-portal]: You have to define a targte via the `to` prop.')
 				}
@@ -69,7 +73,8 @@
 		},
 
 		render(h) {
-			return  null
+
+			return null
 		}
 	}
 </script>

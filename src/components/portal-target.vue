@@ -1,5 +1,6 @@
 <script>
-	import wormhole from './wormhole'
+	import { routes } from './wormhole'
+
 	export default  {
 		name: 'portalTarget',
 		props: {
@@ -7,43 +8,24 @@
 			id: { type: String },
 			tag: { type: String, default: 'div' },
 		},
-
-		beforeMount() {
-			this.checkWormhole()
-			wormhole.$on(this.name, this.update)
+		data() {
+			return {
+				routes
+			}
 		},
 		beforeDestroy() {
 			this.$el.innerHTML = ''
-			wormhole.$off(this.name, this.update)
 		},
 
-		watch: {
-			name(newName, oldName) {
-				wormhole.$off(oldName, this.update)
-				wormhole.$on(newName, this.update)
-				this.checkWormhole()
-			}
-		},
+		computed: {
+			passengers() {
 
-		methods: {
-
-			checkWormhole() {
-				const passengers = wormhole.get(this.name)
-				this.update(passengers)
-			},
-
-			update(passengers) {
-
-				if (passengers) {
-					this.passengers = passengers // cache vNodes for render function
-				} else {
-					this.passengers = null
-				}
-				this.$forceUpdate() // force re-render
+				return this.routes[this.name] || null
 			}
 		},
 
 		render(h) {
+
 			return h(this.tag, {
 				class: { 'vue-portal-target': true },
 				attrs: {

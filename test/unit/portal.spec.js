@@ -47,14 +47,14 @@ describe('Portal', function() {
     expect(vnode.children[0].text).to.equal(vm.message)
   })
 
-  it('calls Wormhole sendUpdate twice when destination changes', () => {
+  it('calls Wormhole clear & sendUpdate when destination changes', () => {
     const captor = td.matchers.captor()
     vm.destination = 'destination2'
     return vm.$nextTick().then(() => {
+      td.verify(Wormhole.clear('destination'))
       td.verify(Wormhole.sendUpdate(captor.capture()), {ignoreExtraArgs: true})
 
-      expect(captor.values[1]).to.equal('destination')
-      expect(captor.values[2]).to.equal('destination2')
+      expect(captor.values[1]).to.equal('destination2')
        return true
     })
 
