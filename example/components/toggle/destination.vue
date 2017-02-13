@@ -1,7 +1,7 @@
 <template>
   <div class="destination">
     <p>
-      Below this paragraph, you see the some content.
+      Below the line , you see the some content.
     </p>
     <p>
       It was created in the component on the right, and transfered here with VuePortal.<br>
