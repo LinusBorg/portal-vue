@@ -5,7 +5,7 @@ const routes = {}
 export { routes }
 
 class Wormhole {
-  constructor() {
+  constructor(routes) {
     this.routes = routes
     this.clearQueue = []
     this.updateQueue = []
@@ -33,14 +33,22 @@ class Wormhole {
   }
 
   _runQueue() {
+    const keys = Object.keys(this.routes)
 
-    this.clearQueue.forEach(job => {
-      Vue.delete(this.routes, job.name)
+    this.clearQueue.forEach(({ name }) => {
+      if (keys.includes(name)) {
+        this.routes[name] = undefined
+      }
     })
     this.clearQueue = []
 
     this.updateQueue.forEach(({name, passengers }) => {
-      Vue.set(this.routes, name, freeze(passengers))
+      if (keys.includes(name)) {
+        this.routes[name] = freeze(passengers)
+      }
+      else {
+        Vue.set(this.routes, name, freeze(passengers))
+      }
     })
     this.updateQueue = []
 
@@ -49,10 +57,11 @@ class Wormhole {
   }
 
 }
-const wormhole = new Wormhole()
+const wormhole = new Wormhole(routes)
 export default wormhole
 
-
+// Utilities
+//
 function freeze(item) {
   if (Array.isArray(item) || typeof item === 'object') {
     return Object.freeze(item)
