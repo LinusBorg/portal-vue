@@ -22,19 +22,32 @@ describe('Portal', function() {
     const el = document.createElement('DIV')
     vm = new Vue({
       components: { Portal },
-      data: { destination: 'destination', message: 'TestString'},
+      data: { destination: 'destination', message: 'TestString', disabled: false, tag: 'DIV'},
       template: `
       <div>
-        <portal :to="destination" ref="portal">
+        <portal :to="destination" ref="portal" :disabled="disabled" :tag="tag">
           <span id="test-span">{{message}}</span>
         </portal>
       </div>`
     }).$mount(el)
   })
 
-  it('renders a comment node', function() {
-    expect(vm.$refs.portal.$el.nodeName).to.equal('#comment')
+
+  it('renders a div element with class `v-portal`', function() {
+    //expect(vm.$refs.portal.$el.nodeName).to.equal('#comment')
+    const el = vm.$el.querySelector('.v-portal')
+    expect(el).not.to.be.undefined
   })
+
+
+  it ('renders different element when tag prop is defined', () => {
+    vm.tag = 'SPAN'
+    return vm.$nextTick().then(() => {
+      const el = vm.$el.querySelector('span.v-portal')
+      expect(el).not.to.be.undefined
+    })
+  })
+
 
   it('calls Wormhole sendUpdate with right content', function() {
     const captor = td.matchers.captor()
@@ -46,6 +59,7 @@ describe('Portal', function() {
     expect(vnode.tag).to.equal('span')
     expect(vnode.children[0].text).to.equal(vm.message)
   })
+
 
   it('calls Wormhole clear & sendUpdate when destination changes', () => {
     const captor = td.matchers.captor()
@@ -60,10 +74,12 @@ describe('Portal', function() {
 
   })
 
+
   it('calls Wormhole.clear() when destroyed', () => {
     vm.$refs.portal.$destroy()
     td.verify(Wormhole.clear('destination'))
   })
+
 
   it('calls sendUpdate when content changes', () => {
     vm.message = 'New Test String'
@@ -78,7 +94,22 @@ describe('Portal', function() {
     })
   })
 
+
+  it('renders locally when `disabled` prop is true', () => {
+    vm.diabled = true
+
+    return vm.$nextTick().then(() => {
+      const span = vm.$el.querySelector('#test-span')
+
+      expect(span).not.to.be.undefined
+    })
+  })
+
+
   it('mounts portal when `mountTarget` prop is set')
 
+
   it('destroys mounted portalTarget when portal is destroyed')
+
+
 })

@@ -7,6 +7,8 @@
 
     <source-switch />
 
+    <disabled />
+
     <mount-to-external />
   </div>
 
@@ -16,6 +18,7 @@
   import ToggleExample from './toggle/toggle-example.vue'
   import TargetSwitch from './target-switch/target-switch.vue'
   import SourceSwitch from './source-switch/source-switch.vue'
+  import Disabled from './disabled'
   import MountToExternal from './mount-to/mount-to-external.vue'
 
   export default {
@@ -23,6 +26,7 @@
       ToggleExample,
       TargetSwitch,
       SourceSwitch,
+      Disabled,
       MountToExternal
     }
   }
