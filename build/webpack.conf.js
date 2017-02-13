@@ -63,7 +63,7 @@ const config = {
       name: 'vendor'
     })
   ],
-  devtool: 'inline-source-map',
+  devtool: 'source-map',
   performance: {
     hints: false
   },
