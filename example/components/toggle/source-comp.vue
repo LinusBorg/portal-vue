@@ -6,7 +6,7 @@
       we can render them outside of this component, into the componenton the left in this case.
     </p>
     <input type="text" v-model="newTodo" @keyup.enter="add"><button @click="add">Add</button>
-    <portal to="destination">
+    <portal to="toggle-destination">
       <ul class="todo-list">
         <li v-for="(todo, index) in todos">{{todo}} (<a href="#" @click.prevent="remove(index)">x</a>)</li>
       </ul>
