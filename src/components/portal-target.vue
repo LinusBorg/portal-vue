@@ -6,7 +6,7 @@
 		props: {
 			name: { type: String, required: true },
 			tag: { type: String, default: 'div' },
-			attributes: { type: Object, default: () => ({}) },
+			attributes: { type: Object },
 		},
 		data() {
 			return {
@@ -25,11 +25,17 @@
 		},
 
 		render(h) {
+			const children = this.passengers || []
 
-			return h(this.tag, {
-				class: { 'vue-portal-target': true },
-				attrs: this.attributes,
-			}, this.passengers)
+			if (children.length === 1 && !this.attributes) {
+				return children[0]
+			}
+			else {
+				return h(this.tag, {
+					class: { 'vue-portal-target': true },
+					attrs: this.attributes,
+				}, children)
+			}
 		}
 	}
 </script>
