@@ -1,6 +1,5 @@
 export function extractAttributes(el) {
   const map = el.hasAttributes() ? el.attributes : []
-  console.log(map)
   const attrs = {}
   for (let i = 0; i < map.length; i++) {
     const attr = map[i]
@@ -8,7 +7,6 @@ export function extractAttributes(el) {
       attrs[attr.name] = attr.value === '' ? true : attr.value
     }
   }
-  console.log (attrs)
   return attrs
 }
 
