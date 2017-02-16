@@ -4,7 +4,7 @@ const routes = {}
 
 export { routes }
 
-class Wormhole {
+export class Wormhole {
   constructor(routes) {
     this.routes = routes
     this.clearQueue = []
