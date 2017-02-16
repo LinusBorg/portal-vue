@@ -1,10 +1,11 @@
 {
-  "name": "vue-portal",
-  "version": "0.1.0",
+  "name": "portal-vue",
+  "version": "1.0.0-beta.1",
   "description": "a Vue component to render elements  outside of a component's template, elsewhere in the DOM",
   "main": "src/index.js",
   "author": "Thorsten <t.luenborg@googlemail.com>",
   "license": "MIT",
+  "repository": "git@github.com:LinusBorg/portal-vue.git",
   "scripts": {
     "build": "NODE_ENV=production node_modules/.bin/rollup -c build/rollup.conf.prod.js && uglifyjs dist/vue-portal.js -c -m > dist/vue-portal.min.js",
     "dev": "NODE_ENV=development webpack-dev-server --watch --config build/webpack.conf.js --inline --hot",
