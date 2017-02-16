@@ -9,6 +9,8 @@
 
     <disabled />
 
+    <comp-as-root />
+
     <mount-to-external />
   </div>
 
@@ -19,6 +21,7 @@
   import TargetSwitch from './target-switch/target-switch.vue'
   import SourceSwitch from './source-switch/source-switch.vue'
   import Disabled from './disabled'
+  import CompAsRoot from './comp-as-root/comp-as-root.vue'
   import MountToExternal from './mount-to/mount-to-external.vue'
 
   export default {
@@ -27,6 +30,7 @@
       TargetSwitch,
       SourceSwitch,
       Disabled,
+      CompAsRoot,
       MountToExternal
     }
   }
