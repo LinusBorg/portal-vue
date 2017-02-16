@@ -4,7 +4,7 @@ const routes = {}
 
 export { routes }
 
-class Wormhole {
+export class Wormhole {
   constructor(routes) {
     this.routes = routes
     this.clearQueue = []
@@ -12,13 +12,13 @@ class Wormhole {
     this.runScheduled = false
   }
 
-  sendUpdate(name, passengers) {
+  send(name, passengers) {
     const job = { name, passengers }
     this.updateQueue.push(job)
     this._scheduleRun()
   }
 
-  clear(name) {
+  close(name) {
     const job = { name }
     this.clearQueue.push(job)
     this._scheduleRun()

@@ -1,19 +1,20 @@
 <script>
+	import Vue from 'vue'
 	import wormhole from './wormhole'
 	import Target from './portal-target'
-	import Vue from 'vue'
+	import { extractAttributes } from '../utils'
 
 	export default {
 		name: 'portal',
 		props: {
 			to: { type: String, required: true },
-			mountTarget: { type: [String,Boolean], default: false },
+			targetEl: { type: [String, HTMLElement] },
 			disabled: { type: Boolean },
-			tag: { type: String, default: 'DIV'}
+			tag: { type: [String], default: 'DIV'}
 		},
 
 		mounted() {
-			if (this.mountTarget) {
+			if (this.targetEl) {
 				this.mountToTarget()
 			}
 			if (!this.disabled) {
@@ -41,7 +42,7 @@
 				oldValue && this.clear(oldValue)
 				this.sendUpdate()
 			},
-			mountTarget (newValue, oldValue) {
+			targetEl (newValue, oldValue) {
 				this.mountToTarget()
 			}
 		},
@@ -51,7 +52,7 @@
 			sendUpdate() {
 				if (this.to) {
 
-					wormhole.sendUpdate(this.to, [...this.$slots.default])
+					wormhole.send(this.to, [...this.$slots.default])
 
 				} else {
 					console.warn('[vue-portal]: You have to define a targte via the `to` prop.')
@@ -59,11 +60,24 @@
 			},
 
 			clear(target) {
-				wormhole.clear(target || this.to)
+				wormhole.close(target || this.to)
 			},
 
 			mountToTarget() {
-				const el = document.querySelector(this.mountTarget)
+				let el,
+						target = this.targetEl
+
+				if (target instanceof HTMLElement) {
+					el = target
+				}
+				else if (typeof target === 'string') {
+				  el = document.querySelector(this.targetEl)
+				}
+				else {
+					console.warn('[vue-portal]: value of targetEl must eb of type String or HTMLElement')
+					return
+				}
+				let attributes = extractAttributes(el)
 
 				if (el) {
 
@@ -71,15 +85,15 @@
 						...Target,
 						propsData: {
 							name: this.to || Math.round(Math.random() * 10000),
-							id: this.mountTarget,
 							tag: el.tagName,
+							attributes
 						}
 					})
 					target.$mount(el)
 					this.mountedComp = target
 
 				} else {
-					console.warn('[vue-porta]: The specified mountTarget ' + this.mountTarget + ' was not found')
+					console.warn('[vue-portal]: The specified targetEl ' + this.targetEl + ' was not found')
 				}
 			}
 		},
@@ -87,10 +101,7 @@
 		render(h) {
       const children = this.$slots.default
 
-
 			if (children.length && this.disabled){
-
-				const children = this.$slots.default
 
 				return children.length <= 1
 				  ? children[0] // TODO: does this work when that vnode is a component?

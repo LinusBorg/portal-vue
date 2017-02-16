@@ -2,11 +2,10 @@ import { expect, td } from './helpers'
 import Vue from 'vue'
 import PortalInj from '!!vue-loader?inject!../../src/components/portal'
 
-const Wormhole = td.object(['sendUpdate', 'get', 'clear'])
+const Wormhole = td.object(['send', 'close'])
 const PortalTarget = {
   render(h) { return h('div') },
   props: ['name', 'id', 'tag'],
-  mounted: td.function()
 }
 const Portal = PortalInj({
   './wormhole': Wormhole,
@@ -49,11 +48,11 @@ describe('Portal', function() {
   })
 
 
-  it('calls Wormhole sendUpdate with right content', function() {
+  it('calls Wormhole.send with right content', function() {
     const captor = td.matchers.captor()
 
     // spy called:
-    td.verify(Wormhole.sendUpdate('destination', captor.capture()))
+    td.verify(Wormhole.send('destination', captor.capture()))
     const vnode = captor.values[0][0]
     // sent correct vnodes as slot content
     expect(vnode.tag).to.equal('span')
@@ -61,12 +60,12 @@ describe('Portal', function() {
   })
 
 
-  it('calls Wormhole clear & sendUpdate when destination changes', () => {
+  it('calls Wormhole close & sendUpdate when destination changes', () => {
     const captor = td.matchers.captor()
     vm.destination = 'destination2'
     return vm.$nextTick().then(() => {
-      td.verify(Wormhole.clear('destination'))
-      td.verify(Wormhole.sendUpdate(captor.capture()), {ignoreExtraArgs: true})
+      td.verify(Wormhole.close('destination'))
+      td.verify(Wormhole.send(captor.capture()), {ignoreExtraArgs: true})
 
       expect(captor.values[1]).to.equal('destination2')
        return true
@@ -75,9 +74,9 @@ describe('Portal', function() {
   })
 
 
-  it('calls Wormhole.clear() when destroyed', () => {
+  it('calls Wormhole.close() when destroyed', () => {
     vm.$refs.portal.$destroy()
-    td.verify(Wormhole.clear('destination'))
+    td.verify(Wormhole.close('destination'))
   })
 
 
@@ -86,7 +85,7 @@ describe('Portal', function() {
     return vm.$nextTick().then(() => {
 
       const captor = td.matchers.captor()
-      td.verify(Wormhole.sendUpdate('destination', captor.capture()))
+      td.verify(Wormhole.send('destination', captor.capture()))
 
       // get second call's first value
       const textNode = captor.values[1][0].children[0]
@@ -96,7 +95,7 @@ describe('Portal', function() {
 
 
   it('renders locally when `disabled` prop is true', () => {
-    vm.diabled = true
+    vm.disabled = true
 
     return vm.$nextTick().then(() => {
       const span = vm.$el.querySelector('#test-span')
@@ -104,12 +103,5 @@ describe('Portal', function() {
       expect(span).not.to.be.undefined
     })
   })
-
-
-  it('mounts portal when `mountTarget` prop is set')
-
-
-  it('destroys mounted portalTarget when portal is destroyed')
-
 
 })
