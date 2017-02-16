@@ -6,7 +6,6 @@ const Wormhole = td.object(['send', 'close'])
 const PortalTarget = {
   render(h) { return h('div') },
   props: ['name', 'id', 'tag'],
-  mounted: td.function()
 }
 const Portal = PortalInj({
   './wormhole': Wormhole,
@@ -96,7 +95,7 @@ describe('Portal', function() {
 
 
   it('renders locally when `disabled` prop is true', () => {
-    vm.diabled = true
+    vm.disabled = true
 
     return vm.$nextTick().then(() => {
       const span = vm.$el.querySelector('#test-span')
@@ -104,12 +103,5 @@ describe('Portal', function() {
       expect(span).not.to.be.undefined
     })
   })
-
-
-  it('mounts portal when `mountTarget` prop is set')
-
-
-  it('destroys mounted portalTarget when portal is destroyed')
-
 
 })
