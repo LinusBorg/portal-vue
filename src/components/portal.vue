@@ -84,7 +84,7 @@
 					const target = new Vue({
 						...Target,
 						propsData: {
-							name: this.to || Math.round(Math.random() * 10000),
+							name: this.to || Math.round(Math.random() * 10000000),
 							tag: el.tagName,
 							attributes
 						}
