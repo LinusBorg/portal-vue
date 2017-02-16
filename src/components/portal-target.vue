@@ -10,7 +10,7 @@
 		},
 		data() {
 			return {
-				routes
+				routes,
 			}
 		},
 		beforeDestroy() {
@@ -21,7 +21,7 @@
 			passengers() {
 
 				return this.routes[this.name] || null
-			}
+			},
 		},
 
 		render(h) {
