@@ -12,13 +12,13 @@ class Wormhole {
     this.runScheduled = false
   }
 
-  sendUpdate(name, passengers) {
+  send(name, passengers) {
     const job = { name, passengers }
     this.updateQueue.push(job)
     this._scheduleRun()
   }
 
-  clear(name) {
+  close(name) {
     const job = { name }
     this.clearQueue.push(job)
     this._scheduleRun()

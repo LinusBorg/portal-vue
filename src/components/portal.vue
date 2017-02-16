@@ -8,13 +8,13 @@
 		name: 'portal',
 		props: {
 			to: { type: String, required: true },
-			mountTarget: { type: [String, HTMLElement] },
+			targetEl: { type: [String, HTMLElement] },
 			disabled: { type: Boolean },
 			tag: { type: [String], default: 'DIV'}
 		},
 
 		mounted() {
-			if (this.mountTarget) {
+			if (this.targetEl) {
 				this.mountToTarget()
 			}
 			if (!this.disabled) {
@@ -42,7 +42,7 @@
 				oldValue && this.clear(oldValue)
 				this.sendUpdate()
 			},
-			mountTarget (newValue, oldValue) {
+			targetEl (newValue, oldValue) {
 				this.mountToTarget()
 			}
 		},
@@ -52,7 +52,7 @@
 			sendUpdate() {
 				if (this.to) {
 
-					wormhole.sendUpdate(this.to, [...this.$slots.default])
+					wormhole.send(this.to, [...this.$slots.default])
 
 				} else {
 					console.warn('[vue-portal]: You have to define a targte via the `to` prop.')
@@ -60,21 +60,21 @@
 			},
 
 			clear(target) {
-				wormhole.clear(target || this.to)
+				wormhole.close(target || this.to)
 			},
 
 			mountToTarget() {
 				let el,
-						target = this.mountTarget
+						target = this.targetEl
 
 				if (target instanceof HTMLElement) {
 					el = target
 				}
 				else if (typeof target === 'string') {
-				  el = document.querySelector(this.mountTarget)
+				  el = document.querySelector(this.targetEl)
 				}
 				else {
-					console.warn('[vue-portal]: value of mountTarget must eb of type String or HTMLElement')
+					console.warn('[vue-portal]: value of targetEl must eb of type String or HTMLElement')
 					return
 				}
 				let attributes = extractAttributes(el)
@@ -93,7 +93,7 @@
 					this.mountedComp = target
 
 				} else {
-					console.warn('[vue-portal]: The specified mountTarget ' + this.mountTarget + ' was not found')
+					console.warn('[vue-portal]: The specified targetEl ' + this.targetEl + ' was not found')
 				}
 			}
 		},
