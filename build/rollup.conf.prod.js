@@ -3,6 +3,16 @@ import vue from 'rollup-plugin-vue'
 import commonjs from 'rollup-plugin-commonjs'
 import nodeResolve from 'rollup-plugin-node-resolve'
 
+const babelConfig = {
+  // runtimeHelpers: true,
+  exclude: 'node_modules/**',
+}
+
+const nodeResolveOptions = {
+  module: true, jsnext: true,
+  extensions: ['.js', '.vue']
+}
+
 export default {
   entry: './src/index.js',
   external: ['vue'],
@@ -12,11 +22,11 @@ export default {
   format: 'umd',
   moduleName: 'VuePortal',
   dest: './dist/vue-portal.js', // equivalent to --output
-  sourcemap: true,
+  sourceMap: true,
   plugins: [
-    nodeResolve({ module: true, jsnext: true }),
+    nodeResolve(nodeResolveOptions),
+    vue({ compileTemplate: false }),
     commonjs(),
-    babel({ exclude: 'node_modules/**' }),
-    vue(),
+    babel(babelConfig),
   ]
 };
