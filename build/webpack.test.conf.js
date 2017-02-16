@@ -15,7 +15,8 @@ var config = merge(devConfig, {
     publicPath: '/',
     filename: '[name].bundle.js',
     path: path.resolve(__dirname, '../test/unit')
-  }
+  },
+  devtool: '#inline-source-map',
 })
 
 config.devServer.port = 8081
