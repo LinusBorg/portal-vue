@@ -19,23 +19,20 @@
 <script>
   export default {
     name: 'source',
-    props: {
-
-    },
-    data() {
+    data () {
       return {
         newTodo: '',
-        todos: ['Todo #1', 'Todo #2']
+        todos: ['Todo #1', 'Todo #2'],
       }
     },
     methods: {
-      add() {
+      add () {
         this.todos.push(this.newTodo)
         this.newTodo = ''
       },
-      remove(index) {
+      remove (index) {
         this.todos.splice(index, 1)
-      }
+      },
     },
   }
 </script>

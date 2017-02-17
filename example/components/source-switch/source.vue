@@ -19,14 +19,6 @@
       name: { type: String },
       active: { type: String },
     },
-    data() {
-      return {
-
-      }
-    },
-    methods: {
-
-    },
   }
 </script>
 

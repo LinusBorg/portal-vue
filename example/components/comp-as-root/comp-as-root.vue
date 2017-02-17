@@ -25,16 +25,16 @@
 
 <script>
   export default {
-    data() {
+    data () {
       return { disabled: true, testProp: 'Test!!' }
     },
     components: {
       test: {
         props: ['testProp'],
-        render(h) {
-          return h('DIV', [h('p',`This was rendered with a component as the root element in the portal: ${this.testProp}`)])
-        }
-      }
+        render (h) {
+          return h('DIV', [h('p', `This was rendered with a component as the root element in the portal: ${this.testProp}`)])
+        },
+      },
     },
     methods: {
 

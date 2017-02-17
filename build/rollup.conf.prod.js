@@ -10,7 +10,7 @@ const babelConfig = {
 
 const nodeResolveOptions = {
   module: true, jsnext: true,
-  extensions: ['.js', '.vue']
+  extensions: ['.js', '.vue'],
 }
 
 export default {
@@ -28,5 +28,5 @@ export default {
     vue({ compileTemplate: false }),
     commonjs(),
     babel(babelConfig),
-  ]
-};
+  ],
+}

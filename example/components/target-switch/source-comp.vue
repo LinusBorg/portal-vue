@@ -16,17 +16,12 @@
     props: {
       target: { type: String },
     },
-    data() {
-      return {
-
-      }
-    },
     methods: {
-      getTimeStamp() {
+      getTimeStamp () {
         const date = new Date()
         return date.toUTCString()
-      }
-    }
+      },
+    },
   }
 </script>
 

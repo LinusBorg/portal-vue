@@ -32,9 +32,9 @@
     components: {
       portalSource, Destination,
     },
-    data() {
+    data () {
       return {
-        active: 'ss-A'
+        active: 'ss-A',
       }
     },
   }

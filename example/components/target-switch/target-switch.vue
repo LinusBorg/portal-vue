@@ -32,16 +32,10 @@
     components: {
       SourceComp, Destination,
     },
-    props: {
-
-    },
-    data() {
+    data () {
       return {
-        target: 'ts-A'
+        target: 'ts-A',
       }
-    },
-    methods: {
-
     },
   }
 </script>

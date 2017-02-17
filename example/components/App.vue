@@ -31,8 +31,8 @@
       SourceSwitch,
       Disabled,
       CompAsRoot,
-      MountToExternal
-    }
+      MountToExternal,
+    },
   }
 </script>
 

@@ -1,38 +1,38 @@
 import Vue from 'vue'
-
+import { freeze } from '../utils'
 const routes = {}
 
 export { routes }
 
 export class Wormhole {
-  constructor(routes) {
+  constructor (routes) {
     this.routes = routes
     this.clearQueue = []
     this.updateQueue = []
     this.runScheduled = false
   }
 
-  send(name, passengers) {
+  send (name, passengers) {
     const job = { name, passengers }
     this.updateQueue.push(job)
     this._scheduleRun()
   }
 
-  close(name) {
+  close (name) {
     const job = { name }
     this.clearQueue.push(job)
     this._scheduleRun()
   }
 
-  _scheduleRun() {
+  _scheduleRun () {
     if (!this.runScheduled) {
       this.runScheduled = true
 
-      setTimeout(this._runQueue.bind(this),0)
+      setTimeout(this._runQueue.bind(this), 0)
     }
   }
 
-  _runQueue() {
+  _runQueue () {
     const keys = Object.keys(this.routes)
 
     this.clearQueue.forEach(({ name }) => {
@@ -42,29 +42,18 @@ export class Wormhole {
     })
     this.clearQueue = []
 
-    this.updateQueue.forEach(({name, passengers }) => {
+    this.updateQueue.forEach(({ name, passengers }) => {
       if (keys.includes(name)) {
         this.routes[name] = freeze(passengers)
-      }
-      else {
+      } else {
         Vue.set(this.routes, name, freeze(passengers))
       }
     })
     this.updateQueue = []
 
     this.runScheduled = false
-
   }
 
 }
 const wormhole = new Wormhole(routes)
 export default wormhole
-
-// Utilities
-//
-function freeze(item) {
-  if (Array.isArray(item) || typeof item === 'object') {
-    return Object.freeze(item)
-  }
-  return item
-}

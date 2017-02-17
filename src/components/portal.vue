@@ -1,117 +1,109 @@
 <script>
-	import Vue from 'vue'
-	import wormhole from './wormhole'
-	import Target from './portal-target'
-	import { extractAttributes } from '../utils'
+  import Vue from 'vue'
+  import wormhole from './wormhole'
+  import Target from './portal-target'
+  import { extractAttributes } from '../utils'
 
-	export default {
-		name: 'portal',
-		props: {
-			to: { type: String, required: true },
-			targetEl: { type: [String, HTMLElement] },
-			disabled: { type: Boolean },
-			tag: { type: [String], default: 'DIV'}
-		},
+  export default {
+    name: 'portal',
+    props: {
+      to: { type: String, required: true },
+      /* global HTMLElement */
+      targetEl: { type: [String, HTMLElement] },
+      disabled: { type: Boolean },
+      tag: { type: [String], default: 'DIV' },
+    },
 
-		mounted() {
-			if (this.targetEl) {
-				this.mountToTarget()
-			}
-			if (!this.disabled) {
-				this.sendUpdate()
-			}
-		},
+    mounted () {
+      if (this.targetEl) {
+        this.mountToTarget()
+      }
+      if (!this.disabled) {
+        this.sendUpdate()
+      }
+    },
 
-		updated() {
-			if (this.disabled) {
-				this.clear()
-			} else {
-				this.sendUpdate()
-			}
-		},
+    updated () {
+      if (this.disabled) {
+        this.clear()
+      } else {
+        this.sendUpdate()
+      }
+    },
 
-		beforeDestroy() {
-			this.clear()
-			if (this.mountedComp) {
-				this.mountedComp.$destroy()
-			}
-		},
+    beforeDestroy () {
+      this.clear()
+      if (this.mountedComp) {
+        this.mountedComp.$destroy()
+      }
+    },
 
-		watch: {
-			to (newValue, oldValue) {
-				oldValue && this.clear(oldValue)
-				this.sendUpdate()
-			},
-			targetEl (newValue, oldValue) {
-				this.mountToTarget()
-			}
-		},
+    watch: {
+      to (newValue, oldValue) {
+        oldValue && this.clear(oldValue)
+        this.sendUpdate()
+      },
+      targetEl (newValue, oldValue) {
+        this.mountToTarget()
+      },
+    },
 
-		methods: {
+    methods: {
 
-			sendUpdate() {
-				if (this.to) {
+      sendUpdate () {
+        if (this.to) {
+          wormhole.send(this.to, [...this.$slots.default])
+        } else {
+          console.warn('[vue-portal]: You have to define a targte via the `to` prop.')
+        }
+      },
 
-					wormhole.send(this.to, [...this.$slots.default])
+      clear (target) {
+        wormhole.close(target || this.to)
+      },
 
-				} else {
-					console.warn('[vue-portal]: You have to define a targte via the `to` prop.')
-				}
-			},
+      mountToTarget () {
+        let el
+        const target = this.targetEl
 
-			clear(target) {
-				wormhole.close(target || this.to)
-			},
+        if (target instanceof HTMLElement) {
+          el = target
+        } else if (typeof target === 'string') {
+          el = document.querySelector(this.targetEl)
+        } else {
+          console.warn('[vue-portal]: value of targetEl must eb of type String or HTMLElement')
+          return
+        }
 
-			mountToTarget() {
-				let el,
-						target = this.targetEl
+        const attributes = extractAttributes(el)
 
-				if (target instanceof HTMLElement) {
-					el = target
-				}
-				else if (typeof target === 'string') {
-				  el = document.querySelector(this.targetEl)
-				}
-				else {
-					console.warn('[vue-portal]: value of targetEl must eb of type String or HTMLElement')
-					return
-				}
-				let attributes = extractAttributes(el)
+        if (el) {
+          const target = new Vue({
+            ...Target,
+            propsData: {
+              name: this.to || Math.round(Math.random() * 10000000),
+              tag: el.tagName,
+              attributes,
+            },
+          })
+          target.$mount(el)
+          this.mountedComp = target
+        } else {
+          console.warn('[vue-portal]: The specified targetEl ' + this.targetEl + ' was not found')
+        }
+      },
+    },
 
-				if (el) {
-
-					const target = new Vue({
-						...Target,
-						propsData: {
-							name: this.to || Math.round(Math.random() * 10000000),
-							tag: el.tagName,
-							attributes
-						}
-					})
-					target.$mount(el)
-					this.mountedComp = target
-
-				} else {
-					console.warn('[vue-portal]: The specified targetEl ' + this.targetEl + ' was not found')
-				}
-			}
-		},
-
-		render(h) {
+    render (h) {
       const children = this.$slots.default
 
-			if (children.length && this.disabled){
-
-				return children.length <= 1
-				  ? children[0] // TODO: does this work when that vnode is a component?
-					: h(this.tag, children)
-
-			} else {
-
-				return h(this.tag, { class: { 'v-portal': true }, style: { display: 'none' }, key: 'v-portal-placeholder' })
-
-			}
-		}
-	}
+      if (children.length && this.disabled) {
+        return children.length <= 1
+          ? children[0] // TODO: does this work when that vnode is a component?
+          : h(this.tag, children)
+      } else {
+        return h(this.tag, { class: { 'v-portal': true }, style: { display: 'none' }, key: 'v-portal-placeholder' })
+      }
+    },
+  }
 </script>

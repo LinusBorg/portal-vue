@@ -1,8 +1,9 @@
-import {default as chai, expect } from 'chai'
+import { default as chai, expect } from 'chai'
 import td from 'testdouble'
-import tdChai from "testdouble-chai"
+import tdChai from 'testdouble-chai'
 
-chai.use(tdChai(td)); // make sure to call tdChai with td to inject the dependency
+// make sure to call tdChai with td to inject the dependency
+chai.use(tdChai(td))
 
 export {
   expect,

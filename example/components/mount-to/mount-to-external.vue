@@ -11,22 +11,19 @@
 
 <script>
   export default {
-    props: {
-
-    },
-    data() {
+    data () {
       return {
         show: false,
-        target: '#external-target'
+        target: '#external-target',
       }
     },
     methods: {
-      toggle() { this.show = !this.show },
+      toggle () { this.show = !this.show },
     },
     computed: {
-      targetEl() {
-          return this.target === '' ? document.querySelector('#external-target') : this.target
-      }
-    }
+      targetEl () {
+        return this.target === '' ? document.querySelector('#external-target') : this.target
+      },
+    },
   }
 </script>

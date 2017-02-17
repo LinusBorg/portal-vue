@@ -1,63 +1,71 @@
 var path = require('path')
 var webpack = require('webpack')
-var FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
+var FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
 
 const config = {
   entry: {
-      example: './example/index.js',
-      vendor: ['vue'],
+    example: './example/index.js',
+    vendor: ['vue'],
   },
   output: {
-    path: path.resolve(__dirname, "../example"),
+    path: path.resolve(__dirname, '../example'),
     publicPath: '/',
     library: 'VuePortal',
     libraryTarget: 'umd',
-    filename: '[name].build.js'
+    filename: '[name].build.js',
   },
   resolve: {
     extensions: ['.js', '.json', '.vue'],
     alias: {
-      'vue$': 'vue/dist/vue.common'
-    }
+      'vue$': 'vue/dist/vue.common',
+    },
   },
   module: {
     rules: [
       {
+        test: /\.(js|vue)$/,
+        loader: 'eslint-loader',
+        enforce: 'pre',
+        exclude: /node_modules/,
+        options: {
+          formatter: require('eslint-friendly-formatter'),
+        },
+      },
+      {
         test: /\.js$/,
         loader: 'babel-loader',
-        exclude: path.resolve(__dirname, "../node_modules")
+        exclude: path.resolve(__dirname, '../node_modules'),
       },
       {
         test: /\.css$/,
-        //exclude: path.resolve(__dirname, "../node_modules"),
         use: [
           'style-loader',
           {
             loader: 'css-loader',
             options: {
               importLoaders: 1,
-            }
+            },
           },
           {
             loader: 'postcss-loader',
-            options: {}
-          }
-        ]
+            options: {},
+          },
+        ],
       },
       {
         test: /\.vue$/,
         loader: 'vue-loader',
         exclude: /node_modules/,
-      }
-    ]
+      },
+    ],
   },
   plugins: [
     new FriendlyErrorsWebpackPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: process.env.NODE_ENV ? JSON.stringify(process.env.NODE_ENV) : "'development'"
-      }
+        NODE_ENV: process.env.NODE_ENV ? JSON.stringify(process.env.NODE_ENV) : "'development'",
+      },
     }),
     // new webpack.optimize.CommonsChunkPlugin({
     //   name: 'vendor'
@@ -65,7 +73,7 @@ const config = {
   ],
   devtool: 'source-map',
   performance: {
-    hints: false
+    hints: false,
   },
   devServer: {
     contentBase: 'example/',
@@ -74,9 +82,9 @@ const config = {
     quiet: true,
     stats: {
       colors: true,
-      chunks: false
-    }
-  }
+      chunks: false,
+    },
+  },
 }
 
 module.exports = config

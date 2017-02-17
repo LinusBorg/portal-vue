@@ -22,7 +22,7 @@
   import portalDestination from './destination.vue'
 
   export default {
-    data() {
+    data () {
       return {
         showDestination: true,
         showSource: true,
@@ -30,7 +30,7 @@
     },
     components: {
       portalSource,
-      portalDestination
+      portalDestination,
     },
   }
 </script>

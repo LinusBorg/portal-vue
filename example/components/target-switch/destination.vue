@@ -10,14 +10,6 @@
     props: {
       name: { type: String },
     },
-    data() {
-      return {
-
-      }
-    },
-    methods: {
-
-    },
   }
 </script>
 

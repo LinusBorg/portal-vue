@@ -6,7 +6,7 @@ import './styles/index.css'
 
 Vue.use(VuePortal)
 
-var app = new Vue({
+new Vue({
   el: '#app',
-  render: h => h(App)
+  render: h => h(App),
 })

@@ -1,4 +1,4 @@
-export function extractAttributes(el) {
+export function extractAttributes (el) {
   const map = el.hasAttributes() ? el.attributes : []
   const attrs = {}
   for (let i = 0; i < map.length; i++) {
@@ -10,7 +10,7 @@ export function extractAttributes(el) {
   return attrs
 }
 
-export function freeze(item) {
+export function freeze (item) {
   if (Array.isArray(item) || typeof item === 'object') {
     return Object.freeze(item)
   }
