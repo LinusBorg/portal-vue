@@ -14,6 +14,7 @@
     "test:unit": "NODE_ENV=testing webpack-dev-server --watch --config build/webpack.test.conf.js --inline --hot"
   },
   "eslintConfig": {
+    "parser": "babel-eslint",
     "extends": [
       "vue"
     ],
