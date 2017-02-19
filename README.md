@@ -7,7 +7,7 @@
 </p>
 
 
-For more detailed documentation and additional Information, visit <a href="http://portal-vue.github.io">the docs</a>
+For more detailed documentation and additional Information, please visit <a href="http://portal-vue.github.io">the docs</a>
 
 ## Installation
 
