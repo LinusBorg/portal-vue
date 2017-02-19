@@ -4,9 +4,10 @@
   export default {
     name: 'portalTarget',
     props: {
-      name: { type: String, required: true },
-      tag: { type: String, default: 'div' },
       attributes: { type: Object },
+      name: { type: String, required: true },
+      slim: { type: Boolean, default: false },
+      tag: { type: String, default: 'div' },
     },
     data () {
       return {
@@ -50,12 +51,16 @@
       passengers () {
         return this.routes[this.name] || null
       },
+      renderSlim () {
+        const passengers = this.passengers || []
+        return passengers.length === 1 && !this.attributes && this.slim
+      },
     },
 
     render (h) {
       const children = this.passengers || []
 
-      if (children.length === 1 && !this.attributes) {
+      if (this.renderSlim) {
         return children[0]
       } else {
         return h(this.tag, {

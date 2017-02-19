@@ -11,7 +11,7 @@
     "build": "npm run lint && NODE_ENV=production node_modules/.bin/rollup -c build/rollup.conf.prod.js && uglifyjs dist/vue-portal.js -c -m > dist/vue-portal.min.js",
     "dev": "NODE_ENV=development webpack-dev-server --watch --config build/webpack.conf.js --inline --hot",
     "docs:dev": "NODE_ENV=development webpack-dev-server --watch --config build/webpack.conf.docs.js --inline --hot",
-    "test:unit": "NODE_ENV=testing webpack-dev-server --watch --config build/webpack.test.conf.js --inline --hot"
+    "test:unit": "NODE_ENV=testing karma start test/karma.conf.js"
   },
   "eslintConfig": {
     "parser": "babel-eslint",
@@ -19,7 +19,8 @@
       "vue"
     ],
     "plugins": [
-      "html", "vue"
+      "html",
+      "vue"
     ],
     "rules": {
       "vue/jsx-uses-vars": 2,
@@ -32,6 +33,7 @@
   "devDependencies": {
     "babel": "^6.5.2",
     "babel-core": "^6.22.1",
+    "babel-eslint": "^7.1.1",
     "babel-loader": "^6.2.10",
     "babel-preset-es2015": "^6.22.0",
     "babel-preset-stage-3": "^6.22.0",

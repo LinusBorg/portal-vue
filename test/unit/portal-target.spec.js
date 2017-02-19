@@ -17,11 +17,12 @@ describe('PortalTarget', function () {
     }
   })
 
-  it('renders a single element for single vNode', () => {
+  it('renders a single element for single vNode with slim prop & single slot element', () => {
     Vue.set(routes, 'target', Object.freeze(generateVNode()))
 
     const vm = generateTarget({
       name: 'target',
+      slim: true,
     })
 
     const el = vm.$el

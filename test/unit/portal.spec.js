@@ -37,6 +37,23 @@ describe('Portal', function () {
     expect(el).not.to.be.undefined
   })
 
+  it('renders no extra root element with slim prop', () => {
+    const el = document.createElement('DIV')
+
+    vm = new Vue({
+      components: { Portal },
+      template: `
+      <div>
+        <portal :to="destination" ref="portal" :disabled="true" slim>
+          <span id="test-span">{{message}}</span>
+        </portal>
+      </div>`,
+    }).$mount(el)
+
+    const rootEl = vm.$el.querySelector('.v-portal')
+    expect(rootEl).to.not.be.truthy
+  })
+
   it('renders different element when tag prop is defined', () => {
     vm.tag = 'SPAN'
     return vm.$nextTick().then(() => {

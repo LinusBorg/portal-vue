@@ -5,5 +5,5 @@
  /* additional setup with other loaders (polyfills, ...)*/
 import 'mocha-css'
 
- const context = require.context(/*directory*/'./unit', /*recursive*/true, /*match files*//\.spec.js$/);
- context.keys().forEach(context);
+const context = require.context('./unit', true, /\.spec.js$/)
+context.keys().forEach(context)

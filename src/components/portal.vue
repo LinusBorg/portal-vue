@@ -7,11 +7,12 @@
   export default {
     name: 'portal',
     props: {
-      to: { type: String, required: true },
       /* global HTMLElement */
-      targetEl: { type: [String, HTMLElement] },
-      disabled: { type: Boolean },
+      disabled: { type: Boolean, default: false },
+      slim: { type: Boolean, default: false },
       tag: { type: [String], default: 'DIV' },
+      targetEl: { type: [String, HTMLElement] },
+      to: { type: String, required: true },
     },
 
     mounted () {
@@ -98,7 +99,7 @@
       const children = this.$slots.default
 
       if (children.length && this.disabled) {
-        return children.length <= 1
+        return children.length <= 1 && this.slim
           ? children[0] // TODO: does this work when that vnode is a component?
           : h(this.tag, children)
       } else {
