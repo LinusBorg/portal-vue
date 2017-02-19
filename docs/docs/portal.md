@@ -1,4 +1,8 @@
-# <Portal>
+# <portal>
+
+## Description
+
+Wrap any content that you want to render somehwere else in a `<portal>` component.
 
 ## Example usage
 
@@ -36,13 +40,37 @@ Instead, they will be rendered in place:
 </div>
 ```
 
+### slim
+
+|Type|Required|Default|
+|----|--------|-------|
+|`Boolean`|no|`false`|
+
+When set to true, the component will check if the sent content has only one root node. If that is the case, the component will *not* render a root node of its own but instead just output the conent as-is.
+
+<p class="warning">This prop only has an effect when the 'disabled' prop is set as well</p>
+
+**Source**
+```html
+<portal to="destination" slim disabled>
+  <p>Only one content element</p>
+</portal>
+```
+**Result**
+```html
+<p>Only one content element</p>
+```
+
 ### `tag`
 
 |Type|Required|Default|
 |----|--------|-------|
 |`String`|no|`'DIV'`|
 
-Defines the type of tag that should be rendered as a root component when component is `disabled`.
+Defines the type of tag that should be rendered as a root element.
+
+<p class="warning">This prop only works when the 'disabled' prop is true</p>
+
 **Source**
 ```html
 <portal :disabled="true" tag="span">
