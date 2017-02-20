@@ -1,4 +1,4 @@
-var cssnext = require('cssnext')
+var cssnext = require('postcss-cssnext')
 module.exports = {
   plugins: [
     cssnext(),

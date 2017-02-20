@@ -39,7 +39,6 @@
     "babel-preset-stage-3": "^6.22.0",
     "chai": "^3.5.0",
     "css-loader": "^0.26.1",
-    "cssnext": "^1.8.4",
     "eslint": "^3.15.0",
     "eslint-config-vue": "^2.0.2",
     "eslint-friendly-formatter": "^2.0.7",
@@ -73,12 +72,13 @@
     "vue": "^2.1.7",
     "vue-loader": "^10.3.0",
     "vue-template-compiler": "^2.1.7",
-    "webpack": "2.2.0-rc.2",
+    "webpack": "2.2.1",
     "webpack-dev-server": "2.2.0-rc.0",
     "webpack-merge": "^2.4.0"
   },
   "dependencies": {
     "flexboxgrid": "^6.3.1",
+    "postcss-cssnext": "^2.9.0",
     "rollup-plugin-postcss": "^0.2.0",
     "scroll": "^2.0.0",
     "scroll-doc": "^0.1.3",
