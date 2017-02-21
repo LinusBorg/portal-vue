@@ -11,3 +11,8 @@ export default {
   Portal,
   PortalTarget,
 }
+
+if (typeof window !== 'undefined' && window.Vue) {
+  console.log('auto install!')
+  window.Vue.use({ install })
+}

@@ -6,151 +6,275 @@
 
 Vue = 'default' in Vue ? Vue['default'] : Vue;
 
-var buffer = {};
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var wormhole = new Vue({
-  methods: {
-    sendUpdate: function sendUpdate(name, passengers) {
-      buffer[name] = passengers;
-      this.$emit(name, passengers);
-    },
-    get: function get(name) {
-      return buffer[name] || null
-    },
-    clear: function clear(name) {
-      buffer[name] = null;
-      this.$emit(name, null);
+function extractAttributes(el) {
+  var map = el.hasAttributes() ? el.attributes : [];
+  var attrs = {};
+  for (var i = 0; i < map.length; i++) {
+    var attr = map[i];
+    if (attr.value) {
+      attrs[attr.name] = attr.value === '' ? true : attr.value;
     }
   }
-});
+  return attrs;
+}
+
+function freeze(item) {
+  if (Array.isArray(item) || (typeof item === 'undefined' ? 'undefined' : _typeof(item)) === 'object') {
+    return Object.freeze(item);
+  }
+  return item;
+}
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var routes = {};
+
+var Wormhole = function () {
+  function Wormhole(routes) {
+    _classCallCheck(this, Wormhole);
+
+    this.routes = routes;
+    this.clearQueue = [];
+    this.updateQueue = [];
+    this.runScheduled = false;
+  }
+
+  _createClass(Wormhole, [{
+    key: 'send',
+    value: function send(name, passengers) {
+      var job = { name: name, passengers: passengers };
+      this.updateQueue.push(job);
+      this._scheduleRun();
+    }
+  }, {
+    key: 'close',
+    value: function close(name) {
+      var job = { name: name };
+      this.clearQueue.push(job);
+      this._scheduleRun();
+    }
+  }, {
+    key: '_scheduleRun',
+    value: function _scheduleRun() {
+      if (!this.runScheduled) {
+        this.runScheduled = true;
+
+        setTimeout(this._runQueue.bind(this), 0);
+      }
+    }
+  }, {
+    key: '_runQueue',
+    value: function _runQueue() {
+      var _this = this;
+
+      var keys = Object.keys(this.routes);
+
+      this.clearQueue.forEach(function (_ref) {
+        var name = _ref.name;
+
+        if (keys.includes(name)) {
+          _this.routes[name] = undefined;
+        }
+      });
+      this.clearQueue = [];
+
+      this.updateQueue.forEach(function (_ref2) {
+        var name = _ref2.name,
+            passengers = _ref2.passengers;
+
+        if (keys.includes(name)) {
+          _this.routes[name] = freeze(passengers);
+        } else {
+          Vue.set(_this.routes, name, freeze(passengers));
+        }
+      });
+      this.updateQueue = [];
+
+      this.runScheduled = false;
+    }
+  }]);
+
+  return Wormhole;
+}();
+var wormhole = new Wormhole(routes);
 
 var Target = {
-	name: 'portalTarget',
+  name: 'portalTarget',
   props: {
+    attributes: { type: Object },
     name: { type: String, required: true },
-		id: { type: String },
-    tag: { type: String, default: 'div' },
+    slim: { type: Boolean, default: false },
+    tag: { type: String, default: 'div' }
   },
-
-	beforeMount: function beforeMount() {
-		this.checkWormhole();
-  	wormhole.$on(this.name, this.update);
+  data: function data() {
+    return {
+      routes: routes
+    };
+  },
+  mounted: function mounted() {
+    this.updateAttributes();
+  },
+  updated: function updated() {
+    this.updateAttributes();
   },
   beforeDestroy: function beforeDestroy() {
-		this.$el.innerHTML = '';
-  	wormhole.$off(this.name, this.update);
+    this.$el.innerHTML = '';
   },
 
-	watch: {
-		name: function name(newName, oldName) {
-			wormhole.$off(oldName, this.update);
-			wormhole.$on(newName, this.update);
-			this.checkWormhole();
-		}
-	},
 
-	methods: {
+  methods: {
+    updateAttributes: function updateAttributes() {
+      if (this.attributes) {
+        var attrs = this.attributes;
+        var el = this.$el;
 
-		checkWormhole: function checkWormhole() {
-			var passengers = wormhole.get(this.name);
-			this.update(passengers);
-		},
+        if (attrs.class) {
+          attrs.class.trim().split(' ').forEach(function (klass) {
+            el.classList.add(klass);
+          });
+          delete attrs.class;
+        }
 
-		update: function update(passengers) {
+        var keys = Object.keys(attrs);
 
-      if (passengers) {
-        this.passengers = passengers; // cache vNodes for render function
-      } else {
-        this.passengers = null;
+        for (var i = 0; i < keys.length; i++) {
+          el.setAttribute(keys[i], attrs[keys[i]]);
+        }
       }
-      this.$forceUpdate(); // force re-render
+    }
+  },
+  computed: {
+    passengers: function passengers() {
+      return this.routes[this.name] || null;
+    },
+    renderSlim: function renderSlim() {
+      var passengers = this.passengers || [];
+      return passengers.length === 1 && !this.attributes && this.slim;
     }
   },
 
-	render: function render(h) {
-  	return h(this.tag, {
-    	class: { 'vue-portal-target': true },
-			attrs: {
-				id: this.id && this.id.substr(1) || false,
-			}
-    }, this.passengers)
+  render: function render(h) {
+    var children = this.passengers || [];
+
+    if (this.renderSlim) {
+      return children[0];
+    } else {
+      return h(this.tag, {
+        class: { 'vue-portal-target': true }
+      }, children);
+    }
   }
 };
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 var Portal = {
-	name: 'portal',
+  name: 'portal',
   props: {
-    to: { type: String, required: true },
-    mountTarget: { type: String },
+    disabled: { type: Boolean, default: false },
+    slim: { type: Boolean, default: false },
+    tag: { type: [String], default: 'DIV' },
+    targetEl: { type: [String, HTMLElement] },
+    to: { type: String, required: true }
   },
 
-	beforeMount: function beforeMount() {
-		if (this.mountTarget) {
-			this.mountToTarget();
-		}
-  	this.sendUpdate();
+  mounted: function mounted() {
+    if (this.targetEl) {
+      this.mountToTarget();
+    }
+    if (!this.disabled) {
+      this.sendUpdate();
+    }
   },
-  beforeUpdate: function beforeUpdate() {
-		this.sendUpdate();
-	},
-	beforeDestroy: function beforeDestroy() {
-		wormhole.clear(this.to);
-		if (this.mountedComp) {
-			this.mountedComp.$destroy();
-		}
-	},
+  updated: function updated() {
+    if (this.disabled) {
+      this.clear();
+    } else {
+      this.sendUpdate();
+    }
+  },
+  beforeDestroy: function beforeDestroy() {
+    this.clear();
+    if (this.mountedComp) {
+      this.mountedComp.$destroy();
+    }
+  },
 
-	watch: {
-		to: function to (newValue, oldValue) {
-			oldValue && wormhole.sendUpdate(oldValue, null);
-			this.sendUpdate();
-		},
-		mountTarget: function mountTarget (newValue, oldValue) {
-			this.mountToTarget();
-		}
-	},
 
-	methods: {
-
-		sendUpdate: function sendUpdate() {
-			if (this.to) {
-				wormhole.sendUpdate(this.to, this.$slots.default);
-			} else {
-				console.warn('[vue-portal]: You have to define a targte via the `to` prop.');
-			}
+  watch: {
+    to: function to(newValue, oldValue) {
+      oldValue && this.clear(oldValue);
+      this.sendUpdate();
     },
-
-		mountToTarget: function mountToTarget() {
-			var el = document.querySelector(this.mountTarget);
-
-			if (el) {
-
-				var target = new Vue(Object.assign({}, Target,
-					{propsData: {
-						name: this.to || Math.round(Math.random() * 10000),
-						id: this.mountTarget,
-						tag: el.tagName,
-					}}));
-				target.$mount(el);
-				this.mountedComp = target;
-
-			} else {
-				console.warn('[vue-porta]: The specified mountTarget ' + this.mountTarget + ' was not found');
-			}
-		}
+    targetEl: function targetEl(newValue, oldValue) {
+      this.mountToTarget();
+    }
   },
 
-	render: function render(h) {
-  	return  null
+  methods: {
+    sendUpdate: function sendUpdate() {
+      if (this.to) {
+        wormhole.send(this.to, [].concat(_toConsumableArray(this.$slots.default)));
+      } else {
+        console.warn('[vue-portal]: You have to define a targte via the `to` prop.');
+      }
+    },
+    clear: function clear(target) {
+      wormhole.close(target || this.to);
+    },
+    mountToTarget: function mountToTarget() {
+      var el = void 0;
+      var target = this.targetEl;
+
+      if (target instanceof HTMLElement) {
+        el = target;
+      } else if (typeof target === 'string') {
+        el = document.querySelector(this.targetEl);
+      } else {
+        console.warn('[vue-portal]: value of targetEl must eb of type String or HTMLElement');
+        return;
+      }
+
+      var attributes = extractAttributes(el);
+
+      if (el) {
+        var _target = new Vue(_extends({}, Target, {
+          propsData: {
+            name: this.to || Math.round(Math.random() * 10000000),
+            tag: el.tagName,
+            attributes: attributes
+          }
+        }));
+        _target.$mount(el);
+        this.mountedComp = _target;
+      } else {
+        console.warn('[vue-portal]: The specified targetEl ' + this.targetEl + ' was not found');
+      }
+    }
+  },
+
+  render: function render(h) {
+    var children = this.$slots.default;
+
+    if (children.length && this.disabled) {
+      return children.length <= 1 && this.slim ? children[0] : h(this.tag, children);
+    } else {
+      return h(this.tag, { class: { 'v-portal': true }, style: { display: 'none' }, key: 'v-portal-placeholder' });
+    }
   }
 };
 
-function install(Vue$$1, opts) {
-  if ( opts === void 0 ) opts = {};
+function install(Vue$$1) {
+  var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
-
-  Vue$$1.component(opts.portalName || 'portal', Portal);
-  Vue$$1.component(opts.portalTargetName || 'portal-target', Target);
+  Vue$$1.component(opts.portalName || 'portal', Portal);
+  Vue$$1.component(opts.portalTargetName || 'portal-target', Target);
 }
 
 var index = {
@@ -159,6 +283,12 @@ var index = {
   PortalTarget: Target
 };
 
+if (typeof window !== 'undefined' && window.Vue) {
+  console.log('auto install!');
+  window.Vue.use({ install: install });
+}
+
 return index;
 
 })));
+//# sourceMappingURL=vue-portal.js.map

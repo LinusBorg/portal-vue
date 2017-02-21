@@ -7,9 +7,10 @@
   "license": "MIT",
   "repository": "git@github.com:LinusBorg/portal-vue.git",
   "scripts": {
-    "lint": "node_modules/.bin/eslint",
-    "build": "npm run lint && NODE_ENV=production node_modules/.bin/rollup -c build/rollup.conf.prod.js && uglifyjs dist/vue-portal.js -c -m > dist/vue-portal.min.js",
+    "lint": "eslint src/",
+    "build": "npm run lint && NODE_ENV=production rollup -c build/rollup.conf.prod.js && uglifyjs dist/vue-portal.js -c -m > dist/vue-portal.min.js",
     "dev": "NODE_ENV=development webpack-dev-server --watch --config build/webpack.conf.js --inline --hot",
+    "prod": "NODE_ENV=production npm run build && webpack-dev-server --watch --config build/webpack.conf.js --inline --hot",
     "docs:dev": "NODE_ENV=development webpack-dev-server --watch --config build/webpack.conf.docs.js --inline --hot",
     "test:unit": "NODE_ENV=testing karma start test/karma.conf.js"
   },
@@ -28,6 +29,22 @@
         "error",
         "always-multiline"
       ]
+    }
+  },
+  "babel": {
+    "presets": [
+      ["es2015", { "modules": false } ],
+      "stage-2"
+    ],
+    "plugins": [],
+    "comments": false,
+    "env": {
+      "testing": {
+        "presets": [
+          "es2015",
+          "stage-2"
+        ]
+      }
     }
   },
   "devDependencies": {
