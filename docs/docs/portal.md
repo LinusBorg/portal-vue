@@ -91,7 +91,15 @@ Defines the type of tag that should be rendered as a root element.
 |----|--------|-------|
 |`String`|yes|none|
 
-Defines the name of the `<portal>` component that the slot contents should be sent to.
+Defines the name of the `<portal>` component that the slot contents should be sent to. This mounts a new instance of the
+<pre>PortalTarget</pre> component.
+
+<p class="warning">
+  This feature should only be used on elements <strong>outside</strong> of the scope of your Vue app,
+  because it replaces the target element while mounting the <pre>PortalVue</pre> instance, which can lead to unwanted
+  side effects in your Vue App.
+</p>
+
 **Source**
 ```html
 <portal to="destination">
