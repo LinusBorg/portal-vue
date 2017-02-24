@@ -44,8 +44,8 @@ describe('Portal', function () {
       components: { Portal },
       template: `
       <div>
-        <portal :to="destination" ref="portal" :disabled="true" slim>
-          <span id="test-span">{{message}}</span>
+        <portal to="destination" ref="portal" :disabled="true" slim>
+          <span id="test-span"></span>
         </portal>
       </div>`,
     }).$mount(el)

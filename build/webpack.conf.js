@@ -4,7 +4,7 @@ var FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
 
 const config = {
   entry: {
-    example: './example/index.js',
+    example: path.resolve(__dirname, '../example/index.js'),
     vendor: ['vue'],
   },
   output: {
@@ -42,13 +42,6 @@ const config = {
           'style-loader',
           {
             loader: 'css-loader',
-            options: {
-              importLoaders: 1,
-            },
-          },
-          {
-            loader: 'postcss-loader',
-            options: {},
           },
         ],
       },
