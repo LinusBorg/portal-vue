@@ -67,11 +67,11 @@ When set to true, the component will check if the sent content has only one root
 
 Defines the type of tag that should be rendered as a root element.
 
-<p class="warning">This prop only works when the 'disabled' prop is true</p>
+<p class="warning">This prop only has an effect when the 'disabled' prop is set as well</p>
 
 **Source**
 ```html
-<portal :disabled="true" tag="span">
+<portal disabled tag="span">
   <p>some content</p>
 </portal>
 ```
@@ -84,11 +84,6 @@ Defines the type of tag that should be rendered as a root element.
 
 ### `targetEl`
 
-### `To`
-|Type|Required|Default|
-|----|--------|-------|
-|`String`|yes|none|
-
 Defines the name of the `<portal>` component that the slot contents should be sent to. This mounts a new instance of the
 <pre>PortalTarget</pre> component.
 
@@ -97,6 +92,34 @@ Defines the name of the `<portal>` component that the slot contents should be se
   because it replaces the target element while mounting the <pre>PortalVue</pre> instance, which can lead to unwanted
   side effects in your Vue App.
 </p>
+
+**Source**
+```html
+<portal to="destination" target-el="#render-here">
+  <p>some content</p>
+</portal>
+
+<div id="render-here" class="someclass">
+ <!-- nothing necessary here -->
+</div>
+
+```
+**Result**
+```html
+<div class="vue-portal"></div>
+
+<div id="render-here" class="someclass">
+  <p>some content</p>
+</div>
+
+```
+
+### `To`
+|Type|Required|Default|
+|----|--------|-------|
+|`String`|yes|none|
+
+This defines the name of the `PortalTarget` component that the slot content should be rendered in.
 
 **Source**
 ```html
