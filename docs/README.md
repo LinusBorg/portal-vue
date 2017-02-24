@@ -1,3 +1,8 @@
+---
+sidebar: false
+---
 # PortalVue
 
-This is awesome!!
+
+
+A Component to render your component's template anywhere in the DOM.

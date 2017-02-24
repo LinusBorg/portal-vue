@@ -1,7 +1,5 @@
 # <portal>
 
-## Description
-
 Wrap any content that you want to render somehwere else in a `<portal>` component.
 
 ## Example usage

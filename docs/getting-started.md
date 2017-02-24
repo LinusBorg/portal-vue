@@ -5,6 +5,23 @@
 PortalVue is a set of components that allow you to render a component's template
 (or a part of it) anywhere in the document - even outside of your the part that is controlled by your Vue App!
 
+## Setup
+
+Install Package:
+```bash
+npm install --save portal-vue
+# or with yarn
+yarn add portal-vue
+```
+Add it to your application:
+```javascript
+import PortalVue from 'portal-vue'
+
+Vue.use(PortalVue)
+```
+
+For more detailed Installation instructions, additional options and Installation via CDN,
+see the <a href="#" router-link="/docs/installation">Installation</a> Page in the Documentation.
 
 ### Simple Example
 
@@ -23,65 +40,6 @@ PortalVue is a set of components that allow you to render a component's template
 ```
 
 See it in action in a fiddle <a href="#">here</a>.
-
-## But why? What can I use it for?
-
-### Working around `position: fixed` issues
-
-In older browsers, `position: fixed` works unreliably when the element with that poperty
-is nested in a node tree that has other `position` values.
-
-But we normally need it to render components like modals, dialogs, notifications, snackbars
-and similar UI elements in a fixed position.
-
-With PortalVue, you can instead render the component to a `<portal-target>` that you can position
-as as the first child of your #app element.
-
-Now you can position your components with `position: absolute` instead
-
-```html
-<body>
-  <div id="app" style="position: relative;">
-    <portal-target name="notification-outlet"></portal-target>
-    <div></div>
-    <div>
-      <portal to="notification-outlet">
-        <notification style="position: absolute; top: 20px; right: 20px;">
-          This modal can be positioned absolutely, working around problems with 'fixed'
-        </notification>
-      </portal>
-    </div>
-  </div>
-</body>
-```
-
-### Rendering dynamic widgets
-
-
-
-### Tell us about your usecase!
-
-We're sure you will find use cases beyond the ones we mentioned. If you do, please
-let us know by opening an issue on <a href="http://github,com/linusborg/portal-vue">Github</a>
-and we will include it here.
-
-## Setup
-
-Install Package:
-```bash
-npm install --save portal-vue
-# or with yarn
-yarn add portal-vue
-```
-Add it to your application:
-```javascript
-import PortalVue from 'portal-vue'
-
-Vue.use(PortalVue)
-```
-
-For more detailed Installation instructions, additional options and Installation via CDN,
-see the <a href="#" router-link="/docs/installation">Installation</a> Page in the Documentation.
 
 ## Feature Examples
 
@@ -143,3 +101,44 @@ the `to` prop of `<portal>` and the `name` prop of `<portal-target>` can be chan
   </aside>
 </body>
 ```
+
+## But why?
+
+### Working around `position: fixed` issues
+
+In older browsers, `position: fixed` works unreliably when the element with that poperty
+is nested in a node tree that has other `position` values.
+
+But we normally need it to render components like modals, dialogs, notifications, snackbars
+and similar UI elements in a fixed position.
+
+With PortalVue, you can instead render the component to a `<portal-target>` that you can position
+as as the first child of your #app element.
+
+Now you can position your components with `position: absolute` instead
+
+```html
+<body>
+  <div id="app" style="position: relative;">
+    <portal-target name="notification-outlet"></portal-target>
+    <div></div>
+    <div>
+      <portal to="notification-outlet">
+        <notification style="position: absolute; top: 20px; right: 20px;">
+          This modal can be positioned absolutely, working around problems with 'fixed'
+        </notification>
+      </portal>
+    </div>
+  </div>
+</body>
+```
+
+### Rendering dynamic widgets
+
+If you use Vue for small bits and pieces on your website, but want to render something in a location at the other end of the page, PortalVue got you covered.
+
+### Tell us about your usecase!
+
+We're sure you will find use cases beyond the ones we mentioned. If you do, please
+let us know by opening an issue on <a href="http://github,com/linusborg/portal-vue">Github</a>
+and we will include it here.

@@ -1,6 +1,5 @@
 # <portal-target>
 
-## Description
 
 This component is an outlet for any content that was sent by a `<portal>` component. It renders received content and doesn't do much else.
 
