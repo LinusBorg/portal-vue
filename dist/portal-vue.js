@@ -1,7 +1,7 @@
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('vue')) :
-  typeof define === 'function' && define.amd ? define(['vue'], factory) :
-  (global.VuePortal = factory(global.Vue));
+	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('vue')) :
+	typeof define === 'function' && define.amd ? define(['vue'], factory) :
+	(global.PortalVue = factory(global.Vue));
 }(this, (function (Vue) { 'use strict';
 
 Vue = 'default' in Vue ? Vue['default'] : Vue;
@@ -276,6 +276,10 @@ function install(Vue$$1) {
   Vue$$1.component(opts.portalName || 'portal', Portal);
   Vue$$1.component(opts.portalTargetName || 'portal-target', Target);
 }
+if (typeof window !== 'undefined' && window.Vue) {
+  console.log('auto install!');
+  window.Vue.use({ install: install });
+}
 
 var index = {
   install: install,
@@ -283,12 +287,7 @@ var index = {
   PortalTarget: Target
 };
 
-if (typeof window !== 'undefined' && window.Vue) {
-  console.log('auto install!');
-  window.Vue.use({ install: install });
-}
-
 return index;
 
 })));
-//# sourceMappingURL=vue-portal.js.map
+//# sourceMappingURL=portal-vue.js.map
