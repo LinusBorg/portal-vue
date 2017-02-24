@@ -20,8 +20,8 @@ export default {
     vue: 'Vue',
   },
   format: 'umd',
-  moduleName: 'VuePortal',
-  dest: './dist/vue-portal.js', // equivalent to --output
+  moduleName: 'PortalVue',
+  dest: './dist/portal-vue.js', // equivalent to --output
   sourceMap: true,
   plugins: [
     nodeResolve(nodeResolveOptions),

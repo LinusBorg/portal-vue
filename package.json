@@ -8,7 +8,7 @@
   "repository": "git@github.com:LinusBorg/portal-vue.git",
   "scripts": {
     "lint": "eslint src/",
-    "build": "npm run lint && NODE_ENV=production rollup -c build/rollup.conf.prod.js && uglifyjs dist/vue-portal.js -c -m > dist/vue-portal.min.js",
+    "build": "npm run lint && NODE_ENV=production rollup -c build/rollup.conf.prod.js && uglifyjs dist/portal-vue.js -c -m > dist/portal-vue.min.js",
     "dev": "NODE_ENV=development webpack-dev-server --watch --config build/webpack.conf.js --inline --hot",
     "prod": "NODE_ENV=production npm run build && webpack-dev-server --watch --config build/webpack.conf.js --inline --hot",
     "docs:dev": "NODE_ENV=development webpack-dev-server --watch --config build/webpack.conf.docs.js --inline --hot",
