@@ -28,7 +28,8 @@ see the <a href="#" router-link="/docs/installation">Installation</a> Page in th
 ```html
 <portal to="destination">
   <p>This slot content will be rendered wherever the <portal-target> with name 'destination'
-    is  located.</p>
+    is located.
+  </p>
 </portal>
 
 <portal-target name="destination">
@@ -39,7 +40,7 @@ see the <a href="#" router-link="/docs/installation">Installation</a> Page in th
 </portal-target>
 ```
 
-See it in action in a fiddle <a href="#">here</a>.
+See it in action in a jsfiddle <a href="#">here</a>. *(still missing)*
 
 ## Feature Examples
 
@@ -59,11 +60,11 @@ See it in action in a fiddle <a href="#">here</a>.
 <portal to="destination" v-if="usePortal">
   <<ul>
     <li>
-      When `userPortal` efvaluates to `true`, the portal's slot content will be rendered
+      When 'userPortal' evaluates to 'true', the portal's slot content will be rendered
       at the destination.
     </li>
     <li>
-      When it evaluates to `fales`, the content will be removed from the detination
+      When it evaluates to 'false', the content will be removed from the detination
     </li>
   </ul>
 </portal>
@@ -71,14 +72,15 @@ See it in action in a fiddle <a href="#">here</a>.
 
 ### Switching targets and sources
 
-the `to` prop of `<portal>` and the `name` prop of `<portal-target>` can be changed dynamically with `v-bind`.
+The `to` prop of `<portal>` and the `name` prop of `<portal-target>` can be changed dynamically with `v-bind`.
+
 ```html
 <portal v-bind:to="name">
   Content will be dynamically sent to the destination that `name` evaluates to
 </portal>
 
 <portal-target v-bind:name="name">
-  by changeing the `name`, you can define which portal's content should be shown.
+  by changing the 'name', you can define which portal's content should be shown.
 </portal-target>
 ```
 ### Rendering outside of the Vue-App
