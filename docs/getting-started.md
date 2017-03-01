@@ -115,7 +115,7 @@ But we normally need it to render components like modals, dialogs, notifications
 and similar UI elements in a fixed position.
 
 With PortalVue, you can instead render the component to a `<portal-target>` that you can position
-as as the first child of your #app element.
+as as the first child of your `#app` element.
 
 Now you can position your components with `position: absolute` instead
 
