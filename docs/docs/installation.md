@@ -6,13 +6,13 @@
 
 This is the recommended way to install this Plugin.
 
-Install vom npm as a dependency:
+Install with npm as a dependency:
 ``` bash
 npm install --save portal-vue
 # or with yarn:
 yarn add portal-vue
 ```
-Then include rthe package in your application and register it with Vue:
+Then include the package in your application and register it with Vue:
 
 ``` javascript
 import PortalVue from 'portal-vue' // as ES6 module
@@ -49,8 +49,8 @@ The same rules and restrictions as for CDN apply.
 When installing with `Vue.use()`, you can pass options to change the component names.
 ```javascript
 Vue.use(PortalVue, {
-  portalNme: 'my-portal', // default: 'portal'
-  portalTargetname: 'my-target', // default:'portal-target'
+  portalName: 'my-portal', // default: 'portal'
+  portalTargetName: 'my-target', // default:'portal-target'
 })
 ```
 These options would make the components available globally as `<my-portal>` and `<my-target>` respectively.
