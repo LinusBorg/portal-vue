@@ -25,6 +25,7 @@
 
 <script>
   export default {
+    name: 'compAsRoot',
     data () {
       return { disabled: true, testProp: 'Test!!' }
     },

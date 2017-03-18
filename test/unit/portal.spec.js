@@ -103,7 +103,7 @@ describe('Portal', function () {
   })
 
   it('calls Wormhole.close() when destroyed', () => {
-    vm.$refs.portal.$destroy()
+    vm.$destroy()
     td.verify(Wormhole.close('destination'))
   })
 

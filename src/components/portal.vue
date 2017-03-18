@@ -7,6 +7,7 @@
   const inBrowser = (typeof window !== 'undefined')
 
   export default {
+    abstract: true,
     name: 'portal',
     props: {
       /* global HTMLElement */

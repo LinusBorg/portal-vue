@@ -28,6 +28,7 @@
   import EmptyPortal from './empty-portal/index.vue'
 
   export default {
+    name: 'App',
     components: {
       ToggleExample,
       TargetSwitch,
