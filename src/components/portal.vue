@@ -53,7 +53,9 @@
 
       sendUpdate () {
         if (this.to) {
-          wormhole.send(this.to, [...this.$slots.default])
+          if (this.$slots.default) {
+            wormhole.send(this.to, [...this.$slots.default])
+          }
         } else {
           console.warn('[vue-portal]: You have to define a targte via the `to` prop.')
         }
@@ -96,7 +98,7 @@
     },
 
     render (h) {
-      const children = this.$slots.default
+      const children = this.$slots.default || []
 
       if (children.length && this.disabled) {
         return children.length <= 1 && this.slim
