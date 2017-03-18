@@ -31,6 +31,23 @@ describe('Portal', function () {
     }).$mount(el)
   })
 
+  it('works when no slot content is provided', () => {
+    let err = false
+    try {
+      const mountEl = document.createElement('DIV')
+      vm = new Vue({
+        template: `<div><portal to="destination"></portal></div>`,
+        components: { Portal },
+      }).$mount(mountEl)
+    } catch (error) {
+      err = true
+    }
+
+    expect(err).to.be.false
+    const el = vm.$el.querySelector('.v-portal')
+    expect(el).not.to.be.undefined
+  })
+
   it('renders a div element with class `v-portal`', function () {
     // expect(vm.$refs.portal.$el.nodeName).to.equal('#comment')
     const el = vm.$el.querySelector('.v-portal')

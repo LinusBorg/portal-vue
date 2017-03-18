@@ -11,6 +11,8 @@
 
     <comp-as-root />
 
+    <empty-portal />
+
     <mount-to-external />
   </div>
 
@@ -23,6 +25,7 @@
   import Disabled from './disabled'
   import CompAsRoot from './comp-as-root/comp-as-root.vue'
   import MountToExternal from './mount-to/mount-to-external.vue'
+  import EmptyPortal from './empty-portal/index.vue'
 
   export default {
     components: {
@@ -32,6 +35,7 @@
       Disabled,
       CompAsRoot,
       MountToExternal,
+      EmptyPortal,
     },
   }
 </script>
