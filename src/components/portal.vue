@@ -4,6 +4,8 @@
   import Target from './portal-target'
   import { extractAttributes } from '../utils'
 
+  const inBrowser = (typeof window !== 'undefined')
+
   export default {
     name: 'portal',
     props: {
@@ -11,7 +13,7 @@
       disabled: { type: Boolean, default: false },
       slim: { type: Boolean, default: false },
       tag: { type: [String], default: 'DIV' },
-      targetEl: { type: [String, HTMLElement] },
+      targetEl: { type: inBrowser ? [String, HTMLElement] : String },
       to: { type: String, required: true },
     },
 
