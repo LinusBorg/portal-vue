@@ -28,7 +28,8 @@ export class Wormhole {
     if (!this.runScheduled) {
       this.runScheduled = true
 
-      setTimeout(this._runQueue.bind(this), 0)
+      // setTimeout(this._runQueue.bind(this), 0)
+      Vue.nextTick(this._runQueue.bind(this))
     }
   }
 
