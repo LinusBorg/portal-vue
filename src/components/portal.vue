@@ -72,10 +72,10 @@
         let el
         const target = this.targetEl
 
-        if (target instanceof HTMLElement) {
-          el = target
-        } else if (typeof target === 'string') {
+        if (typeof target === 'string') {
           el = document.querySelector(this.targetEl)
+        } else if (target instanceof HTMLElement) {
+          el = target
         } else {
           console.warn('[vue-portal]: value of targetEl must eb of type String or HTMLElement')
           return
@@ -105,7 +105,7 @@
 
       if (children.length && this.disabled) {
         return children.length <= 1 && this.slim
-          ? children[0] // TODO: does this work when that vnode is a component?
+          ? children[0]
           : h(this.tag, children)
       } else {
         return h(this.tag, { class: { 'v-portal': true }, style: { display: 'none' }, key: 'v-portal-placeholder' })
