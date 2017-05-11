@@ -16,7 +16,7 @@
     "build": "npm run lint && npm run test:once && cross-env NODE_ENV=production rollup -c build/rollup.conf.prod.js && uglifyjs dist/portal-vue.js -c -m > dist/portal-vue.min.js",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --watch --config build/webpack.conf.js --inline --hot",
     "prod": "cross-env NODE_ENV=production npm run build && webpack-dev-server --watch --config build/webpack.conf.js --inline --hot",
-    "docs": "docute ./docs",
+    "docs": "docute ./docs -- --watch",
     "test": "cross-env NODE_ENV=testing karma start test/karma.conf.js",
     "test:once": "npm run test -- --single-run"
   },
@@ -68,6 +68,8 @@
     "chai": "^3.5.0",
     "cross-env": "^4.0.0",
     "css-loader": "^0.28.1",
+    "docute": "^3.0.10",
+    "docute-cli": "^0.5.2",
     "eslint": "^3.19.0",
     "eslint-config-vue": "^2.0.2",
     "eslint-friendly-formatter": "^2.0.7",
