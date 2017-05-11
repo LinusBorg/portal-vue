@@ -86,6 +86,7 @@
         if (el) {
           const target = new Vue({
             ...Target,
+            parent: this,
             propsData: {
               name: this.to || Math.round(Math.random() * 10000000),
               tag: el.tagName,
