@@ -83,15 +83,16 @@ Defines the type of tag that should be rendered as a root element.
 ```
 
 ### `targetEl`
+
 |Type|Required|Default|
 |----|--------|-------|
-|`[String, HTMLElement]`|yes|none|
+|`[String, HTMLElement]`|no|none|
 
 <p class="info">
   Type HTMElement is not allowed when using Vue SSR.
 </p>
 
-Defines the name of the `<portal>` component that the slot contents should be sent to. This mounts a new instance of the
+Defines the name of the `Portal` component that the slot contents should be sent to. This mounts a new instance of the
 <pre>PortalTarget</pre> component.
 
 <p class="warning">
@@ -127,10 +128,10 @@ Defines the name of the `<portal>` component that the slot contents should be se
 
 ```
 
-### `To`
+### `to`
 |Type|Required|Default|
 |----|--------|-------|
-|`String`|yes, unless `targetEl` prop is provided|none|
+|`String`|yes, unless `targetEl` prop is provided|a random String|
 
 This defines the name of the `PortalTarget` component that the slot content should be rendered in.
 

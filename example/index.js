@@ -8,6 +8,8 @@ var PortalVue = process.env.NODE_ENV === 'production'
   ? require('../dist/portal-vue').default
   : require('../src').default
 
+Vue.config.productionTip = false
+
 Vue.use(PortalVue)
 
 new Vue({
