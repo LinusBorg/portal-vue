@@ -117,7 +117,7 @@ Defines the name of the `<portal>` component that the slot contents should be se
 ### `To`
 |Type|Required|Default|
 |----|--------|-------|
-|`String`|yes|none|
+|`String`|yes, unless `targetEl` prop is provided|none|
 
 This defines the name of the `PortalTarget` component that the slot content should be rendered in.
 

@@ -15,7 +15,7 @@
       slim: { type: Boolean, default: false },
       tag: { type: [String], default: 'DIV' },
       targetEl: { type: inBrowser ? [String, HTMLElement] : String },
-      to: { type: String, required: true },
+      to: { type: String },
     },
 
     mounted () {
@@ -59,7 +59,7 @@
           if (this.$slots.default) {
             wormhole.send(this.to, [...this.$slots.default])
           }
-        } else {
+        } else if (!this.to && !this.targetEl) {
           console.warn('[vue-portal]: You have to define a targte via the `to` prop.')
         }
       },
