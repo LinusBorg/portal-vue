@@ -17,6 +17,9 @@
             When Portal is disabled, this paragraph is rendered in the left box.<br>
             When it's enabled, it's rendered in the right box.
           </p>
+          <div ref="text">
+            Some more Text ...
+          </div>
         </portal>
       </div>
       <div class="item destination">
@@ -35,6 +38,17 @@
       return {
         disabled: false,
       }
+    },
+    mounted () { // test when refs are available
+      this.$nextTick(() => {
+        this.$nextTick(() => {
+          console.log(this.$refs.text)
+          console.log(this.$refs.text.getBoundingClientRect())
+        })
+      })
+      setTimeout(() => {
+        console.log(this.$refs.text.getBoundingClientRect())
+      }, 0)
     },
   }
 </script>
