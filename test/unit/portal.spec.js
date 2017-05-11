@@ -128,4 +128,11 @@ describe('Portal', function () {
       expect(span).not.to.be.undefined
     })
   })
+
+  // check necessary because I regularly deactivate this during development
+  it('is an abstract component', () => {
+    vm.$nextTick(() => {
+      expect(vm.$refs.portal.$options.abstract).to.be.true
+    })
+  })
 })

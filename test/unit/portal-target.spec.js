@@ -9,6 +9,27 @@ const PortalTarget = new PortalTargetInj({
   './wormhole': { routes: routes },
 })
 
+// Utils
+function generateTarget (props) {
+  const el = document.createElement('DIV')
+  return new Vue({
+    ...PortalTarget,
+    name: 'target',
+    propsData: props,
+  }).$mount(el)
+}
+
+function generateVNode () {
+  const el = document.createElement('DIV')
+  const vm = new Vue({
+    el,
+    render (h) {
+      return h('div', [h('span', { class: 'testnode' }, 'Test')])
+    },
+  })
+  return vm._vnode.children
+}
+
 describe('PortalTarget', function () {
   afterEach(() => {
     const keys = Object.keys(routes)
@@ -60,25 +81,9 @@ describe('PortalTarget', function () {
       expect(el.getAttribute('id')).to.equal('test-id')
     })
   })
-})
 
-// Utils
-function generateTarget (props) {
-  const el = document.createElement('DIV')
-  return new Vue({
-    ...PortalTarget,
-    name: 'target',
-    propsData: props,
-  }).$mount(el)
-}
-
-function generateVNode () {
-  const el = document.createElement('DIV')
-  const vm = new Vue({
-    el,
-    render (h) {
-      return h('div', [h('span', { class: 'testnode' }, 'Test')])
-    },
+  // check necessary because I regularly deactivate this during development
+  it('is an abstract component', () => {
+    expect(PortalTarget.abstract).to.be.true
   })
-  return vm._vnode.children
-}
+})
