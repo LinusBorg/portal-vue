@@ -26,3 +26,24 @@ When you Vue [Vue's SSR capabilities](https://ssr.vuejs.org), there are some res
 2. targetEl  cannot be a real HTMLElement
 
   See the <a href="#" router-link="/docs/portal#targetel">Portal</a> documentation for details
+
+## Refs
+
+The internal mechanism which sends updates from `Portals` to `PortalTargets` is asynchrnoues at the moment, to avoid some race conditions.
+
+Unfortunately, this means that `$refs` that you might have added to a `Portal's` slot content will not be available on the next Tick, but only the one after that.
+
+So you have to use a workaround for now:
+```javascript
+// Option 1: Two nested $nextTick calls
+this.$nextTick(() => {
+  this.$nextTick(() => {
+    console.log(this.$refs.text)
+  })
+})
+
+// Option 2: setTimeout
+setTimeout(() => {
+  console.log(this.$refs.text)
+}, 0)
+```
