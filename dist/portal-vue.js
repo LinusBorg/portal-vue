@@ -1,6 +1,6 @@
 /*
     portal-vue
-    Version: 1.0.0-beta.3
+    Version: 1.0.0-beta.5
     Licence: MIT
     (c) Thorsten Lünborg
   */
@@ -291,7 +291,6 @@ function install(Vue$$1) {
   Vue$$1.component(opts.portalTargetName || 'portal-target', Target);
 }
 if (typeof window !== 'undefined' && window.Vue) {
-  console.log('auto install!');
   window.Vue.use({ install: install });
 }
 
