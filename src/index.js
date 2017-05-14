@@ -6,7 +6,6 @@ function install (Vue, opts = {}) {
   Vue.component(opts.portalTargetName || 'portal-target', PortalTarget)
 }
 if (typeof window !== 'undefined' && window.Vue) {
-  console.log('auto install!')
   window.Vue.use({ install: install })
 }
 
