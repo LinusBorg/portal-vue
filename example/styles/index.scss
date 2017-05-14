@@ -1,0 +1,44 @@
+@import 'variables';
+
+html {
+  font-family: sans-serif;
+  padding: 0;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+}
+.controls {
+  list-style-type: none;
+  display: block;
+  border-bottom: 1px solid black;
+  margin-bottom: 10px;
+}
+.controls--item {
+  display: inline-block;
+  padding: 3px;
+}
+.controls--link {
+  text-decoration: none;
+  display: block;
+  border-radius: 5px;
+  padding: 5px;
+  color: $vueColor;
+  background-color: white;
+  border: 2px solid $vueColor;
+}
+.controls--link:hover {
+  color: white;
+  background-color: $vueColor;
+  border: 2px solid $vueColor;
+}
+.controls--link-active {
+  color: white;
+  background-color: $vueColor;
+  border: 2px solid $vueColor;
+}
+
+.wrapper {
+  display: flex;
+}

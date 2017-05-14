@@ -20,7 +20,8 @@ describe('Wormhole', function () {
     })
   })
 
-  it('removes content on close()', () => {
+  it('removes content on close()', function () {
+    this.timeout(4000)
     wormhole.send('target', 'Test')
 
     return new Promise((resolve, reject) => {
@@ -31,10 +32,10 @@ describe('Wormhole', function () {
     .then(() => {
       wormhole.close('target')
 
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve2, reject) => {
         setTimeout(() => {
           expect(wormhole.routes).to.deep.equal({ target: undefined })
-          resolve()
+          resolve2()
         }, 0)
       })
     })

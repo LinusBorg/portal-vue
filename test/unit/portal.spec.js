@@ -103,7 +103,7 @@ describe('Portal', function () {
   })
 
   it('calls Wormhole.close() when destroyed', () => {
-    vm.$refs.portal.$destroy()
+    vm.$destroy()
     td.verify(Wormhole.close('destination'))
   })
 
@@ -126,6 +126,13 @@ describe('Portal', function () {
       const span = vm.$el.querySelector('#test-span')
 
       expect(span).not.to.be.undefined
+    })
+  })
+
+  // check necessary because I regularly deactivate this during development
+  it('is an abstract component', () => {
+    vm.$nextTick(() => {
+      expect(vm.$refs.portal.$options.abstract).to.be.true
     })
   })
 })

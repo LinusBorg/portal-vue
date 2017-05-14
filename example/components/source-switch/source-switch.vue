@@ -17,9 +17,15 @@
       </ul>
     </div>
     <div class="wrapper">
-      <portal-source :active="active" name="ss-A" />
-      <portal-source :active="active" name="ss-B" />
-      <destination :source="active" />
+      <container type="source">
+        <portal-source :active="active" name="ss-A" />
+      </container>
+      <container type="source">
+        <portal-source :active="active" name="ss-B" />
+      </container>
+      <container type="destination">
+        <destination :source="active" />
+      </container>
     </div>
   </div>
 </template>

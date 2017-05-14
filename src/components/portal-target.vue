@@ -2,6 +2,7 @@
   import { routes } from './wormhole'
 
   export default {
+    abstract: true,
     name: 'portalTarget',
     props: {
       attributes: { type: Object },

@@ -37,7 +37,19 @@ const config = {
         exclude: path.resolve(__dirname, '../node_modules'),
       },
       {
+        test: /\.scss$/,
+        exclude: /node_modules/,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+          },
+          'sass-loader',
+        ],
+      },
+      {
         test: /\.css$/,
+        exclude: /node_modules/,
         use: [
           'style-loader',
           {

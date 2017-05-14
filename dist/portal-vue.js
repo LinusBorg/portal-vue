@@ -1,3 +1,10 @@
+/*
+    portal-vue
+    Version: 1.0.0-beta.3
+    Licence: MIT
+    (c) Thorsten Lünborg
+  */
+  
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('vue')) :
 	typeof define === 'function' && define.amd ? define(['vue'], factory) :
@@ -63,7 +70,7 @@ var Wormhole = function () {
       if (!this.runScheduled) {
         this.runScheduled = true;
 
-        setTimeout(this._runQueue.bind(this), 0);
+        Vue.nextTick(this._runQueue.bind(this));
       }
     }
   }, {
@@ -103,6 +110,7 @@ var Wormhole = function () {
 var wormhole = new Wormhole(routes);
 
 var Target = {
+  abstract: true,
   name: 'portalTarget',
   props: {
     attributes: { type: Object },
@@ -174,14 +182,17 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
+var inBrowser = typeof window !== 'undefined';
+
 var Portal = {
+  abstract: true,
   name: 'portal',
   props: {
     disabled: { type: Boolean, default: false },
     slim: { type: Boolean, default: false },
     tag: { type: [String], default: 'DIV' },
-    targetEl: { type: [String, HTMLElement] },
-    to: { type: String, required: true }
+    targetEl: { type: inBrowser ? [String, HTMLElement] : String },
+    to: { type: String }
   },
 
   mounted: function mounted() {
@@ -220,8 +231,10 @@ var Portal = {
   methods: {
     sendUpdate: function sendUpdate() {
       if (this.to) {
-        wormhole.send(this.to, [].concat(_toConsumableArray(this.$slots.default)));
-      } else {
+        if (this.$slots.default) {
+          wormhole.send(this.to, [].concat(_toConsumableArray(this.$slots.default)));
+        }
+      } else if (!this.to && !this.targetEl) {
         console.warn('[vue-portal]: You have to define a targte via the `to` prop.');
       }
     },
@@ -232,10 +245,10 @@ var Portal = {
       var el = void 0;
       var target = this.targetEl;
 
-      if (target instanceof HTMLElement) {
-        el = target;
-      } else if (typeof target === 'string') {
+      if (typeof target === 'string') {
         el = document.querySelector(this.targetEl);
+      } else if (target instanceof HTMLElement) {
+        el = target;
       } else {
         console.warn('[vue-portal]: value of targetEl must eb of type String or HTMLElement');
         return;
@@ -245,6 +258,7 @@ var Portal = {
 
       if (el) {
         var _target = new Vue(_extends({}, Target, {
+          parent: this,
           propsData: {
             name: this.to || Math.round(Math.random() * 10000000),
             tag: el.tagName,
@@ -260,7 +274,7 @@ var Portal = {
   },
 
   render: function render(h) {
-    var children = this.$slots.default;
+    var children = this.$slots.default || [];
 
     if (children.length && this.disabled) {
       return children.length <= 1 && this.slim ? children[0] : h(this.tag, children);

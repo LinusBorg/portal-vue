@@ -142,5 +142,5 @@ If you use Vue for small bits and pieces on your website, but want to render som
 ### Tell us about your usecase!
 
 We're sure you will find use cases beyond the ones we mentioned. If you do, please
-let us know by opening an issue on <a href="http://github,com/linusborg/portal-vue">Github</a>
+let us know by opening an issue on <a href="http://github.com/linusborg/portal-vue">Github</a>
 and we will include it here.

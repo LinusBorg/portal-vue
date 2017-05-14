@@ -1,18 +1,21 @@
 <template>
   <div id="empty-portal-example">
     <div class="wrapper">
-      <div class="item source">
-        <portal to="empty-portal-destination"></portal>
-      </div>
-      <div class="item destination">
-        <portal-target name="empty-portal-destination" />
-      </div>
+
+      <container type="source">
+        <portal to="empty-portal-destination" />
+      </container>
+
+      <container type="destination">
+        <portal-target name="empty-portal-destination" slim />
+      </container>
+
     </div>
   </div>
 </template>
 
 <script>
-  // This Example is just usrd to test that an empty portal works as expected.
+  // This Example is just used to test that an empty portal works as expected.
   export default {
 
   }
