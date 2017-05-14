@@ -1,3 +1,10 @@
+/*
+    portal-vue
+    Version: 1.0.0-beta.3
+    Licence: MIT
+    (c) Thorsten Lünborg
+  */
+  
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('vue')) :
 	typeof define === 'function' && define.amd ? define(['vue'], factory) :
