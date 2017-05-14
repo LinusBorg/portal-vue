@@ -11,14 +11,17 @@
       </ul>
     </div>
     <div class="wrapper">
-      <div class="item source">
+
+      <container type="source">
         <portal to="comp-as-root" :disabled="disabled">
           <test :test-prop="testProp"></test>
         </portal>
-      </div>
-      <div class="item destination">
+      </container>
+
+      <container type="destination">
         <portal-target name="comp-as-root" />
-      </div>
+      </container>
+
     </div>
   </div>
 </template>

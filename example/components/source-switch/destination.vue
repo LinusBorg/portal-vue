@@ -1,5 +1,5 @@
 <template>
-  <div class="item destination">
+  <div>
     <portal-target :name="source" />
   </div>
 </template>

@@ -1,5 +1,5 @@
 <template>
-  <div class="destination">
+  <container type="destination">
     <p>
       Below the line , you see the some content.
     </p>
@@ -11,7 +11,7 @@
     <portal-target name="toggle-destination">
 
     </portal-target>
-  </div>
+  </container>
 </template>
 
 <script>

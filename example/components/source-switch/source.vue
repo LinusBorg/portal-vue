@@ -1,5 +1,5 @@
 <template>
-  <div v-if="active === name" class="item source">
+  <div v-if="active === name">
     <p>
       <i>This content was portal'ed to {{ `${name}` }}</i>
     </p>
@@ -8,7 +8,7 @@
     </portal>
   </div>
 
-  <div v-else class="item source">
+  <div v-else>
     <p>This is Content in Source {{ name }}</p>
   </div>
 </template>

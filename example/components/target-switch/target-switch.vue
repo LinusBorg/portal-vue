@@ -17,9 +17,15 @@
       </ul>
     </div>
     <div class="wrapper">
-      <Source-comp class="item source" :target="target"></Source-comp>
-      <destination class="item destination" name="ts-A" key="A"></destination>
-      <destination class="item destination" name="ts-B" key="B"></destination>
+      <container type="source">
+        <Source-comp :target="target" />
+      </container>
+      <container type="destination">
+        <destination name="ts-A" key="A" />
+      </container>
+      <container type="destination">
+        <destination name="ts-B" key="B" />
+      </container>
     </div>
   </div>
 </template>

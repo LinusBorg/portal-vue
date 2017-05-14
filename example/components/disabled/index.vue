@@ -11,7 +11,7 @@
       </ul>
     </div>
     <div class="wrapper">
-      <div class="item source">
+      <container type="source">
         <portal to="disabled-destination" :disabled="disabled">
           <p>
             When Portal is disabled, this paragraph is rendered in the left box.<br>
@@ -21,10 +21,12 @@
             Some more Text ...
           </div>
         </portal>
-      </div>
-      <div class="item destination">
+      </container>
+
+      <container type="destination">
         <portal-target name="disabled-destination" />
-      </div>
+      </container>
+
     </div>
   </div>
 </template>

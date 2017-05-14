@@ -1,5 +1,5 @@
 <template>
-  <div class="source">
+  <container type="source">
     <p>Here you can add the todos</p>
     <p>
       Normally, they would be rendered below the input, but with VuePortal
@@ -13,7 +13,7 @@
     </portal>
     <p>Below is the raw data from this component</p>
     <pre>{{$data}}</pre>
-  </div>
+  </container>
 </template>
 
 <script>

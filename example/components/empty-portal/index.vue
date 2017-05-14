@@ -1,14 +1,15 @@
 <template>
   <div id="empty-portal-example">
     <div class="wrapper">
-      <div class="item source">
-        <portal to="empty-portal-destination">
 
-        </portal>
-      </div>
-      <div class="item destination">
+      <container type="source">
+        <portal to="empty-portal-destination" />
+      </container>
+
+      <container type="destination">
         <portal-target name="empty-portal-destination" slim />
-      </div>
+      </container>
+
     </div>
   </div>
 </template>
