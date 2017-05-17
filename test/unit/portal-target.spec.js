@@ -1,12 +1,12 @@
-/* global describe it afterEach */
+transports/* global describe it afterEach */
 import { expect } from './helpers'
 import Vue from 'vue'
 import PortalTargetInj from '!!vue-loader?inject!../../src/components/portal-target'
 
-const routes = {}
+const transports = {}
 
 const PortalTarget = new PortalTargetInj({
-  './wormhole': { routes: routes },
+  './wormhole': { transports: transports },
 })
 
 // Utils
@@ -32,14 +32,19 @@ function generateVNode () {
 
 describe('PortalTarget', function () {
   afterEach(() => {
-    const keys = Object.keys(routes)
+    const keys = Object.keys(transports)
     for (let i = 0; i < keys.length; i++) {
-      Vue.delete(routes, keys[i])
+      Vue.delete(transports, keys[i])
     }
   })
 
   it('renders a single element for single vNode with slim prop & single slot element', () => {
-    Vue.set(routes, 'target', Object.freeze(generateVNode()))
+    const vNode = Object.freeze(generateVNode())
+    Vue.set(transports, 'target', {
+      from: 'target-portal',
+      to: 'target',
+      passenger: vNode,
+    })
 
     const vm = generateTarget({
       name: 'target',
@@ -52,7 +57,11 @@ describe('PortalTarget', function () {
 
   it('renders a wrapper with class `vue-portal-target` for multiple vNodes', () => {
     const vNodes = Object.freeze([generateVNode(), generateVNode()])
-    Vue.set(routes, 'target', vNodes)
+    Vue.set(transports, 'target', {
+      from: 'test-portal',
+      to: 'target',
+      passengers: vNodes,
+    })
 
     const vm = generateTarget({
       name: 'target',
@@ -66,7 +75,11 @@ describe('PortalTarget', function () {
 
   it('applies attributes correctly to root node', () => {
     const vNodes = Object.freeze([generateVNode(), generateVNode()])
-    Vue.set(routes, 'target', vNodes)
+    Vue.set(transports, 'target', {
+      from: 'test-portal',
+      to: 'target',
+      passengers: vNodes,
+    })
 
     const vm = generateTarget({
       name: 'target',

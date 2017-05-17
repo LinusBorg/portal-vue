@@ -10,11 +10,21 @@ describe('Wormhole', function () {
   })
 
   it('correctly adds passengers on send', () => {
-    wormhole.send('target', 'Test')
+    wormhole.open({
+      from: 'test-portal',
+      to: 'target',
+      passengers: ['Test'],
+    })
 
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        expect(wormhole.routes).to.deep.equal({ target: 'Test' })
+        expect(wormhole.routes).to.deep.equal({
+          target: {
+            from: 'test-portal',
+            to: 'target',
+            passengers: ['Test'],
+          },
+        })
         resolve()
       }, 0)
     })
@@ -22,7 +32,11 @@ describe('Wormhole', function () {
 
   it('removes content on close()', function () {
     this.timeout(4000)
-    wormhole.send('target', 'Test')
+    wormhole.open({
+      from: 'test-portal',
+      to: 'target',
+      passengers: ['Test'],
+    })
 
     return new Promise((resolve, reject) => {
       setTimeout(() => {
@@ -30,7 +44,10 @@ describe('Wormhole', function () {
       }, 0)
     })
     .then(() => {
-      wormhole.close('target')
+      wormhole.close({
+        from: 'test-portal',
+        to: 'target',
+      })
 
       return new Promise((resolve2, reject) => {
         setTimeout(() => {
@@ -42,18 +59,35 @@ describe('Wormhole', function () {
   })
 
   it('the queue correctly executes sync close() before send() calls', () => {
-    wormhole.send('target', 'Test1')
+    wormhole.open({
+      from: 'test-portal',
+      to: 'target',
+      passengers: ['Test1'],
+    })
 
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        wormhole.send('target', 'Test2')
-        wormhole.close('target')
+        wormhole.open({
+          from: 'test-portal',
+          to: 'target',
+          passengers: ['Test2'],
+        })
+        wormhole.close({
+          from: 'test-portal',
+          to: 'target',
+        })
         resolve()
       }, 0)
     })
     .then(() => {
       setTimeout(() => {
-        expect(wormhole.routes).to.deep.equal({ target: 'Test2' })
+        expect(wormhole.routes).to.deep.equal({
+          target: {
+            from: 'test-portal',
+            to: 'target',
+            passengers: ['Test2'],
+          },
+        })
       }, 0)
     })
   })
