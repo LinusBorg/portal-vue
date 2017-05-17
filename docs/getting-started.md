@@ -58,7 +58,7 @@ See it in action in a jsfiddle <a href="#">here</a>. *(still missing)*
 
 ```html
 <portal to="destination" v-if="usePortal">
-  <<ul>
+  <ul>
     <li>
       When 'userPortal' evaluates to 'true', the portal's slot content will be rendered
       at the destination.
