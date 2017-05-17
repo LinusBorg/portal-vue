@@ -15,6 +15,7 @@ self.$config = {
     ],
     },
     { title: 'Examples', path: '/examples' },
+    { title: 'caveats', path: '/caveats' },
   ],
   repo: 'linusborg/portal-vue',
   twitter: 'Linus_Borg',
