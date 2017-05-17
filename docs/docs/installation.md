@@ -40,11 +40,11 @@ The components will be named `<portal>` and `<portal-target>`, respectively.
 
 ### Local copy
 
-Of course oyu can include PortalVue into your page as a local file on your server as well.
+Of course you can include PortalVue into your page as a local file on your server as well.
 
 The same rules and restrictions as for CDN apply.
 
-## Install Options
+## Options
 
 When installing with `Vue.use()`, you can pass options to change the component names.
 ```javascript
@@ -55,11 +55,11 @@ Vue.use(PortalVue, {
 ```
 These options would make the components available globally as `<my-portal>` and `<my-target>` respectively.
 
-## Using Components manually
+## Using the components locally
 
 If you don't want to register the components globally, don't do `Vue.use('PortalVue')`
 
-Instead,  import the plugin in those components you need them, and register them locally:
+Instead, import the component(s) in those components that you need them in and register them locally:
 ```javascript
 import { Portal, PortalTarget } from 'portal-vue'
 

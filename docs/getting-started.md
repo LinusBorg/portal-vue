@@ -2,26 +2,8 @@
 
 ## What is PortalVue?
 
-PortalVue is a set of components that allow you to render a component's template
+PortalVue is a set of two components that allow you to render a component's template
 (or a part of it) anywhere in the document - even outside of your the part that is controlled by your Vue App!
-
-## Setup
-
-Install Package:
-```bash
-npm install --save portal-vue
-# or with yarn
-yarn add portal-vue
-```
-Add it to your application:
-```javascript
-import PortalVue from 'portal-vue'
-
-Vue.use(PortalVue)
-```
-
-For more detailed Installation instructions, additional options and Installation via CDN,
-see the <a href="#" router-link="/docs/installation">Installation</a> Page in the Documentation.
 
 ### Simple Example
 
@@ -40,7 +22,28 @@ see the <a href="#" router-link="/docs/installation">Installation</a> Page in th
 </portal-target>
 ```
 
-See it in action in a jsfiddle <a href="#">here</a>. *(still missing)*
+See it in action in this fiddle:
+
+<iframe height='300' scrolling='no' title='PortalVue - Simple Example' src='//codepen.io/LinusBorg/embed/preview/QvVqpY/?height=265&theme-id=light&default-tab=html,result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='https://codepen.io/LinusBorg/pen/QvVqpY/'>PortalVue - Simple Example</a> by Thorsten Lünborg (<a href='http://codepen.io/LinusBorg'>@LinusBorg</a>) on <a href='http://codepen.io'>CodePen</a>.
+</iframe>
+
+## Setup
+
+Install Package:
+```bash
+npm install --save portal-vue
+# or with yarn
+yarn add portal-vue
+```
+Add it to your application:
+```javascript
+import PortalVue from 'portal-vue'
+
+Vue.use(PortalVue)
+```
+
+For more detailed Installation instructions, additional options and Installation via CDN,
+see the <a href="#" router-link="/docs/installation">Installation</a> Page in the Documentation.
 
 ## Feature Examples
 

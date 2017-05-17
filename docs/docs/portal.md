@@ -1,4 +1,4 @@
-# <portal>
+# Portal Component
 
 Wrap any content that you want to render somehwere else in a `<portal>` component.
 
@@ -10,6 +10,8 @@ Wrap any content that you want to render somehwere else in a `<portal>` componen
 </portal>
 ```
 
+<p class="info">This is an avstract component which means it will not be visible in vue-devtools</p>
+
 ## Props API
 
 ### disabled
@@ -20,7 +22,7 @@ Wrap any content that you want to render somehwere else in a `<portal>` componen
 
 When `true`, the slot content will *not* be send through the portal to the defined PortalTarget.
 
-Instead, they will be rendered in place:
+Instead, it will be rendered in place:
 **Source**
 ```html
 <div class="wrapper">
@@ -67,8 +69,6 @@ When set to true, the component will check if the sent content has only one root
 
 Defines the type of tag that should be rendered as a root element.
 
-<p class="warning">This prop only has an effect when the 'disabled' prop is set as well</p>
-
 **Source**
 ```html
 <portal disabled tag="span">
@@ -93,18 +93,14 @@ Defines the type of tag that should be rendered as a root element.
 </p>
 
 Defines the name of the `Portal` component that the slot contents should be sent to. This mounts a new instance of the
-<pre>PortalTarget</pre> component.
+`PortalTarget` component.
 
 <p class="warning">
   This feature should be used on elements <strong>outside</strong> of the scope of your Vue app,
-  because it replaces the target element while mounting the <pre>PortalVue</pre> instance, which can lead to unwanted
+  because it replaces the target element while mounting the Portal instance, which can lead to unwanted
   side effects in your Vue App.
 
   You *can* use it inside of the Vue-controlled part of your page, It works for the most part, but be warned that this is not thoroughly tested.
-</p>
-
-<p class="warning">
-
 </p>
 
 **Source**

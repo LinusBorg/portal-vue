@@ -1,4 +1,4 @@
-#Known Caveats
+# Known Caveats
 
 Admittedly, portal-vue does a little bit of trickery to do what it does. With this come some caveats, which are documented below.
 
@@ -9,12 +9,12 @@ did not exist, and keep pointing to the parent component of the portal.
 
 That means they behave a bit differently in two ways:
 
-1. They don't show up in devtools.
-2. they don't show up in `$children`
+1. They don't show up in vue-devtools.
+2. they don't show up in `$children` but components in the portal's content will.
 
 ## Server-Side Rendering
 
-When you Vue [Vue's SSR capabilities](https://ssr.vuejs.org), there are some restrictions as well:
+When you [Vue's SSR capabilities](https://ssr.vuejs.org), there currently are some restrictions as well:
 
 1. Order of components
 
@@ -27,9 +27,11 @@ When you Vue [Vue's SSR capabilities](https://ssr.vuejs.org), there are some res
 
   See the <a href="#" router-link="/docs/portal#targetel">Portal</a> documentation for details
 
+<p class="tip">We are working on a proper solution to this problem. Stay tuned!</p>
+
 ## Refs
 
-The internal mechanism which sends updates from `Portals` to `PortalTargets` is asynchrnoues at the moment, to avoid some race conditions.
+The internal mechanism which sends updates from `Portals` to `PortalTargets` currently is asynchronous, to avoid some race possible conditions.
 
 Unfortunately, this means that `$refs` that you might have added to a `Portal's` slot content will not be available on the next Tick, but only the one after that.
 
@@ -47,3 +49,4 @@ setTimeout(() => {
   console.log(this.$refs.text)
 }, 0)
 ```
+<p class="tip">We are also working on a proper solution to this problem.</p>
