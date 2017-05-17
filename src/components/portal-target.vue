@@ -1,5 +1,5 @@
 <script>
-  import { routes } from './wormhole'
+  import { transports } from './wormhole'
 
   export default {
     abstract: true,
@@ -12,7 +12,7 @@
     },
     data () {
       return {
-        routes,
+        transports,
       }
     },
 
@@ -50,7 +50,7 @@
     },
     computed: {
       passengers () {
-        return this.routes[this.name] || null
+        return this.transports[this.name] && this.transports[this.name].passengers
       },
       renderSlim () {
         const passengers = this.passengers || []
