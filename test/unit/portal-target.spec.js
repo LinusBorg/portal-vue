@@ -43,7 +43,7 @@ describe('PortalTarget', function () {
     Vue.set(transports, 'target', {
       from: 'target-portal',
       to: 'target',
-      passenger: vNode,
+      passengers: vNode,
     })
 
     const vm = generateTarget({

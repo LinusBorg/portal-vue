@@ -16,79 +16,56 @@ describe('Wormhole', function () {
       passengers: ['Test'],
     })
 
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        expect(wormhole.routes).to.deep.equal({
-          target: {
-            from: 'test-portal',
-            to: 'target',
-            passengers: ['Test'],
-          },
-        })
-        resolve()
-      }, 0)
+    expect(wormhole.transports).to.deep.equal({
+      target: {
+        from: 'test-portal',
+        to: 'target',
+        passengers: ['Test'],
+      },
     })
   })
 
   it('removes content on close()', function () {
     this.timeout(4000)
-    wormhole.open({
+    const content = {
       from: 'test-portal',
       to: 'target',
       passengers: ['Test'],
-    })
+    }
 
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve()
-      }, 0)
-    })
-    .then(() => {
-      wormhole.close({
-        from: 'test-portal',
-        to: 'target',
-      })
+    wormhole.open(content)
+    expect(wormhole.transports).to.deep.equal({ target: content })
 
-      return new Promise((resolve2, reject) => {
-        setTimeout(() => {
-          expect(wormhole.routes).to.deep.equal({ target: undefined })
-          resolve2()
-        }, 0)
-      })
+    wormhole.close({
+      from: 'test-portal',
+      to: 'target',
     })
+    expect(wormhole.transports).to.deep.equal({ target: undefined })
   })
 
-  it('the queue correctly executes sync close() before send() calls', () => {
+  it('only closes transports from the same source portal', () => {
     wormhole.open({
-      from: 'test-portal',
+      from: 'test-portal1',
       to: 'target',
       passengers: ['Test1'],
     })
 
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        wormhole.open({
-          from: 'test-portal',
-          to: 'target',
-          passengers: ['Test2'],
-        })
-        wormhole.close({
-          from: 'test-portal',
-          to: 'target',
-        })
-        resolve()
-      }, 0)
+    wormhole.open({
+      from: 'test-portal2',
+      to: 'target',
+      passengers: ['Test2'],
     })
-    .then(() => {
-      setTimeout(() => {
-        expect(wormhole.routes).to.deep.equal({
-          target: {
-            from: 'test-portal',
-            to: 'target',
-            passengers: ['Test2'],
-          },
-        })
-      }, 0)
+
+    wormhole.close({
+      from: 'test-portal1',
+      to: 'target',
+    })
+    expect(wormhole.transports).to.deep.equal({
+      target: {
+        from: 'test-portal2',
+        to: 'target',
+        passengers: ['Test2'],
+      },
     })
   })
 })

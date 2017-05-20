@@ -83,46 +83,44 @@ describe('Portal', function () {
     const captor = td.matchers.captor()
 
     // spy called:
-    td.verify(Wormhole.open({
-      from: 'test-portal',
-      to: 'destination',
-      passengers: captor.capture(),
-    }))
-    const vnode = captor.values[0][0]
+    td.verify(Wormhole.open(captor.capture()))
+    const vnode = captor.value.passengers[0]
     // sent correct vnodes as slot content
     expect(vnode.tag).to.equal('span')
     expect(vnode.children[0].text).to.equal(vm.message)
   })
 
   it('calls Wormhole close & sendUpdate when destination changes', () => {
-    const captor = td.matchers.captor()
+    const closeCaptor = td.matchers.captor()
+    const openCaptor = td.matchers.captor()
     vm.destination = 'destination2'
     return vm.$nextTick().then(() => {
-      td.verify(Wormhole.close('destination'))
-      td.verify(Wormhole.open(captor.capture()), { ignoreExtraArgs: true })
+      td.verify(Wormhole.close(closeCaptor.capture()))
+      expect(closeCaptor.value).to.have.property('to', 'destination')
 
-      expect(captor.values[1].to).to.equal('destination2')
+      td.verify(Wormhole.open(openCaptor.capture()), { ignoreExtraArgs: true })
+      expect(openCaptor.values[1]).to.have.property('to', 'destination2')
+
       return true
     })
   })
 
   it('calls Wormhole.close() when destroyed', () => {
+    const closeCaptor = td.matchers.captor()
+
     vm.$destroy()
-    td.verify(Wormhole.close('destination'))
+    td.verify(Wormhole.close(closeCaptor.capture()))
+    expect(closeCaptor.value).to.have.property('to', 'destination')
   })
 
   it('calls sendUpdate when content changes', () => {
     vm.message = 'New Test String'
     return vm.$nextTick().then(() => {
       const captor = td.matchers.captor()
-      td.verify(Wormhole.open({
-        from: 'test-portal',
-        to: 'destination',
-        passengers: captor.capture(),
-      }))
+      td.verify(Wormhole.open(captor.capture()))
 
       // get second call's first value
-      const textNode = captor.values[1][0].children[0]
+      const textNode = captor.values[1].passengers[0].children[0]
       expect(textNode.text).to.equal('New Test String')
     })
   })
