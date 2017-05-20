@@ -14,7 +14,7 @@
     props: {
       /* global HTMLElement */
       disabled: { type: Boolean, default: false },
-      name: { type: String, default: () => pid++ },
+      name: { type: String, default: () => String(pid++) },
       slim: { type: Boolean, default: false },
       tag: { type: [String], default: 'DIV' },
       targetEl: { type: inBrowser ? [String, HTMLElement] : String },
