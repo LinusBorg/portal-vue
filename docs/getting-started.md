@@ -2,8 +2,30 @@
 
 ## What is PortalVue?
 
-PortalVue is a set of components that allow you to render a component's template
+PortalVue is a set of two components that allow you to render a component's template
 (or a part of it) anywhere in the document - even outside of your the part that is controlled by your Vue App!
+
+### Simple Example
+
+```html
+<portal to="destination">
+  <p>This slot content will be rendered wherever the <portal-target> with name 'destination'
+    is located.
+  </p>
+</portal>
+
+<portal-target name="destination">
+  <!--
+  This component can be located anwhere in your App.
+  The slot content of the above portal component will be rendered here.
+  -->
+</portal-target>
+```
+
+See it in action in this fiddle:
+
+<iframe height='300' scrolling='no' title='PortalVue - Simple Example' src='//codepen.io/LinusBorg/embed/preview/QvVqpY/?height=265&theme-id=light&default-tab=html,result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='https://codepen.io/LinusBorg/pen/QvVqpY/'>PortalVue - Simple Example</a> by Thorsten Lünborg (<a href='http://codepen.io/LinusBorg'>@LinusBorg</a>) on <a href='http://codepen.io'>CodePen</a>.
+</iframe>
 
 ## Setup
 
@@ -23,25 +45,6 @@ Vue.use(PortalVue)
 For more detailed Installation instructions, additional options and Installation via CDN,
 see the <a href="#" router-link="/docs/installation">Installation</a> Page in the Documentation.
 
-### Simple Example
-
-```html
-<portal to="destination">
-  <p>This slot content will be rendered wherever the <portal-target> with name 'destination'
-    is located.
-  </p>
-</portal>
-
-<portal-target name="destination">
-  <!--
-  This component can be located anwhere in your App.
-  The slot content of the above portal component will be rendered here.
-  -->
-</portal-target>
-```
-
-See it in action in a jsfiddle <a href="#">here</a>. *(still missing)*
-
 ## Feature Examples
 
 ### Enabling/Disabling the Portal
@@ -58,7 +61,7 @@ See it in action in a jsfiddle <a href="#">here</a>. *(still missing)*
 
 ```html
 <portal to="destination" v-if="usePortal">
-  <<ul>
+  <ul>
     <li>
       When 'userPortal' evaluates to 'true', the portal's slot content will be rendered
       at the destination.

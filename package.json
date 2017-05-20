@@ -1,6 +1,6 @@
 {
   "name": "portal-vue",
-  "version": "1.0.0-beta.5",
+  "version": "1.0.0",
   "description": "A Vue component to render elements outside of a component's template, elsewhere in the DOM",
   "main": "dist/portal-vue.js",
   "files": [
@@ -16,7 +16,7 @@
     "build": "npm run lint && cross-env NODE_ENV=production rollup -c build/rollup.conf.prod.js && uglifyjs dist/portal-vue.js -c -m > dist/portal-vue.min.js",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --watch --config build/webpack.conf.js --inline --hot",
     "prod": "NODE_ENV=production webpack-dev-server --watch --config build/webpack.conf.js --inline --hot",
-    "docs": "docute ./docs -- --watch",
+    "docs": "docute ./docs --watch",
     "test": "cross-env NODE_ENV=testing karma start test/karma.conf.js",
     "test:once": "npm run test -- --single-run"
   },

@@ -1,5 +1,4 @@
-# <portal-target>
-
+# PortalTarget
 
 This component is an outlet for any content that was sent by a `<portal>` component. It renders received content and doesn't do much else.
 
@@ -8,6 +7,8 @@ This component is an outlet for any content that was sent by a `<portal>` compon
 ```html
 <portal-target name="destination" />
 ```
+
+<p class="info">This is an avstract component which means it will not be visible in vue-devtools</p>
 
 ## Props API
 
@@ -25,7 +26,7 @@ Defines the name of this portal-target. `<portal>` components can send content t
 |----|--------|-------|
 |`Boolean`|no|`false`|
 
-When set to true, the component will check if the sent content has only one root node. If that is the case, the component will *not* render a root node of its own but instead just output the conent as-is.
+When set to true, the component will check if the sent content has only one root node. If that is the case, the component will *not* render a root node of its own but instead just return that single node.
 
 **Source**
 ```html

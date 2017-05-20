@@ -73,7 +73,7 @@ describe('Portal', function () {
 
   it('renders different element when tag prop is defined', () => {
     vm.tag = 'SPAN'
-    return vm.$nextTick().then(() => {
+    return vm.$nextTick().then(function () {
       const el = vm.$el.querySelector('span.v-portal')
       expect(el).not.to.be.undefined
     })
@@ -131,8 +131,6 @@ describe('Portal', function () {
 
   // check necessary because I regularly deactivate this during development
   it('is an abstract component', () => {
-    vm.$nextTick(() => {
-      expect(vm.$refs.portal.$options.abstract).to.be.true
-    })
+    expect(Portal.abstract).to.be.true
   })
 })

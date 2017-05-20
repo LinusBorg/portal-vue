@@ -1,10 +1,11 @@
-/* global self */
-self.$config = {
+/* global docuteIframe docute */
+docute.init({
   landing: true,
   home: 'getting-started.md',
   nav: [
     { title: 'PortalVue', path: '/' },
     { title: 'Getting Started', path: '/getting-started' },
+    { title: 'Examples', path: '/examples' },
     { title: 'Documentation', type: 'dropdown', items: [
       { title: 'Installation Instructions', type: 'label' },
       { title: 'Installation', path: '/docs/installation' },
@@ -14,8 +15,11 @@ self.$config = {
       { title: 'PortalTarget', path: '/docs/portal-target' },
     ],
     },
-    { title: 'Examples', path: '/examples' },
+    { title: 'Caveats', path: '/docs/caveats' },
   ],
   repo: 'linusborg/portal-vue',
   twitter: 'Linus_Borg',
-}
+  plugins: [
+    docuteIframe(),
+  ],
+})

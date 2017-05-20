@@ -15,7 +15,7 @@
       slim: { type: Boolean, default: false },
       tag: { type: [String], default: 'DIV' },
       targetEl: { type: inBrowser ? [String, HTMLElement] : String },
-      to: { type: String },
+      to: { type: String, default: () => String(Math.round(Math.random() * 10000000)) },
     },
 
     mounted () {
@@ -88,7 +88,7 @@
             ...Target,
             parent: this,
             propsData: {
-              name: this.to || Math.round(Math.random() * 10000000),
+              name: this.to,
               tag: el.tagName,
               attributes,
             },
