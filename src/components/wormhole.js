@@ -28,9 +28,8 @@ export class Wormhole {
   close (transport) {
     const { to, from } = transport
     if (!to || !from) return
-    if (transports[to] && transports[to].from === from) {
-      transports[to] = undefined
-      // Vue.delete(transports, to)
+    if (this.transports[to] && this.transports[to].from === from) {
+      this.transports[to] = undefined
     }
   }
 
