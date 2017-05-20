@@ -20,6 +20,7 @@
           <div ref="text">
             Some more Text ...
           </div>
+          <test ref="test" />
         </portal>
       </container>
 
@@ -32,7 +33,9 @@
 </template>
 
 <script>
+  import Test from '../test-component.vue'
   export default {
+    components: { Test },
     props: {
 
     },
@@ -42,14 +45,15 @@
       }
     },
     mounted () { // test when refs are available
+      // this.$nextTick(() => {
+      //   this.$nextTick(() => {
+      //     console.log(this.$refs.text)
+      //     console.log(this.$refs.text.getBoundingClientRect())
+      //   })
+      // })
       this.$nextTick(() => {
-        this.$nextTick(() => {
-          console.log(this.$refs.text)
-          console.log(this.$refs.text.getBoundingClientRect())
-        })
-      })
-      setTimeout(() => {
         console.log(this.$refs.text.getBoundingClientRect())
+        console.log(this.$refs.test.$el.getBoundingClientRect())
       }, 0)
     },
   }
