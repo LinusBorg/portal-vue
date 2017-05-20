@@ -1,6 +1,6 @@
 /*
     portal-vue
-    Version: 1.0.0-beta.5
+    Version: 1.0.0
     Licence: MIT
     (c) Thorsten Lünborg
   */
@@ -192,7 +192,9 @@ var Portal = {
     slim: { type: Boolean, default: false },
     tag: { type: [String], default: 'DIV' },
     targetEl: { type: inBrowser ? [String, HTMLElement] : String },
-    to: { type: String }
+    to: { type: String, default: function _default() {
+        return String(Math.round(Math.random() * 10000000));
+      } }
   },
 
   mounted: function mounted() {
@@ -260,7 +262,7 @@ var Portal = {
         var _target = new Vue(_extends({}, Target, {
           parent: this,
           propsData: {
-            name: this.to || Math.round(Math.random() * 10000000),
+            name: this.to,
             tag: el.tagName,
             attributes: attributes
           }
