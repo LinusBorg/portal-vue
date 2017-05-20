@@ -89,7 +89,7 @@
             parent: this,
             propsData: {
               name: this.to || String(Math.round(Math.random() * 10000000)),
-              tag: el.tagName
+              tag: el.tagName,
               attributes,
             },
           })
