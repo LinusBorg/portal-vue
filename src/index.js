@@ -1,5 +1,6 @@
 import Portal from './components/portal.js'
 import PortalTarget from './components/portal-target.js'
+import Wormhole from './component/wormhole.js'
 
 function install (Vue, opts = {}) {
   Vue.component(opts.portalName || 'portal', Portal)
@@ -13,4 +14,5 @@ export default {
   install,
   Portal,
   PortalTarget,
+  Wormhole,
 }
