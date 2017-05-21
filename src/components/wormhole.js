@@ -22,12 +22,24 @@ export class Wormhole {
     }
   }
 
-  close (transport) {
+  close (transport, force = false) {
     const { to, from } = transport
     if (!to || !from) return
-    if (this.transports[to] && this.transports[to].from === from) {
+    if (force || (this.transports[to] && this.transports[to].from === from)) {
       this.transports[to] = undefined
     }
+  }
+
+  hasTarget (target) {
+    return this.transports.hasOwnProperty(target)
+  }
+
+  getSourceFor (target) {
+    return this.transports[target] || this.transports.from
+  }
+
+  getContentFor (target) {
+    return this.transports[target] || this.transports.passengers
   }
 
 }
