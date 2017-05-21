@@ -25,7 +25,7 @@ export class Wormhole {
   close (transport, force = false) {
     const { to, from } = transport
     if (!to || !from) return
-    if (force || (this.transports[to] && this.transports[to].from === from)) {
+    if (this.transports[to] && (force || this.transports[to].from === from)) {
       this.transports[to] = undefined
     }
   }
