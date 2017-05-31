@@ -67,7 +67,7 @@
             })
           }
         } else if (!this.to && !this.targetEl) {
-          console.warn('[vue-portal]: You have to define a targte via the `to` prop.')
+          console.warn('[vue-portal]: You have to define a target via the `to` prop.')
         }
       },
 
@@ -87,7 +87,7 @@
         } else if (target instanceof HTMLElement) {
           el = target
         } else {
-          console.warn('[vue-portal]: value of targetEl must eb of type String or HTMLElement')
+          console.warn('[vue-portal]: value of targetEl must be of type String or HTMLElement')
           return
         }
 
