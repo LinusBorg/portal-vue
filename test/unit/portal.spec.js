@@ -68,7 +68,7 @@ describe('Portal', function () {
     }).$mount(el)
 
     const rootEl = vm.$el.querySelector('.v-portal')
-    expect(rootEl).to.not.be.truthy
+    expect(rootEl).to.be.null
   })
 
   it('renders different element when tag prop is defined', () => {
