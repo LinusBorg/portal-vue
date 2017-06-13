@@ -39,7 +39,12 @@
   },
   "babel": {
     "presets": [
-      "es2015",
+      [
+        "es2015",
+        {
+          "modules": false
+        }
+      ],
       "stage-3"
     ],
     "plugins": [],
@@ -47,12 +52,7 @@
     "env": {
       "testing": {
         "presets": [
-          [
-            "es2015",
-            {
-              "modules": false
-            }
-          ],
+          "es2015",
           "stage-3"
         ]
       }
