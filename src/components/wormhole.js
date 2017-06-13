@@ -7,9 +7,6 @@ export { transports }
 export class Wormhole {
   constructor (transports) {
     this.transports = transports
-    this.clearQueue = []
-    this.updateQueue = []
-    this.runScheduled = false
   }
 
   open (transport) {
