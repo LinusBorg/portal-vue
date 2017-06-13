@@ -1,6 +1,6 @@
 /*
     portal-vue
-    Version: 1.0.0
+    Version: 1.0.1
     Licence: MIT
     (c) Thorsten Lünborg
   */
@@ -11,7 +11,7 @@
 	(global.PortalVue = factory(global.Vue));
 }(this, (function (Vue) { 'use strict';
 
-Vue = 'default' in Vue ? Vue['default'] : Vue;
+Vue = Vue && 'default' in Vue ? Vue['default'] : Vue;
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
@@ -38,76 +38,48 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var routes = {};
+var transports = {};
 
 var Wormhole = function () {
-  function Wormhole(routes) {
+  function Wormhole(transports) {
     _classCallCheck(this, Wormhole);
 
-    this.routes = routes;
-    this.clearQueue = [];
-    this.updateQueue = [];
-    this.runScheduled = false;
+    this.transports = transports;
   }
 
   _createClass(Wormhole, [{
-    key: 'send',
-    value: function send(name, passengers) {
-      var job = { name: name, passengers: passengers };
-      this.updateQueue.push(job);
-      this._scheduleRun();
-    }
-  }, {
-    key: 'close',
-    value: function close(name) {
-      var job = { name: name };
-      this.clearQueue.push(job);
-      this._scheduleRun();
-    }
-  }, {
-    key: '_scheduleRun',
-    value: function _scheduleRun() {
-      if (!this.runScheduled) {
-        this.runScheduled = true;
+    key: 'open',
+    value: function open(transport) {
+      var to = transport.to,
+          from = transport.from,
+          passengers = transport.passengers;
 
-        Vue.nextTick(this._runQueue.bind(this));
+      if (!to || !from || !passengers) return;
+
+      transport.passengers = freeze(passengers);
+      var keys = Object.keys(this.transports);
+      if (keys.includes(to)) {
+        this.transports[to] = transport;
+      } else {
+        Vue.set(this.transports, to, transport);
       }
     }
   }, {
-    key: '_runQueue',
-    value: function _runQueue() {
-      var _this = this;
+    key: 'close',
+    value: function close(transport) {
+      var to = transport.to,
+          from = transport.from;
 
-      var keys = Object.keys(this.routes);
-
-      this.clearQueue.forEach(function (_ref) {
-        var name = _ref.name;
-
-        if (keys.includes(name)) {
-          _this.routes[name] = undefined;
-        }
-      });
-      this.clearQueue = [];
-
-      this.updateQueue.forEach(function (_ref2) {
-        var name = _ref2.name,
-            passengers = _ref2.passengers;
-
-        if (keys.includes(name)) {
-          _this.routes[name] = freeze(passengers);
-        } else {
-          Vue.set(_this.routes, name, freeze(passengers));
-        }
-      });
-      this.updateQueue = [];
-
-      this.runScheduled = false;
+      if (!to || !from) return;
+      if (this.transports[to] && this.transports[to].from === from) {
+        this.transports[to] = undefined;
+      }
     }
   }]);
 
   return Wormhole;
 }();
-var wormhole = new Wormhole(routes);
+var wormhole = new Wormhole(transports);
 
 var Target = {
   abstract: true,
@@ -120,7 +92,7 @@ var Target = {
   },
   data: function data() {
     return {
-      routes: routes
+      transports: transports
     };
   },
   mounted: function mounted() {
@@ -157,7 +129,7 @@ var Target = {
   },
   computed: {
     passengers: function passengers() {
-      return this.routes[this.name] || null;
+      return this.transports[this.name] && this.transports[this.name].passengers;
     },
     renderSlim: function renderSlim() {
       var passengers = this.passengers || [];
@@ -184,11 +156,16 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 var inBrowser = typeof window !== 'undefined';
 
+var pid = 1;
+
 var Portal = {
   abstract: true,
   name: 'portal',
   props: {
     disabled: { type: Boolean, default: false },
+    name: { type: String, default: function _default() {
+        return String(pid++);
+      } },
     slim: { type: Boolean, default: false },
     tag: { type: [String], default: 'DIV' },
     targetEl: { type: inBrowser ? [String, HTMLElement] : String },
@@ -234,14 +211,21 @@ var Portal = {
     sendUpdate: function sendUpdate() {
       if (this.to) {
         if (this.$slots.default) {
-          wormhole.send(this.to, [].concat(_toConsumableArray(this.$slots.default)));
+          wormhole.open({
+            from: this.name,
+            to: this.to,
+            passengers: [].concat(_toConsumableArray(this.$slots.default))
+          });
         }
       } else if (!this.to && !this.targetEl) {
-        console.warn('[vue-portal]: You have to define a targte via the `to` prop.');
+        console.warn('[vue-portal]: You have to define a target via the `to` prop.');
       }
     },
     clear: function clear(target) {
-      wormhole.close(target || this.to);
+      wormhole.close({
+        from: this.name,
+        to: target || this.to
+      });
     },
     mountToTarget: function mountToTarget() {
       var el = void 0;
@@ -252,7 +236,7 @@ var Portal = {
       } else if (target instanceof HTMLElement) {
         el = target;
       } else {
-        console.warn('[vue-portal]: value of targetEl must eb of type String or HTMLElement');
+        console.warn('[vue-portal]: value of targetEl must be of type String or HTMLElement');
         return;
       }
 
