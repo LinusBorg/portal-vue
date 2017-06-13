@@ -6,12 +6,15 @@
 
   const inBrowser = (typeof window !== 'undefined')
 
+  let pid = 1
+
   export default {
     abstract: true,
     name: 'portal',
     props: {
       /* global HTMLElement */
       disabled: { type: Boolean, default: false },
+      name: { type: String, default: () => String(pid++) },
       slim: { type: Boolean, default: false },
       tag: { type: [String], default: 'DIV' },
       targetEl: { type: inBrowser ? [String, HTMLElement] : String },
@@ -57,15 +60,22 @@
       sendUpdate () {
         if (this.to) {
           if (this.$slots.default) {
-            wormhole.send(this.to, [...this.$slots.default])
+            wormhole.open({
+              from: this.name,
+              to: this.to,
+              passengers: [...this.$slots.default],
+            })
           }
         } else if (!this.to && !this.targetEl) {
-          console.warn('[vue-portal]: You have to define a targte via the `to` prop.')
+          console.warn('[vue-portal]: You have to define a target via the `to` prop.')
         }
       },
 
       clear (target) {
-        wormhole.close(target || this.to)
+        wormhole.close({
+          from: this.name,
+          to: target || this.to,
+        })
       },
 
       mountToTarget () {
@@ -77,7 +87,7 @@
         } else if (target instanceof HTMLElement) {
           el = target
         } else {
-          console.warn('[vue-portal]: value of targetEl must eb of type String or HTMLElement')
+          console.warn('[vue-portal]: value of targetEl must be of type String or HTMLElement')
           return
         }
 
