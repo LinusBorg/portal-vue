@@ -1,7 +1,7 @@
 /* global describe it beforeEach */
 import { expect, td } from './helpers'
 import Vue from 'vue'
-import PortalInj from '!!vue-loader?inject!../../src/components/portal'
+const PortalInj = require('!!inject-loader!babel-loader!../../src/components/portal.js')
 
 const Wormhole = td.object(['open', 'close'])
 const PortalTarget = {
@@ -11,7 +11,8 @@ const PortalTarget = {
 const Portal = PortalInj({
   './wormhole': Wormhole,
   './portal-target': PortalTarget,
-})
+}).default
+
 let vm
 
 describe('Portal', function () {

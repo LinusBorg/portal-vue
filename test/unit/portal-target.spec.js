@@ -1,13 +1,13 @@
 transports/* global describe it afterEach */
 import { expect } from './helpers'
 import Vue from 'vue'
-import PortalTargetInj from '!!vue-loader?inject!../../src/components/portal-target'
+const PortalTargetInj = require('!!inject-loader!babel-loader!../../src/components/portal-target.js')
 
 const transports = {}
 
 const PortalTarget = new PortalTargetInj({
   './wormhole': { transports: transports },
-})
+}).default
 
 // Utils
 function generateTarget (props) {

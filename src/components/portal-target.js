@@ -60,13 +60,11 @@ export default {
 
   render (h) {
     const children = this.passengers || []
-
+    const Tag = this.tag
     if (this.renderSlim) {
       return children[0]
     } else {
-      return h(this.tag, {
-        class: { 'vue-portal-target': true },
-      }, children)
+      return (<Tag class={'vue-portal-target'}>{children}</Tag>)
     }
   },
 }
