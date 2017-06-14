@@ -1,5 +1,5 @@
-import Portal from './components/portal.vue'
-import PortalTarget from './components/portal-target.vue'
+import Portal from './components/portal.js'
+import PortalTarget from './components/portal-target.js'
 
 function install (Vue, opts = {}) {
   Vue.component(opts.portalName || 'portal', Portal)
