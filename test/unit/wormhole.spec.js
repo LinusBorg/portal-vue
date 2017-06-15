@@ -70,6 +70,26 @@ describe('Wormhole', function () {
     })
   })
 
+  it('closes transports from the other source portals when force=true', () => {
+    wormhole.open({
+      from: 'test-portal1',
+      to: 'target',
+      passengers: ['Test1'],
+    })
+
+    wormhole.open({
+      from: 'test-portal2',
+      to: 'target',
+      passengers: ['Test2'],
+    })
+
+    wormhole.close({
+      from: 'test-portal1',
+      to: 'target',
+    }, true) // force argument
+    expect(wormhole.transports).to.deep.equal({})
+  })
+
   it('hasTarget()', function () {
     const check1 = wormhole.hasTarget('target')
     expect(check1).to.be.false
