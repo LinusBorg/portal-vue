@@ -49,11 +49,12 @@ export default {
         }
       }
     },
-    emitChange (transport) {
+    emitChange (newTransport, oldTransport) {
       console.log('emitting change')
-      this.$emit('change', {
-        ...transport,
-      })
+      this.$emit('change',
+        { ...newTransport },
+        { ...oldTransport }
+      )
     },
   },
   computed: {
