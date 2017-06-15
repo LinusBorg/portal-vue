@@ -17,12 +17,14 @@ export default {
   },
 
   mounted () {
+    this.unwatch = this.$watch(function () { return this.transports[this.name] }, this.emitChange)
     this.updateAttributes()
   },
   updated () {
     this.updateAttributes()
   },
   beforeDestroy () {
+    this.unwatch()
     this.$el.innerHTML = ''
   },
 
@@ -46,6 +48,12 @@ export default {
           el.setAttribute(keys[i], attrs[keys[i]])
         }
       }
+    },
+    emitChange (transport) {
+      console.log('emitting change')
+      this.$emit('change', {
+        ...transport,
+      })
     },
   },
   computed: {
