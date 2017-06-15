@@ -40,7 +40,8 @@ export class Wormhole {
   }
 
   getContentFor (to) {
-    return this.transports[to]
+    const transport = this.transports[to]
+    return transport ? transport.passengers : undefined
   }
 
 }
