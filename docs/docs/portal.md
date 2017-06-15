@@ -14,7 +14,7 @@ Wrap any content that you want to render somehwere else in a `<portal>` componen
 
 ## Props API
 
-### disabled
+### `disabled`
 
 |Type|Required|Default|
 |----|--------|-------|
@@ -40,7 +40,19 @@ Instead, it will be rendered in place:
 </div>
 ```
 
-### slim
+### `name`
+
+|Type|Required|Default|
+|----|--------|-------|
+|`String`|no|a random String|
+
+This optional prop can usually be left out, because `Portal` can generate a random string to provide a identifier for the source of the content being sent to the `PortalTarget`.
+
+But it might be a good idea to name your `Portal` components so you can debug them easier if need would be.
+
+
+
+### `slim`
 
 |Type|Required|Default|
 |----|--------|-------|
