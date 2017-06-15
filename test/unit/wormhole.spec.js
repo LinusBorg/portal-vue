@@ -4,7 +4,7 @@ import { Wormhole } from '../../src/components/wormhole'
 
 let wormhole
 
-describe('Wormhole', function () {
+describe.only('Wormhole', function () {
   beforeEach(() => {
     wormhole = new Wormhole({})
     wormhole.transports = {}
@@ -41,7 +41,7 @@ describe('Wormhole', function () {
       from: 'test-portal',
       to: 'target',
     })
-    expect(wormhole.transports).to.deep.equal({ })
+    expect(wormhole.transports).to.deep.equal({ target: undefined })
   })
 
   it('only closes transports from the same source portal', () => {
@@ -87,7 +87,7 @@ describe('Wormhole', function () {
       from: 'test-portal1',
       to: 'target',
     }, true) // force argument
-    expect(wormhole.transports).to.deep.equal({})
+    expect(wormhole.transports).to.deep.equal({ target: undefined })
   })
 
   it('hasTarget()', function () {
