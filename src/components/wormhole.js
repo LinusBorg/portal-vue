@@ -35,10 +35,6 @@ export class Wormhole {
     return this.transports.hasOwnProperty(to)
   }
 
-  hasContentFor (to) {
-    return this.tranports[to] != null
-  }
-
   getSourceFor (to) {
     return this.transports[to] && this.transports[to].from
   }
