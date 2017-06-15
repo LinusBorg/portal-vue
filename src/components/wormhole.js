@@ -26,20 +26,25 @@ export class Wormhole {
     const { to, from } = transport
     if (!to || !from) return
     if (this.transports[to] && (force || this.transports[to].from === from)) {
-      this.transports[to] = undefined
+      // this.transports[to] = undefined
+      Vue.delete(this.transports, to)
     }
   }
 
-  hasTarget (target) {
-    return this.transports.hasOwnProperty(target)
+  hasTarget (to) {
+    return this.transports.hasOwnProperty(to)
   }
 
-  getSourceFor (target) {
-    return this.transports[target] || this.transports.from
+  hasContentFor (to) {
+    return this.tranports[to] != null
   }
 
-  getContentFor (target) {
-    return this.transports[target] || this.transports.passengers
+  getSourceFor (to) {
+    return this.transports[to] && this.transports[to].from
+  }
+
+  getContentFor (to) {
+    return this.transports[to]
   }
 
 }

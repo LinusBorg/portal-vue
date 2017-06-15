@@ -40,7 +40,7 @@ describe('Wormhole', function () {
       from: 'test-portal',
       to: 'target',
     })
-    expect(wormhole.transports).to.deep.equal({ target: undefined })
+    expect(wormhole.transports).to.deep.equal({ })
   })
 
   it('only closes transports from the same source portal', () => {
