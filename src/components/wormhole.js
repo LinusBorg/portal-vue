@@ -35,7 +35,7 @@ export class Wormhole {
   }
 
   hasContentFor (to) {
-    return this.hasTarget(to) && this.transport[to].passengers != null
+    return this.hasTarget(to) && this.transports[to].passengers != null
   }
 
   getSourceFor (to) {
