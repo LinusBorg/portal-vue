@@ -22,6 +22,10 @@
   },
   "eslintConfig": {
     "parser": "babel-eslint",
+    "env": {
+      "mocha": true,
+      "browser": true
+    },
     "extends": [
       "vue"
     ],

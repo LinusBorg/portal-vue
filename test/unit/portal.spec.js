@@ -1,4 +1,3 @@
-/* global describe it beforeEach */
 import { expect, td } from './helpers'
 import Vue from 'vue'
 const PortalInj = require('!!inject-loader!babel-loader!../../src/components/portal.js')

@@ -1,4 +1,3 @@
-transports/* global describe it afterEach */
 import { expect } from './helpers'
 import Vue from 'vue'
 const PortalTargetInj = require('!!inject-loader!babel-loader!../../src/components/portal-target.js')
