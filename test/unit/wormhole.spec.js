@@ -103,6 +103,19 @@ describe.only('Wormhole', function () {
     expect(check2).to.be.true
   })
 
+  it('hasContentFor()', function () {
+    const check1 = wormhole.hasContentFor('target')
+    expect(check1).to.be.false
+
+    wormhole.open({
+      to: 'target',
+      from: 'source',
+      passengers: ['passenger1'],
+    })
+    const check2 = wormhole.hasContentFor('target')
+    expect(check2).to.be.true
+  })
+
   it('getSourceFor()', function () {
     const check1 = wormhole.getSourceFor('target')
     expect(check1).to.be.undefined
