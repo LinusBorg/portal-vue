@@ -94,13 +94,21 @@ methods: {
 
 `Wormhole.hasTarget(to)`
 
-Returns `true` if there's content for a target with the given `to` name.
-
-This does **not** check if a `PortalTarget` with that name exists. If it exsists but there's no content for it, this method will still return `false`.
+Returns `true` if there's a `PortalTarget` with the given name active.
 
 Example:
 ```javascript
  Wormhole.hasTarget('destination')
+ // => true
+```
+
+## hasContentFor() 
+
+Returns `true` if there's a `PortalTarget` with the given name active, **and** there's content shown by the `PortalTarget`.
+
+Example:
+```javascript
+ Wormhole.hasContentFor('destination')
  // => true
 ```
 
