@@ -50,16 +50,19 @@ export default {
   },
   computed: {
     passengers () {
-      return this.transports[this.name] && this.transports[this.name].passengers
+      return (this.transports[this.name] && this.transports[this.name].passengers) || []
+    },
+    children () {
+      return this.passengers.length !== 0 ? this.passengers : (this.$slots.default || [])
     },
     renderSlim () {
-      const passengers = this.passengers || []
-      return passengers.length === 1 && !this.attributes && this.slim
+      const children = this.children
+      return children.length === 1 && !this.attributes && this.slim
     },
   },
 
   render (h) {
-    const children = this.passengers || []
+    const children = this.children
     const Tag = this.tag
     if (this.renderSlim) {
       return children[0]
