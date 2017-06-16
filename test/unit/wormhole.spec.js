@@ -4,7 +4,7 @@ import { Wormhole } from '../../src/components/wormhole'
 
 let wormhole
 
-describe.only('Wormhole', function () {
+describe('Wormhole', function () {
   beforeEach(() => {
     wormhole = new Wormhole({})
     wormhole.transports = {}
