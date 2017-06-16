@@ -17,6 +17,9 @@ export default {
   },
 
   mounted () {
+    if (!this.transports[this.name]) {
+      this.$set(this.transports, this.name, undefined)
+    }
     this.updateAttributes()
   },
   updated () {

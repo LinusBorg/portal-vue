@@ -13,6 +13,8 @@ docute.init({
       { title: 'Components', type: 'label' },
       { title: 'Portal', path: '/docs/portal' },
       { title: 'PortalTarget', path: '/docs/portal-target' },
+      { title: 'Special Objects' },
+      { title: 'Wormhole', path: '/doc/wormhole' },
     ],
     },
     { title: 'Caveats', path: '/docs/caveats' },
