@@ -17,7 +17,12 @@ export default {
   },
 
   mounted () {
+    if (!this.transports[this.name]) {
+      this.$set(this.transports, this.name, undefined)
+    }
+    
     this.unwatch = this.$watch(function () { return this.transports[this.name] }, this.emitChange)
+
     this.updateAttributes()
   },
   updated () {

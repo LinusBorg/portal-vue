@@ -6,6 +6,7 @@ import TargetSwitch from './components/target-switch/target-switch.vue'
 import SourceSwitch from './components/source-switch/source-switch.vue'
 import Disabled from './components/disabled'
 import CompAsRoot from './components/comp-as-root/comp-as-root.vue'
+import Programmatic from './components/programmatic/index.vue'
 import MountToExternal from './components/mount-to/mount-to-external.vue'
 import EmptyPortal from './components/empty-portal/index.vue'
 
@@ -39,6 +40,10 @@ const routes = [
   {
     path: '/empty',
     component: EmptyPortal,
+  },
+  {
+    path: '/programmatic',
+    component: Programmatic,
   },
   {
     path: '/Mount-to-external-element',
