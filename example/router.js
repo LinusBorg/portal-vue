@@ -8,6 +8,7 @@ import Disabled from './components/disabled'
 import CompAsRoot from './components/comp-as-root/comp-as-root.vue'
 import MountToExternal from './components/mount-to/mount-to-external.vue'
 import EmptyPortal from './components/empty-portal/index.vue'
+import DefaultSlotContent from './components/default-content-on-target/index.vue'
 
 Vue.use(VueRouter)
 
@@ -43,6 +44,10 @@ const routes = [
   {
     path: '/Mount-to-external-element',
     component: MountToExternal,
+  },
+  {
+    path: '/default-slot-content-for-target',
+    component: DefaultSlotContent,
   },
 ]
 
