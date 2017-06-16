@@ -102,6 +102,22 @@ describe('PortalTarget', function () {
     expect(PortalTarget.abstract).to.be.true
   })
 
+  it('renders slot content when no other content is available', function () {
+    const vm = new Vue({
+      components: { PortalTarget },
+      template: `
+        <portal-target name="target">
+          <p class="default">This is the default content</p>
+        </portal-target>
+      `,
+    }).$mount(document.createElement('DIV'))
+
+    return vm.$nextTick().then(() => {
+      const el = vm.$el.querySelector('p.default')
+      expect(el).to.exist
+    })
+  })
+
   it('emits change event with correct payload', function () {
     const spy = td.function('changeHandler') // {}
     /* eslint no-unused-vars: 0 */
