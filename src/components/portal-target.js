@@ -20,12 +20,16 @@ export default {
     if (!this.transports[this.name]) {
       this.$set(this.transports, this.name, undefined)
     }
+    
+    this.unwatch = this.$watch(function () { return this.transports[this.name] }, this.emitChange)
+
     this.updateAttributes()
   },
   updated () {
     this.updateAttributes()
   },
   beforeDestroy () {
+    this.unwatch()
     this.$el.innerHTML = ''
   },
 
@@ -49,6 +53,13 @@ export default {
           el.setAttribute(keys[i], attrs[keys[i]])
         }
       }
+    },
+    emitChange (newTransport, oldTransport) {
+      console.log('emitting change')
+      this.$emit('change',
+        { ...newTransport },
+        { ...oldTransport }
+      )
     },
   },
   computed: {
