@@ -61,3 +61,25 @@ Defines the type of tag that should be rendered as a root component.
   <!-- any content from <portal> component may be rendered here -->
 </span>
 ```
+
+
+## Slots API
+
+### Default slot
+
+Any existing slot content is rendered in case that no contnt from any source Portal is available.
+
+Example:
+**Source**
+```html
+<portal-target name="destination" tag="span">
+  <p>This is rendered when no other content is avaiable.</p>
+</portal-target>
+```
+
+**Result**
+```html
+<span class="vue-portal-target">
+  <p>This is rendered when no other content is avaiable.</p>
+</span>
+```
