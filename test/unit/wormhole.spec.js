@@ -7,6 +7,7 @@ let wormhole
 describe('Wormhole', function () {
   beforeEach(() => {
     wormhole = new Wormhole({})
+    wormhole.transports = {}
   })
 
   it('correctly adds passengers on send', () => {
@@ -67,5 +68,77 @@ describe('Wormhole', function () {
         passengers: ['Test2'],
       },
     })
+  })
+
+  it('closes transports from the other source portals when force=true', () => {
+    wormhole.open({
+      from: 'test-portal1',
+      to: 'target',
+      passengers: ['Test1'],
+    })
+
+    wormhole.open({
+      from: 'test-portal2',
+      to: 'target',
+      passengers: ['Test2'],
+    })
+
+    wormhole.close({
+      from: 'test-portal1',
+      to: 'target',
+    }, true) // force argument
+    expect(wormhole.transports).to.deep.equal({ target: undefined })
+  })
+
+  it('hasTarget()', function () {
+    const check1 = wormhole.hasTarget('target')
+    expect(check1).to.be.false
+
+    wormhole.open({
+      to: 'target',
+      from: 'source',
+      passengers: ['passenger1'],
+    })
+    const check2 = wormhole.hasTarget('target')
+    expect(check2).to.be.true
+  })
+
+  it('hasContentFor()', function () {
+    const check1 = wormhole.hasContentFor('target')
+    expect(check1).to.be.false
+
+    wormhole.open({
+      to: 'target',
+      from: 'source',
+      passengers: ['passenger1'],
+    })
+    const check2 = wormhole.hasContentFor('target')
+    expect(check2).to.be.true
+  })
+
+  it('getSourceFor()', function () {
+    const check1 = wormhole.getSourceFor('target')
+    expect(check1).to.be.undefined
+
+    wormhole.open({
+      to: 'target',
+      from: 'source',
+      passengers: ['passenger1'],
+    })
+    const check2 = wormhole.getSourceFor('target')
+    expect(check2).to.equal('source')
+  })
+
+  it('getContentFor()', function () {
+    const check1 = wormhole.getContentFor('target')
+    expect(check1).to.be.undefined
+
+    wormhole.open({
+      to: 'target',
+      from: 'source',
+      passengers: ['passenger1'],
+    })
+    const check2 = wormhole.getContentFor('target')
+    expect(check2).to.be.deep.equal(['passenger1'])
   })
 })

@@ -1,4 +1,4 @@
-import { expect } from './helpers'
+import { expect, td } from './helpers'
 import Vue from 'vue'
 const PortalTargetInj = require('!!inject-loader!babel-loader!../../src/components/portal-target.js')
 
@@ -30,6 +30,9 @@ function generateVNode () {
 }
 
 describe('PortalTarget', function () {
+  beforeEach(() => {
+    td.reset()
+  })
   afterEach(() => {
     const keys = Object.keys(transports)
     for (let i = 0; i < keys.length; i++) {
@@ -112,6 +115,31 @@ describe('PortalTarget', function () {
     return vm.$nextTick().then(() => {
       const el = vm.$el.querySelector('p.default')
       expect(el).to.exist
+    })
+  })
+
+  it('emits change event with correct payload', function () {
+    const spy = td.function('changeHandler') // {}
+    /* eslint no-unused-vars: 0 */
+    const el = document.createElement('DIV')
+    const vm = new Vue({
+      components: { PortalTarget },
+      template: `<portal-target name="target" @change="handler"/>`,
+      methods: {
+        handler: spy,
+      },
+    }).$mount(el)
+    const vNodes = Object.freeze([generateVNode(), generateVNode()])
+    Vue.set(transports, 'target', {
+      to: 'target',
+      from: 'source',
+      passengers: vNodes,
+    })
+    return vm.$nextTick().then(() => {
+      td.verify(spy({
+        to: 'target', from: 'source', passengers: vNodes },
+        {}
+      ))
     })
   })
 })
