@@ -1,6 +1,6 @@
 /*
     portal-vue
-    Version: 1.0.1
+    Version: 1.1.0
     Licence: MIT
     (c) Thorsten Lünborg
   */
@@ -13,7 +13,109 @@
 
 Vue = Vue && 'default' in Vue ? Vue['default'] : Vue;
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
+  return typeof obj;
+} : function (obj) {
+  return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+};
+
+
+
+
+
+
+
+
+
+
+
+var classCallCheck = function (instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+};
+
+var createClass = function () {
+  function defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ("value" in descriptor) descriptor.writable = true;
+      Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }
+
+  return function (Constructor, protoProps, staticProps) {
+    if (protoProps) defineProperties(Constructor.prototype, protoProps);
+    if (staticProps) defineProperties(Constructor, staticProps);
+    return Constructor;
+  };
+}();
+
+
+
+
+
+
+
+var _extends = Object.assign || function (target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i];
+
+    for (var key in source) {
+      if (Object.prototype.hasOwnProperty.call(source, key)) {
+        target[key] = source[key];
+      }
+    }
+  }
+
+  return target;
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var toConsumableArray = function (arr) {
+  if (Array.isArray(arr)) {
+    for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i];
+
+    return arr2;
+  } else {
+    return Array.from(arr);
+  }
+};
 
 function extractAttributes(el) {
   var map = el.hasAttributes() ? el.attributes : [];
@@ -34,20 +136,16 @@ function freeze(item) {
   return item;
 }
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
 var transports = {};
 
 var Wormhole = function () {
   function Wormhole(transports) {
-    _classCallCheck(this, Wormhole);
+    classCallCheck(this, Wormhole);
 
     this.transports = transports;
   }
 
-  _createClass(Wormhole, [{
+  createClass(Wormhole, [{
     key: 'open',
     value: function open(transport) {
       var to = transport.to,
@@ -67,16 +165,37 @@ var Wormhole = function () {
   }, {
     key: 'close',
     value: function close(transport) {
+      var force = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
       var to = transport.to,
           from = transport.from;
 
       if (!to || !from) return;
-      if (this.transports[to] && this.transports[to].from === from) {
+      if (this.transports[to] && (force || this.transports[to].from === from)) {
         this.transports[to] = undefined;
       }
     }
+  }, {
+    key: 'hasTarget',
+    value: function hasTarget(to) {
+      return this.transports.hasOwnProperty(to);
+    }
+  }, {
+    key: 'hasContentFor',
+    value: function hasContentFor(to) {
+      return this.hasTarget(to) && this.transports[to].passengers != null;
+    }
+  }, {
+    key: 'getSourceFor',
+    value: function getSourceFor(to) {
+      return this.transports[to] && this.transports[to].from;
+    }
+  }, {
+    key: 'getContentFor',
+    value: function getContentFor(to) {
+      var transport = this.transports[to];
+      return transport ? transport.passengers : undefined;
+    }
   }]);
-
   return Wormhole;
 }();
 var wormhole = new Wormhole(transports);
@@ -96,12 +215,21 @@ var Target = {
     };
   },
   mounted: function mounted() {
+    if (!this.transports[this.name]) {
+      this.$set(this.transports, this.name, undefined);
+    }
+
+    this.unwatch = this.$watch(function () {
+      return this.transports[this.name];
+    }, this.emitChange);
+
     this.updateAttributes();
   },
   updated: function updated() {
     this.updateAttributes();
   },
   beforeDestroy: function beforeDestroy() {
+    this.unwatch();
     this.$el.innerHTML = '';
   },
 
@@ -125,34 +253,38 @@ var Target = {
           el.setAttribute(keys[i], attrs[keys[i]]);
         }
       }
+    },
+    emitChange: function emitChange(newTransport, oldTransport) {
+      this.$emit('change', _extends({}, newTransport), _extends({}, oldTransport));
     }
   },
   computed: {
     passengers: function passengers() {
-      return this.transports[this.name] && this.transports[this.name].passengers;
+      return this.transports[this.name] && this.transports[this.name].passengers || [];
+    },
+    children: function children() {
+      return this.passengers.length !== 0 ? this.passengers : this.$slots.default || [];
     },
     renderSlim: function renderSlim() {
-      var passengers = this.passengers || [];
-      return passengers.length === 1 && !this.attributes && this.slim;
+      var children = this.children;
+      return children.length === 1 && !this.attributes && this.slim;
     }
   },
 
   render: function render(h) {
-    var children = this.passengers || [];
-
+    var children = this.children;
+    var Tag = this.tag;
     if (this.renderSlim) {
       return children[0];
     } else {
-      return h(this.tag, {
-        class: { 'vue-portal-target': true }
-      }, children);
+      return h(
+        Tag,
+        { 'class': 'vue-portal-target' },
+        [children]
+      );
     }
   }
 };
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 var inBrowser = typeof window !== 'undefined';
 
@@ -214,7 +346,7 @@ var Portal = {
           wormhole.open({
             from: this.name,
             to: this.to,
-            passengers: [].concat(_toConsumableArray(this.$slots.default))
+            passengers: [].concat(toConsumableArray(this.$slots.default))
           });
         }
       } else if (!this.to && !this.targetEl) {
@@ -261,11 +393,19 @@ var Portal = {
 
   render: function render(h) {
     var children = this.$slots.default || [];
-
+    var Tag = this.tag;
     if (children.length && this.disabled) {
-      return children.length <= 1 && this.slim ? children[0] : h(this.tag, children);
+      return children.length <= 1 && this.slim ? children[0] : h(
+        Tag,
+        null,
+        [children]
+      );
     } else {
-      return h(this.tag, { class: { 'v-portal': true }, style: { display: 'none' }, key: 'v-portal-placeholder' });
+      return h(
+        Tag,
+        { 'class': 'v-portal', style: 'display: none', key: 'v-portal-placeholder' },
+        []
+      );
     }
   }
 };
@@ -283,7 +423,8 @@ if (typeof window !== 'undefined' && window.Vue) {
 var index = {
   install: install,
   Portal: Portal,
-  PortalTarget: Target
+  PortalTarget: Target,
+  Wormhole: wormhole
 };
 
 return index;
