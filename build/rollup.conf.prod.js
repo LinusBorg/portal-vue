@@ -1,5 +1,4 @@
 import babel from 'rollup-plugin-babel'
-import vue from 'rollup-plugin-vue'
 import commonjs from 'rollup-plugin-commonjs'
 import nodeResolve from 'rollup-plugin-node-resolve'
 
@@ -37,7 +36,6 @@ export default {
   sourceMap: true,
   plugins: [
     nodeResolve(nodeResolveOptions),
-    vue({ compileTemplate: false }),
     commonjs(),
     babel(babelConfig),
   ],
