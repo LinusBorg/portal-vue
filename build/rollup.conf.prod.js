@@ -10,6 +10,9 @@ const version = pkg.version
 const babelConfig = {
   // runtimeHelpers: true,
   exclude: 'node_modules/**',
+  plugins: [
+    'external-helpers',
+  ],
 }
 
 const nodeResolveOptions = {
@@ -35,8 +38,8 @@ export default {
   dest: './dist/portal-vue.js', // equivalent to --output
   sourceMap: true,
   plugins: [
+    babel(babelConfig),
     nodeResolve(nodeResolveOptions),
     commonjs(),
-    babel(babelConfig),
   ],
 }
