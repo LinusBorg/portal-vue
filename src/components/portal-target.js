@@ -20,7 +20,7 @@ export default {
     if (!this.transports[this.name]) {
       this.$set(this.transports, this.name, undefined)
     }
-    
+
     this.unwatch = this.$watch(function () { return this.transports[this.name] }, this.emitChange)
 
     this.updateAttributes()
@@ -55,7 +55,6 @@ export default {
       }
     },
     emitChange (newTransport, oldTransport) {
-      console.log('emitting change')
       this.$emit('change',
         { ...newTransport },
         { ...oldTransport }
