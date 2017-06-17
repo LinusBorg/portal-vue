@@ -14,7 +14,12 @@
         </li>
         <li class="controls--item" >
           <a href="#" class="controls--link" @click.prevent="checkTarget">
-            Has Content for target?
+            has Target?
+          </a>
+        </li>
+        <li class="controls--item" >
+          <a href="#" class="controls--link" @click.prevent="checkContent">
+            has Content for Target?
           </a>
         </li>
         <li class="controls--item" >
@@ -57,13 +62,17 @@
       },
       close (force = false) {
         Wormhole.close({
-          to: 'programmatic-target',
+          to: 'programmatic-source',
           from: force ? 'wrong-source' : 'programmatic-source',
         }, force)
       },
       checkTarget () {
         const res = Wormhole.hasTarget('programmatic-target')
         window.alert(`Does target content exist? \n${res}`)
+      },
+      checkContent () {
+        const res = Wormhole.hasContentFor('programmatic-target')
+        window.alert(`Does Wormhole have content for 'programmatic-target'? \n${res}`)
       },
       getSource () {
         const res = Wormhole.getSourceFor('programmatic-target')
