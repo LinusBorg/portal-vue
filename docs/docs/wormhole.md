@@ -5,9 +5,9 @@ The Wormhole is not a component, it's an object that connects the `Portal`s to t
 You can use this object to programmatically send content to a `PortalTarget`,
 check weither a target exists, has content, and where that content was sent from.
 
-# API
+## Methods
 
-## open()
+### open()
 
 The `open` method accepts one argument, an object with the following properties:
 
@@ -44,7 +44,7 @@ This is the programmatic equivalent of the following:
 </portal>
 ```
 
-## close()
+### close()
 
 As the name suggests, this is the counterpart to `open()`. It's used to remove content from a `PortalTarget`.
 
@@ -102,7 +102,7 @@ Example:
  // => true
 ```
 
-## hasContentFor() 
+### hasContentFor()
 
 Returns `true` if there's a `PortalTarget` with the given name active, **and** there's content shown by the `PortalTarget`.
 
@@ -112,7 +112,7 @@ Example:
  // => true
 ```
 
-## getSourceFor()
+### getSourceFor()
 
 `Wormhole.getSourceFor(to)`
 
@@ -123,7 +123,7 @@ Returns the name of the source that sent the current content to the given target
   // => 'my-portal'
 ```
 
-## getContentFor()
+### getContentFor()
 
 `Wormhole.getContentFor(to)`
 
