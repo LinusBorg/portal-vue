@@ -1,3 +1,5 @@
+process.env.BABEL_ENV = process.env.NODE_ENV || 'testing'
+
 var webpackConfig = require('../build/webpack.test.conf')
 
 module.exports = function (config) {
