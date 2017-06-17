@@ -79,6 +79,7 @@ const config = {
   },
   devServer: {
     contentBase: 'example/',
+    historyApiFallback: true,
     inline: true,
     hot: true,
     quiet: true,
