@@ -182,7 +182,7 @@ var Wormhole = function () {
   }, {
     key: 'hasContentFor',
     value: function hasContentFor(to) {
-      return this.hasTarget(to) && this.transports[to].passengers != null;
+      return this.transports[to] && this.transports[to].passengers != null ? true : false;
     }
   }, {
     key: 'getSourceFor',
