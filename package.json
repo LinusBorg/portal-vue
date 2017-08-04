@@ -6,6 +6,7 @@
   "files": [
     "dist/portal-vue.js",
     "dist/portal-vue.min.js",
+    "dist/portal-vue.js.map",
     "src"
   ],
   "author": "Thorsten <t.luenborg@googlemail.com>",
