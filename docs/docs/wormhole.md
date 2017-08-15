@@ -23,11 +23,11 @@ Even if you ue this method programmatically and there is not source `Portal`, yo
 
 Examples:
 ```javascript
-import { Wormhole } = 'portal-vue'
+import { Wormhole } from 'portal-vue'
 
 methods: {
   sendToPortalTarget() {
-    const passengers = this.$createElement('p', 'This will be displayed in the Target!')
+    const passengers = [this.$createElement('p', 'This will be displayed in the Target!')]
     Wormhole.open({
       to: 'destination',
       from: 'my-portal',
