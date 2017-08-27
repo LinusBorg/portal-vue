@@ -15,7 +15,7 @@ export class Wormhole {
 
     transport.passengers = freeze(passengers)
     const keys = Object.keys(this.transports)
-    if (keys.includes(to)) {
+    if (keys.indexOf(to) !== -1) {
       this.transports[to] = transport
     } else {
       Vue.set(this.transports, to, transport)
@@ -36,7 +36,9 @@ export class Wormhole {
 
   hasContentFor (to) {
     /* eslint no-unneeded-ternary: 0 */
-    return (this.transports[to] && this.transports[to].passengers != null) ? true : false
+    return this.transports[to] && this.transports[to].passengers != null
+      ? true
+      : false
   }
 
   getSourceFor (to) {
@@ -47,7 +49,6 @@ export class Wormhole {
     const transport = this.transports[to]
     return transport ? transport.passengers : undefined
   }
-
 }
 const wormhole = new Wormhole(transports)
 export default wormhole
