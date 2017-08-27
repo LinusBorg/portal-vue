@@ -156,7 +156,7 @@ var Wormhole = function () {
 
       transport.passengers = freeze(passengers);
       var keys = Object.keys(this.transports);
-      if (keys.includes(to)) {
+      if (keys.indexOf(to) !== -1) {
         this.transports[to] = transport;
       } else {
         Vue.set(this.transports, to, transport);
