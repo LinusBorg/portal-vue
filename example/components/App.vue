@@ -2,7 +2,7 @@
   <div class="main-container">
     <div class="sidebar">
       <ul>
-        <li v-for="target in routes">
+        <li v-for="target in routes" v-bind:key="target.path">
           <router-link :to="target.path"> {{target.path}}</router-link>
         </li>
       </ul>
