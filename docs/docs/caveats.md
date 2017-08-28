@@ -14,17 +14,22 @@ That means they behave a bit differently in two ways:
 
 ## Server-Side Rendering
 
-When you [Vue's SSR capabilities](https://ssr.vuejs.org), there currently are some restrictions as well:
+When you use [Vue's SSR capabilities](https://ssr.vuejs.org), portal-vue can't work reliably because Vue renders the page directly to a string, there are not reactive updates applied. That means that a `<portal-target>` appearing before a `<portal>` will render an empty div on the server whereas it will render the sent content on the client, resulting in a hydration vdom mismatch error.
 
-1. Order of components
+### Solution
 
-  The `PortalTarget` has to appear **after** the **Portal** component in the document flow.
-  The reason is that Vue renders the result of the first render to a string immediatly - so any changes that are triggered in a `PortalTarget`
-  after it has been initially rendered will not appear in the HTML document that is sent to the user's browser - but they will appear after hydration,
-  which will make Vue bail the hydration phase because it didn't find the HTML that it expected, and re-render the whole app.
+The incredible @egoist has written a *really* tiny [component called `<no-ssr>`](https://github.com/egoist/vue-no-ssr), which can solve this problem. You wrap your `<portal-target>` elements in it, and it will prevent rendering on the server and on client during hydration, preventing the error described above.. Immediatly after hyration, it will render the previously "hidden" content, so that the `<portal-target>` will render its content. Usually the user can hardly notice this as the update is near-immediate.
 
-2. targetEl  cannot be a real HTMLElement
+Example:
 
-  See the <a href="#" router-link="/docs/portal#targetel">Portal</a> documentation for details
+```html
+<no-ssr>
+  <portal-target name="destination">
+</no-ssr>
 
-<p class="tip">We are working on a proper solution to this problem. Stay tuned!</p>
+<!-- with placeholder text, usually not necessary -->
+<no-ssr placeholder="Loading...">
+  <portal-target name="destination">
+</no-ssr>
+```
+
