@@ -1,6 +1,6 @@
 /*
     portal-vue
-    Version: 1.1.0
+    Version: 1.2.0
     Licence: MIT
     (c) Thorsten Lünborg
   */
@@ -207,12 +207,14 @@ var Target = {
     attributes: { type: Object },
     name: { type: String, required: true },
     slim: { type: Boolean, default: false },
-    tag: { type: String, default: 'div' }
+    tag: { type: String, default: 'div' },
+    transition: { type: Object },
+    transitionEvents: { type: Object }
   },
   data: function data() {
     return {
-      transports: transports
-    };
+      transports: transports,
+      firstRender: true };
   },
   mounted: function mounted() {
     if (!this.transports[this.name]) {
@@ -224,6 +226,8 @@ var Target = {
     }, this.emitChange);
 
     this.updateAttributes();
+
+    this.firstRender = false;
   },
   updated: function updated() {
     this.updateAttributes();
@@ -268,6 +272,9 @@ var Target = {
     renderSlim: function renderSlim() {
       var children = this.children;
       return children.length === 1 && !this.attributes && this.slim;
+    },
+    withTransition: function withTransition() {
+      return this.transition && (!this.firstRender || this.transition.appear);
     }
   },
 
@@ -275,12 +282,19 @@ var Target = {
     var children = this.children;
     var Tag = this.tag;
     if (this.renderSlim) {
-      return children[0];
+      return this.withTransition ? h('transition', {
+        props: this.transition,
+        on: this.transitionEvents || {}
+      }, children) : children[0];
     } else {
+      var preparedChildren = this.withTransition ? h('transition', {
+        props: this.transition,
+        on: this.transitionEvents || {}
+      }, children) : children;
       return h(
         Tag,
         { 'class': 'vue-portal-target' },
-        [children]
+        [preparedChildren]
       );
     }
   }

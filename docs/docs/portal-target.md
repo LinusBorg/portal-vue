@@ -62,6 +62,40 @@ Defines the type of tag that should be rendered as a root component.
 </span>
 ```
 
+### `transition`
+|Type|Required|Default|
+|----|--------|-------|
+|`Object`|no| none |
+
+This property accepts and object that is used to configure a transition for the portal content.
+
+Its content should mimic the props interface of Vue's `<transition>` component, e.g.:
+```html
+<portal-target name="dest" :transition="{name: 'fade', mode: 'out-in'}">
+```
+
+You can use the `transitionEvents` prop to pass event listeners for that transition.
+
+<p class="warning">
+  <strong>Caveat:</strong> For reasons that I haven't understood yet, these transitions will always behave as if you defined the <code>appear</code> option on them, which means the content will transition in even on first render. I continue to investigate this and hope to solve this later on.
+ </p>
+
+ ### `transitionEvents`
+
+|Type|Required|Default|
+|----|--------|-------|
+|`Object`|no| none |
+
+ <p class="info">This property requires that the `transition` prop is defined as well.</p>
+
+Accepts an object whose keys match the transition component's events. Each key's value should be a callback function for the transition.
+```html
+<portal-target 
+  name="dest" 
+  :transition="{name: 'fade', mode: 'out-in'}"
+  :transition-events="{ enter: handleEnter, leave: handleLeave }">
+```
+
 ## Slots API
 
 ### Default slot

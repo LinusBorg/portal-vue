@@ -9,10 +9,13 @@ export default {
     name: { type: String, required: true },
     slim: { type: Boolean, default: false },
     tag: { type: String, default: 'div' },
+    transition: { type: Object },
+    transitionEvents: { type: Object },
   },
   data () {
     return {
       transports,
+      firstRender: true, // necessary to make not transition initial renders
     }
   },
 
@@ -24,6 +27,8 @@ export default {
     this.unwatch = this.$watch(function () { return this.transports[this.name] }, this.emitChange)
 
     this.updateAttributes()
+
+    this.firstRender = false
   },
   updated () {
     this.updateAttributes()
@@ -72,15 +77,27 @@ export default {
       const children = this.children
       return children.length === 1 && !this.attributes && this.slim
     },
+    withTransition () { return this.transition && (!this.firstRender || this.transition.appear) },
   },
 
   render (h) {
     const children = this.children
     const Tag = this.tag
     if (this.renderSlim) {
-      return children[0]
+      return this.withTransition
+        ? h('transition', {
+          props: this.transition,
+          on: this.transitionEvents || {},
+        }, children)
+        : children[0]
     } else {
-      return (<Tag class={'vue-portal-target'}>{children}</Tag>)
+      const preparedChildren = this.withTransition
+        ? h('transition', {
+          props: this.transition,
+          on: this.transitionEvents || {},
+        }, children)
+        : children
+      return (<Tag class={'vue-portal-target'}>{preparedChildren}</Tag>)
     }
   },
 }
