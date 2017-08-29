@@ -35,7 +35,7 @@ When set to true, the component will check if the sent content has only one root
 </portal>
 
 <portal-target name="destination" slim>
-</portal-targed>
+</portal-target>
 ```
 **Result**
 ```html
