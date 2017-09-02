@@ -26,6 +26,7 @@
 
         <portal-target 
           name="target-transitions" 
+          slim
           :transition="{ name: 'fade', mode: 'out-in' }"
           :transition-events="{ enter: log }"/>
       </container>
@@ -33,20 +34,20 @@
     
     <portal to="source-transitions" name="source-transitions">
       <transition name="fade" mode="out-in">
-        <div v-if="showSource === 'left'" key="SourceA">
+        <div v-if="showSource === 'left'" key="SourceA" class="A__">
           This is A
         </div>
-        <div v-else key="SourceB">
+        <div v-else key="SourceB" class="B__">
           This is B
         </div>
       </transition>
     </portal>  
 
     <portal to="target-transitions" name="target-transitions">
-      <div v-if="showTarget === 'left'" key="TargetA">
+      <div v-if="showTarget === 'left'" key="TargetA" class="A__">
         This is A
       </div>
-      <div v-else key="TargetB">
+      <div v-else key="TargetB" class="B__">
         This is B
       </div>
     </portal>

@@ -8,7 +8,7 @@
       Click the "x" to remove links - all vue directives continue to work in their original context.<br>
       Hint: When the source component is removed, then the target's content below disappears as well.
     </p>
-    <portal-target name="toggle-destination">
+    <portal-target name="toggle-destination" :transition="{name: 'fade'}" tag="ul">
 
     </portal-target>
   </container>
