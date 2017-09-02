@@ -18,9 +18,6 @@ export default {
       firstRender: true,
     }
   },
-  created () {
-    // this.firstRender = true
-  },
   mounted () {
     if (!this.transports[this.name]) {
       this.$set(this.transports, this.name, undefined)
@@ -119,7 +116,6 @@ export default {
   render (h) {
     const TransitionType = this.renderSlim ? 'transition' : 'transition-group'
     const Tag = this.tag
-    // console.log('should render: ', this.renderTransition)
     const result = this.renderTransition
       ? (<TransitionType {...this.transitionData} class='vue-portal-target'>
           {this.children}
