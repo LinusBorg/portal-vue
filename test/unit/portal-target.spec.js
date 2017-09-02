@@ -18,12 +18,14 @@ function generateTarget (props) {
   }).$mount(el)
 }
 
+let __id = 0
 function generateVNode () {
   const el = document.createElement('DIV')
   const vm = new Vue({
     el,
     render (h) {
-      return h('div', [h('span', { class: 'testnode' }, 'Test')])
+      __id++
+      return h('div', [h('span', { key: `key-${__id}`, class: 'testnode' }, 'Test')])
     },
   })
   return vm._vnode.children
@@ -55,10 +57,12 @@ describe('PortalTarget', function () {
 
     const el = vm.$el
     expect(el.classList.contains('testnode')).to.be.true
+
+    vm.$destroy()
   })
 
   it('renders a wrapper with class `vue-portal-target` for multiple vNodes', () => {
-    const vNodes = Object.freeze([generateVNode(), generateVNode()])
+    const vNodes = Object.freeze([generateVNode()[0], generateVNode()[0]])
     Vue.set(transports, 'target', {
       from: 'test-portal',
       to: 'target',
@@ -72,11 +76,12 @@ describe('PortalTarget', function () {
     const el = vm.$el
     return vm.$nextTick().then(() => {
       expect(el.classList.contains('vue-portal-target')).to.be.true
+      vm.$destroy()
     })
   })
 
   it('applies attributes correctly to root node', () => {
-    const vNodes = Object.freeze([generateVNode(), generateVNode()])
+    const vNodes = Object.freeze([generateVNode()[0], generateVNode()[0]])
     Vue.set(transports, 'target', {
       from: 'test-portal',
       to: 'target',
@@ -94,6 +99,7 @@ describe('PortalTarget', function () {
     return vm.$nextTick().then(() => {
       expect(el.classList.contains('red')).to.be.true
       expect(el.getAttribute('id')).to.equal('test-id')
+      vm.$destroy()
     })
   })
 
@@ -115,6 +121,7 @@ describe('PortalTarget', function () {
     return vm.$nextTick().then(() => {
       const el = vm.$el.querySelector('p.default')
       expect(el).to.exist
+      vm.$destroy()
     })
   })
 
@@ -129,7 +136,7 @@ describe('PortalTarget', function () {
         handler: spy,
       },
     }).$mount(el)
-    const vNodes = Object.freeze([generateVNode(), generateVNode()])
+    const vNodes = Object.freeze([generateVNode()[0], generateVNode()[0]])
     Vue.set(transports, 'target', {
       to: 'target',
       from: 'source',
@@ -140,6 +147,7 @@ describe('PortalTarget', function () {
         to: 'target', from: 'source', passengers: vNodes },
         {}
       ))
+      vm.$destroy()
     })
   })
 
@@ -159,12 +167,12 @@ describe('PortalTarget', function () {
           :transition="{name: 'fade'}"
           :transition-events="{enter: spy}"
           >
-          <p class="default">This is the default content</p>
+          <p class="default" key="p1">This is the default content</p>
         </portal-target>
       `,
     }).$mount(document.createElement('DIV'))
 
-    const vNode = Object.freeze([generateVNode()])
+    const vNode = Object.freeze(generateVNode())
 
     return vm.$nextTick().then(() => { // needed so the portal-target can mount.
       Vue.set(transports, 'target', {
@@ -174,6 +182,7 @@ describe('PortalTarget', function () {
       })
       return vm.$nextTick().then(() => {
         td.verify(spy(td.matchers.isA(HTMLElement), td.matchers.isA(Function)))
+        vm.$destroy()
       })
     })
   })
@@ -191,12 +200,12 @@ describe('PortalTarget', function () {
           :transition="{name: 'fade'}"
           :transition-events="{enter: spy}"
           >
-          <p class="default">This is the default content</p>
+          <p class="default" key="p1">This is the default content</p>
         </portal-target>
       `,
     }).$mount(document.createElement('DIV'))
 
-    const vNode = Object.freeze([generateVNode()])
+    const vNode = Object.freeze(generateVNode())
 
     Vue.set(transports, 'target', {
       to: 'target',
@@ -205,6 +214,7 @@ describe('PortalTarget', function () {
     })
     return vm.$nextTick().then(() => {
       td.verify(spy(), { times: 0, ignoreExtraArgs: true })
+      vm.$destroy()
     })
   })
 
@@ -221,7 +231,7 @@ describe('PortalTarget', function () {
           :transition="{name: 'fade', appear: true}"
           :transition-events="{enter: spy}"
           >
-          <p class="default">This is the default content</p>
+          <p class="default" key="p1">This is the default content</p>
         </portal-target>
       `,
     }).$mount(document.createElement('DIV'))
@@ -235,6 +245,7 @@ describe('PortalTarget', function () {
     })
     return vm.$nextTick().then(() => {
       td.verify(spy(td.matchers.isA(HTMLElement), td.matchers.isA(Function)))
+      vm.$destroy()
     })
   })
 })
