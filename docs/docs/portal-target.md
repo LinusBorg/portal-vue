@@ -65,20 +65,30 @@ Defines the type of tag that should be rendered as a root component.
 ### `transition`
 |Type|Required|Default|
 |----|--------|-------|
-|`Object`|no| none |
+|`Boolean|String|Object`|no| none |
 
-This property accepts and object that is used to configure a transition for the portal content.
+This property is used to configure a transition for the portal content. By default, it will render
+a `<transition-group>`, which will respect the `PortalTarget`'s [`tag`](#tag) property and will render instead of the 
+plain wrapper element that is usually rendered.
+
+It accepts:
+
+* a `Boolean` value: will render `<transition-group>` without any options
+* a `String` value: will render  `<transition-group>` with the `name` prop set to that string.
+* an `Object`: will render `<transition-group>` with the object's content passed as props.
+
 
 Its content should mimic the props interface of Vue's `<transition>` component, e.g.:
+
 ```html
-<portal-target name="dest" :transition="{name: 'fade', mode: 'out-in'}">
+<portal-target name="dest" slim :transition="{name: 'fade', mode: 'out-in'}">
 ```
 
-You can use the `transitionEvents` prop to pass event listeners for that transition.
+#### Slim Mode
 
-<p class="warning">
-  <strong>Caveat:</strong> For reasons that I haven't understood yet, these transitions will always behave as if you defined the <code>appear</code> option on them, which means the content will transition in even on first render. I continue to investigate this and hope to solve this later on.
- </p>
+When [`slim`](#slim) is also specified, it will render a `<transition>` instead of a `<transition-group>`.
+
+You can use the `transitionEvents` prop to pass event listeners for that transition.
 
  ### `transitionEvents`
 
@@ -92,7 +102,7 @@ Accepts an object whose keys match the transition component's events. Each key's
 ```html
 <portal-target 
   name="dest" 
-  :transition="{name: 'fade', mode: 'out-in'}"
+  :transition="{name: 'fade'}"
   :transition-events="{ enter: handleEnter, leave: handleLeave }">
 ```
 
