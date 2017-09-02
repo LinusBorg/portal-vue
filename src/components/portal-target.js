@@ -74,8 +74,7 @@ export default {
       return this.passengers.length !== 0 ? this.passengers : (this.$slots.default || [])
     },
     renderSlim () {
-      const children = this.children
-      return children.length === 1 && !this.attributes && this.slim
+      return this.children.length === 1 && !this.attributes && this.slim
     },
     withTransition () { return this.transition && (!this.firstRender || this.transition.appear) },
   },
@@ -83,6 +82,7 @@ export default {
   render (h) {
     const children = this.children
     const Tag = this.tag
+
     if (this.renderSlim) {
       return this.withTransition
         ? h('transition', {
