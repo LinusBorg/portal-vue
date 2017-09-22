@@ -62,6 +62,50 @@ Defines the type of tag that should be rendered as a root component.
 </span>
 ```
 
+### `transition`
+|Type|Required|Default|
+|----|--------|-------|
+|`Boolean|String|Object`|no| none |
+
+This property is used to configure a transition for the portal content. By default, it will render
+a `<transition-group>`, which will respect the `PortalTarget`'s [`tag`](#tag) property and will render instead of the 
+plain wrapper element that is usually rendered.
+
+It accepts:
+
+* a `Boolean` value: will render `<transition-group>` without any options
+* a `String` value: will render  `<transition-group>` with the `name` prop set to that string.
+* an `Object`: will render `<transition-group>` with the object's content passed as props.
+
+
+Its content should mimic the props interface of Vue's `<transition>` component, e.g.:
+
+```html
+<portal-target name="dest" slim :transition="{name: 'fade', mode: 'out-in'}">
+```
+
+#### Slim Mode
+
+When [`slim`](#slim) is also specified, it will render a `<transition>` instead of a `<transition-group>`.
+
+You can use the `transitionEvents` prop to pass event listeners for that transition.
+
+ ### `transitionEvents`
+
+|Type|Required|Default|
+|----|--------|-------|
+|`Object`|no| none |
+
+ <p class="info">This property requires that the `transition` prop is defined as well.</p>
+
+Accepts an object whose keys match the transition component's events. Each key's value should be a callback function for the transition.
+```html
+<portal-target 
+  name="dest" 
+  :transition="{name: 'fade'}"
+  :transition-events="{ enter: handleEnter, leave: handleLeave }">
+```
+
 ## Slots API
 
 ### Default slot

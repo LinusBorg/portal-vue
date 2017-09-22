@@ -7,9 +7,11 @@
     </p>
     <input type="text" v-model="newTodo" @keyup.enter="add"><button @click="add">Add</button>
     <portal to="toggle-destination">
-      <ul class="todo-list">
-        <li v-for="(todo, index) in todos">{{todo}} (<a href="#" @click.prevent="remove(index)">x</a>)</li>
-      </ul>
+      <!-- <ul class="todo-list"> -->
+      <li v-for="(todo, index) in todos" :key="todo">
+        {{todo}} (<a href="#" @click.prevent="remove(index)">x</a>)
+        </li>
+      <!-- </ul> -->
     </portal>
     <p>Below is the raw data from this component</p>
     <pre>{{$data}}</pre>

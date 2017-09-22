@@ -4,7 +4,7 @@
       <i>This content was portal'ed to {{ `${name}` }}</i>
     </p>
     <portal :to="name" :name="name">
-      <p>This is Content in Source {{ name }}</p>
+      <p :key="name">This is Content in Source {{ name }}</p>
     </portal>
   </div>
 

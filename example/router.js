@@ -10,6 +10,7 @@ import Programmatic from './components/programmatic/index.vue'
 import MountToExternal from './components/mount-to/mount-to-external.vue'
 import EmptyPortal from './components/empty-portal/index.vue'
 import DefaultSlotContent from './components/default-content-on-target/index.vue'
+import Transitions from './components/transitions/transitions.vue'
 
 Vue.use(VueRouter)
 
@@ -47,12 +48,16 @@ const routes = [
     component: Programmatic,
   },
   {
-    path: '/Mount-to-external-element',
-    component: MountToExternal,
-  },
-  {
     path: '/default-slot-content-for-target',
     component: DefaultSlotContent,
+  },
+  {
+    path: '/transitions',
+    component: Transitions,
+  },
+  {
+    path: '/Mount-to-external-element',
+    component: MountToExternal,
   },
 ]
 
