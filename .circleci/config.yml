@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  install:
+  install_deps:
     working_directory: ~/tmp
     docker:
       - image: circleci/node:8.5-browsers
@@ -18,8 +18,7 @@ jobs:
         key: dependency-cache-{{ checksum "package.json" }}
         paths:
           - node_modules
-  
-  build:
+  build_release:
     working_directory: ~/tmp
     docker:
       - image: circleci/node:8.5-browsers
@@ -29,7 +28,7 @@ jobs:
         name: Build release files
         command: npm run build
   
-  test:
+  exec_unit_tests:
     working_directory: ~/tmp
     docker:
       - image: circleci/node:8.5-browsers
@@ -38,15 +37,19 @@ jobs:
       - run:
         name: Unit Tests
         command: npm run test:once
-
 workflows:
   version: 2
   build_and_test:
     jobs:
-      - install
-      - build:
+      - install_deps
+      - build_release:
         requires:
-          - install
-      - test:
+          - install_deps
+        filters:
+          branches:
+            only:
+              - develop
+              - master
+      - exec_unit_tests:
         requires:
-           - install
+           - install_deps
