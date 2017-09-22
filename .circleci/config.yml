@@ -1,13 +1,13 @@
 version: 2
+defaults: &defaults
+  working_directory: ~/project/portal-vue
+  docker:
+    - image: circleci/node:8.3-browsers
 jobs:
   install_deps:
-    docker:
-      - image: circleci/node:8.3-browsers
+    <<: *defaults
     steps:
       - checkout
-      #- run:
-      #    name: Update npm
-      #    command: 'sudo npm install -g npm@5.3.0'
       - restore_cache:
           key: dependency-cache-{{ checksum "package.json" }}
       - run:
@@ -17,19 +17,27 @@ jobs:
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
             - node_modules
+      - persist_to_workspace:
+          root: ~/project
+          paths:
+            - portal-vue
+
   build_release:
-    docker:
-      - image: circleci/node:8.5-browsers
+    <<: *defaults
     steps:
+      - attach_workspace:
+          at: ~/project
       - checkout
       - run:
           name: Build release files
           command: npm run build
   
+
   exec_unit_tests:
-    docker:
-      - image: circleci/node:8.5-browsers
+    <<: *defaults
     steps:
+      - attach_workspace:
+            at: ~/project
       - checkout
       - run:
           name: Unit Tests
