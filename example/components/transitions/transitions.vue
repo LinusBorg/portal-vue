@@ -13,7 +13,13 @@
           <a href="#" class="controls--link" @click.prevent="toggleTarget">
             Toggle
           </a>
-          </li>
+        </li>
+        <li class="controls--item">
+          Transition-Group:
+          <a href="#" class="controls--link" @click.prevent="showGroupItem = !showGroupItem">
+            Toggle
+          </a>
+        </li>
       </ul>
     </div>
     
@@ -28,6 +34,13 @@
           name="target-transitions" 
           slim
           :transition="{ name: 'fade', mode: 'out-in' }"
+          :transition-events="{ enter: log }"/>
+
+        <portal-target 
+          style="position: relative"
+          name="group-transition"
+          :transition="{ name: 'fade', leaveToClass: 'fade-group-leave-to', 
+            moveClass: 'fade-group-move' }"
           :transition-events="{ enter: log }"/>
       </container>
     </div>
@@ -52,6 +65,11 @@
       </div>
     </portal>
 
+    <portal to="group-transition" name="group-transition" tag="ul">
+      <li key="1">Test 1</li>
+      <li key="2" v-if="showGroupItem">Test 2</li>
+      <li key="3">Test 3</li>
+    </portal>
 
   </div>
 </template>
@@ -62,6 +80,7 @@ export default {
     return {
       showSource: 'left',
       showTarget: 'left',
+      showGroupItem: false,
     }
   },
   methods: {
