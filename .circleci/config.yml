@@ -3,7 +3,7 @@ jobs:
   install:
     working_directory: ~/tmp
     docker:
-      - image: circleci/mode:8.5-browsers
+      - image: circleci/node:8.5-browsers
     steps:
       - checkout
       - run:
