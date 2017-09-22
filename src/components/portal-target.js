@@ -27,7 +27,9 @@ export default {
 
     this.updateAttributes()
     this.$nextTick(() => {
-      this.firstRender = false
+      if (this.transition) { // only when we have a transition, because it causes a re-render
+        this.firstRender = false
+      }
     })
   },
   updated () {
