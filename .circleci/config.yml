@@ -1,14 +1,13 @@
 version: 2
 jobs:
   install_deps:
-    working_directory: ~/tmp
     docker:
       - image: circleci/node:8.3-browsers
     steps:
       - checkout
-      - run:
-          name: Update npm
-          command: 'sudo npm install -g npm@5.3.0'
+      #- run:
+      #    name: Update npm
+      #    command: 'sudo npm install -g npm@5.3.0'
       - restore_cache:
           key: dependency-cache-{{ checksum "package.json" }}
       - run:
@@ -19,7 +18,6 @@ jobs:
           paths:
             - node_modules
   build_release:
-    working_directory: ~/tmp
     docker:
       - image: circleci/node:8.5-browsers
     steps:
@@ -29,7 +27,6 @@ jobs:
           command: npm run build
   
   exec_unit_tests:
-    working_directory: ~/tmp
     docker:
       - image: circleci/node:8.5-browsers
     steps:
