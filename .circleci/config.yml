@@ -43,13 +43,13 @@ workflows:
     jobs:
       - install_deps
       - build_release:
-        requires:
-          - install_deps
-        filters:
-          branches:
-            only:
-              - develop
-              - master
+          requires:
+            - install_deps
+          filters:
+            branches:
+              only:
+                - develop
+                - master
       - exec_unit_tests:
-        requires:
-           - install_deps
+          requires:
+            - install_deps
