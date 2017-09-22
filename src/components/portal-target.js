@@ -69,24 +69,20 @@ export default {
     },
   },
   computed: {
-    slots () {
-      return this.$slots.default && this.$slots.default.filter(v => v.tag)
-    },
     passengers () {
       return (this.transports[this.name] && this.transports[this.name].passengers) || []
     },
     children () {
-      return this.passengers.length !== 0 ? this.passengers : (this.slots || [])
+      return this.passengers.length !== 0 ? this.passengers : (this.$slots.default || [])
     },
-    renderSlim () {
-      const renderSlim = !this.attributes && this.slim
-      if (renderSlim && this.children.length > 1) {
+    noWrapper () {
+      const noWrapper = !this.attributes && this.slim
+      if (noWrapper && this.children.length > 1) {
         console.warn('[portal-vue]: PortalTarget with `slim` option received more than one child element.')
-        debugger
       }
-      return renderSlim
+      return noWrapper
     },
-    renderTransition () {
+    withTransition () {
       return !!this.transition
     },
     transitionData () {
@@ -116,13 +112,13 @@ export default {
   },
 
   render (h) {
-    const TransitionType = this.renderSlim ? 'transition' : 'transition-group'
+    const TransitionType = this.noWrapper ? 'transition' : 'transition-group'
     const Tag = this.tag
-    const result = this.renderTransition
+    const result = this.withTransition
       ? (<TransitionType {...this.transitionData} class='vue-portal-target'>
           {this.children}
         </TransitionType>)
-      : this.renderSlim
+      : this.noWrapper
         ? this.children[0]
         : <Tag class='vue-portal-target'>{this.children}</Tag>
 
