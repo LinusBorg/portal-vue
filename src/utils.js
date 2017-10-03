@@ -16,3 +16,11 @@ export function freeze (item) {
   }
   return item
 }
+
+export function combinePassengers (transports) {
+  const passengers = []
+  for (const transport of transports) {
+    Array.prototype.push.apply(passengers, transport.passengers)
+  }
+  return passengers
+}

@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import { freeze } from '../utils'
+import { combinePassengers, freeze } from '../utils'
 const transports = {}
 
 export { transports }
@@ -44,19 +44,22 @@ export class Wormhole {
   }
 
   hasContentFor (to) {
-    /* eslint no-unneeded-ternary: 0 */
-    return this.transports[to] && this.transports[to].passengers != null
-      ? true
-      : false
+    if (!this.transports[to]) {
+      return false
+    }
+    return this.getContentFor(to).length > 0
   }
 
   getSourceFor (to) {
-    return this.transports[to] && this.transports[to].from
+    return this.transports[to] && this.transports[to][0].from
   }
 
   getContentFor (to) {
-    const transport = this.transports[to]
-    return transport ? transport.passengers : undefined
+    const transports = this.transports[to]
+    if (!transports) {
+      return undefined
+    }
+    return combinePassengers(transports)
   }
 
   getTransportIndex ({ to, from }) {

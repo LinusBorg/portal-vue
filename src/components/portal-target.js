@@ -1,5 +1,6 @@
 
 import { transports } from './wormhole'
+import { combinePassengers } from '../utils'
 
 export default {
   abstract: true,
@@ -78,11 +79,7 @@ export default {
       return transports.length === 0 ? [] : [transports[0]]
     },
     passengers () {
-      const passengers = []
-      for (const transport of this.ownTransports) {
-        Array.prototype.push.apply(passengers, transport.passengers)
-      }
-      return passengers
+      return combinePassengers(this.ownTransports)
     },
     children () {
       return this.passengers.length !== 0 ? this.passengers : (this.$slots.default || [])
