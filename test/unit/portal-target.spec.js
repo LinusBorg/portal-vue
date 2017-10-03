@@ -1,11 +1,12 @@
-import { expect, td } from './helpers'
+import {expect, td} from './helpers'
 import Vue from 'vue'
+
 const PortalTargetInj = require('!!inject-loader!babel-loader!../../src/components/portal-target.js')
 
 const transports = {}
 
 const PortalTarget = new PortalTargetInj({
-  './wormhole': { transports: transports },
+  './wormhole': {transports: transports},
 }).default
 
 // Utils
@@ -19,13 +20,14 @@ function generateTarget (props) {
 }
 
 let __id = 0
+
 function generateVNode () {
   const el = document.createElement('DIV')
   const vm = new Vue({
     el,
     render (h) {
       __id++
-      return h('div', [h('span', { key: `key-${__id}`, class: 'testnode' }, 'Test')])
+      return h('div', [h('span', {key: `key-${__id}`, class: 'testnode'}, 'Test')])
     },
   })
   return vm._vnode.children
@@ -44,11 +46,13 @@ describe('PortalTarget', function () {
 
   it('renders a single element for single vNode with slim prop & single slot element', () => {
     const vNode = Object.freeze(generateVNode())
-    Vue.set(transports, 'target', {
-      from: 'target-portal',
-      to: 'target',
-      passengers: vNode,
-    })
+    Vue.set(transports, 'target', [
+      {
+        from: 'target-portal',
+        to: 'target',
+        passengers: vNode,
+      },
+    ])
 
     const vm = generateTarget({
       name: 'target',
@@ -63,11 +67,13 @@ describe('PortalTarget', function () {
 
   it('renders a wrapper with class `vue-portal-target` for multiple vNodes', () => {
     const vNodes = Object.freeze([generateVNode()[0], generateVNode()[0]])
-    Vue.set(transports, 'target', {
-      from: 'test-portal',
-      to: 'target',
-      passengers: vNodes,
-    })
+    Vue.set(transports, 'target', [
+      {
+        from: 'test-portal',
+        to: 'target',
+        passengers: vNodes,
+      }
+    ])
 
     const vm = generateTarget({
       name: 'target',
@@ -82,11 +88,13 @@ describe('PortalTarget', function () {
 
   it('applies attributes correctly to root node', () => {
     const vNodes = Object.freeze([generateVNode()[0], generateVNode()[0]])
-    Vue.set(transports, 'target', {
-      from: 'test-portal',
-      to: 'target',
-      passengers: vNodes,
-    })
+    Vue.set(transports, 'target', [
+      {
+        from: 'test-portal',
+        to: 'target',
+        passengers: vNodes,
+      },
+    ])
 
     const vm = generateTarget({
       name: 'target',
@@ -110,7 +118,7 @@ describe('PortalTarget', function () {
 
   it('renders slot content when no other content is available', function () {
     const vm = new Vue({
-      components: { PortalTarget },
+      components: {PortalTarget},
       template: `
         <portal-target name="target">
           <p class="default">This is the default content</p>
@@ -130,7 +138,7 @@ describe('PortalTarget', function () {
     /* eslint no-unused-vars: 0 */
     const el = document.createElement('DIV')
     const vm = new Vue({
-      components: { PortalTarget },
+      components: {PortalTarget},
       template: `<portal-target name="target" @change="handler"/>`,
       methods: {
         handler: spy,
@@ -144,7 +152,8 @@ describe('PortalTarget', function () {
     })
     return vm.$nextTick().then(() => {
       td.verify(spy({
-        to: 'target', from: 'source', passengers: vNodes },
+          to: 'target', from: 'source', passengers: vNodes
+        },
         {}
       ))
       vm.$destroy()
@@ -161,7 +170,7 @@ describe('PortalTarget', function () {
       created () {
         this.spy = spy
       },
-      components: { PortalTarget },
+      components: {PortalTarget},
       template: `
         <portal-target name="target" ref="target"
           :transition="{name: 'fade'}"
@@ -175,11 +184,13 @@ describe('PortalTarget', function () {
     const vNode = Object.freeze(generateVNode())
 
     return vm.$nextTick().then(() => { // needed so the portal-target can mount.
-      Vue.set(transports, 'target', {
-        to: 'target',
-        from: 'source',
-        passengers: vNode,
-      })
+      Vue.set(transports, 'target', [
+        {
+          to: 'target',
+          from: 'source',
+          passengers: vNode,
+        },
+      ])
       return vm.$nextTick().then(() => {
         td.verify(spy(td.matchers.isA(HTMLElement), td.matchers.isA(Function)))
         vm.$destroy()
@@ -194,7 +205,7 @@ describe('PortalTarget', function () {
       created () {
         this.spy = spy
       },
-      components: { PortalTarget },
+      components: {PortalTarget},
       template: `
         <portal-target name="target" ref="target"
           :transition="{name: 'fade'}"
@@ -213,7 +224,7 @@ describe('PortalTarget', function () {
       passengers: vNode,
     })
     return vm.$nextTick().then(() => {
-      td.verify(spy(), { times: 0, ignoreExtraArgs: true })
+      td.verify(spy(), {times: 0, ignoreExtraArgs: true})
       vm.$destroy()
     })
   })
@@ -225,7 +236,7 @@ describe('PortalTarget', function () {
       created () {
         this.spy = spy
       },
-      components: { PortalTarget },
+      components: {PortalTarget},
       template: `
         <portal-target name="target" ref="target"
           :transition="{name: 'fade', appear: true}"
