@@ -18,14 +18,24 @@ export class Wormhole {
     if (keys.indexOf(to) === -1) {
       Vue.set(this.transports, to, [])
     }
-    this.transports[to].push(transport)
+    if (this.getTransportIndex(transport) === -1) {
+      this.transports[to].push(transport)
+    }
   }
 
   close (transport, force = false) {
     const { to, from } = transport
     if (!to || !from) return
-    if (this.transports[to] && (force || this.transports[to].from === from)) {
-      this.transports[to] = undefined
+    if (!this.transports[to]) {
+      return
+    }
+    if (force) {
+      this.transports[to] = []
+    } else {
+      const index = this.getTransportIndex(transport)
+      if (index >= 0) {
+        this.transports[to].splice(index, 1)
+      }
     }
   }
 
@@ -47,6 +57,15 @@ export class Wormhole {
   getContentFor (to) {
     const transport = this.transports[to]
     return transport ? transport.passengers : undefined
+  }
+
+  getTransportIndex ({ to, from }) {
+    for (const i in this.transports[to]) {
+      if (this.transports[to][i].from === from) {
+        return i
+      }
+    }
+    return -1
   }
 }
 const wormhole = new Wormhole(transports)
