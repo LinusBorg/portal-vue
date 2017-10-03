@@ -82,6 +82,10 @@ export default {
       return combinePassengers(this.ownTransports)
     },
     children () {
+      if (this.multiple) {
+        const Tag = this.tag
+        return this.ownTransports.map((transport) => <Tag key={transport.from}>{transport.passengers}</Tag>)
+      }
       return this.passengers.length !== 0 ? this.passengers : (this.$slots.default || [])
     },
     noWrapper () {
@@ -123,14 +127,16 @@ export default {
   render (h) {
     const TransitionType = this.noWrapper ? 'transition' : 'transition-group'
     const Tag = this.tag
-    const result = this.withTransition
-      ? (<TransitionType {...this.transitionData} class='vue-portal-target'>
+
+    if (this.withTransition) {
+      return (
+        <TransitionType {...this.transitionData} class='vue-portal-target'>
           {this.children}
-        </TransitionType>)
-      : this.noWrapper
+        </TransitionType>
+      )
+    }
+    return this.noWrapper
         ? this.children[0]
         : <Tag class='vue-portal-target'>{this.children}</Tag>
-
-    return result
   },
 }

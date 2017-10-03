@@ -18,6 +18,7 @@ export class Wormhole {
     if (keys.indexOf(to) === -1) {
       Vue.set(this.transports, to, [])
     }
+
     if (this.getTransportIndex(transport) === -1) {
       this.transports[to].push(transport)
     }
@@ -29,6 +30,7 @@ export class Wormhole {
     if (!this.transports[to]) {
       return
     }
+
     if (force) {
       this.transports[to] = []
     } else {
