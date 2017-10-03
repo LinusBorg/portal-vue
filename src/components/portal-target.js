@@ -6,6 +6,7 @@ export default {
   name: 'portalTarget',
   props: {
     attributes: { type: Object },
+    multiple: { type: Boolean, default: false },
     name: { type: String, required: true },
     slim: { type: Boolean, default: false },
     tag: { type: String, default: 'div' },
@@ -20,7 +21,7 @@ export default {
   },
   mounted () {
     if (!this.transports[this.name]) {
-      this.$set(this.transports, this.name, undefined)
+      this.$set(this.transports, this.name, [])
     }
 
     this.unwatch = this.$watch(function () { return this.transports[this.name] }, this.emitChange)
@@ -69,8 +70,19 @@ export default {
     },
   },
   computed: {
+    ownTransports () {
+      const transports = this.transports[this.name] || []
+      if (this.multiple) {
+        return transports
+      }
+      return transports.length === 0 ? [] : [transports[0]]
+    },
     passengers () {
-      return (this.transports[this.name] && this.transports[this.name].passengers) || []
+      const passengers = []
+      for (const transport of this.ownTransports) {
+        Array.prototype.push.apply(passengers, transport.passengers)
+      }
+      return passengers
     },
     children () {
       return this.passengers.length !== 0 ? this.passengers : (this.$slots.default || [])

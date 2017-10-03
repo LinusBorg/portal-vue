@@ -15,11 +15,10 @@ export class Wormhole {
 
     transport.passengers = freeze(passengers)
     const keys = Object.keys(this.transports)
-    if (keys.indexOf(to) !== -1) {
-      this.transports[to] = transport
-    } else {
-      Vue.set(this.transports, to, transport)
+    if (keys.indexOf(to) === -1) {
+      Vue.set(this.transports, to, [])
     }
+    this.transports[to].push(transport)
   }
 
   close (transport, force = false) {
