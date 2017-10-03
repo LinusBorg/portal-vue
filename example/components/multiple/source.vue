@@ -1,58 +1,50 @@
 <template>
-    <container type="source">
-        <h2>{{ name }}</h2>
-        <form @submit.prevent.stop="addItem">
-            <input type="text" v-model="newItem">
-            <button>Add</button>
-        </form>
-        <pre>{{ $data }}</pre>
-        <portal to="lists">
-            <h3>{{ name }}</h3>
-            <ul>
-                <li v-for="(item, i) in items" :key="i">{{ item }}</li>
-            </ul>
-        </portal>
-    </container>
+  <container type="source">
+    <h2>{{ list.name }}</h2>
+
+    <form @submit.prevent.stop="addItem">
+      <input type="text" v-model="newItem">
+      <button>Add</button>
+    </form>
+
+    <pre>{{ list.items }}</pre>
+
+    <button @click="togglePortal">Toggle Portal</button>
+
+    <portal to="lists" :disabled="!list.enabled">
+      <h3>{{ list.name }}</h3>
+      <ul>
+        <li v-for="(item, i) in items" :key="i">{{ item }}</li>
+      </ul>
+    </portal>
+  </container>
 </template>
 
 <script>
-    const startingItems = [
-        'carrots',
-        'detergent',
-        'lego',
-        'mushrooms',
-        'pudding',
-        'risotto',
-        'spaghetti',
-        'super nintendo',
-        'teddy bear',
-        'train set',
-        'yoghurt',
-    ];
+  export default {
+    props: ['list'],
 
-    function pickStartItems(count) {
-        const items = []
-        for (let i = 0; i < count; i++) {
-            items.push(startingItems[Math.floor(Math.random() * startingItems.length)])
-        }
-        return items
+    data () {
+      return {
+        newItem: '',
+      }
+    },
+
+    methods: {
+      addItem () {
+        this.items.push(this.newItem)
+        this.newItem = ''
+      },
+
+      togglePortal () {
+        this.list.enabled = !this.list.enabled;
+      }
+    },
+
+    computed: {
+      items () {
+        return this.list.items;
+      }
     }
-
-    export default {
-        props: ['name'],
-
-        data() {
-            return {
-                newItem: '',
-                items: pickStartItems(3),
-            }
-        },
-
-        methods: {
-            addItem() {
-                this.items.push(this.newItem)
-                this.newItem = ''
-            }
-        }
-    }
+  }
 </script>
