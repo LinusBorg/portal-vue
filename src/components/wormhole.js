@@ -19,8 +19,11 @@ export class Wormhole {
       Vue.set(this.transports, to, [])
     }
 
-    if (this.getTransportIndex(transport) === -1) {
+    const currentIndex = this.getTransportIndex(transport)
+    if (currentIndex === -1) {
       this.transports[to].push(transport)
+    } else {
+      this.transports[to][currentIndex].passengers = passengers
     }
   }
 
