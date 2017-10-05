@@ -76,7 +76,7 @@ export default {
       if (this.multiple) {
         return transports
       }
-      return transports.length === 0 ? [] : [transports[0]]
+      return transports.length === 0 ? [] : [transports[transports.length - 1]]
     },
     passengers () {
       return combinePassengers(this.ownTransports)

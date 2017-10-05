@@ -23,8 +23,13 @@ export class Wormhole {
     if (currentIndex === -1) {
       this.transports[to].push(transport)
     } else {
-      this.transports[to][currentIndex].passengers = passengers
+      this.transports[to][currentIndex] = transport
     }
+
+    this.transports[to].sort(function (a, b) {
+      console.log(a.order - b.order)
+      return a.order - b.order
+    })
   }
 
   close (transport, force = false) {

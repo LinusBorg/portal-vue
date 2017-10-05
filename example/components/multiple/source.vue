@@ -11,7 +11,7 @@
 
     <button @click="togglePortal">Toggle Portal</button>
 
-    <portal to="lists" :disabled="!list.enabled">
+    <portal to="lists" :disabled="!list.enabled" :order="parseInt(list.id)">
       <h3>{{ list.name }}</h3>
       <ul>
         <li v-for="(item, i) in items" :key="i">{{ item }}</li>

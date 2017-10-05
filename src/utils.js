@@ -18,9 +18,9 @@ export function freeze (item) {
 }
 
 export function combinePassengers (transports) {
-  const passengers = []
+  let passengers = []
   for (const transport of transports) {
-    Array.prototype.push.apply(passengers, transport.passengers)
+    passengers = passengers.concat(transport.passengers)
   }
   return passengers
 }

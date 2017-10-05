@@ -15,6 +15,7 @@ export default {
     /* global HTMLElement */
     disabled: { type: Boolean, default: false },
     name: { type: String, default: () => String(pid++) },
+    order: { type: Number, default: 0 },
     slim: { type: Boolean, default: false },
     tag: { type: [String], default: 'DIV' },
     targetEl: { type: inBrowser ? [String, HTMLElement] : String },
@@ -64,6 +65,7 @@ export default {
             from: this.name,
             to: this.to,
             passengers: [...this.$slots.default],
+            order: this.order,
           })
         }
       } else if (!this.to && !this.targetEl) {
