@@ -138,7 +138,7 @@ it recives two arguments, each is an object with the following properties:
 |Property|Type|Description|
 |--------|----|-----------|
 |`from`|`String`|Name of the source `Portal` that the content was sent from|
-|`pssengers`|`Array<VNode>`|An array of vnodes, the content that was sent to this `PortalTarget`|
+|`passengers`|`Array<VNode>`|An array of vnodes, the content that was sent to this `PortalTarget`|
 
 The first object represents the new conent, the second one the old content.
 
