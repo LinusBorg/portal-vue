@@ -27,7 +27,6 @@ export class Wormhole {
     }
 
     this.transports[to].sort(function (a, b) {
-      console.log(a.order - b.order)
       return a.order - b.order
     })
   }

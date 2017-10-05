@@ -1,6 +1,7 @@
 
-import { transports } from './wormhole'
+// import { transports } from './wormhole'
 import { combinePassengers } from '../utils'
+import wormhole from './wormhole'
 
 export default {
   abstract: true,
@@ -16,7 +17,7 @@ export default {
   },
   data () {
     return {
-      transports,
+      transports: wormhole.transports,
       firstRender: true,
     }
   },
@@ -82,10 +83,6 @@ export default {
       return combinePassengers(this.ownTransports)
     },
     children () {
-      if (this.multiple) {
-        const Tag = this.tag
-        return this.ownTransports.map((transport) => <Tag key={transport.from}>{transport.passengers}</Tag>)
-      }
       return this.passengers.length !== 0 ? this.passengers : (this.$slots.default || [])
     },
     noWrapper () {
@@ -135,8 +132,12 @@ export default {
         </TransitionType>
       )
     }
+
+    // Solves a bug where Vue would sometimes duplicate elements upon changing multiple or disabled
+    const wrapperKey = parseInt(Math.random() * 100)
+
     return this.noWrapper
         ? this.children[0]
-        : <Tag class='vue-portal-target'>{this.children}</Tag>
+        : <Tag class='vue-portal-target' key={wrapperKey}>{this.children}</Tag>
   },
 }
