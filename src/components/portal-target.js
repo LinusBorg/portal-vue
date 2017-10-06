@@ -134,7 +134,7 @@ export default {
     }
 
     // Solves a bug where Vue would sometimes duplicate elements upon changing multiple or disabled
-    const wrapperKey = parseInt(Math.random() * 100)
+    const wrapperKey = this.ownTransports.length
 
     return this.noWrapper
         ? this.children[0]
