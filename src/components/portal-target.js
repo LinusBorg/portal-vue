@@ -1,19 +1,18 @@
-
 // import { transports } from './wormhole'
-import { combinePassengers } from '../utils'
+import {combinePassengers} from '../utils'
 import wormhole from './wormhole'
 
 export default {
   abstract: true,
   name: 'portalTarget',
   props: {
-    attributes: { type: Object },
-    multiple: { type: Boolean, default: false },
-    name: { type: String, required: true },
-    slim: { type: Boolean, default: false },
-    tag: { type: String, default: 'div' },
-    transition: { type: [Boolean, String, Object], default: false },
-    transitionEvents: { type: Object, default: () => ({}) },
+    attributes: {type: Object},
+    multiple: {type: Boolean, default: false},
+    name: {type: String, required: true},
+    slim: {type: Boolean, default: false},
+    tag: {type: String, default: 'div'},
+    transition: {type: [Boolean, String, Object], default: false},
+    transitionEvents: {type: Object, default: () => ({})},
   },
   data () {
     return {
@@ -26,7 +25,7 @@ export default {
       this.$set(this.transports, this.name, [])
     }
 
-    this.unwatch = this.$watch(function () { return this.transports[this.name] }, this.emitChange)
+    this.unwatch = this.$watch('ownTransports', this.emitChange)
 
     this.updateAttributes()
     this.$nextTick(() => {
@@ -64,11 +63,20 @@ export default {
         }
       }
     },
-    emitChange (newTransport, oldTransport) {
-      this.$emit('change',
-        { ...newTransport },
-        { ...oldTransport }
-      )
+    emitChange (newTransports, oldTransports) {
+      if (this.multiple) {
+        this.$emit('change',
+          [...newTransports],
+          [...oldTransports]
+        )
+      } else {
+        const newTransport = newTransports.length === 0 ? undefined : newTransports[0]
+        const oldTransport = oldTransports.length === 0 ? undefined : oldTransports[0]
+        this.$emit('change',
+          { ...newTransport },
+          { ...oldTransport }
+        )
+      }
     },
   },
   computed: {
@@ -103,12 +111,12 @@ export default {
       // We have to do this to emulate the normal behaviour of transitions without `appear`
       // because in Portals, transitions can behave as if appear was defined under certain conditions.
       if (this.firstRender && (typeof this.transition === 'object' && !this.transition.appear)) {
-        data.props = { name: '__notranstition__portal-vue__' }
+        data.props = {name: '__notranstition__portal-vue__'}
         return data
       }
 
       if (typeof t === 'string') {
-        data.props = { name: t }
+        data.props = {name: t}
       } else if (typeof t === 'object') {
         data.props = t
       }
@@ -137,7 +145,7 @@ export default {
     const wrapperKey = this.ownTransports.length
 
     return this.noWrapper
-        ? this.children[0]
-        : <Tag class='vue-portal-target' key={wrapperKey}>{this.children}</Tag>
+      ? this.children[0]
+      : <Tag class='vue-portal-target' key={wrapperKey}>{this.children}</Tag>
   },
 }

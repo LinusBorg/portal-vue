@@ -20,15 +20,18 @@ export class Wormhole {
     }
 
     const currentIndex = this.getTransportIndex(transport)
+    // Copying the array here so that the PortalTarget change event will actually contain two distinct arrays
+    const newTransports = this.transports[to].slice(0)
     if (currentIndex === -1) {
-      this.transports[to].push(transport)
+      newTransports.push(transport)
     } else {
-      this.transports[to][currentIndex] = transport
+      newTransports[currentIndex] = transport
     }
-
-    this.transports[to].sort(function (a, b) {
+    newTransports.sort(function (a, b) {
       return a.order - b.order
     })
+
+    this.transports[to] = newTransports
   }
 
   close (transport, force = false) {
@@ -43,7 +46,10 @@ export class Wormhole {
     } else {
       const index = this.getTransportIndex(transport)
       if (index >= 0) {
-        this.transports[to].splice(index, 1)
+        // Copying the array here so that the PortalTarget change event will actually contain two distinct arrays
+        const newTransports = this.transports[to].slice(0)
+        newTransports.splice(index, 1)
+        this.transports[to] = newTransports
       }
     }
   }
