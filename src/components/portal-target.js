@@ -20,11 +20,12 @@ export default {
       firstRender: true,
     }
   },
-  mounted () {
+  created () {
     if (!this.transports[this.name]) {
       this.$set(this.transports, this.name, [])
     }
-
+  },
+  mounted () {
     this.unwatch = this.$watch('ownTransports', this.emitChange)
 
     this.updateAttributes()
