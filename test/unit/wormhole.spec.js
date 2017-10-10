@@ -1,6 +1,6 @@
 /* global describe it beforeEach */
-import {expect} from './helpers'
-import {Wormhole} from '../../src/components/wormhole'
+import { expect } from './helpers'
+import { Wormhole } from '../../src/components/wormhole'
 
 let wormhole
 
@@ -37,13 +37,13 @@ describe('Wormhole', function () {
     }
 
     wormhole.open(content)
-    expect(wormhole.transports).to.deep.equal({target: [content]})
+    expect(wormhole.transports).to.deep.equal({ target: [content] })
 
     wormhole.close({
       from: 'test-portal',
       to: 'target',
     })
-    expect(wormhole.transports).to.deep.equal({target: []})
+    expect(wormhole.transports).to.deep.equal({ target: [] })
   })
 
   it('only closes transports from the same source portal', () => {
@@ -91,7 +91,7 @@ describe('Wormhole', function () {
       from: 'test-portal1',
       to: 'target',
     }, true) // force argument
-    expect(wormhole.transports).to.deep.equal({target: []})
+    expect(wormhole.transports).to.deep.equal({ target: [] })
   })
 
   it('hasTarget()', function () {
