@@ -1,4 +1,4 @@
-import { expect, td } from './helpers'
+import {expect, td} from './helpers'
 import Vue from 'vue'
 
 const PortalTargetInj = require('!!inject-loader!babel-loader!../../src/components/portal-target.js')
@@ -133,7 +133,7 @@ describe('PortalTarget', function () {
     })
   })
 
-  it('emits change event with the new last transport and old last transport when multiple is true', function () {
+  it('emits change event with the new last transport and old last transport when multiple is false', function () {
     const spy = td.function('changeHandler') // {}
     /* eslint no-unused-vars: 0 */
     const el = document.createElement('DIV')
@@ -145,11 +145,11 @@ describe('PortalTarget', function () {
       },
     }).$mount(el)
     const vNodes = Object.freeze([generateVNode()[0], generateVNode()[0]])
-    Vue.set(transports, 'target', {
+    Vue.set(transports, 'target', [{
       to: 'target',
       from: 'source',
       passengers: vNodes,
-    })
+    }])
     return vm.$nextTick().then(() => {
       td.verify(spy({
           to: 'target', from: 'source', passengers: vNodes,
@@ -166,23 +166,33 @@ describe('PortalTarget', function () {
     const el = document.createElement('DIV')
     const vm = new Vue({
       components: { PortalTarget },
-      template: `<portal-target name="target" @change="handler"/>`,
+      template: `<portal-target name="target" @change="handler" :multiple="true"/>`,
       methods: {
         handler: spy,
       },
     }).$mount(el)
     const vNodes = Object.freeze([generateVNode()[0], generateVNode()[0]])
-    Vue.set(transports, 'target', {
+    const newTransports = [{
       to: 'target',
       from: 'source',
       passengers: vNodes,
-    })
+    }, {
+      to: 'target',
+      from: 'source2',
+      passengers: vNodes,
+    }]
+    Vue.set(transports, 'target', newTransports)
+    const newerTransports = newTransports.slice(0)
+    newerTransports.push({ to: 'target', from: 'source3', passengers: vNodes })
+
     return vm.$nextTick().then(() => {
-      td.verify(spy({
-          to: 'target', from: 'source', passengers: vNodes,
-        },
-        {},
-      ))
+      td.verify(spy(newTransports, []))
+
+      transports['target'] = newerTransports
+
+      return vm.$nextTick()
+    }).then(() => {
+      td.verify(spy(newerTransports, newTransports))
       vm.$destroy()
     })
   })
