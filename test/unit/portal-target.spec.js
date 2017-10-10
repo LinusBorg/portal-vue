@@ -255,11 +255,11 @@ describe('PortalTarget', function () {
 
     const vNode = Object.freeze(generateVNode())
 
-    Vue.set(transports, 'target', {
+    Vue.set(transports, 'target', [{
       to: 'target',
       from: 'source',
       passengers: vNode,
-    })
+    }])
     return vm.$nextTick().then(() => {
       td.verify(spy(), { times: 0, ignoreExtraArgs: true })
       vm.$destroy()
@@ -286,11 +286,11 @@ describe('PortalTarget', function () {
 
     const vNode = Object.freeze([generateVNode()])
 
-    Vue.set(transports, 'target', {
+    Vue.set(transports, 'target', [{
       to: 'target',
       from: 'source',
       passengers: vNode,
-    })
+    }])
     return vm.$nextTick().then(() => {
       td.verify(spy(td.matchers.isA(HTMLElement), td.matchers.isA(Function)))
       vm.$destroy()
