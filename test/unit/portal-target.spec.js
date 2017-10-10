@@ -1,4 +1,4 @@
-import {expect, td} from './helpers'
+import { expect, td } from './helpers'
 import Vue from 'vue'
 
 const PortalTargetInj = require('!!inject-loader!babel-loader!../../src/components/portal-target.js')
@@ -152,8 +152,8 @@ describe('PortalTarget', function () {
     }])
     return vm.$nextTick().then(() => {
       td.verify(spy({
-          to: 'target', from: 'source', passengers: vNodes,
-        },
+        to: 'target', from: 'source', passengers: vNodes,
+      },
         {},
       ))
       vm.$destroy()
