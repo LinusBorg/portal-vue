@@ -65,6 +65,8 @@ export default {
             to: this.to,
             passengers: [...this.$slots.default],
           })
+        } else {
+          this.clear()
         }
       } else if (!this.to && !this.targetEl) {
         console.warn('[vue-portal]: You have to define a target via the `to` prop.')
