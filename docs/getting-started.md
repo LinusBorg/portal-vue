@@ -111,14 +111,14 @@ The `to` prop of `<portal>` and the `name` prop of `<portal-target>` can be chan
 
 ### Working around `position: fixed` issues
 
-In older browsers, `position: fixed` works unreliably when the element with that poperty
+In older browsers, `position: fixed` works unreliably when the element with that property
 is nested in a node tree that has other `position` values.
 
 But we normally need it to render components like modals, dialogs, notifications, snackbars
 and similar UI elements in a fixed position.
 
 With PortalVue, you can instead render the component to a `<portal-target>` that you can position
-as as the first child of your `#app` element.
+as the first child of your `#app` element.
 
 Now you can position your components with `position: absolute` instead
 
