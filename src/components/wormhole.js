@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import { freeze } from '../utils'
+import { combinePassengers, freeze } from '../utils'
 const transports = {}
 
 export { transports }
@@ -15,18 +15,42 @@ export class Wormhole {
 
     transport.passengers = freeze(passengers)
     const keys = Object.keys(this.transports)
-    if (keys.indexOf(to) !== -1) {
-      this.transports[to] = transport
-    } else {
-      Vue.set(this.transports, to, transport)
+    if (keys.indexOf(to) === -1) {
+      Vue.set(this.transports, to, [])
     }
+
+    const currentIndex = this.getTransportIndex(transport)
+    // Copying the array here so that the PortalTarget change event will actually contain two distinct arrays
+    const newTransports = this.transports[to].slice(0)
+    if (currentIndex === -1) {
+      newTransports.push(transport)
+    } else {
+      newTransports[currentIndex] = transport
+    }
+    newTransports.sort(function (a, b) {
+      return a.order - b.order
+    })
+
+    this.transports[to] = newTransports
   }
 
   close (transport, force = false) {
     const { to, from } = transport
     if (!to || !from) return
-    if (this.transports[to] && (force || this.transports[to].from === from)) {
-      this.transports[to] = undefined
+    if (!this.transports[to]) {
+      return
+    }
+
+    if (force) {
+      this.transports[to] = []
+    } else {
+      const index = this.getTransportIndex(transport)
+      if (index >= 0) {
+        // Copying the array here so that the PortalTarget change event will actually contain two distinct arrays
+        const newTransports = this.transports[to].slice(0)
+        newTransports.splice(index, 1)
+        this.transports[to] = newTransports
+      }
     }
   }
 
@@ -35,19 +59,31 @@ export class Wormhole {
   }
 
   hasContentFor (to) {
-    /* eslint no-unneeded-ternary: 0 */
-    return this.transports[to] && this.transports[to].passengers != null
-      ? true
-      : false
+    if (!this.transports[to]) {
+      return false
+    }
+    return this.getContentFor(to).length > 0
   }
 
   getSourceFor (to) {
-    return this.transports[to] && this.transports[to].from
+    return this.transports[to] && this.transports[to][0].from
   }
 
   getContentFor (to) {
-    const transport = this.transports[to]
-    return transport ? transport.passengers : undefined
+    const transports = this.transports[to]
+    if (!transports) {
+      return undefined
+    }
+    return combinePassengers(transports)
+  }
+
+  getTransportIndex ({ to, from }) {
+    for (const i in this.transports[to]) {
+      if (this.transports[to][i].from === from) {
+        return i
+      }
+    }
+    return -1
   }
 }
 const wormhole = new Wormhole(transports)

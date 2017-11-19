@@ -14,6 +14,7 @@ import MountToExternal from './components/mount-to/mount-to-external.vue'
 import EmptyPortal from './components/empty-portal/index.vue'
 import DefaultSlotContent from './components/default-content-on-target/index.vue'
 import Transitions from './components/transitions/transitions.vue'
+import Multiple from './components/multiple/multiple.vue'
 
 Vue.use(VueRouter)
 
@@ -69,6 +70,10 @@ const routes = [
   {
     path: '/Mount-to-external-element',
     component: MountToExternal,
+  },
+  {
+    path: '/multiple',
+    component: Multiple,
   },
 ]
 

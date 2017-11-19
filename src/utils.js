@@ -16,3 +16,11 @@ export function freeze (item) {
   }
   return item
 }
+
+export function combinePassengers (transports) {
+  let passengers = []
+  for (const transport of transports) {
+    passengers = passengers.concat(transport.passengers)
+  }
+  return passengers
+}

@@ -1,11 +1,13 @@
-
-import { transports } from './wormhole'
+// import { transports } from './wormhole'
+import { combinePassengers } from '../utils'
+import wormhole from './wormhole'
 
 export default {
   abstract: true,
   name: 'portalTarget',
   props: {
     attributes: { type: Object },
+    multiple: { type: Boolean, default: false },
     name: { type: String, required: true },
     slim: { type: Boolean, default: false },
     tag: { type: String, default: 'div' },
@@ -14,16 +16,17 @@ export default {
   },
   data () {
     return {
-      transports,
+      transports: wormhole.transports,
       firstRender: true,
     }
   },
-  mounted () {
+  created () {
     if (!this.transports[this.name]) {
-      this.$set(this.transports, this.name, undefined)
+      this.$set(this.transports, this.name, [])
     }
-
-    this.unwatch = this.$watch(function () { return this.transports[this.name] }, this.emitChange)
+  },
+  mounted () {
+    this.unwatch = this.$watch('ownTransports', this.emitChange)
 
     this.updateAttributes()
     this.$nextTick(() => {
@@ -61,16 +64,32 @@ export default {
         }
       }
     },
-    emitChange (newTransport, oldTransport) {
-      this.$emit('change',
-        { ...newTransport },
-        { ...oldTransport }
-      )
+    emitChange (newTransports, oldTransports) {
+      if (this.multiple) {
+        this.$emit('change',
+          [...newTransports],
+          [...oldTransports]
+        )
+      } else {
+        const newTransport = newTransports.length === 0 ? undefined : newTransports[0]
+        const oldTransport = oldTransports.length === 0 ? undefined : oldTransports[0]
+        this.$emit('change',
+          { ...newTransport },
+          { ...oldTransport }
+        )
+      }
     },
   },
   computed: {
+    ownTransports () {
+      const transports = this.transports[this.name] || []
+      if (this.multiple) {
+        return transports
+      }
+      return transports.length === 0 ? [] : [transports[transports.length - 1]]
+    },
     passengers () {
-      return (this.transports[this.name] && this.transports[this.name].passengers) || []
+      return combinePassengers(this.ownTransports)
     },
     children () {
       return this.passengers.length !== 0 ? this.passengers : (this.$slots.default || [])
@@ -114,14 +133,20 @@ export default {
   render (h) {
     const TransitionType = this.noWrapper ? 'transition' : 'transition-group'
     const Tag = this.tag
-    const result = this.withTransition
-      ? (<TransitionType {...this.transitionData} class='vue-portal-target'>
-          {this.children}
-        </TransitionType>)
-      : this.noWrapper
-        ? this.children[0]
-        : <Tag class='vue-portal-target'>{this.children}</Tag>
 
-    return result
+    if (this.withTransition) {
+      return (
+        <TransitionType {...this.transitionData} class='vue-portal-target'>
+          {this.children}
+        </TransitionType>
+      )
+    }
+
+    // Solves a bug where Vue would sometimes duplicate elements upon changing multiple or disabled
+    const wrapperKey = this.ownTransports.length
+
+    return this.noWrapper
+      ? this.children[0]
+      : <Tag class='vue-portal-target' key={wrapperKey}>{this.children}</Tag>
   },
 }

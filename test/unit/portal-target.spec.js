@@ -1,5 +1,6 @@
 import { expect, td } from './helpers'
 import Vue from 'vue'
+
 const PortalTargetInj = require('!!inject-loader!babel-loader!../../src/components/portal-target.js')
 
 const transports = {}
@@ -19,6 +20,7 @@ function generateTarget (props) {
 }
 
 let __id = 0
+
 function generateVNode () {
   const el = document.createElement('DIV')
   const vm = new Vue({
@@ -44,11 +46,13 @@ describe('PortalTarget', function () {
 
   it('renders a single element for single vNode with slim prop & single slot element', () => {
     const vNode = Object.freeze(generateVNode())
-    Vue.set(transports, 'target', {
-      from: 'target-portal',
-      to: 'target',
-      passengers: vNode,
-    })
+    Vue.set(transports, 'target', [
+      {
+        from: 'target-portal',
+        to: 'target',
+        passengers: vNode,
+      },
+    ])
 
     const vm = generateTarget({
       name: 'target',
@@ -63,11 +67,13 @@ describe('PortalTarget', function () {
 
   it('renders a wrapper with class `vue-portal-target` for multiple vNodes', () => {
     const vNodes = Object.freeze([generateVNode()[0], generateVNode()[0]])
-    Vue.set(transports, 'target', {
-      from: 'test-portal',
-      to: 'target',
-      passengers: vNodes,
-    })
+    Vue.set(transports, 'target', [
+      {
+        from: 'test-portal',
+        to: 'target',
+        passengers: vNodes,
+      },
+    ])
 
     const vm = generateTarget({
       name: 'target',
@@ -82,11 +88,13 @@ describe('PortalTarget', function () {
 
   it('applies attributes correctly to root node', () => {
     const vNodes = Object.freeze([generateVNode()[0], generateVNode()[0]])
-    Vue.set(transports, 'target', {
-      from: 'test-portal',
-      to: 'target',
-      passengers: vNodes,
-    })
+    Vue.set(transports, 'target', [
+      {
+        from: 'test-portal',
+        to: 'target',
+        passengers: vNodes,
+      },
+    ])
 
     const vm = generateTarget({
       name: 'target',
@@ -125,7 +133,7 @@ describe('PortalTarget', function () {
     })
   })
 
-  it('emits change event with correct payload', function () {
+  it('emits change event with the new last transport and old last transport when multiple is false', function () {
     const spy = td.function('changeHandler') // {}
     /* eslint no-unused-vars: 0 */
     const el = document.createElement('DIV')
@@ -137,16 +145,54 @@ describe('PortalTarget', function () {
       },
     }).$mount(el)
     const vNodes = Object.freeze([generateVNode()[0], generateVNode()[0]])
-    Vue.set(transports, 'target', {
+    Vue.set(transports, 'target', [{
       to: 'target',
       from: 'source',
       passengers: vNodes,
-    })
+    }])
     return vm.$nextTick().then(() => {
       td.verify(spy({
-        to: 'target', from: 'source', passengers: vNodes },
-        {}
+        to: 'target', from: 'source', passengers: vNodes,
+      },
+        {},
       ))
+      vm.$destroy()
+    })
+  })
+
+  it('emits change event with the new and old transports when multiple is true', function () {
+    const spy = td.function('changeHandler') // {}
+    /* eslint no-unused-vars: 0 */
+    const el = document.createElement('DIV')
+    const vm = new Vue({
+      components: { PortalTarget },
+      template: `<portal-target name="target" @change="handler" :multiple="true"/>`,
+      methods: {
+        handler: spy,
+      },
+    }).$mount(el)
+    const vNodes = Object.freeze([generateVNode()[0], generateVNode()[0]])
+    const newTransports = [{
+      to: 'target',
+      from: 'source',
+      passengers: vNodes,
+    }, {
+      to: 'target',
+      from: 'source2',
+      passengers: vNodes,
+    }]
+    Vue.set(transports, 'target', newTransports)
+    const newerTransports = newTransports.slice(0)
+    newerTransports.push({ to: 'target', from: 'source3', passengers: vNodes })
+
+    return vm.$nextTick().then(() => {
+      td.verify(spy(newTransports, []))
+
+      transports['target'] = newerTransports
+
+      return vm.$nextTick()
+    }).then(() => {
+      td.verify(spy(newerTransports, newTransports))
       vm.$destroy()
     })
   })
@@ -175,11 +221,13 @@ describe('PortalTarget', function () {
     const vNode = Object.freeze(generateVNode())
 
     return vm.$nextTick().then(() => { // needed so the portal-target can mount.
-      Vue.set(transports, 'target', {
-        to: 'target',
-        from: 'source',
-        passengers: vNode,
-      })
+      Vue.set(transports, 'target', [
+        {
+          to: 'target',
+          from: 'source',
+          passengers: vNode,
+        },
+      ])
       return vm.$nextTick().then(() => {
         td.verify(spy(td.matchers.isA(HTMLElement), td.matchers.isA(Function)))
         vm.$destroy()
@@ -207,11 +255,11 @@ describe('PortalTarget', function () {
 
     const vNode = Object.freeze(generateVNode())
 
-    Vue.set(transports, 'target', {
+    Vue.set(transports, 'target', [{
       to: 'target',
       from: 'source',
       passengers: vNode,
-    })
+    }])
     return vm.$nextTick().then(() => {
       td.verify(spy(), { times: 0, ignoreExtraArgs: true })
       vm.$destroy()
@@ -238,11 +286,11 @@ describe('PortalTarget', function () {
 
     const vNode = Object.freeze([generateVNode()])
 
-    Vue.set(transports, 'target', {
+    Vue.set(transports, 'target', [{
       to: 'target',
       from: 'source',
       passengers: vNode,
-    })
+    }])
     return vm.$nextTick().then(() => {
       td.verify(spy(td.matchers.isA(HTMLElement), td.matchers.isA(Function)))
       vm.$destroy()

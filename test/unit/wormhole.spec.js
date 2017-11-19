@@ -18,11 +18,13 @@ describe('Wormhole', function () {
     })
 
     expect(wormhole.transports).to.deep.equal({
-      target: {
-        from: 'test-portal',
-        to: 'target',
-        passengers: ['Test'],
-      },
+      target: [
+        {
+          from: 'test-portal',
+          to: 'target',
+          passengers: ['Test'],
+        },
+      ],
     })
   })
 
@@ -35,13 +37,13 @@ describe('Wormhole', function () {
     }
 
     wormhole.open(content)
-    expect(wormhole.transports).to.deep.equal({ target: content })
+    expect(wormhole.transports).to.deep.equal({ target: [content] })
 
     wormhole.close({
       from: 'test-portal',
       to: 'target',
     })
-    expect(wormhole.transports).to.deep.equal({ target: undefined })
+    expect(wormhole.transports).to.deep.equal({ target: [] })
   })
 
   it('only closes transports from the same source portal', () => {
@@ -62,15 +64,17 @@ describe('Wormhole', function () {
       to: 'target',
     })
     expect(wormhole.transports).to.deep.equal({
-      target: {
-        from: 'test-portal2',
-        to: 'target',
-        passengers: ['Test2'],
-      },
+      target: [
+        {
+          from: 'test-portal2',
+          to: 'target',
+          passengers: ['Test2'],
+        },
+      ],
     })
   })
 
-  it('closes transports from the other source portals when force=true', () => {
+  it('closes all transports to the same target when force=true', () => {
     wormhole.open({
       from: 'test-portal1',
       to: 'target',
@@ -87,7 +91,7 @@ describe('Wormhole', function () {
       from: 'test-portal1',
       to: 'target',
     }, true) // force argument
-    expect(wormhole.transports).to.deep.equal({ target: undefined })
+    expect(wormhole.transports).to.deep.equal({ target: [] })
   })
 
   it('hasTarget()', function () {
