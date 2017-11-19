@@ -10,7 +10,7 @@ Wrap any content that you want to render somehwere else in a `<portal>` componen
 </portal>
 ```
 
-<p class="info">This is an avstract component which means it will not be visible in vue-devtools</p>
+<p class="info">This is an abstract component which means it will not be visible in vue-devtools</p>
 
 ## Props API
 
