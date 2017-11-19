@@ -1,10 +1,8 @@
-/* global describe it beforeEach */
-import { expect } from './helpers'
-import { Wormhole } from '../../src/components/wormhole'
+import { Wormhole } from '@/components/wormhole'
 
 let wormhole
 
-describe('Wormhole', function () {
+describe.only('Wormhole', function () {
   beforeEach(() => {
     wormhole = new Wormhole({})
     wormhole.transports = {}
@@ -17,7 +15,7 @@ describe('Wormhole', function () {
       passengers: ['Test'],
     })
 
-    expect(wormhole.transports).to.deep.equal({
+    expect(wormhole.transports).toEqual({
       target: [
         {
           from: 'test-portal',
@@ -29,7 +27,6 @@ describe('Wormhole', function () {
   })
 
   it('removes content on close()', function () {
-    this.timeout(4000)
     const content = {
       from: 'test-portal',
       to: 'target',
@@ -37,13 +34,13 @@ describe('Wormhole', function () {
     }
 
     wormhole.open(content)
-    expect(wormhole.transports).to.deep.equal({ target: [content] })
+    expect(wormhole.transports).toEqual({ target: [content] })
 
     wormhole.close({
       from: 'test-portal',
       to: 'target',
     })
-    expect(wormhole.transports).to.deep.equal({ target: [] })
+    expect(wormhole.transports).toEqual({ target: [] })
   })
 
   it('only closes transports from the same source portal', () => {
@@ -63,7 +60,7 @@ describe('Wormhole', function () {
       from: 'test-portal1',
       to: 'target',
     })
-    expect(wormhole.transports).to.deep.equal({
+    expect(wormhole.transports).toEqual({
       target: [
         {
           from: 'test-portal2',
@@ -91,12 +88,12 @@ describe('Wormhole', function () {
       from: 'test-portal1',
       to: 'target',
     }, true) // force argument
-    expect(wormhole.transports).to.deep.equal({ target: [] })
+    expect(wormhole.transports).toEqual({ target: [] })
   })
 
   it('hasTarget()', function () {
     const check1 = wormhole.hasTarget('target')
-    expect(check1).to.be.false
+    expect(check1).toBe(false)
 
     wormhole.open({
       to: 'target',
@@ -104,12 +101,12 @@ describe('Wormhole', function () {
       passengers: ['passenger1'],
     })
     const check2 = wormhole.hasTarget('target')
-    expect(check2).to.be.true
+    expect(check2).toBe(true)
   })
 
   it('hasContentFor()', function () {
     const check1 = wormhole.hasContentFor('target')
-    expect(check1).to.be.false
+    expect(check1).toBe(false)
 
     wormhole.open({
       to: 'target',
@@ -117,12 +114,12 @@ describe('Wormhole', function () {
       passengers: ['passenger1'],
     })
     const check2 = wormhole.hasContentFor('target')
-    expect(check2).to.be.true
+    expect(check2).toBe(true)
   })
 
   it('getSourceFor()', function () {
     const check1 = wormhole.getSourceFor('target')
-    expect(check1).to.be.undefined
+    expect(check1).toBeUndefined()
 
     wormhole.open({
       to: 'target',
@@ -130,12 +127,12 @@ describe('Wormhole', function () {
       passengers: ['passenger1'],
     })
     const check2 = wormhole.getSourceFor('target')
-    expect(check2).to.equal('source')
+    expect(check2).toBe('source')
   })
 
   it('getContentFor()', function () {
     const check1 = wormhole.getContentFor('target')
-    expect(check1).to.be.undefined
+    expect(check1).toBeUndefined()
 
     wormhole.open({
       to: 'target',
@@ -143,6 +140,6 @@ describe('Wormhole', function () {
       passengers: ['passenger1'],
     })
     const check2 = wormhole.getContentFor('target')
-    expect(check2).to.be.deep.equal(['passenger1'])
+    expect(check2).toEqual(['passenger1'])
   })
 })

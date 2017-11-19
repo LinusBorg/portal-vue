@@ -1,14 +1,11 @@
-import { expect, td } from './helpers'
+//import { td } from './helpers'
 import Vue from 'vue'
+import { mount } from 'vue-test-utils'
 
-const PortalTargetInj = require('!!inject-loader!babel-loader!../../src/components/portal-target.js')
+jest.mock('@/components/wormhole')
 
-const transports = {}
-
-const PortalTarget = new PortalTargetInj({
-  './wormhole': { transports: transports },
-}).default
-
+const PortalTarget = require('@/components/portal-target.js').default
+const transports = require('@/components/wormhole').transports
 // Utils
 function generateTarget (props) {
   const el = document.createElement('DIV')
@@ -19,23 +16,33 @@ function generateTarget (props) {
   }).$mount(el)
 }
 
+function createWrapper (props = {}, options = {}) {
+  return mount(PortalTarget, {
+    propsData: {
+      name: 'target',
+      ...props,
+    },
+    ...options,
+  })
+}
+
 let __id = 0
 
 function generateVNode () {
   const el = document.createElement('DIV')
-  const vm = new Vue({
+  const wrapper = new Vue({
     el,
     render (h) {
       __id++
       return h('div', [h('span', { key: `key-${__id}`, class: 'testnode' }, 'Test')])
     },
   })
-  return vm._vnode.children
+  return wrapper._vnode.children
 }
 
 describe('PortalTarget', function () {
   beforeEach(() => {
-    td.reset()
+
   })
   afterEach(() => {
     const keys = Object.keys(transports)
@@ -54,15 +61,9 @@ describe('PortalTarget', function () {
       },
     ])
 
-    const vm = generateTarget({
-      name: 'target',
-      slim: true,
-    })
+    const wrapper = createWrapper({ slim: true })
 
-    const el = vm.$el
-    expect(el.classList.contains('testnode')).to.be.true
-
-    vm.$destroy()
+    expect(wrapper.is('.testnode')).toBe(true)
   })
 
   it('renders a wrapper with class `vue-portal-target` for multiple vNodes', () => {
@@ -74,103 +75,49 @@ describe('PortalTarget', function () {
         passengers: vNodes,
       },
     ])
-
-    const vm = generateTarget({
-      name: 'target',
-    })
-
-    const el = vm.$el
-    return vm.$nextTick().then(() => {
-      expect(el.classList.contains('vue-portal-target')).to.be.true
-      vm.$destroy()
-    })
-  })
-
-  it('applies attributes correctly to root node', () => {
-    const vNodes = Object.freeze([generateVNode()[0], generateVNode()[0]])
-    Vue.set(transports, 'target', [
-      {
-        from: 'test-portal',
-        to: 'target',
-        passengers: vNodes,
-      },
-    ])
-
-    const vm = generateTarget({
-      name: 'target',
-      attributes: {
-        class: 'red blue',
-        id: 'test-id',
-      },
-    })
-    const el = vm.$el
-    return vm.$nextTick().then(() => {
-      expect(el.classList.contains('red')).to.be.true
-      expect(el.getAttribute('id')).to.equal('test-id')
-      vm.$destroy()
-    })
+    const wrapper = createWrapper()
+    expect(wrapper.is('.vue-portal-target')).toBe(true)
   })
 
   // check necessary because I regularly deactivate this during development
   it('is an abstract component', () => {
-    expect(PortalTarget.abstract).to.be.true
+    expect(PortalTarget.abstract).toBe(true)
   })
 
   it('renders slot content when no other content is available', function () {
-    const vm = new Vue({
-      components: { PortalTarget },
-      template: `
-        <portal-target name="target">
-          <p class="default">This is the default content</p>
-        </portal-target>
-      `,
-    }).$mount(document.createElement('DIV'))
-
-    return vm.$nextTick().then(() => {
-      const el = vm.$el.querySelector('p.default')
-      expect(el).to.exist
-      vm.$destroy()
+    const wrapper = createWrapper({}, {
+      slots: {
+        default: `<p class="default">Test</p>`,
+      },
     })
+
+    expect(wrapper.contains('p.default')).toBe(true)
   })
 
   it('emits change event with the new last transport and old last transport when multiple is false', function () {
-    const spy = td.function('changeHandler') // {}
-    /* eslint no-unused-vars: 0 */
-    const el = document.createElement('DIV')
-    const vm = new Vue({
-      components: { PortalTarget },
-      template: `<portal-target name="target" @change="handler"/>`,
-      methods: {
-        handler: spy,
-      },
-    }).$mount(el)
+    const wrapper = createWrapper()
+
     const vNodes = Object.freeze([generateVNode()[0], generateVNode()[0]])
     Vue.set(transports, 'target', [{
       to: 'target',
       from: 'source',
       passengers: vNodes,
     }])
-    return vm.$nextTick().then(() => {
-      td.verify(spy({
-        to: 'target', from: 'source', passengers: vNodes,
-      },
-        {},
-      ))
-      vm.$destroy()
+
+    return Vue.nextTick().then(() => {
+      expect(wrapper.emitted().change[0]).toMatchObject([
+        expect.objectContaining({
+          to: 'target', from: 'source',
+          passengers: vNodes,
+        }),
+        expect.objectContaining({}),
+      ])
     })
   })
 
   it('emits change event with the new and old transports when multiple is true', function () {
-    const spy = td.function('changeHandler') // {}
-    /* eslint no-unused-vars: 0 */
-    const el = document.createElement('DIV')
-    const vm = new Vue({
-      components: { PortalTarget },
-      template: `<portal-target name="target" @change="handler" :multiple="true"/>`,
-      methods: {
-        handler: spy,
-      },
-    }).$mount(el)
+    const wrapper = createWrapper({ multiple: true })
+
     const vNodes = Object.freeze([generateVNode()[0], generateVNode()[0]])
     const newTransports = [{
       to: 'target',
@@ -185,60 +132,57 @@ describe('PortalTarget', function () {
     const newerTransports = newTransports.slice(0)
     newerTransports.push({ to: 'target', from: 'source3', passengers: vNodes })
 
-    return vm.$nextTick().then(() => {
-      td.verify(spy(newTransports, []))
+    return wrapper.vm.$nextTick().then(() => {
+      expect(wrapper.emitted().change[0]).toMatchObject([
+        newTransports, expect.arrayContaining([])
+      ])
 
       transports['target'] = newerTransports
 
-      return vm.$nextTick()
+      return wrapper.vm.$nextTick()
     }).then(() => {
-      td.verify(spy(newerTransports, newTransports))
-      vm.$destroy()
+      expect(wrapper.emitted().change[1]).toMatchObject([
+        newerTransports, newTransports,
+      ])
     })
   })
 
-  it('correctly creates a transition when specified', function () {
+  it.only('correctly creates a transition when specified', function () {
     // This testcase should also verify if the transition classes are actually applied,
     // but I have not found a way to test that yet.
     // TODO: check how Vue itself is testing that.
-    const spy = td.function('enter')
-
-    const vm = new Vue({
-      created () {
-        this.spy = spy
+    const spy = jest.fn()
+    const wrapper = createWrapper({
+      transition: { name: 'fade' },
+      'transition-events': {
+        enter: spy,
       },
-      components: { PortalTarget },
-      template: `
-        <portal-target name="target" ref="target"
-          :transition="{name: 'fade'}"
-          :transition-events="{enter: spy}"
-          >
-          <p class="default" key="p1">This is the default content</p>
-        </portal-target>
-      `,
-    }).$mount(document.createElement('DIV'))
+    }, {
+      slots: {
+        default: `<p class="default" key="p1">This is the default content</p>`,
+      },
+    })
 
     const vNode = Object.freeze(generateVNode())
+    Vue.set(transports, 'target', [
+      {
+        to: 'target',
+        from: 'source',
+        passengers: vNode,
+      },
+    ])
 
-    return vm.$nextTick().then(() => { // needed so the portal-target can mount.
-      Vue.set(transports, 'target', [
-        {
-          to: 'target',
-          from: 'source',
-          passengers: vNode,
-        },
-      ])
-      return vm.$nextTick().then(() => {
-        td.verify(spy(td.matchers.isA(HTMLElement), td.matchers.isA(Function)))
-        vm.$destroy()
-      })
+    return wrapper.vm.$nextTick().then(() => {
+      expect(spy).toHaveBeenCalledWith(expect.any(HTMLElement), expect.any(Function))
+      td.verify(spy(td.matchers.isA(HTMLElement), td.matchers.isA(Function)))
+      wrapper.$destroy()
     })
   })
 
   it('doesnt create a transition when on first render specified', function () {
     const spy = td.function('enter')
 
-    const vm = new Vue({
+    const wrapper = new Vue({
       created () {
         this.spy = spy
       },
@@ -260,16 +204,16 @@ describe('PortalTarget', function () {
       from: 'source',
       passengers: vNode,
     }])
-    return vm.$nextTick().then(() => {
+    return wrapper.$nextTick().then(() => {
       td.verify(spy(), { times: 0, ignoreExtraArgs: true })
-      vm.$destroy()
+      wrapper.$destroy()
     })
   })
 
   it('create a transition on first render when appear specified', function () {
     const spy = td.function('enter')
 
-    const vm = new Vue({
+    const wrapper = new Vue({
       created () {
         this.spy = spy
       },
@@ -291,9 +235,9 @@ describe('PortalTarget', function () {
       from: 'source',
       passengers: vNode,
     }])
-    return vm.$nextTick().then(() => {
+    return wrapper.$nextTick().then(() => {
       td.verify(spy(td.matchers.isA(HTMLElement), td.matchers.isA(Function)))
-      vm.$destroy()
+      wrapper.$destroy()
     })
   })
 })
