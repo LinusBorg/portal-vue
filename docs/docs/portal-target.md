@@ -110,7 +110,7 @@ Accepts an object whose keys match the transition component's events. Each key's
 
 ### Default slot
 
-Any existing slot content is rendered in case that no contnt from any source Portal is available.
+Any existing slot content is rendered in case that no content from any source Portal is available.
 
 Example:
 **Source**
