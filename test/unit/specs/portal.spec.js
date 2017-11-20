@@ -1,6 +1,6 @@
 import { mount } from 'vue-test-utils'
 import Vue from 'vue'
-
+import { createEl } from '../utils'
 jest.mock('@/components/wormhole')
 
 const Portal = require('@/components/portal').default
@@ -105,6 +105,63 @@ describe('Portal', function () {
     const wrapper = createWrapper({ disabled: true })
 
     expect(wrapper.contains('.test-span')).toBe(true)
+  })
+
+  it('successfully mounts on external element via class string', () => {
+    const { id } = createEl(undefined, 'test-string')
+    createWrapper({
+      targetEl: `#${id}`,
+    })
+
+    return Vue.nextTick()
+    .then(() => {
+      expect.assertions(3)
+      expect(document.body.querySelector(`#${id}`)).not.toBe(undefined)
+      const newEl = document.body.querySelector(`.test-string`)
+      expect(newEl).not.toBe(undefined)
+      expect(newEl.__vue__).not.toBe(undefined)
+    })
+  })
+
+  it('successfully mounts on external element via HTMLElement', () => {
+    const { el, id } = createEl(undefined, 'test-el')
+    createWrapper({
+      targetEl: el,
+    })
+
+    return Vue.nextTick()
+    .then(() => {
+      expect.assertions(3)
+      expect(document.body.querySelector(`#${id}`)).not.toBe(undefined)
+      const newEl = document.body.querySelector(`.test-el`)
+      expect(newEl).not.toBe(undefined)
+      expect(newEl.__vue__).not.toBe(undefined)
+    })
+  })
+
+  it('warns when no el was found for targetEl string', () => {
+    const spy = jest.spyOn(global.console, 'warn').mockImplementation(function () {
+      return undefined
+    })
+    const { id } = createEl()
+    createWrapper({
+      targetEl: `#${id}x`,
+    })
+
+    expect(spy).toHaveBeenCalled()
+    spy.mockRestore()
+  })
+
+  it('doesnt throw when targetEl switched to undefined', () => {
+    const { id } = createEl()
+    const wrapper = createWrapper({
+      to: 'target',
+      targetEl: `#${id}`,
+    })
+
+    wrapper.setProps({ targetEl: undefined })
+
+    expect(wrapper.vm.mountedComp.name).toBe('target')
   })
 
   // check necessary because I regularly deactivate this during development

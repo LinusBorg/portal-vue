@@ -52,26 +52,24 @@ export default {
       this.sendUpdate()
     },
     targetEl (newValue, oldValue) {
-      this.mountToTarget()
+      if (newValue) {
+        this.mountToTarget()
+      }
     },
   },
 
   methods: {
 
     sendUpdate () {
-      if (this.to) {
-        if (this.$slots.default) {
-          wormhole.open({
-            from: this.name,
-            to: this.to,
-            passengers: [...this.$slots.default],
-            order: this.order,
-          })
-        } else {
-          this.clear()
-        }
-      } else if (!this.to && !this.targetEl) {
-        console.warn('[vue-portal]: You have to define a target via the `to` prop.')
+      if (this.$slots.default) {
+        wormhole.open({
+          from: this.name,
+          to: this.to,
+          passengers: [...this.$slots.default],
+          order: this.order,
+        })
+      } else {
+        this.clear()
       }
     },
 
@@ -87,7 +85,7 @@ export default {
       const target = this.targetEl
 
       if (typeof target === 'string') {
-        el = document.querySelector(this.targetEl)
+        el = document.querySelector(target)
       } else if (target instanceof HTMLElement) {
         el = target
       } else {
@@ -95,22 +93,20 @@ export default {
         return
       }
 
-      const attributes = extractAttributes(el)
-
       if (el) {
-        const target = new Vue({
+        const newTarget = new Vue({
           ...Target,
           parent: this,
           propsData: {
             name: this.to,
             tag: el.tagName,
-            attributes,
+            attributes: extractAttributes(el),
           },
         })
-        target.$mount(el)
-        this.mountedComp = target
+        newTarget.$mount(el)
+        this.mountedComp = newTarget
       } else {
-        console.warn('[vue-portal]: The specified targetEl ' + this.targetEl + ' was not found')
+        console.warn('[vue-portal]: The specified targetEl ' + target + ' was not found')
       }
     },
   },

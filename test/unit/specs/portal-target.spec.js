@@ -138,4 +138,21 @@ describe('PortalTarget', function () {
       ])
     })
   })
+
+  it('renders when a transition name is passed as a string', () => {
+    const wrapper = createWrapper({
+      transition: 'fade',
+    })
+
+    expect(wrapper.element).not.toBe(undefined)
+  })
+
+  it('renders when a transition name is passed as an object', () => {
+    const wrapper = createWrapper({
+      transition: { name: 'fade' },
+      slim: true,
+    })
+
+    expect(wrapper.element).not.toBe(undefined)
+  })
 })
