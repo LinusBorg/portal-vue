@@ -20,8 +20,7 @@
     "prod": "NODE_ENV=production webpack-dev-server --watch --config build/webpack.conf.js --inline --hot",
     "docs": "docute ./docs --watch",
     "test": "jest --config test/unit/jest.conf.js --coverage",
-    "test:old": "NODE_ENV=testing karma start test/karma.conf.js",
-    "test:once": "npm run test -- --single-run"
+    "test:watch": "jest --config test/unit/jest.conf.js --watch"
   },
   "eslintConfig": {
     "parser": "babel-eslint",
