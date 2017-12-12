@@ -1,6 +1,6 @@
 /*
     portal-vue
-    Version: 1.3.0
+    Version: 1.2.0
     Licence: MIT
     (c) Thorsten Lünborg
   */
@@ -127,6 +127,22 @@ function extractAttributes(el) {
     }
   }
   return attrs;
+}
+
+function updateAttributes(attrs, el) {
+  // special treatment for class
+  if (attrs.class) {
+    attrs.class.trim().split(' ').forEach(function (klass) {
+      el.classList.add(klass);
+    });
+    delete attrs.class;
+  }
+
+  var keys = Object.keys(attrs);
+
+  for (var i = 0; i < keys.length; i++) {
+    el.setAttribute(keys[i], attrs[keys[i]]);
+  }
 }
 
 function freeze(item) {
@@ -373,24 +389,9 @@ var Target = {
 
 
   methods: {
-    updateAttributes: function updateAttributes() {
+    updateAttributes: function updateAttributes$$1() {
       if (this.attributes) {
-        var attrs = this.attributes;
-        var el = this.$el;
-
-        // special treatment for class
-        if (attrs.class) {
-          attrs.class.trim().split(' ').forEach(function (klass) {
-            el.classList.add(klass);
-          });
-          delete attrs.class;
-        }
-
-        var keys = Object.keys(attrs);
-
-        for (var i = 0; i < keys.length; i++) {
-          el.setAttribute(keys[i], attrs[keys[i]]);
-        }
+        updateAttributes(this.attributes, this.$el);
       }
     },
     emitChange: function emitChange(newTransports, oldTransports) {
