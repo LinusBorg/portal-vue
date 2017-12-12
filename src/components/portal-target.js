@@ -1,12 +1,12 @@
 // import { transports } from './wormhole'
-import { combinePassengers, updateAttributes } from '../utils'
+import { combinePassengers } from '../utils'
 import wormhole from './wormhole'
 
 export default {
   abstract: true,
   name: 'portalTarget',
   props: {
-    attributes: { type: Object },
+    attributes: { type: Object, default: () => ({}) },
     multiple: { type: Boolean, default: false },
     name: { type: String, required: true },
     slim: { type: Boolean, default: false },
@@ -27,16 +27,11 @@ export default {
   },
   mounted () {
     this.unwatch = this.$watch('ownTransports', this.emitChange)
-
-    this.updateAttributes()
     this.$nextTick(() => {
       if (this.transition) { // only when we have a transition, because it causes a re-render
         this.firstRender = false
       }
     })
-  },
-  updated () {
-    this.updateAttributes()
   },
   beforeDestroy () {
     this.unwatch()
@@ -44,11 +39,6 @@ export default {
   },
 
   methods: {
-    updateAttributes () {
-      if (this.attributes) {
-        updateAttributes(this.attributes, this.$el)
-      }
-    },
     emitChange (newTransports, oldTransports) {
       if (this.multiple) {
         this.$emit('change',
@@ -79,8 +69,11 @@ export default {
     children () {
       return this.passengers.length !== 0 ? this.passengers : (this.$slots.default || [])
     },
+    hasAttributes () {
+      return Object.keys(this.attributes).length > 0
+    },
     noWrapper () {
-      const noWrapper = !this.attributes && this.slim
+      const noWrapper = !this.hasAttributes && this.slim
       if (noWrapper && this.children.length > 1) {
         console.warn('[portal-vue]: PortalTarget with `slim` option received more than one child element.')
       }
@@ -132,6 +125,6 @@ export default {
 
     return this.noWrapper
       ? this.children[0]
-      : <Tag class='vue-portal-target' key={wrapperKey}>{this.children}</Tag>
+      : <Tag class='vue-portal-target' {...this.attributes} key={wrapperKey}>{this.children}</Tag>
   },
 }

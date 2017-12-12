@@ -1,6 +1,6 @@
 /*
     portal-vue
-    Version: 1.2.0
+    Version: 1.2.1-beta.1
     Licence: MIT
     (c) Thorsten Lünborg
   */
@@ -126,23 +126,22 @@ function extractAttributes(el) {
       attrs[attr.name] = attr.value === '' ? true : attr.value;
     }
   }
-  return attrs;
-}
-
-function updateAttributes(attrs, el) {
-  // special treatment for class
+  var klass = void 0,
+      style = void 0;
   if (attrs.class) {
-    attrs.class.trim().split(' ').forEach(function (klass) {
-      el.classList.add(klass);
-    });
+    klass = attrs.class;
     delete attrs.class;
   }
-
-  var keys = Object.keys(attrs);
-
-  for (var i = 0; i < keys.length; i++) {
-    el.setAttribute(keys[i], attrs[keys[i]]);
+  if (attrs.style) {
+    style = attrs.style;
+    delete attrs.style;
   }
+  var data = {
+    attrs: attrs,
+    class: klass,
+    style: style
+  };
+  return data;
 }
 
 function freeze(item) {
@@ -345,7 +344,9 @@ var Target = {
   abstract: true,
   name: 'portalTarget',
   props: {
-    attributes: { type: Object },
+    attributes: { type: Object, default: function _default() {
+        return {};
+      } },
     multiple: { type: Boolean, default: false },
     name: { type: String, required: true },
     slim: { type: Boolean, default: false },
@@ -370,17 +371,12 @@ var Target = {
     var _this = this;
 
     this.unwatch = this.$watch('ownTransports', this.emitChange);
-
-    this.updateAttributes();
     this.$nextTick(function () {
       if (_this.transition) {
         // only when we have a transition, because it causes a re-render
         _this.firstRender = false;
       }
     });
-  },
-  updated: function updated() {
-    this.updateAttributes();
   },
   beforeDestroy: function beforeDestroy() {
     this.unwatch();
@@ -389,11 +385,6 @@ var Target = {
 
 
   methods: {
-    updateAttributes: function updateAttributes$$1() {
-      if (this.attributes) {
-        updateAttributes(this.attributes, this.$el);
-      }
-    },
     emitChange: function emitChange(newTransports, oldTransports) {
       if (this.multiple) {
         this.$emit('change', [].concat(toConsumableArray(newTransports)), [].concat(toConsumableArray(oldTransports)));
@@ -418,8 +409,11 @@ var Target = {
     children: function children() {
       return this.passengers.length !== 0 ? this.passengers : this.$slots.default || [];
     },
+    hasAttributes: function hasAttributes() {
+      return Object.keys(this.attributes).length > 0;
+    },
     noWrapper: function noWrapper() {
-      var noWrapper = !this.attributes && this.slim;
+      var noWrapper = !this.hasAttributes && this.slim;
       if (noWrapper && this.children.length > 1) {
         console.warn('[portal-vue]: PortalTarget with `slim` option received more than one child element.');
       }
@@ -471,7 +465,7 @@ var Target = {
 
     return this.noWrapper ? this.children[0] : h(
       Tag,
-      { 'class': 'vue-portal-target', key: wrapperKey },
+      babelHelperVueJsxMergeProps([{ 'class': 'vue-portal-target' }, this.attributes, { key: wrapperKey }]),
       [this.children]
     );
   }
