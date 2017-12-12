@@ -7,23 +7,21 @@ export function extractAttributes (el) {
       attrs[attr.name] = attr.value === '' ? true : attr.value
     }
   }
-  return attrs
-}
-
-export function updateAttributes (attrs, el) {
-  // special treatment for class
+  let klass, style
   if (attrs.class) {
-    attrs.class.trim().split(' ').forEach((klass) => {
-      el.classList.add(klass)
-    })
+    klass = attrs.class
     delete attrs.class
   }
-
-  const keys = Object.keys(attrs)
-
-  for (let i = 0; i < keys.length; i++) {
-    el.setAttribute(keys[i], attrs[keys[i]])
+  if (attrs.style) {
+    style = attrs.style
+    delete attrs.style
   }
+  const data = {
+    attrs,
+    class: klass,
+    style,
+  }
+  return data
 }
 
 export function freeze (item) {

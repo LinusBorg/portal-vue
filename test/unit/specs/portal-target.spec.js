@@ -52,9 +52,7 @@ describe('PortalTarget', function () {
         passengers: vNode,
       },
     ])
-
     const wrapper = createWrapper({ slim: true })
-
     expect(wrapper.is('.testnode')).toBe(true)
   })
 
