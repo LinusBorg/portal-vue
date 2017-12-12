@@ -1,5 +1,5 @@
 // import { transports } from './wormhole'
-import { combinePassengers } from '../utils'
+import { combinePassengers, updateAttributes } from '../utils'
 import wormhole from './wormhole'
 
 export default {
@@ -46,22 +46,7 @@ export default {
   methods: {
     updateAttributes () {
       if (this.attributes) {
-        const attrs = this.attributes
-        const el = this.$el
-
-        // special treatment for class
-        if (attrs.class) {
-          attrs.class.trim().split(' ').forEach((klass) => {
-            el.classList.add(klass)
-          })
-          delete attrs.class
-        }
-
-        const keys = Object.keys(attrs)
-
-        for (let i = 0; i < keys.length; i++) {
-          el.setAttribute(keys[i], attrs[keys[i]])
-        }
+        updateAttributes(this.attributes, this.$el)
       }
     },
     emitChange (newTransports, oldTransports) {

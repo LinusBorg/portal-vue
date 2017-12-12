@@ -10,6 +10,22 @@ export function extractAttributes (el) {
   return attrs
 }
 
+export function updateAttributes (attrs, el) {
+  // special treatment for class
+  if (attrs.class) {
+    attrs.class.trim().split(' ').forEach((klass) => {
+      el.classList.add(klass)
+    })
+    delete attrs.class
+  }
+
+  const keys = Object.keys(attrs)
+
+  for (let i = 0; i < keys.length; i++) {
+    el.setAttribute(keys[i], attrs[keys[i]])
+  }
+}
+
 export function freeze (item) {
   if (Array.isArray(item) || typeof item === 'object') {
     return Object.freeze(item)
