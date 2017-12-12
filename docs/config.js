@@ -1,10 +1,10 @@
 /* global docuteIframe docute */
 docute.init({
   landing: true,
-  home: 'getting-started.md',
+  home: 'guide.md',
   nav: [
     { title: 'PortalVue', path: '/' },
-    { title: 'Getting Started', path: '/getting-started' },
+    { title: 'Usage Guide', path: '/guide' },
     { title: 'Examples', path: '/examples' },
     { title: 'Documentation', type: 'dropdown', items: [
       { title: 'Installation Instructions', type: 'label' },

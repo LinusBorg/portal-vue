@@ -5,8 +5,10 @@
 PortalVue is a set of two components that allow you to render a component's template
 (or a part of it) anywhere in the document - even outside of your the part that is controlled by your Vue App!
 
-### Simple Example
+## Getting Started
 
+
+### A simple example
 ```html
 <portal to="destination">
   <p>This slot content will be rendered wherever the <portal-target> with name 'destination'
@@ -27,7 +29,7 @@ See it in action in this fiddle:
 <iframe height='300' scrolling='no' title='PortalVue - Simple Example' src='//codepen.io/LinusBorg/embed/preview/QvVqpY/?height=265&theme-id=light&default-tab=html,result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='https://codepen.io/LinusBorg/pen/QvVqpY/'>PortalVue - Simple Example</a> by Thorsten Lünborg (<a href='http://codepen.io/LinusBorg'>@LinusBorg</a>) on <a href='http://codepen.io'>CodePen</a>.
 </iframe>
 
-## Setup
+### Setup
 
 Install Package:
 ```bash
@@ -45,7 +47,7 @@ Vue.use(PortalVue)
 For more detailed Installation instructions, additional options and Installation via CDN,
 see the <a href="#" router-link="/docs/installation">Installation</a> Page in the Documentation.
 
-## Basic Usage
+## Basic Features
 
 ### Enabling/Disabling the Portal
 ```html
@@ -67,17 +69,17 @@ see the <a href="#" router-link="/docs/installation">Installation</a> Page in th
       at the destination.
     </li>
     <li>
-      When it evaluates to 'false', the content will be removed from the detination
+      When it evaluates to 'false', the content will be removed from the destination
     </li>
   </ul>
 </portal>
 ```
 
-## Advanced Usage
+## Advanced Features
 
 ### Switching targets and sources
 
-The `to` prop of `<portal>` and the `name` prop of `<portal-target>` can be changed dynamically with `v-bind`, allowing you to send content of one `Portal` to a different `PortalTarget`, or switch the source of a `PortalTarget` from one `Portal` to another.
+The `to` prop of `Portal` and the `name` prop of `PortalTarget` can be changed dynamically with `v-bind`, allowing you to send content of one `Portal` to a different `PortalTarget`, or switch the source of a `PortalTarget` from one `Portal` to another.
 
 ```html
 <portal v-bind:to="name">
@@ -114,6 +116,27 @@ The order the content is rendered in can be adjusted through the `order` prop on
   <p>some content</p>
 </div>
 ```
+
+### Removing the Wrapper element
+
+Vue components always need a single root element. Since the `PortalTarget` can't know in advance weither or not it will receive content with more than one root element, it will ender a wrapper element around the content to provide a single root node.
+
+However, if you know that you will send content with a single root element only, you can use the `slim` prop to tell `PortalTarget` to render that element only and do without the wrapper element.
+
+This can be useful if `PortalTarget`s wrapper element is creating problem for your styling.
+
+```html
+<portal to="destination">
+  <div>
+    <p>This content has a single root node (the div)</p>
+    <p>Therefore, we can tell the PortalTarget to do without a root element of its own</p>
+  </div>
+</portal>
+
+<portal-target name="destination" slim />
+```
+
+The `slim` property also works on `Portal` components when the are `disabled`.
 
 ### Transitions
 
