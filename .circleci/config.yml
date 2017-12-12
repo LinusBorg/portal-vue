@@ -41,7 +41,7 @@ jobs:
       - checkout
       - run:
           name: Unit Tests
-          command: npm run test:once
+          command: npm run test
 workflows:
   version: 2
   build_and_test:
