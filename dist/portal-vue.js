@@ -1,6 +1,6 @@
 /*
     portal-vue
-    Version: 1.2.0
+    Version: 1.3.0
     Licence: MIT
     (c) Thorsten Lünborg
   */
@@ -136,6 +136,36 @@ function freeze(item) {
   return item;
 }
 
+function combinePassengers(transports) {
+  var passengers = [];
+  var _iteratorNormalCompletion = true;
+  var _didIteratorError = false;
+  var _iteratorError = undefined;
+
+  try {
+    for (var _iterator = transports[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+      var transport = _step.value;
+
+      passengers = passengers.concat(transport.passengers);
+    }
+  } catch (err) {
+    _didIteratorError = true;
+    _iteratorError = err;
+  } finally {
+    try {
+      if (!_iteratorNormalCompletion && _iterator.return) {
+        _iterator.return();
+      }
+    } finally {
+      if (_didIteratorError) {
+        throw _iteratorError;
+      }
+    }
+  }
+
+  return passengers;
+}
+
 var transports = {};
 
 var Wormhole = function () {
@@ -156,11 +186,23 @@ var Wormhole = function () {
 
       transport.passengers = freeze(passengers);
       var keys = Object.keys(this.transports);
-      if (keys.indexOf(to) !== -1) {
-        this.transports[to] = transport;
-      } else {
-        Vue.set(this.transports, to, transport);
+      if (keys.indexOf(to) === -1) {
+        Vue.set(this.transports, to, []);
       }
+
+      var currentIndex = this.getTransportIndex(transport);
+      // Copying the array here so that the PortalTarget change event will actually contain two distinct arrays
+      var newTransports = this.transports[to].slice(0);
+      if (currentIndex === -1) {
+        newTransports.push(transport);
+      } else {
+        newTransports[currentIndex] = transport;
+      }
+      newTransports.sort(function (a, b) {
+        return a.order - b.order;
+      });
+
+      this.transports[to] = newTransports;
     }
   }, {
     key: 'close',
@@ -170,8 +212,20 @@ var Wormhole = function () {
           from = transport.from;
 
       if (!to || !from) return;
-      if (this.transports[to] && (force || this.transports[to].from === from)) {
-        this.transports[to] = undefined;
+      if (!this.transports[to]) {
+        return;
+      }
+
+      if (force) {
+        this.transports[to] = [];
+      } else {
+        var index = this.getTransportIndex(transport);
+        if (index >= 0) {
+          // Copying the array here so that the PortalTarget change event will actually contain two distinct arrays
+          var newTransports = this.transports[to].slice(0);
+          newTransports.splice(index, 1);
+          this.transports[to] = newTransports;
+        }
       }
     }
   }, {
@@ -182,52 +236,132 @@ var Wormhole = function () {
   }, {
     key: 'hasContentFor',
     value: function hasContentFor(to) {
-      return this.transports[to] && this.transports[to].passengers != null ? true : false;
+      if (!this.transports[to]) {
+        return false;
+      }
+      return this.getContentFor(to).length > 0;
     }
   }, {
     key: 'getSourceFor',
     value: function getSourceFor(to) {
-      return this.transports[to] && this.transports[to].from;
+      return this.transports[to] && this.transports[to][0].from;
     }
   }, {
     key: 'getContentFor',
     value: function getContentFor(to) {
-      var transport = this.transports[to];
-      return transport ? transport.passengers : undefined;
+      var transports = this.transports[to];
+      if (!transports) {
+        return undefined;
+      }
+      return combinePassengers(transports);
+    }
+  }, {
+    key: 'getTransportIndex',
+    value: function getTransportIndex(_ref) {
+      var to = _ref.to,
+          from = _ref.from;
+
+      for (var i in this.transports[to]) {
+        if (this.transports[to][i].from === from) {
+          return i;
+        }
+      }
+      return -1;
     }
   }]);
   return Wormhole;
 }();
 var wormhole = new Wormhole(transports);
 
+var nestRE = /^(attrs|props|on|nativeOn|class|style|hook)$/;
+
+var babelHelperVueJsxMergeProps = function mergeJSXProps (objs) {
+  return objs.reduce(function (a, b) {
+    var aa, bb, key, nestedKey, temp;
+    for (key in b) {
+      aa = a[key];
+      bb = b[key];
+      if (aa && nestRE.test(key)) {
+        // normalize class
+        if (key === 'class') {
+          if (typeof aa === 'string') {
+            temp = aa;
+            a[key] = aa = {};
+            aa[temp] = true;
+          }
+          if (typeof bb === 'string') {
+            temp = bb;
+            b[key] = bb = {};
+            bb[temp] = true;
+          }
+        }
+        if (key === 'on' || key === 'nativeOn' || key === 'hook') {
+          // merge functions
+          for (nestedKey in bb) {
+            aa[nestedKey] = mergeFn(aa[nestedKey], bb[nestedKey]);
+          }
+        } else if (Array.isArray(aa)) {
+          a[key] = aa.concat(bb);
+        } else if (Array.isArray(bb)) {
+          a[key] = [aa].concat(bb);
+        } else {
+          for (nestedKey in bb) {
+            aa[nestedKey] = bb[nestedKey];
+          }
+        }
+      } else {
+        a[key] = b[key];
+      }
+    }
+    return a
+  }, {})
+};
+
+function mergeFn (a, b) {
+  return function () {
+    a.apply(this, arguments);
+    b.apply(this, arguments);
+  }
+}
+
+// import { transports } from './wormhole'
 var Target = {
   abstract: true,
   name: 'portalTarget',
   props: {
     attributes: { type: Object },
+    multiple: { type: Boolean, default: false },
     name: { type: String, required: true },
     slim: { type: Boolean, default: false },
     tag: { type: String, default: 'div' },
-    transition: { type: Object },
-    transitionEvents: { type: Object }
+    transition: { type: [Boolean, String, Object], default: false },
+    transitionEvents: { type: Object, default: function _default() {
+        return {};
+      } }
   },
   data: function data() {
     return {
-      transports: transports,
-      firstRender: true };
+      transports: wormhole.transports,
+      firstRender: true
+    };
+  },
+  created: function created() {
+    if (!this.transports[this.name]) {
+      this.$set(this.transports, this.name, []);
+    }
   },
   mounted: function mounted() {
-    if (!this.transports[this.name]) {
-      this.$set(this.transports, this.name, undefined);
-    }
+    var _this = this;
 
-    this.unwatch = this.$watch(function () {
-      return this.transports[this.name];
-    }, this.emitChange);
+    this.unwatch = this.$watch('ownTransports', this.emitChange);
 
     this.updateAttributes();
-
-    this.firstRender = false;
+    this.$nextTick(function () {
+      if (_this.transition) {
+        // only when we have a transition, because it causes a re-render
+        _this.firstRender = false;
+      }
+    });
   },
   updated: function updated() {
     this.updateAttributes();
@@ -244,6 +378,7 @@ var Target = {
         var attrs = this.attributes;
         var el = this.$el;
 
+        // special treatment for class
         if (attrs.class) {
           attrs.class.trim().split(' ').forEach(function (klass) {
             el.classList.add(klass);
@@ -258,45 +393,86 @@ var Target = {
         }
       }
     },
-    emitChange: function emitChange(newTransport, oldTransport) {
-      this.$emit('change', _extends({}, newTransport), _extends({}, oldTransport));
+    emitChange: function emitChange(newTransports, oldTransports) {
+      if (this.multiple) {
+        this.$emit('change', [].concat(toConsumableArray(newTransports)), [].concat(toConsumableArray(oldTransports)));
+      } else {
+        var newTransport = newTransports.length === 0 ? undefined : newTransports[0];
+        var oldTransport = oldTransports.length === 0 ? undefined : oldTransports[0];
+        this.$emit('change', _extends({}, newTransport), _extends({}, oldTransport));
+      }
     }
   },
   computed: {
+    ownTransports: function ownTransports() {
+      var transports$$1 = this.transports[this.name] || [];
+      if (this.multiple) {
+        return transports$$1;
+      }
+      return transports$$1.length === 0 ? [] : [transports$$1[transports$$1.length - 1]];
+    },
     passengers: function passengers() {
-      return this.transports[this.name] && this.transports[this.name].passengers || [];
+      return combinePassengers(this.ownTransports);
     },
     children: function children() {
       return this.passengers.length !== 0 ? this.passengers : this.$slots.default || [];
     },
-    renderSlim: function renderSlim() {
-      var children = this.children;
-      return children.length === 1 && !this.attributes && this.slim;
+    noWrapper: function noWrapper() {
+      var noWrapper = !this.attributes && this.slim;
+      if (noWrapper && this.children.length > 1) {
+        console.warn('[portal-vue]: PortalTarget with `slim` option received more than one child element.');
+      }
+      return noWrapper;
     },
     withTransition: function withTransition() {
-      return this.transition && (!this.firstRender || this.transition.appear);
+      return !!this.transition;
+    },
+    transitionData: function transitionData() {
+      var t = this.transition;
+      var data = {};
+
+      // During first render, we render a dumb transition without any classes, events and a fake name
+      // We have to do this to emulate the normal behaviour of transitions without `appear`
+      // because in Portals, transitions can behave as if appear was defined under certain conditions.
+      if (this.firstRender && _typeof(this.transition) === 'object' && !this.transition.appear) {
+        data.props = { name: '__notranstition__portal-vue__' };
+        return data;
+      }
+
+      if (typeof t === 'string') {
+        data.props = { name: t };
+      } else if ((typeof t === 'undefined' ? 'undefined' : _typeof(t)) === 'object') {
+        data.props = t;
+      }
+      if (this.renderSlim) {
+        data.props.tag = this.tag;
+      }
+      data.on = this.transitionEvents;
+
+      return data;
     }
   },
 
   render: function render(h) {
-    var children = this.children;
+    var TransitionType = this.noWrapper ? 'transition' : 'transition-group';
     var Tag = this.tag;
-    if (this.renderSlim) {
-      return this.withTransition ? h('transition', {
-        props: this.transition,
-        on: this.transitionEvents || {}
-      }, children) : children[0];
-    } else {
-      var preparedChildren = this.withTransition ? h('transition', {
-        props: this.transition,
-        on: this.transitionEvents || {}
-      }, children) : children;
+
+    if (this.withTransition) {
       return h(
-        Tag,
-        { 'class': 'vue-portal-target' },
-        [preparedChildren]
+        TransitionType,
+        babelHelperVueJsxMergeProps([this.transitionData, { 'class': 'vue-portal-target' }]),
+        [this.children]
       );
     }
+
+    // Solves a bug where Vue would sometimes duplicate elements upon changing multiple or disabled
+    var wrapperKey = this.ownTransports.length;
+
+    return this.noWrapper ? this.children[0] : h(
+      Tag,
+      { 'class': 'vue-portal-target', key: wrapperKey },
+      [this.children]
+    );
   }
 };
 
@@ -308,10 +484,12 @@ var Portal = {
   abstract: true,
   name: 'portal',
   props: {
+    /* global HTMLElement */
     disabled: { type: Boolean, default: false },
     name: { type: String, default: function _default() {
         return String(pid++);
       } },
+    order: { type: Number, default: 0 },
     slim: { type: Boolean, default: false },
     tag: { type: [String], default: 'DIV' },
     targetEl: { type: inBrowser ? [String, HTMLElement] : String },
@@ -349,22 +527,23 @@ var Portal = {
       this.sendUpdate();
     },
     targetEl: function targetEl(newValue, oldValue) {
-      this.mountToTarget();
+      if (newValue) {
+        this.mountToTarget();
+      }
     }
   },
 
   methods: {
     sendUpdate: function sendUpdate() {
-      if (this.to) {
-        if (this.$slots.default) {
-          wormhole.open({
-            from: this.name,
-            to: this.to,
-            passengers: [].concat(toConsumableArray(this.$slots.default))
-          });
-        }
-      } else if (!this.to && !this.targetEl) {
-        console.warn('[vue-portal]: You have to define a target via the `to` prop.');
+      if (this.$slots.default) {
+        wormhole.open({
+          from: this.name,
+          to: this.to,
+          passengers: [].concat(toConsumableArray(this.$slots.default)),
+          order: this.order
+        });
+      } else {
+        this.clear();
       }
     },
     clear: function clear(target) {
@@ -378,7 +557,7 @@ var Portal = {
       var target = this.targetEl;
 
       if (typeof target === 'string') {
-        el = document.querySelector(this.targetEl);
+        el = document.querySelector(target);
       } else if (target instanceof HTMLElement) {
         el = target;
       } else {
@@ -386,21 +565,19 @@ var Portal = {
         return;
       }
 
-      var attributes = extractAttributes(el);
-
       if (el) {
-        var _target = new Vue(_extends({}, Target, {
+        var newTarget = new Vue(_extends({}, Target, {
           parent: this,
           propsData: {
             name: this.to,
             tag: el.tagName,
-            attributes: attributes
+            attributes: extractAttributes(el)
           }
         }));
-        _target.$mount(el);
-        this.mountedComp = _target;
+        newTarget.$mount(el);
+        this.mountedComp = newTarget;
       } else {
-        console.warn('[vue-portal]: The specified targetEl ' + this.targetEl + ' was not found');
+        console.warn('[vue-portal]: The specified targetEl ' + target + ' was not found');
       }
     }
   },
@@ -420,6 +597,7 @@ var Portal = {
         { 'class': 'v-portal', style: 'display: none', key: 'v-portal-placeholder' },
         []
       );
+      // h(this.tag, { class: { 'v-portal': true }, style: { display: 'none' }, key: 'v-portal-placeholder' })
     }
   }
 };
