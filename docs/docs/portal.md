@@ -50,6 +50,33 @@ This optional prop can usually be left out, because `Portal` can generate a rand
 
 But it might be a good idea to name your `Portal` components so you can debug them easier if need would be.
 
+### `order`
+
+|Type|Required|Default|
+|----|--------|-------|
+|`String|Number`|no*|a random String|
+
+This prop is only required when the Portal is sending content to a PortalTarget which has the `multiple` prop set. It defines the order position in the outupt of thePortalTarget.
+
+**Source**
+```html
+<portal name="destination" :order="2">
+  <p>some content</p>
+</portal>
+<portal name="destination" :order="1">
+  <p>some other content</p>
+</portal>
+
+<portal-target name="destination" multiple />
+```
+
+**Result**
+```html
+<div clas="vue-portal-target">
+  <p>some other content</p>
+  <p>some content</p>
+</div>
+```
 
 
 ### `slim`

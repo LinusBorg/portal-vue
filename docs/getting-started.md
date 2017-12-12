@@ -45,7 +45,7 @@ Vue.use(PortalVue)
 For more detailed Installation instructions, additional options and Installation via CDN,
 see the <a href="#" router-link="/docs/installation">Installation</a> Page in the Documentation.
 
-## Feature Examples
+## Basic Usage
 
 ### Enabling/Disabling the Portal
 ```html
@@ -57,7 +57,7 @@ see the <a href="#" router-link="/docs/installation">Installation</a> Page in th
 </portal>
 ```
 
-### v-if works, too
+### Conditional rendering with v-if
 
 ```html
 <portal to="destination" v-if="usePortal">
@@ -73,9 +73,11 @@ see the <a href="#" router-link="/docs/installation">Installation</a> Page in th
 </portal>
 ```
 
+## Advanced Usage
+
 ### Switching targets and sources
 
-The `to` prop of `<portal>` and the `name` prop of `<portal-target>` can be changed dynamically with `v-bind`.
+The `to` prop of `<portal>` and the `name` prop of `<portal-target>` can be changed dynamically with `v-bind`, allowing you to send content of one `Portal` to a different `PortalTarget`, or switch the source of a `PortalTarget` from one `Portal` to another.
 
 ```html
 <portal v-bind:to="name">
@@ -86,6 +88,60 @@ The `to` prop of `<portal>` and the `name` prop of `<portal-target>` can be chan
   by changing the 'name', you can define which portal's content should be shown.
 </portal-target>
 ```
+
+### Showing content from multiple `Portal`s in one target:
+
+The `PortalTarget` component has a `multiple` mode, which allows to render content from multiple `Portal` components *at the same time*.
+
+The order the content is rendered in can be adjusted through the `order` prop on the `Portal` components:
+
+**Source**
+```html
+<portal name="destination" :order="2">
+  <p>some content</p>
+</portal>
+<portal name="destination" :order="1">
+  <p>some other content</p>
+</portal>
+
+<portal-target name="destination" multiple />
+```
+
+**Result**
+```html
+<div clas="vue-portal-target">
+  <p>some other content</p>
+  <p>some content</p>
+</div>
+```
+
+### Transitions
+
+You can pass transitions to a `Portal` without problems. It will behave just the same when the content is being rendered in the `PortalTarget`:
+
+```html
+<portal to="destination">
+  <transition name="fade">
+    <p v-if="hasMessages" key="1">You have {{messages.length}} new messages</p>
+    <p v-else key="2">No unread messages</p>
+  </transition>
+</portal>
+```
+
+However, if you use a `PortalTarget` for multiple `Portal`s, you likely want to define the transition on the target end instead. This is also supported:
+```html
+<portal-target 
+  :transition="{ name: 'fade'}"
+  :transition-events="{ enter: onEnterCallBack }"
+/>
+```
+
+One important behaviour to know is this:
+
+* When the PortalTarget would render only one content element, a `<transition>` is created.
+* When it would render multiple elements, the rendered root wrapper element will be turned into a `<transition-group>` component instead.
+
+
 ### Rendering outside of the Vue-App
 
 ```html
@@ -107,7 +163,7 @@ The `to` prop of `<portal>` and the `name` prop of `<portal-target>` can be chan
 </body>
 ```
 
-## But why?
+## Use Cases
 
 ### Working around `position: fixed` issues
 
@@ -118,22 +174,21 @@ But we normally need it to render components like modals, dialogs, notifications
 and similar UI elements in a fixed position.
 
 With PortalVue, you can instead render the component to a `<portal-target>` that you can position
-as the first child of your `#app` element.
+as the very last in the page's `body`, making styling and positioning much easier and less error-prone.
 
 Now you can position your components with `position: absolute` instead
 
 ```html
 <body>
   <div id="app" style="position: relative;">
-    <portal-target name="notification-outlet"></portal-target>
-    <div></div>
     <div>
       <portal to="notification-outlet">
         <notification style="position: absolute; top: 20px; right: 20px;">
-          This modal can be positioned absolutely, working around problems with 'fixed'
+          This modal can be positioned absolutely very easily.
         </notification>
       </portal>
     </div>
+    <portal-target name="notification-outlet"></portal-target>
   </div>
 </body>
 ```

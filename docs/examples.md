@@ -1,6 +1,6 @@
 # Examples
 
-> Coming soon. Still working on the JSFiddles ;)
+> This section cold need some more lovely examples. PRs are welcome :)
 
 ## Starter
 

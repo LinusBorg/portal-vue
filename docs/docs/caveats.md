@@ -12,6 +12,19 @@ That means they behave a bit differently in two ways:
 1. They don't show up in vue-devtools.
 2. they don't show up in `$children` but components in the portal's content will.
 
+### A workaround
+
+If you want the components to show up in your devtools, you can simply change the `abstract` option on the components to `false`:
+
+```javascript
+import { Portal } from 'portal-vue'
+
+// Make a shallow copy so the original object keeps `abstract: true` 
+const NonAbstractPortal = Object.assign({}, Portal, { abstract: false })
+```
+
+Notice that any reference for `$parent` in that portal's content will now point to the `Portal` instance.
+
 ## Server-Side Rendering
 
 When you use [Vue's SSR capabilities](https://ssr.vuejs.org), portal-vue can't work reliably because Vue renders the page directly to a string, there are not reactive updates applied. That means that a `<portal-target>` appearing before a `<portal>` will render an empty div on the server whereas it will render the sent content on the client, resulting in a hydration vdom mismatch error.

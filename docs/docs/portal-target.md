@@ -12,6 +12,32 @@ This component is an outlet for any content that was sent by a `<portal>` compon
 
 ## Props API
 
+### `multiple`
+
+When `multiple` is `true`, the portal will be able to receive and render content from multiple `Portal` component at the same time.
+
+You should use the `order` prop on the `Portal` to define the order in which the contents should be rendered:
+
+**Source**
+```html
+<portal name="destination" :order="2">
+  <p>some content</p>
+</portal>
+<portal name="destination" :order="1">
+  <p>some other content</p>
+</portal>
+
+<portal-target name="destination" multiple />
+```
+
+**Result**
+```html
+<div clas="vue-portal-target">
+  <p>some other content</p>
+  <p>some content</p>
+</div>
+```
+
 ### `name`
 
 |Type|Required|Default|
