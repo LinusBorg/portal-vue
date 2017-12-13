@@ -3,10 +3,9 @@
 ## What is PortalVue?
 
 PortalVue is a set of two components that allow you to render a component's template
-(or a part of it) anywhere in the document - even outside of your the part that is controlled by your Vue App!
+(or a part of it) anywhere in the document - even outside the part controlled by your Vue App!
 
 ## Getting Started
-
 
 ### A simple example
 ```html
@@ -44,12 +43,13 @@ import PortalVue from 'portal-vue'
 Vue.use(PortalVue)
 ```
 
-For more detailed Installation instructions, additional options and Installation via CDN,
-see the <a href="#" router-link="/docs/installation">Installation</a> Page in the Documentation.
+For more detailed installation instructions, additional options and installation via CDN,
+see the <a href="#" router-link="/docs/installation">Installation</a> page in the documentation.
 
 ## Basic Features
 
 ### Enabling/Disabling the Portal
+
 ```html
 <portal to="destination" :disabled="true">
   <p>
@@ -79,7 +79,7 @@ see the <a href="#" router-link="/docs/installation">Installation</a> Page in th
 
 ### Switching targets and sources
 
-The `to` prop of `Portal` and the `name` prop of `PortalTarget` can be changed dynamically with `v-bind`, allowing you to send content of one `Portal` to a different `PortalTarget`, or switch the source of a `PortalTarget` from one `Portal` to another.
+The `to` prop of `<portal>` and the `name` prop of `<portal-target>` can be changed dynamically with `v-bind`, allowing you to send content of one `<portal>` to a different `<portal-target>`, or switch the source of a `<portal-target>` from one `<portal>` to another.
 
 ```html
 <portal v-bind:to="name">
@@ -93,9 +93,9 @@ The `to` prop of `Portal` and the `name` prop of `PortalTarget` can be changed d
 
 ### Showing content from multiple `Portal`s in one target:
 
-The `PortalTarget` component has a `multiple` mode, which allows to render content from multiple `Portal` components *at the same time*.
+The `<portal-target>` component has a `multiple` mode, which allows to render content from multiple `<portal>` components *at the same time*.
 
-The order the content is rendered in can be adjusted through the `order` prop on the `Portal` components:
+The order the content is rendered in can be adjusted through the `order` prop on the `<portal>` components:
 
 **Source**
 ```html
@@ -119,11 +119,11 @@ The order the content is rendered in can be adjusted through the `order` prop on
 
 ### Removing the Wrapper element
 
-Vue components always need a single root element. Since the `PortalTarget` can't know in advance weither or not it will receive content with more than one root element, it will ender a wrapper element around the content to provide a single root node.
+Vue components always need a single root element. Since `<portal-target>` can't know in advance weither or not it will receive content with more than one root element, it will ender a wrapper element around the content to provide a single root node.
 
-However, if you know that you will send content with a single root element only, you can use the `slim` prop to tell `PortalTarget` to render that element only and do without the wrapper element.
+However, if you know that you will send content with a single root element only, you can use the `slim` prop to tell `<portal-target>` to render that element only and do without the wrapper element.
 
-This can be useful if `PortalTarget`s wrapper element is creating problem for your styling.
+This can be useful if `<portal-target>`s wrapper element is creating problem for your styling.
 
 ```html
 <portal to="destination">
@@ -136,11 +136,11 @@ This can be useful if `PortalTarget`s wrapper element is creating problem for yo
 <portal-target name="destination" slim />
 ```
 
-The `slim` property also works on `Portal` components when the are `disabled`.
+The `slim` property also works on `<portal>` components when the are `disabled`.
 
 ### Transitions
 
-You can pass transitions to a `Portal` without problems. It will behave just the same when the content is being rendered in the `PortalTarget`:
+You can pass transitions to a `<portal>` without problems. It will behave just the same when the content is being rendered in the `<portal-target>`:
 
 ```html
 <portal to="destination">
@@ -151,7 +151,7 @@ You can pass transitions to a `Portal` without problems. It will behave just the
 </portal>
 ```
 
-However, if you use a `PortalTarget` for multiple `Portal`s, you likely want to define the transition on the target end instead. This is also supported:
+However, if you use a `<portal-target>` for multiple `<portal>`s, you likely want to define the transition on the target end instead. This is also supported:
 ```html
 <portal-target 
   :transition="{ name: 'fade'}"
