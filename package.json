@@ -1,6 +1,6 @@
 {
   "name": "portal-vue",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "A Vue component to render elements outside of a component's template, elsewhere in the DOM",
   "main": "dist/portal-vue.js",
   "files": [

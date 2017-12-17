@@ -1,6 +1,6 @@
 /*
     portal-vue
-    Version: 1.2.1-beta.1
+    Version: 1.2.2
     Licence: MIT
     (c) Thorsten Lünborg
   */
@@ -152,33 +152,9 @@ function freeze(item) {
 }
 
 function combinePassengers(transports) {
-  var passengers = [];
-  var _iteratorNormalCompletion = true;
-  var _didIteratorError = false;
-  var _iteratorError = undefined;
-
-  try {
-    for (var _iterator = transports[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-      var transport = _step.value;
-
-      passengers = passengers.concat(transport.passengers);
-    }
-  } catch (err) {
-    _didIteratorError = true;
-    _iteratorError = err;
-  } finally {
-    try {
-      if (!_iteratorNormalCompletion && _iterator.return) {
-        _iterator.return();
-      }
-    } finally {
-      if (_didIteratorError) {
-        throw _iteratorError;
-      }
-    }
-  }
-
-  return passengers;
+  return transports.reduce(function (passengers, transport) {
+    return passengers.concat(transport.passengers);
+  }, []);
 }
 
 var transports = {};
