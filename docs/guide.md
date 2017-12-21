@@ -8,6 +8,7 @@ PortalVue is a set of two components that allow you to render a component's temp
 ## Getting Started
 
 ### A simple example
+
 ```html
 <portal to="destination">
   <p>This slot content will be rendered wherever the <portal-target> with name 'destination'
@@ -31,12 +32,15 @@ See it in action in this fiddle:
 ### Setup
 
 Install Package:
+
 ```bash
 npm install --save portal-vue
 # or with yarn
 yarn add portal-vue
 ```
+
 Add it to your application:
+
 ```javascript
 import PortalVue from 'portal-vue'
 
@@ -46,7 +50,7 @@ Vue.use(PortalVue)
 For more detailed installation instructions, additional options and installation via CDN,
 see the <a href="#" router-link="/docs/installation">Installation</a> page in the documentation.
 
-## Basic Features
+## Basic Usage
 
 ### Enabling/Disabling the Portal
 
@@ -75,7 +79,7 @@ see the <a href="#" router-link="/docs/installation">Installation</a> page in th
 </portal>
 ```
 
-## Advanced Features
+## Advanced Usage
 
 ### Switching targets and sources
 
@@ -93,11 +97,12 @@ The `to` prop of `<portal>` and the `name` prop of `<portal-target>` can be chan
 
 ### Showing content from multiple `Portal`s in one target:
 
-The `<portal-target>` component has a `multiple` mode, which allows to render content from multiple `<portal>` components *at the same time*.
+The `<portal-target>` component has a `multiple` mode, which allows to render content from multiple `<portal>` components _at the same time_.
 
 The order the content is rendered in can be adjusted through the `order` prop on the `<portal>` components:
 
 **Source**
+
 ```html
 <portal name="destination" :order="2">
   <p>some content</p>
@@ -110,6 +115,7 @@ The order the content is rendered in can be adjusted through the `order` prop on
 ```
 
 **Result**
+
 ```html
 <div clas="vue-portal-target">
   <p>some other content</p>
@@ -138,6 +144,30 @@ This can be useful if `<portal-target>`s wrapper element is creating problem for
 
 The `slim` property also works on `<portal>` components when the are `disabled`.
 
+### Using Scoped Slots
+
+PortalVue can also be used with [Scoped Slots](https://vuejs.org/v2/guide/components.html#Scoped-Slots)! This allows you to send a scoped slot to a PortalTarget, which can then provide props for the slot content:
+
+```html
+<portal to="destination">
+  <p slot-scope="{message}">
+    {{message}}
+  </p>
+</portal>
+
+<portal-target name="destination" :slot-props="{message: 'Hello from the Target to You!'}" />
+```
+
+**Result:**
+
+```html
+<div class="vue-portal-target">
+  <p>
+    Hello from the Target to You!
+  </p>
+</div>
+```
+
 ### Transitions
 
 You can pass transitions to a `<portal>` without problems. It will behave just the same when the content is being rendered in the `<portal-target>`:
@@ -152,8 +182,9 @@ You can pass transitions to a `<portal>` without problems. It will behave just t
 ```
 
 However, if you use a `<portal-target>` for multiple `<portal>`s, you likely want to define the transition on the target end instead. This is also supported:
+
 ```html
-<portal-target 
+<portal-target
   :transition="{ name: 'fade'}"
   :transition-events="{ enter: onEnterCallBack }"
 />
@@ -164,8 +195,12 @@ One important behaviour to know is this:
 * When the PortalTarget would render only one content element, a `<transition>` is created.
 * When it would render multiple elements, the rendered root wrapper element will be turned into a `<transition-group>` component instead.
 
-
 ### Rendering outside of the Vue-App
+
+<p class="warning">
+  <strong>Depracation Warning</strong><br>
+  This feature will be removed in PortalVue 2.0. See [this issue](https://github.com/LinusBorg/portal-vue/issues/74).
+</p>
 
 ```html
 <body>
