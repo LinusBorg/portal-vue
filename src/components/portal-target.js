@@ -3,13 +3,14 @@ import { combinePassengers } from '../utils'
 import wormhole from './wormhole'
 
 export default {
-  abstract: true,
+  abstract: false,
   name: 'portalTarget',
   props: {
     attributes: { type: Object, default: () => ({}) },
     multiple: { type: Boolean, default: false },
     name: { type: String, required: true },
     slim: { type: Boolean, default: false },
+    slotProps: { type: Object, default: () => ({}) },
     tag: { type: String, default: 'div' },
     transition: { type: [Boolean, String, Object], default: false },
     transitionEvents: { type: Object, default: () => ({}) },
@@ -28,7 +29,8 @@ export default {
   mounted () {
     this.unwatch = this.$watch('ownTransports', this.emitChange)
     this.$nextTick(() => {
-      if (this.transition) { // only when we have a transition, because it causes a re-render
+      if (this.transition) {
+        // only when we have a transition, because it causes a re-render
         this.firstRender = false
       }
     })
@@ -41,17 +43,13 @@ export default {
   methods: {
     emitChange (newTransports, oldTransports) {
       if (this.multiple) {
-        this.$emit('change',
-          [...newTransports],
-          [...oldTransports]
-        )
+        this.$emit('change', [...newTransports], [...oldTransports])
       } else {
-        const newTransport = newTransports.length === 0 ? undefined : newTransports[0]
-        const oldTransport = oldTransports.length === 0 ? undefined : oldTransports[0]
-        this.$emit('change',
-          { ...newTransport },
-          { ...oldTransport }
-        )
+        const newTransport =
+          newTransports.length === 0 ? undefined : newTransports[0]
+        const oldTransport =
+          oldTransports.length === 0 ? undefined : oldTransports[0]
+        this.$emit('change', { ...newTransport }, { ...oldTransport })
       }
     },
   },
@@ -64,10 +62,12 @@ export default {
       return transports.length === 0 ? [] : [transports[transports.length - 1]]
     },
     passengers () {
-      return combinePassengers(this.ownTransports)
+      return combinePassengers(this.ownTransports, this.slotProps)
     },
     children () {
-      return this.passengers.length !== 0 ? this.passengers : (this.$slots.default || [])
+      return this.passengers.length !== 0
+        ? this.passengers
+        : this.$slots.default || []
     },
     hasAttributes () {
       return Object.keys(this.attributes).length > 0
@@ -75,7 +75,9 @@ export default {
     noWrapper () {
       const noWrapper = !this.hasAttributes && this.slim
       if (noWrapper && this.children.length > 1) {
-        console.warn('[portal-vue]: PortalTarget with `slim` option received more than one child element.')
+        console.warn(
+          '[portal-vue]: PortalTarget with `slim` option received more than one child element.'
+        )
       }
       return noWrapper
     },
@@ -89,7 +91,10 @@ export default {
       // During first render, we render a dumb transition without any classes, events and a fake name
       // We have to do this to emulate the normal behaviour of transitions without `appear`
       // because in Portals, transitions can behave as if appear was defined under certain conditions.
-      if (this.firstRender && (typeof this.transition === 'object' && !this.transition.appear)) {
+      if (
+        this.firstRender &&
+        (typeof this.transition === 'object' && !this.transition.appear)
+      ) {
         data.props = { name: '__notranstition__portal-vue__' }
         return data
       }
@@ -123,8 +128,12 @@ export default {
     // Solves a bug where Vue would sometimes duplicate elements upon changing multiple or disabled
     const wrapperKey = this.ownTransports.length
 
-    return this.noWrapper
-      ? this.children[0]
-      : <Tag class='vue-portal-target' {...this.attributes} key={wrapperKey}>{this.children}</Tag>
+    return this.noWrapper ? (
+      this.children[0]
+    ) : (
+      <Tag class='vue-portal-target' {...this.attributes} key={wrapperKey}>
+        {this.children}
+      </Tag>
+    )
   },
 }

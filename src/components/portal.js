@@ -1,15 +1,14 @@
-
 import Vue from 'vue'
 import wormhole from './wormhole'
 import Target from './portal-target'
 import { extractAttributes } from '../utils'
 
-const inBrowser = (typeof window !== 'undefined')
+const inBrowser = typeof window !== 'undefined'
 
 let pid = 1
 
 export default {
-  abstract: true,
+  abstract: false,
   name: 'portal',
   props: {
     /* global HTMLElement */
@@ -19,7 +18,10 @@ export default {
     slim: { type: Boolean, default: false },
     tag: { type: [String], default: 'DIV' },
     targetEl: { type: inBrowser ? [String, HTMLElement] : String },
-    to: { type: String, default: () => String(Math.round(Math.random() * 10000000)) },
+    to: {
+      type: String,
+      default: () => String(Math.round(Math.random() * 10000000)),
+    },
   },
 
   mounted () {
@@ -45,7 +47,6 @@ export default {
       this.mountedComp.$destroy()
     }
   },
-
   watch: {
     to (newValue, oldValue) {
       oldValue && this.clear(oldValue)
@@ -58,14 +59,20 @@ export default {
     },
   },
 
+  computed: {
+    normalizedSlots () {
+      return this.$scopedSlots[this.to]
+        ? [this.$scopedSlots[this.to]]
+        : this.$slots.default
+    },
+  },
   methods: {
-
     sendUpdate () {
-      if (this.$slots.default) {
+      if (this.normalizedSlots) {
         wormhole.open({
           from: this.name,
           to: this.to,
-          passengers: [...this.$slots.default],
+          passengers: [...this.normalizedSlots],
           order: this.order,
         })
       } else {
@@ -89,7 +96,9 @@ export default {
       } else if (target instanceof HTMLElement) {
         el = target
       } else {
-        console.warn('[vue-portal]: value of targetEl must be of type String or HTMLElement')
+        console.warn(
+          '[vue-portal]: value of targetEl must be of type String or HTMLElement'
+        )
         return
       }
 
@@ -106,20 +115,33 @@ export default {
         newTarget.$mount(el)
         this.mountedComp = newTarget
       } else {
-        console.warn('[vue-portal]: The specified targetEl ' + target + ' was not found')
+        console.warn(
+          '[vue-portal]: The specified targetEl ' + target + ' was not found'
+        )
       }
+    },
+    normalizeChildren (children) {
+      return typeof children === 'function' ? children({}) : children
     },
   },
 
   render (h) {
-    const children = this.$slots.default || []
+    const children = this.$slots.default || this.$scopedSlots[this.to] || []
     const Tag = this.tag
     if (children.length && this.disabled) {
-      return children.length <= 1 && this.slim
-        ? children[0]
-        : (<Tag>{children}</Tag>)
+      return children.length <= 1 && this.slim ? (
+        children[0]
+      ) : (
+        <Tag>{this.normalizeChildren(children)}</Tag>
+      )
     } else {
-      return (<Tag class={'v-portal'} style={'display: none'} key={'v-portal-placeholder'}/>)
+      return (
+        <Tag
+          class={'v-portal'}
+          style={'display: none'}
+          key={'v-portal-placeholder'}
+        />
+      )
       // h(this.tag, { class: { 'v-portal': true }, style: { display: 'none' }, key: 'v-portal-placeholder' })
     }
   },

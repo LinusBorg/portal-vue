@@ -1,4 +1,4 @@
-export function extractAttributes (el) {
+export function extractAttributes(el) {
   const map = el.hasAttributes() ? el.attributes : []
   const attrs = {}
   for (let i = 0; i < map.length; i++) {
@@ -24,15 +24,20 @@ export function extractAttributes (el) {
   return data
 }
 
-export function freeze (item) {
+export function freeze(item) {
   if (Array.isArray(item) || typeof item === 'object') {
     return Object.freeze(item)
   }
   return item
 }
 
-export function combinePassengers (transports) {
+export function combinePassengers(transports, slotProps = {}) {
   return transports.reduce((passengers, transport) => {
-    return passengers.concat(transport.passengers)
+    let newPassengers = transport.passengers[0]
+    newPassengers =
+      typeof newPassengers === 'function'
+        ? newPassengers(slotProps)
+        : newPassengers
+    return passengers.concat(newPassengers)
   }, [])
 }
