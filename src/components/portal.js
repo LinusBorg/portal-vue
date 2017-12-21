@@ -16,6 +16,7 @@ export default {
     name: { type: String, default: () => String(pid++) },
     order: { type: Number, default: 0 },
     slim: { type: Boolean, default: false },
+    slotProps: { type: Object, default: () => ({}) },
     tag: { type: [String], default: 'DIV' },
     targetEl: { type: inBrowser ? [String, HTMLElement] : String },
     to: {
@@ -24,7 +25,7 @@ export default {
     },
   },
 
-  mounted () {
+  mounted() {
     if (this.targetEl) {
       this.mountToTarget()
     }
@@ -33,7 +34,7 @@ export default {
     }
   },
 
-  updated () {
+  updated() {
     if (this.disabled) {
       this.clear()
     } else {
@@ -41,18 +42,18 @@ export default {
     }
   },
 
-  beforeDestroy () {
+  beforeDestroy() {
     this.clear()
     if (this.mountedComp) {
       this.mountedComp.$destroy()
     }
   },
   watch: {
-    to (newValue, oldValue) {
+    to(newValue, oldValue) {
       oldValue && this.clear(oldValue)
       this.sendUpdate()
     },
-    targetEl (newValue, oldValue) {
+    targetEl(newValue, oldValue) {
       if (newValue) {
         this.mountToTarget()
       }
@@ -60,14 +61,14 @@ export default {
   },
 
   computed: {
-    normalizedSlots () {
-      return this.$scopedSlots[this.to]
-        ? [this.$scopedSlots[this.to]]
+    normalizedSlots() {
+      return this.$scopedSlots.default
+        ? [this.$scopedSlots.default]
         : this.$slots.default
     },
   },
   methods: {
-    sendUpdate () {
+    sendUpdate() {
       if (this.normalizedSlots) {
         wormhole.open({
           from: this.name,
@@ -80,14 +81,14 @@ export default {
       }
     },
 
-    clear (target) {
+    clear(target) {
       wormhole.close({
         from: this.name,
         to: target || this.to,
       })
     },
 
-    mountToTarget () {
+    mountToTarget() {
       let el
       const target = this.targetEl
 
@@ -120,13 +121,15 @@ export default {
         )
       }
     },
-    normalizeChildren (children) {
-      return typeof children === 'function' ? children({}) : children
+    normalizeChildren(children) {
+      return typeof children === 'function'
+        ? children(this.slotProps)
+        : children
     },
   },
 
-  render (h) {
-    const children = this.$slots.default || this.$scopedSlots[this.to] || []
+  render(h) {
+    const children = this.$slots.default || this.$scopedSlots.default || []
     const Tag = this.tag
     if (children.length && this.disabled) {
       return children.length <= 1 && this.slim ? (

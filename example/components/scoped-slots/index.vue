@@ -12,8 +12,8 @@
     </div>
     <div class="wrapper">
       <container type="source">
-        <portal to="scoped-slot-destination" :disabled="scopedSlot">
-          <template slot-scope="{ message }" slot="scoped-slot-destination">
+        <portal to="scoped-slot-destination" :disabled="scopedSlot" :slot-props="{message: 'Message for local!!'}">
+          <template slot-scope="{ message }" slot="default">
             <p>
               This content was created with a scoped Slot.<br>
               When Portal is disabled, this paragraph is rendered in the left box.<br>
@@ -28,7 +28,7 @@
       </container>
 
       <container type="destination">
-        <portal-target name="scoped-slot-destination" :slot-props="{message: 'Test!!'}"/>
+        <portal-target name="scoped-slot-destination" :slot-props="{message: 'Message for Target!!!!'}"/>
       </container>
 
     </div>
