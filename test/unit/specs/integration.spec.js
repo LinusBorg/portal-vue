@@ -41,7 +41,9 @@ describe('Integration Tests', () => {
     const { portal, target } = mountScenario(component)
 
     return waitTicks().then(() => {
-      expect(target.find('p').text()).toBe('Test')
+      const pArray = target.findAll('p')
+      expect(pArray.at(0).text()).toBe('Test1')
+      expect(pArray.at(1).text()).toBe('Test2')
     })
   })
 

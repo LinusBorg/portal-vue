@@ -2,7 +2,8 @@
   <div>
     <div id="from">
       <portal ref="portal" to="target">
-        <p>Test</p>
+        <p key="1">Test1</p>
+        <p key="2">Test2</p>
       </portal>
     </div>
     <div id="to">
