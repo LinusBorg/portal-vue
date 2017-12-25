@@ -120,9 +120,9 @@ When set to true, the component will check if the sent content has only one root
 This prop is only useful if:
 
 * the `disabled` prop is `true`, **and**
-* the portal' slot content is a [Scoped Slot](https://vuejs.org/v2/guide/components.html#Scoped-Slots).
+* the `Portal`'s slot content is a [Scoped Slot](https://vuejs.org/v2/guide/components.html#Scoped-Slots).
 
-If that's the case, then the object you pass to `slotProps` is used to define the props that are passed to the scoped slot to display the content correctly it locally:
+If that's the case, then the object you pass to `slotProps` is used to define the props that are passed to the scoped slot to display the content correctly in-place:
 
 It has a (more useful) counterpart in the `<portal-target>` component
 
