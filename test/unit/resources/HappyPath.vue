@@ -1,0 +1,18 @@
+<template>
+  <div>
+    <div id="from">
+      <portal ref="portal" to="target">
+        <p>Test</p>
+      </portal>
+    </div>
+    <div id="to">
+      <portal-target name="target" ref="target"/>
+    </div>
+  </div>
+</template>
+<script>
+export default {
+  name: 'HappyPath',
+}
+</script>
+
