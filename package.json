@@ -1,8 +1,7 @@
 {
   "name": "portal-vue",
   "version": "1.2.2",
-  "description":
-    "A Vue component to render elements outside of a component's template, elsewhere in the DOM",
+  "description": "A Vue component to render elements outside of a component's template, elsewhere in the DOM",
   "main": "dist/portal-vue.js",
   "files": [
     "dist/portal-vue.js",
@@ -16,12 +15,9 @@
   "scripts": {
     "lint": "eslint src/",
     "lint:test": "eslint test/",
-    "build":
-      "npm run lint && cross-env NODE_ENV=production rollup -c build/rollup.conf.prod.js && uglifyjs dist/portal-vue.js -c -m > dist/portal-vue.min.js",
-    "dev":
-      "cross-env NODE_ENV=development webpack-dev-server --watch --config build/webpack.conf.js --inline --hot",
-    "prod":
-      "NODE_ENV=production webpack-dev-server --watch --config build/webpack.conf.js --inline --hot",
+    "build": "npm run lint && cross-env NODE_ENV=production rollup -c build/rollup.conf.prod.js && uglifyjs dist/portal-vue.js -c -m > dist/portal-vue.min.js",
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --watch --config build/webpack.conf.js --inline --hot",
+    "prod": "NODE_ENV=production webpack-dev-server --watch --config build/webpack.conf.js --inline --hot",
     "docs": "docute ./docs --watch",
     "test": "jest --config test/unit/jest.conf.js --coverage",
     "test:watch": "jest --config test/unit/jest.conf.js --watch"
@@ -36,11 +32,19 @@
       "mocha": true,
       "browser": true
     },
-    "extends": ["plugin:vue/recommended"],
-    "plugins": ["html", "vue"],
+    "extends": [
+      "plugin:vue/recommended"
+    ],
+    "plugins": [
+      "html",
+      "vue"
+    ],
     "rules": {
       "vue/jsx-uses-vars": 2,
-      "comma-dangle": ["error", "always-multiline"]
+      "comma-dangle": [
+        "error",
+        "always-multiline"
+      ]
     }
   },
   "babel": {
@@ -53,12 +57,17 @@
       ],
       "stage-3"
     ],
-    "plugins": ["transform-vue-jsx"],
+    "plugins": [
+      "transform-vue-jsx"
+    ],
     "comments": true,
     "env": {
       "jest": true,
       "test": {
-        "presets": ["es2015", "stage-3"]
+        "presets": [
+          "es2015",
+          "stage-3"
+        ]
       }
     }
   },

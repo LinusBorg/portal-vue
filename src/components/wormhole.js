@@ -5,11 +5,11 @@ const transports = {}
 export { transports }
 
 export class Wormhole {
-  constructor (transports) {
+  constructor(transports) {
     this.transports = transports
   }
 
-  open (transport) {
+  open(transport) {
     const { to, from, passengers } = transport
     if (!to || !from || !passengers) return
 
@@ -27,14 +27,14 @@ export class Wormhole {
     } else {
       newTransports[currentIndex] = transport
     }
-    newTransports.sort(function (a, b) {
+    newTransports.sort(function(a, b) {
       return a.order - b.order
     })
 
     this.transports[to] = newTransports
   }
 
-  close (transport, force = false) {
+  close(transport, force = false) {
     const { to, from } = transport
     if (!to || !from) return
     if (!this.transports[to]) {
@@ -54,22 +54,22 @@ export class Wormhole {
     }
   }
 
-  hasTarget (to) {
+  hasTarget(to) {
     return this.transports.hasOwnProperty(to)
   }
 
-  hasContentFor (to) {
+  hasContentFor(to) {
     if (!this.transports[to]) {
       return false
     }
     return this.getContentFor(to).length > 0
   }
 
-  getSourceFor (to) {
+  getSourceFor(to) {
     return this.transports[to] && this.transports[to][0].from
   }
 
-  getContentFor (to) {
+  getContentFor(to) {
     const transports = this.transports[to]
     if (!transports) {
       return undefined
@@ -77,7 +77,7 @@ export class Wormhole {
     return combinePassengers(transports)
   }
 
-  getTransportIndex ({ to, from }) {
+  getTransportIndex({ to, from }) {
     for (const i in this.transports[to]) {
       if (this.transports[to][i].from === from) {
         return i

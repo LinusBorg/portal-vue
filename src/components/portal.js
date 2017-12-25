@@ -8,7 +8,7 @@ const inBrowser = typeof window !== 'undefined'
 let pid = 1
 
 export default {
-  abstract: false,
+  abstract: true,
   name: 'portal',
   props: {
     /* global HTMLElement */

@@ -3,7 +3,7 @@ import { combinePassengers } from '../utils'
 import wormhole from './wormhole'
 
 export default {
-  abstract: false,
+  abstract: true,
   name: 'portalTarget',
   props: {
     attributes: { type: Object, default: () => ({}) },
@@ -15,18 +15,18 @@ export default {
     transition: { type: [Boolean, String, Object], default: false },
     transitionEvents: { type: Object, default: () => ({}) },
   },
-  data () {
+  data() {
     return {
       transports: wormhole.transports,
       firstRender: true,
     }
   },
-  created () {
+  created() {
     if (!this.transports[this.name]) {
       this.$set(this.transports, this.name, [])
     }
   },
-  mounted () {
+  mounted() {
     this.unwatch = this.$watch('ownTransports', this.emitChange)
     this.$nextTick(() => {
       if (this.transition) {
@@ -35,13 +35,13 @@ export default {
       }
     })
   },
-  beforeDestroy () {
+  beforeDestroy() {
     this.unwatch()
     this.$el.innerHTML = ''
   },
 
   methods: {
-    emitChange (newTransports, oldTransports) {
+    emitChange(newTransports, oldTransports) {
       if (this.multiple) {
         this.$emit('change', [...newTransports], [...oldTransports])
       } else {
@@ -54,25 +54,25 @@ export default {
     },
   },
   computed: {
-    ownTransports () {
+    ownTransports() {
       const transports = this.transports[this.name] || []
       if (this.multiple) {
         return transports
       }
       return transports.length === 0 ? [] : [transports[transports.length - 1]]
     },
-    passengers () {
+    passengers() {
       return combinePassengers(this.ownTransports, this.slotProps)
     },
-    children () {
+    children() {
       return this.passengers.length !== 0
         ? this.passengers
         : this.$slots.default || []
     },
-    hasAttributes () {
+    hasAttributes() {
       return Object.keys(this.attributes).length > 0
     },
-    noWrapper () {
+    noWrapper() {
       const noWrapper = !this.hasAttributes && this.slim
       if (noWrapper && this.children.length > 1) {
         console.warn(
@@ -81,10 +81,10 @@ export default {
       }
       return noWrapper
     },
-    withTransition () {
+    withTransition() {
       return !!this.transition
     },
-    transitionData () {
+    transitionData() {
       const t = this.transition
       const data = {}
 
@@ -113,13 +113,13 @@ export default {
     },
   },
 
-  render (h) {
+  render(h) {
     const TransitionType = this.noWrapper ? 'transition' : 'transition-group'
     const Tag = this.tag
 
     if (this.withTransition) {
       return (
-        <TransitionType {...this.transitionData} class='vue-portal-target'>
+        <TransitionType {...this.transitionData} class="vue-portal-target">
           {this.children}
         </TransitionType>
       )
@@ -131,7 +131,7 @@ export default {
     return this.noWrapper ? (
       this.children[0]
     ) : (
-      <Tag class='vue-portal-target' {...this.attributes} key={wrapperKey}>
+      <Tag class="vue-portal-target" {...this.attributes} key={wrapperKey}>
         {this.children}
       </Tag>
     )
