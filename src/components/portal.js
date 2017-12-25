@@ -60,20 +60,19 @@ export default {
     },
   },
 
-  computed: {
+  methods: {
     normalizedSlots() {
       return this.$scopedSlots.default
         ? [this.$scopedSlots.default]
         : this.$slots.default
     },
-  },
-  methods: {
     sendUpdate() {
-      if (this.normalizedSlots) {
+      const slotContent = this.normalizedSlots()
+      if (slotContent) {
         wormhole.open({
           from: this.name,
           to: this.to,
-          passengers: [...this.normalizedSlots],
+          passengers: [...slotContent],
           order: this.order,
         })
       } else {
