@@ -37,7 +37,7 @@ export function combinePassengers(transports, slotProps = {}) {
     newPassengers =
       typeof newPassengers === 'function'
         ? newPassengers(slotProps)
-        : newPassengers
+        : transport.passengers
     return passengers.concat(newPassengers)
   }, [])
 }
