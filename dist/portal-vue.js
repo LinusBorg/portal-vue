@@ -1,6 +1,6 @@
 /*
     portal-vue
-    Version: 1.2.2
+    Version: 1.3.0
     Licence: MIT
     (c) Thorsten Lünborg
   */
@@ -29,29 +29,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 
 
-var classCallCheck = function (instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-};
 
-var createClass = function () {
-  function defineProperties(target, props) {
-    for (var i = 0; i < props.length; i++) {
-      var descriptor = props[i];
-      descriptor.enumerable = descriptor.enumerable || false;
-      descriptor.configurable = true;
-      if ("value" in descriptor) descriptor.writable = true;
-      Object.defineProperty(target, descriptor.key, descriptor);
-    }
-  }
 
-  return function (Constructor, protoProps, staticProps) {
-    if (protoProps) defineProperties(Constructor.prototype, protoProps);
-    if (staticProps) defineProperties(Constructor, staticProps);
-    return Constructor;
-  };
-}();
+
 
 
 
@@ -152,23 +132,23 @@ function freeze(item) {
 }
 
 function combinePassengers(transports) {
+  var slotProps = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
   return transports.reduce(function (passengers, transport) {
-    return passengers.concat(transport.passengers);
+    var newPassengers = transport.passengers[0];
+    newPassengers = typeof newPassengers === 'function' ? newPassengers(slotProps) : transport.passengers;
+    return passengers.concat(newPassengers);
   }, []);
 }
 
 var transports = {};
 
-var Wormhole = function () {
-  function Wormhole(transports) {
-    classCallCheck(this, Wormhole);
-
-    this.transports = transports;
-  }
-
-  createClass(Wormhole, [{
-    key: 'open',
-    value: function open(transport) {
+var Wormhole = Vue.extend({
+  data: function data() {
+    return { transports: transports };
+  },
+  methods: {
+    open: function open(transport) {
       var to = transport.to,
           from = transport.from,
           passengers = transport.passengers;
@@ -194,10 +174,8 @@ var Wormhole = function () {
       });
 
       this.transports[to] = newTransports;
-    }
-  }, {
-    key: 'close',
-    value: function close(transport) {
+    },
+    close: function close(transport) {
       var force = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
       var to = transport.to,
           from = transport.from;
@@ -218,37 +196,27 @@ var Wormhole = function () {
           this.transports[to] = newTransports;
         }
       }
-    }
-  }, {
-    key: 'hasTarget',
-    value: function hasTarget(to) {
+    },
+    hasTarget: function hasTarget(to) {
       return this.transports.hasOwnProperty(to);
-    }
-  }, {
-    key: 'hasContentFor',
-    value: function hasContentFor(to) {
+    },
+    hasContentFor: function hasContentFor(to) {
       if (!this.transports[to]) {
         return false;
       }
       return this.getContentFor(to).length > 0;
-    }
-  }, {
-    key: 'getSourceFor',
-    value: function getSourceFor(to) {
+    },
+    getSourceFor: function getSourceFor(to) {
       return this.transports[to] && this.transports[to][0].from;
-    }
-  }, {
-    key: 'getContentFor',
-    value: function getContentFor(to) {
+    },
+    getContentFor: function getContentFor(to) {
       var transports = this.transports[to];
       if (!transports) {
         return undefined;
       }
       return combinePassengers(transports);
-    }
-  }, {
-    key: 'getTransportIndex',
-    value: function getTransportIndex(_ref) {
+    },
+    getTransportIndex: function getTransportIndex(_ref) {
       var to = _ref.to,
           from = _ref.from;
 
@@ -259,9 +227,9 @@ var Wormhole = function () {
       }
       return -1;
     }
-  }]);
-  return Wormhole;
-}();
+  }
+});
+
 var wormhole = new Wormhole(transports);
 
 var nestRE = /^(attrs|props|on|nativeOn|class|style|hook)$/;
@@ -310,8 +278,8 @@ var babelHelperVueJsxMergeProps = function mergeJSXProps (objs) {
 
 function mergeFn (a, b) {
   return function () {
-    a.apply(this, arguments);
-    b.apply(this, arguments);
+    a && a.apply(this, arguments);
+    b && b.apply(this, arguments);
   }
 }
 
@@ -326,6 +294,9 @@ var Target = {
     multiple: { type: Boolean, default: false },
     name: { type: String, required: true },
     slim: { type: Boolean, default: false },
+    slotProps: { type: Object, default: function _default() {
+        return {};
+      } },
     tag: { type: String, default: 'div' },
     transition: { type: [Boolean, String, Object], default: false },
     transitionEvents: { type: Object, default: function _default() {
@@ -380,7 +351,7 @@ var Target = {
       return transports$$1.length === 0 ? [] : [transports$$1[transports$$1.length - 1]];
     },
     passengers: function passengers() {
-      return combinePassengers(this.ownTransports);
+      return combinePassengers(this.ownTransports, this.slotProps);
     },
     children: function children() {
       return this.passengers.length !== 0 ? this.passengers : this.$slots.default || [];
@@ -452,7 +423,7 @@ var inBrowser = typeof window !== 'undefined';
 var pid = 1;
 
 var Portal = {
-  abstract: true,
+  abstract: false,
   name: 'portal',
   props: {
     /* global HTMLElement */
@@ -462,11 +433,17 @@ var Portal = {
       } },
     order: { type: Number, default: 0 },
     slim: { type: Boolean, default: false },
+    slotProps: { type: Object, default: function _default() {
+        return {};
+      } },
     tag: { type: [String], default: 'DIV' },
     targetEl: { type: inBrowser ? [String, HTMLElement] : String },
-    to: { type: String, default: function _default() {
+    to: {
+      type: String,
+      default: function _default() {
         return String(Math.round(Math.random() * 10000000));
-      } }
+      }
+    }
   },
 
   mounted: function mounted() {
@@ -491,7 +468,6 @@ var Portal = {
     }
   },
 
-
   watch: {
     to: function to(newValue, oldValue) {
       oldValue && this.clear(oldValue);
@@ -505,12 +481,16 @@ var Portal = {
   },
 
   methods: {
+    normalizedSlots: function normalizedSlots() {
+      return this.$scopedSlots.default ? [this.$scopedSlots.default] : this.$slots.default;
+    },
     sendUpdate: function sendUpdate() {
-      if (this.$slots.default) {
+      var slotContent = this.normalizedSlots();
+      if (slotContent) {
         wormhole.open({
           from: this.name,
           to: this.to,
-          passengers: [].concat(toConsumableArray(this.$slots.default)),
+          passengers: [].concat(toConsumableArray(slotContent)),
           order: this.order
         });
       } else {
@@ -550,22 +530,29 @@ var Portal = {
       } else {
         console.warn('[vue-portal]: The specified targetEl ' + target + ' was not found');
       }
+    },
+    normalizeChildren: function normalizeChildren(children) {
+      return typeof children === 'function' ? children(this.slotProps) : children;
     }
   },
 
   render: function render(h) {
-    var children = this.$slots.default || [];
+    var children = this.$slots.default || this.$scopedSlots.default || [];
     var Tag = this.tag;
     if (children.length && this.disabled) {
       return children.length <= 1 && this.slim ? children[0] : h(
         Tag,
         null,
-        [children]
+        [this.normalizeChildren(children)]
       );
     } else {
       return h(
         Tag,
-        { 'class': 'v-portal', style: 'display: none', key: 'v-portal-placeholder' },
+        {
+          'class': 'v-portal',
+          style: 'display: none',
+          key: 'v-portal-placeholder'
+        },
         []
       );
       // h(this.tag, { class: { 'v-portal': true }, style: { display: 'none' }, key: 'v-portal-placeholder' })
@@ -577,7 +564,7 @@ function install(Vue$$1) {
   var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
   Vue$$1.component(opts.portalName || 'portal', Portal);
-  Vue$$1.component(opts.portalTargetName || 'portal-target', Target);
+  Vue$$1.component(opts.portalTargetName || 'portalTarget', Target);
 }
 if (typeof window !== 'undefined' && window.Vue) {
   window.Vue.use({ install: install });
