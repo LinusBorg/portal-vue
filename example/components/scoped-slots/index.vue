@@ -38,6 +38,7 @@
 <script>
 import Test from '../test-component.vue'
 export default {
+  name: 'scopedSlotExample',
   components: { Test },
   props: {},
   data() {

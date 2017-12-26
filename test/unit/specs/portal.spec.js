@@ -6,7 +6,7 @@ jest.mock('@/components/wormhole')
 const Portal = require('@/components/portal').default
 const Wormhole = require('@/components/wormhole').default
 
-function createWrapper (props = {}) {
+function createWrapper(props = {}) {
   return mount(Portal, {
     propsData: {
       to: 'destination',
@@ -19,13 +19,13 @@ function createWrapper (props = {}) {
   })
 }
 
-describe('Portal', function () {
+describe('Portal', function() {
   beforeEach(() => {
     Wormhole.open.mockClear()
     Wormhole.close.mockClear()
   })
 
-  it('renders a div element with class `v-portal`', function () {
+  it('renders a div element with class `v-portal`', function() {
     // expect(wrapper.$refs.portal.$el.nodeName).to.equal('#comment')
     const wrapper = mount(Portal)
     expect(wrapper.is('div.v-portal')).toBe(true)
@@ -52,13 +52,15 @@ describe('Portal', function () {
     expect(wrapper.is('SPAN')).toBe(true)
   })
 
-  it('calls Wormhole.open with right content', function () {
+  it('calls Wormhole.open with right content', function() {
     createWrapper()
-    expect(Wormhole.open).toHaveBeenCalledWith(expect.objectContaining({
-      to: 'destination',
-      from: 'source',
-      passengers: expect.any(Array),
-    }))
+    expect(Wormhole.open).toHaveBeenCalledWith(
+      expect.objectContaining({
+        to: 'destination',
+        from: 'source',
+        passengers: expect.any(Array),
+      })
+    )
   })
 
   it('calls Wormhole close & sendUpdate when destination changes', () => {
@@ -83,7 +85,7 @@ describe('Portal', function () {
       components: {
         Portal,
       },
-      data () {
+      data() {
         return {
           message: 'A',
         }
@@ -113,8 +115,7 @@ describe('Portal', function () {
       targetEl: `#${id}`,
     })
 
-    return Vue.nextTick()
-    .then(() => {
+    return Vue.nextTick().then(() => {
       expect.assertions(3)
       expect(document.body.querySelector(`#${id}`)).not.toBe(undefined)
       const newEl = document.body.querySelector(`.test-string`)
@@ -129,8 +130,7 @@ describe('Portal', function () {
       targetEl: el,
     })
 
-    return Vue.nextTick()
-    .then(() => {
+    return Vue.nextTick().then(() => {
       expect.assertions(3)
       expect(document.body.querySelector(`#${id}`)).not.toBe(undefined)
       const newEl = document.body.querySelector(`.test-el`)
@@ -140,9 +140,11 @@ describe('Portal', function () {
   })
 
   it('warns when no el was found for targetEl string', () => {
-    const spy = jest.spyOn(global.console, 'warn').mockImplementation(function () {
-      return undefined
-    })
+    const spy = jest
+      .spyOn(global.console, 'warn')
+      .mockImplementation(function() {
+        return undefined
+      })
     const { id } = createEl()
     createWrapper({
       targetEl: `#${id}x`,
@@ -165,7 +167,7 @@ describe('Portal', function () {
   })
 
   // check necessary because I regularly deactivate this during development
-  it('is an abstract component', () => {
-    expect(Portal.abstract).toBe(true)
+  it('is not an abstract component', () => {
+    expect(Portal.abstract).toBe(false)
   })
 })
