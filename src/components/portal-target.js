@@ -3,7 +3,7 @@ import { combinePassengers } from '../utils'
 import wormhole from './wormhole'
 
 export default {
-  abstract: true,
+  abstract: false,
   name: 'portalTarget',
   props: {
     attributes: { type: Object, default: () => ({}) },
@@ -34,6 +34,14 @@ export default {
         this.firstRender = false
       }
     })
+    if (this.$options.abstract) {
+      this.$options.abstract = false
+    }
+  },
+  updated() {
+    if (this.$options.abstract) {
+      this.$options.abstract = false
+    }
   },
   beforeDestroy() {
     this.unwatch()
@@ -114,6 +122,7 @@ export default {
   },
 
   render(h) {
+    this.$options.abstract = true
     const TransitionType = this.noWrapper ? 'transition' : 'transition-group'
     const Tag = this.tag
 

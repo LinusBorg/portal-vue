@@ -70,8 +70,8 @@ describe('PortalTarget', function () {
   })
 
   // check necessary because I regularly deactivate this during development
-  it('is an abstract component', () => {
-    expect(PortalTarget.abstract).toBe(true)
+  it('is not an abstract component', () => {
+    expect(PortalTarget.abstract).toBe(false)
   })
 
   it('renders slot content when no other content is available', function () {
