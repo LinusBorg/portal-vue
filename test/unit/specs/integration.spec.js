@@ -2,9 +2,6 @@ import Vue from 'vue'
 import { mount, createLocalVue } from 'vue-test-utils'
 import PortalVue from '../../../src/index'
 
-PortalVue.Portal.abstract = false
-PortalVue.PortalTarget.abstract = false
-
 const Wormhole = PortalVue.Wormhole
 
 function waitTicks(n = 1) {
