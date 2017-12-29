@@ -35,13 +35,20 @@ describe('Integration Tests', () => {
 
   it('Happy Path (Simplest scenario)', () => {
     const component = require('../resources/HappyPath.vue')
-    const { portal, target } = mountScenario(component)
+    const { wrapper, ortal, target } = mountScenario(component)
 
-    return waitTicks().then(() => {
-      const pArray = target.findAll('p')
-      expect(pArray.at(0).text()).toBe('Test1')
-      expect(pArray.at(1).text()).toBe('Test2')
-    })
+    return waitTicks()
+      .then(() => {
+        const pArray = target.findAll('p')
+        expect(pArray.at(0).text()).toBe('Test1')
+        expect(pArray.at(1).text()).toBe('Test2')
+
+        wrapper.vm.show = true
+        return waitTicks()
+      })
+      .then(() => {
+        expect(wrapper.find('#additional').text()).toBe('Test3')
+      })
   })
 
   it('Scoped Slot (Happy Path)', () => {
