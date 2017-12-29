@@ -32,6 +32,8 @@ export default {
     if (!this.disabled) {
       this.sendUpdate()
     }
+    // Reset hack to make child components skip the portal when defining their $parent
+    // was set to true during render when we render something locally.
     if (this.$options.abstract) {
       this.$options.abstract = false
     }
