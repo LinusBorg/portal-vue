@@ -1,5 +1,8 @@
 import Vue from 'vue'
 import { combinePassengers, freeze } from '../utils'
+
+Vue.config.productionTip = false
+
 const transports = {}
 
 export { transports }
