@@ -1,6 +1,6 @@
 /*
     portal-vue
-    Version: 1.3.0
+    Version: 1.3.0-beta.0
     Licence: MIT
     (c) Thorsten Lünborg
   */
@@ -285,7 +285,7 @@ function mergeFn (a, b) {
 
 // import { transports } from './wormhole'
 var Target = {
-  abstract: true,
+  abstract: false,
   name: 'portalTarget',
   props: {
     attributes: { type: Object, default: function _default() {
@@ -324,6 +324,14 @@ var Target = {
         _this.firstRender = false;
       }
     });
+    if (this.$options.abstract) {
+      this.$options.abstract = false;
+    }
+  },
+  updated: function updated() {
+    if (this.$options.abstract) {
+      this.$options.abstract = false;
+    }
   },
   beforeDestroy: function beforeDestroy() {
     this.unwatch();
@@ -396,6 +404,7 @@ var Target = {
   },
 
   render: function render(h) {
+    this.$options.abstract = true;
     var TransitionType = this.noWrapper ? 'transition' : 'transition-group';
     var Tag = this.tag;
 
@@ -453,12 +462,22 @@ var Portal = {
     if (!this.disabled) {
       this.sendUpdate();
     }
+    // Reset hack to make child components skip the portal when defining their $parent
+    // was set to true during render when we render something locally.
+    if (this.$options.abstract) {
+      this.$options.abstract = false;
+    }
   },
   updated: function updated() {
     if (this.disabled) {
       this.clear();
     } else {
       this.sendUpdate();
+    }
+    // Reset hack to make child components skip the portal when defining their $parent
+    // was set to true during render when we render something locally.
+    if (this.$options.abstract) {
+      this.$options.abstract = false;
     }
   },
   beforeDestroy: function beforeDestroy() {
@@ -540,6 +559,8 @@ var Portal = {
     var children = this.$slots.default || this.$scopedSlots.default || [];
     var Tag = this.tag;
     if (children.length && this.disabled) {
+      // hack to make child components skip the portal when defining their $parent
+      this.$options.abstract = true;
       return children.length <= 1 && this.slim ? children[0] : h(
         Tag,
         null,
