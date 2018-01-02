@@ -22,7 +22,8 @@
       "cross-env NODE_ENV=development webpack-dev-server --watch --config build/webpack.conf.js --inline --hot",
     "prod":
       "NODE_ENV=production webpack-dev-server --watch --config build/webpack.conf.js --inline --hot",
-    "docs": "docute ./docs --watch",
+    "docs:dev": "docute ./docs --watch",
+    "docs:deploy": "gh-pages -d docs",
     "test": "jest --config test/unit/jest.conf.js --coverage",
     "test:watch": "jest --config test/unit/jest.conf.js --watch"
   },
@@ -87,6 +88,7 @@
     "eslint-plugin-html": "^4.0.1",
     "eslint-plugin-vue": "^4.0.0-beta.3",
     "friendly-errors-webpack-plugin": "^1.6.1",
+    "gh-pages": "^1.1.0",
     "inject-loader": "^3.0.0",
     "jest": "^21.2.0",
     "jest-serializer-vue": "^0.3.0",
