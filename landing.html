@@ -1,0 +1,138 @@
+<style>
+  @keyframes anim {
+    0% {
+      transform: translate(-50px) rotate(10deg);
+    }
+    100% {
+      transform: translate(50px)  rotate(-10deg);
+    }
+  }
+
+  .anim {
+    transform-origin: 50% 50%;
+    animation: anim 1s alternate infinite ease-in-out;
+  }
+
+  line {
+    stroke-width: 5px;
+    stroke-linecap: round;
+  }
+  body {
+    margin: 0;
+
+  }
+  .container {
+    height: 100vh;
+    background-color: #FEFEFE;
+  }
+  .upper {
+    height: 50vh;
+    background-color: #42b983;
+    position: relative;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.3);
+  }
+  .middle-box-wrapper {
+    position: absolute;
+    top: 5rem;
+    /*transform: translateY(-50%);*/
+    width: 100%;
+  }
+  .middle-box {
+    background-color: white;
+    border: 2px solid rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+    margin: 0 auto;
+    padding: 30px;
+    text-align: center;
+    /*transform: translateX(-50%);*/
+    width: 80%;
+  }
+  .h1 {
+    text-align: center;
+    font-family: 'Raleway', 'helvetica neue', helvetica, sans-serif;
+    color: #333;
+    font-size: 3rem;
+    margin: 1rem auto;
+  }
+  @media only screen and (min-width: 451px) {
+    .h1 {
+      font-size: 4rem;
+    }
+  }
+  @media only screen and (min-width: 700px) {
+    .h1 {
+      font-size: 6rem;
+    }
+  }
+  .h2 {
+    font-family: 'Raleway', 'helvetica neue', helvetica, sans-serif;
+    color: #333;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    margin: .5rem auto;
+  }
+  @media only screen and (min-width: 700px) {
+    .h2 {
+      font-size: 1.5rem;
+    }
+  }
+  .button {
+    font-family: 'Raleway', 'helvetica neue', helvetica, sans-serif;
+    border: 2px solid #42b983;
+    color: #42b983;
+    border-radius: 5px;
+    padding: 10px 15px;
+  }
+  .box {
+    padding: 10px 0;
+  }
+</style>
+<!-- <link rel="stylesheet" href="https://unpkg.com/docute@2/dist/docute.css"> -->
+<div class="contaier">
+  <div class="upper">
+    <div class="middle-box-wrapper">
+      <div class="middle-box">
+        <h1 class="h1">PortalVue</h1>
+        <div class="logo" style="width: 90%; max-width: 400px; height: auto; text-align: center; margin: 0 auto;">
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 400 200" width="100%">
+            <defs>
+              <g id="vue">
+                <path fill="#4dba87" d="M 0,0 -22.669,39.264 -45.338,0 h -75.491 L -22.669,170.017 75.491,0 Z"/>
+                <path fill="#435466" d="M 0,0 -22.669,39.264 -45.338,0 H -81.565 L -22.669,102.01 36.227,0 Z"/>
+              </g>
+
+              <clipPath id="cut1">
+                <rect x="0" y="0" width="150" height="200" />
+              </clipPath>
+              <clipPath id="cut2">
+                <rect x="250" y="0" width="150" height="200" />
+              </clipPath>
+            </defs>
+
+            <g clip-path="url(#cut1)">
+              <g class="anim">
+                <use transform="translate(173, 30)" xlink:href="#vue"></use>
+              </g>
+            </g>
+            <g clip-path="url(#cut2)">
+              <g class="anim">
+                <use transform="translate(273, 30)" xlink:href="#vue"></use>
+              </g>
+            </g>
+            <line x1="150" y1="20" x2="150" y2="200" stroke="#579BDD" />
+            <line x1="250" y1="20" x2="250" y2="200" stroke="#DA9022" />
+          </svg>
+        </div>
+
+        <div class="box">
+          <h2 class="h2">
+            A Vue Plugin to render your component's templates anywhere in the DOM
+          </h2>
+        </div>
+        <div class="box">
+          <a class="button" href="http://linusborg.github.io/portal-vue/#/guide">See Docs &amp; Examples</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
