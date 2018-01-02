@@ -125,7 +125,7 @@ The order the content is rendered in can be adjusted through the `order` prop on
 
 ### Removing the Wrapper element
 
-Vue components always need a single root element. Since `<portal-target>` can't know in advance weither or not it will receive content with more than one root element, it will ender a wrapper element around the content to provide a single root node.
+Vue components always need a single root element. Since `<portal-target>` can't know in advance weither or not it will receive content with more than one root element, it will render a wrapper element around the content to provide a single root node.
 
 However, if you know that you will send content with a single root element only, you can use the `slim` prop to tell `<portal-target>` to render that element only and do without the wrapper element.
 
@@ -259,7 +259,7 @@ Now you can position your components with `position: absolute` instead
 
 If you use Vue for small bits and pieces on your website, but want to render something in a location at the other end of the page, PortalVue got you covered.
 
-### Tell us about your usecase!
+### Tell us about your use case!
 
 We're sure you will find use cases beyond the ones we mentioned. If you do, please
 let us know by opening an issue on <a href="http://github.com/linusborg/portal-vue">Github</a>
