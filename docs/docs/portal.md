@@ -55,6 +55,8 @@ But it might be a good idea to name your `Portal` components so you can debug th
 
 ### `order`
 
+> since `1.2.0`
+
 | Type              | Required | Default         |
 | ----------------- | -------- | --------------- |
 | `[String,Number]` | no\*     | a random String |
@@ -112,6 +114,8 @@ When set to true, the component will check if the sent content has only one root
 ```
 
 ### `slotProps`
+
+> since `1.3.0`
 
 | Type     | Required | Default |
 | -------- | -------- | ------- |

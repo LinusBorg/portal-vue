@@ -14,6 +14,8 @@ This component is an outlet for any content that was sent by a `<portal>` compon
 
 ### `multiple`
 
+> since `1.2.0`
+
 When `multiple` is `true`, the portal will be able to receive and render content from multiple `Portal` component at the same time.
 
 You should use the `order` prop on the `Portal` to define the order in which the contents should be rendered:
@@ -75,6 +77,8 @@ When set to true, the component will check if the sent content has only one root
 
 ### `slotProps`
 
+> since `1.3.0`
+
 | Type     | Required | Default |
 | -------- | -------- | ------- |
 | `Object` | no       | `{}`    |
@@ -133,6 +137,8 @@ Defines the type of tag that should be rendered as a root component.
 
 ### `transition`
 
+> since `1.2.0`
+
 | Type                    | Required | Default |
 | ----------------------- | -------- | ------- |
 | `Boolean|String|Object` | no       | none    |
@@ -161,6 +167,8 @@ You can use the `transitionEvents` prop to pass event listeners for that transit
 
 ### `transitionEvents`
 
+> since `1.2.0`
+
 | Type     | Required | Default |
 | -------- | -------- | ------- |
 | `Object` | no       | none    |
@@ -179,6 +187,8 @@ Accepts an object whose keys match the transition component's events. Each key's
 ## Slots API
 
 ### Default slot
+
+> since `1.1.0`
 
 Any existing slot content is rendered in case that no content from any source Portal is available.
 
@@ -200,6 +210,8 @@ Example:
 ```
 
 ## Events API
+
+> since `1.1.0`
 
 ### `change`
 

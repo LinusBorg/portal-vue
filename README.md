@@ -6,20 +6,24 @@
   <img src="http://linusborg.github.io/portal-vue/assets/logo.png" alt="PortalVue Logo">
 </p>
 
-
 For more detailed documentation and additional Information, please visit <a href="http://linusborg.github.io/portal-vue">the docs</a>
+
+> The documentation is for version 1.3.0-beta, but all things except the sections about scoped slots apply to previous versions as well.
 
 ## Installation
 
 ```
-npm install --save portal-vue
+// 1.3.0-beta with scopedSlots support:
+npm i portal-vue@next
 
-// in .js
+// current stable:
+npm i portal-vue
+```
+
+```javascript
 import PortalVue from 'portal-vue'
 Vue.use(PortalVue)
 ```
-
-
 
 ## Usage
 

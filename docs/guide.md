@@ -146,6 +146,8 @@ The `slim` property also works on `<portal>` components when the are `disabled`.
 
 ### Using Scoped Slots
 
+> since `1.3.0`
+
 PortalVue can also be used with [Scoped Slots](https://vuejs.org/v2/guide/components.html#Scoped-Slots)! This allows you to send a scoped slot to a PortalTarget, which can then provide props for the slot content:
 
 ```html
@@ -169,6 +171,8 @@ PortalVue can also be used with [Scoped Slots](https://vuejs.org/v2/guide/compon
 ```
 
 ### Transitions
+
+> since `1.2.0`
 
 You can pass transitions to a `<portal>` without problems. It will behave just the same when the content is being rendered in the `<portal-target>`:
 
