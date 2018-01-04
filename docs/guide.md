@@ -34,7 +34,12 @@ See it in action in this fiddle:
 Install Package:
 
 ```bash
+// current beta: 1.3.0-beta.0
+npm install --save portal-vue@next
+
+//stable 1.2.2:
 npm install --save portal-vue
+
 # or with yarn
 yarn add portal-vue
 ```
