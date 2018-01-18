@@ -1,8 +1,7 @@
 {
   "name": "portal-vue",
   "version": "1.3.0",
-  "description":
-    "A Vue component to render elements outside of a component's template, elsewhere in the DOM",
+  "description": "A Vue component to render elements outside of a component's template, elsewhere in the DOM",
   "main": "dist/portal-vue.js",
   "files": [
     "dist/portal-vue.js",
@@ -16,12 +15,9 @@
   "scripts": {
     "lint": "eslint src/",
     "lint:test": "eslint test/",
-    "build":
-      "npm run lint && cross-env NODE_ENV=production rollup -c build/rollup.conf.prod.js && uglifyjs dist/portal-vue.js -c -m > dist/portal-vue.min.js",
-    "dev":
-      "cross-env NODE_ENV=development webpack-dev-server --watch --config build/webpack.conf.js --inline --hot",
-    "prod":
-      "NODE_ENV=production webpack-dev-server --watch --config build/webpack.conf.js --inline --hot",
+    "build": "npm run lint && cross-env NODE_ENV=production rollup -c build/rollup.conf.prod.js && uglifyjs dist/portal-vue.js -c -m > dist/portal-vue.min.js",
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --watch --config build/webpack.conf.js --inline --hot",
+    "prod": "NODE_ENV=production webpack-dev-server --watch --config build/webpack.conf.js --inline --hot",
     "docs:dev": "docute ./docs --watch",
     "docs:deploy": "gh-pages -d docs",
     "test": "jest --config test/unit/jest.conf.js --coverage",
@@ -37,11 +33,19 @@
       "mocha": true,
       "browser": true
     },
-    "extends": ["plugin:vue/recommended"],
-    "plugins": ["html", "vue"],
+    "extends": [
+      "plugin:vue/recommended"
+    ],
+    "plugins": [
+      "html",
+      "vue"
+    ],
     "rules": {
       "vue/jsx-uses-vars": 2,
-      "comma-dangle": ["error", "always-multiline"]
+      "comma-dangle": [
+        "error",
+        "always-multiline"
+      ]
     }
   },
   "babel": {
@@ -54,21 +58,27 @@
       ],
       "stage-3"
     ],
-    "plugins": ["transform-vue-jsx"],
+    "plugins": [
+      "transform-vue-jsx"
+    ],
     "comments": true,
     "env": {
       "jest": true,
       "test": {
-        "presets": ["es2015", "stage-3"]
+        "presets": [
+          "es2015",
+          "stage-3"
+        ]
       }
     }
   },
   "devDependencies": {
+    "@vue/test-utils": "^1.0.0-beta.10",
     "babel": "^6.5.2",
     "babel-core": "^6.25.0",
-    "babel-eslint": "^8.0.3",
+    "babel-eslint": "^8.2.1",
     "babel-helper-vue-jsx-merge-props": "^2.0.3",
-    "babel-jest": "^21.0.2",
+    "babel-jest": "^22.1.0",
     "babel-loader": "^7.0.0",
     "babel-plugin-dynamic-import-node": "^1.2.0",
     "babel-plugin-external-helpers": "^6.22.0",
@@ -82,15 +92,15 @@
     "css-loader": "^0.28.7",
     "docute": "^3.4.9",
     "docute-cli": "^0.6.0",
-    "eslint": "^4.13.1",
+    "eslint": "^4.15.0",
     "eslint-friendly-formatter": "^3.0.0",
     "eslint-loader": "^1.7.1",
     "eslint-plugin-html": "^4.0.1",
-    "eslint-plugin-vue": "^4.0.0-beta.3",
+    "eslint-plugin-vue": "^4.2.0",
     "friendly-errors-webpack-plugin": "^1.6.1",
     "gh-pages": "^1.1.0",
     "inject-loader": "^3.0.0",
-    "jest": "^21.2.0",
+    "jest": "^22.1.3",
     "jest-serializer-vue": "^0.3.0",
     "karma-chrome-launcher": "^2.1.1",
     "karma-mocha": "^1.3.0",
@@ -110,12 +120,11 @@
     "testdouble-chai": "^0.5.0",
     "vue": "^2.5.13",
     "vue-jest": "^1.4.0",
-    "vue-loader": "^13.6.0",
+    "vue-loader": "^13.7.0",
     "vue-router": "^3.0.1",
     "vue-template-compiler": "^2.5.13",
-    "vue-test-utils": "^1.0.0-beta.8",
     "webpack": "^3.10.0",
-    "webpack-dev-server": "^2.9.7",
+    "webpack-dev-server": "^2.11.0",
     "webpack-merge": "^4.1.1"
   }
 }
