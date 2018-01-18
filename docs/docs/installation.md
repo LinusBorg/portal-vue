@@ -14,14 +14,6 @@ npm install --save portal-vue
 yarn add portal-vue
 ```
 
-#### Beta version:
-
-We are currently testing `v1.3.0-beta.0`. To install it, use:
-
-```bash
-npm install --save portal-vue@next
-```
-
 Then include the package in your application and register it with Vue:
 
 ```javascript

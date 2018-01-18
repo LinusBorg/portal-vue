@@ -13,10 +13,6 @@ For more detailed documentation and additional Information, please visit <a href
 ## Installation
 
 ```
-// 1.3.0-beta with scopedSlots support:
-npm i portal-vue@next
-
-// current stable:
 npm i portal-vue
 ```
 
