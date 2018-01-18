@@ -19,21 +19,23 @@ const nodeResolveOptions = {
 }
 
 export default {
-  banner: `/*
+  input: './src/index.js',
+  external: ['vue'],
+  output: {
+    banner: `/*
     portal-vue
     Version: ${version}
     Licence: MIT
     (c) Thorsten Lünborg
   */
   `,
-  entry: './src/index.js',
-  external: ['vue'],
-  globals: {
-    vue: 'Vue',
+    format: 'umd',
+    file: './dist/portal-vue.js',
+    name: 'PortalVue',
+    globals: {
+      vue: 'Vue',
+    },
+    sourcemap: true,
   },
-  format: 'umd',
-  moduleName: 'PortalVue',
-  dest: './dist/portal-vue.js', // equivalent to --output
-  sourceMap: true,
   plugins: [babel(babelConfig), nodeResolve(nodeResolveOptions), commonjs()],
 }
