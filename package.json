@@ -25,19 +25,15 @@
   },
   "eslintConfig": {
     "parserOptions": {
-      "parser": "babel-eslint",
-      "ecmaVersion": 2017,
-      "sourceType": "module"
+      "parser": "babel-eslint"
     },
     "env": {
-      "mocha": true,
       "browser": true
     },
     "extends": [
       "plugin:vue/recommended"
     ],
     "plugins": [
-      "html",
       "vue"
     ],
     "rules": {
@@ -95,7 +91,6 @@
     "eslint": "^4.15.0",
     "eslint-friendly-formatter": "^3.0.0",
     "eslint-loader": "^1.7.1",
-    "eslint-plugin-html": "^4.0.1",
     "eslint-plugin-vue": "^4.2.0",
     "friendly-errors-webpack-plugin": "^1.6.1",
     "gh-pages": "^1.1.0",
