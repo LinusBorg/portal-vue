@@ -5,18 +5,16 @@ import nodeResolve from 'rollup-plugin-node-resolve'
 const pkg = require('../package.json')
 
 const version = pkg.version
-// const version = '1.0.0-beta.4'
 
 const babelConfig = {
   // runtimeHelpers: true,
   exclude: 'node_modules/**',
-  plugins: [
-    'external-helpers',
-  ],
+  plugins: ['external-helpers'],
 }
 
 const nodeResolveOptions = {
-  module: true, jsnext: true,
+  module: true,
+  jsnext: true,
   extensions: ['.js', '.vue'],
 }
 
@@ -37,9 +35,5 @@ export default {
   moduleName: 'PortalVue',
   dest: './dist/portal-vue.js', // equivalent to --output
   sourceMap: true,
-  plugins: [
-    babel(babelConfig),
-    nodeResolve(nodeResolveOptions),
-    commonjs(),
-  ],
+  plugins: [babel(babelConfig), nodeResolve(nodeResolveOptions), commonjs()],
 }
