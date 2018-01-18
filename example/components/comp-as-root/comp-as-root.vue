@@ -39,8 +39,9 @@ export default {
         return h('DIV', [
           h(
             'p',
-            `This was rendered with a component as the root element in the portal: ${this
-              .testProp}`
+            `This was rendered with a component as the root element in the portal: ${
+              this.testProp
+            }`
           ),
         ])
       },
