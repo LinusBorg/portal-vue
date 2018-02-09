@@ -83,7 +83,7 @@ This prop defines the order position in the outupt of the `PortalTarget`.
 **Result**
 
 ```html
-<div clas="vue-portal-target">
+<div class="vue-portal-target">
   <p>some other content</p>
   <p>some content</p>
 </div>
