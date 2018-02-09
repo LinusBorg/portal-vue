@@ -36,7 +36,7 @@ You should use the `order` prop on the `Portal` to define the order in which the
 **Result**
 
 ```html
-<div clas="vue-portal-target">
+<div class="vue-portal-target">
   <p>some other content</p>
   <p>some content</p>
 </div>
