@@ -203,7 +203,7 @@ One important behaviour to know is this:
 ### Rendering outside of the Vue-App
 
 <p class="warning">
-  <strong>Depracation Warning</strong><br>
+  <strong>Deprecation Warning</strong><br>
   This feature will be removed in PortalVue 2.0. See [this issue](https://github.com/LinusBorg/portal-vue/issues/74).
 </p>
 
