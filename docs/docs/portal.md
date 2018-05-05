@@ -185,7 +185,7 @@ Defines the type of tag that should be rendered as a root element.
 </p>
 
 <p class="warning">
-  <strong>Depracation Warning</strong><br>
+  <strong>Deprecation Warning</strong><br>
   This feature will be removed in PortalVue 2.0. See [this issue](https://github.com/LinusBorg/portal-vue/issues/74).
 </p>
 
