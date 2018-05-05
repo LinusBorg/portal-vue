@@ -70,7 +70,7 @@ see the <a href="#" router-link="/docs/installation">Installation</a> page in th
 <portal to="destination" v-if="usePortal">
   <ul>
     <li>
-      When 'userPortal' evaluates to 'true', the portal's slot content will be rendered
+      When 'usePortal' evaluates to 'true', the portal's slot content will be rendered
       at the destination.
     </li>
     <li>
