@@ -17,7 +17,7 @@ export default {
     order: { type: Number, default: 0 },
     slim: { type: Boolean, default: false },
     slotProps: { type: Object, default: () => ({}) },
-    tag: { type: [String], default: 'DIV' },
+    tag: { type: [String], default: 'div' },
     targetEl: { type: inBrowser ? [String, HTMLElement] : String },
     to: {
       type: String,
