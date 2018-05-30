@@ -118,7 +118,7 @@ The order the content is rendered in can be adjusted through the `order` prop on
 **Result**
 
 ```html
-<div clas="vue-portal-target">
+<div class="vue-portal-target">
   <p>some other content</p>
   <p>some content</p>
 </div>
