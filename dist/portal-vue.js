@@ -400,6 +400,15 @@ var Target = {
       data.on = this.transitionEvents;
 
       return data;
+    },
+    transportedClasses: function transportedClasses() {
+      return this.ownTransports.map(function (transport) {
+        return transport.class;
+      }).reduce(function (array, subarray) {
+        return array.concat(subarray);
+      }, []).filter(function (string, index, array) {
+        return array.indexOf(string) === index;
+      });
     }
   },
 
@@ -421,7 +430,7 @@ var Target = {
 
     return this.noWrapper ? this.children[0] : h(
       Tag,
-      babelHelperVueJsxMergeProps([{ 'class': 'vue-portal-target' }, this.attributes, { key: wrapperKey }]),
+      babelHelperVueJsxMergeProps([{ 'class': 'vue-portal-target ' + this.transportedClasses.join(' ') }, this.attributes, { key: wrapperKey }]),
       [this.children]
     );
   }
@@ -505,11 +514,21 @@ var Portal = {
     },
     sendUpdate: function sendUpdate() {
       var slotContent = this.normalizedSlots();
+
       if (slotContent) {
+        var classes = [this.$vnode.data.staticClass, this.$vnode.data.class].filter(function (string) {
+          return !!string && !!string.length;
+        }).map(function (string) {
+          return string.split(' ');
+        }).reduce(function (array, subarray) {
+          return array.concat(subarray);
+        }, []);
+
         wormhole.open({
           from: this.name,
           to: this.to,
           passengers: [].concat(toConsumableArray(slotContent)),
+          class: classes,
           order: this.order
         });
       } else {
