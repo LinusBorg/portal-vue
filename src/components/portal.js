@@ -77,12 +77,20 @@ export default {
         : this.$slots.default
     },
     sendUpdate() {
-      const slotContent = this.normalizedSlots()
+      const slotContent = this.normalizedSlots();
+
+
       if (slotContent) {
+        const classes = [this.$vnode.data.staticClass, this.$vnode.data.class]
+          .filter(string => !!string && !!string.length)
+          .map(string => string.split(' '))
+          .reduce((array, subarray) => array.concat(subarray), []);
+
         wormhole.open({
           from: this.name,
           to: this.to,
           passengers: [...slotContent],
+          class: classes,
           order: this.order,
         })
       } else {
@@ -146,8 +154,8 @@ export default {
       return children.length <= 1 && this.slim ? (
         children[0]
       ) : (
-        <Tag>{this.normalizeChildren(children)}</Tag>
-      )
+          <Tag>{this.normalizeChildren(children)}</Tag>
+        )
     } else {
       return (
         <Tag

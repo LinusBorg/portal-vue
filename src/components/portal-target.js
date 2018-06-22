@@ -119,6 +119,12 @@ export default {
 
       return data
     },
+    transportedClasses() {
+      return this.ownTransports
+        .map(transport => transport.class)
+        .reduce((array, subarray) => array.concat(subarray), [])
+        .filter((string, index, array) => array.indexOf(string) === index)
+    },
   },
 
   render(h) {
@@ -134,15 +140,17 @@ export default {
       )
     }
 
+
+
     // Solves a bug where Vue would sometimes duplicate elements upon changing multiple or disabled
     const wrapperKey = this.ownTransports.length
 
     return this.noWrapper ? (
       this.children[0]
     ) : (
-      <Tag class="vue-portal-target" {...this.attributes} key={wrapperKey}>
-        {this.children}
-      </Tag>
-    )
+        <Tag class={`vue-portal-target ${this.transportedClasses.join(' ')}`} {...this.attributes} key={wrapperKey}>
+          {this.children}
+        </Tag>
+      )
   },
 }
