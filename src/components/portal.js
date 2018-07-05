@@ -19,6 +19,7 @@ export default {
     slotProps: { type: Object, default: () => ({}) },
     tag: { type: [String], default: 'DIV' },
     targetEl: { type: inBrowser ? [String, HTMLElement] : String },
+    targetClass: { type: String, default: null },
     to: {
       type: String,
       default: () => String(Math.round(Math.random() * 10000000)),
@@ -81,16 +82,11 @@ export default {
 
 
       if (slotContent) {
-        const classes = [this.$vnode.data.staticClass, this.$vnode.data.class]
-          .filter(string => !!string && !!string.length)
-          .map(string => string.split(' '))
-          .reduce((array, subarray) => array.concat(subarray), []);
-
         wormhole.open({
           from: this.name,
           to: this.to,
           passengers: [...slotContent],
-          class: classes,
+          class: this.targetClass.split(' '),
           order: this.order,
         })
       } else {

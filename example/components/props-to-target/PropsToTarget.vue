@@ -11,11 +11,11 @@
     <div class="wrapper">
 
       <container type="source">
-        <portal to="props-to-target" :class="c1">
+        <portal to="props-to-target" :targetClass="c1">
           some content from 1
         </portal>
 
-        <portal to="props-to-target" class='static-class-2' :class="c2">
+        <portal to="props-to-target" :targetClass="c2">
           some content from 2
         </portal>
       </container>
