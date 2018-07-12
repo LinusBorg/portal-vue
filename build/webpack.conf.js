@@ -17,20 +17,11 @@ const config = {
   resolve: {
     extensions: ['.js', '.json', '.vue'],
     alias: {
-      'vue$': 'vue/dist/vue.common',
+      vue$: 'vue/dist/vue.common',
     },
   },
   module: {
     rules: [
-      {
-        test: /\.(js|vue)$/,
-        loader: 'eslint-loader',
-        enforce: 'pre',
-        exclude: /node_modules/,
-        options: {
-          formatter: require('eslint-friendly-formatter'),
-        },
-      },
       {
         test: /\.js$/,
         loader: 'babel-loader',
@@ -69,7 +60,9 @@ const config = {
     new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: process.env.NODE_ENV ? JSON.stringify(process.env.NODE_ENV) : "'development'",
+        NODE_ENV: process.env.NODE_ENV
+          ? JSON.stringify(process.env.NODE_ENV)
+          : "'development'",
       },
     }),
   ],
