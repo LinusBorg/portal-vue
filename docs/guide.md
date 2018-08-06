@@ -105,10 +105,10 @@ The order the content is rendered in can be adjusted through the `order` prop on
 **Source**
 
 ```html
-<portal name="destination" :order="2">
+<portal to="destination" :order="2">
   <p>some content</p>
 </portal>
-<portal name="destination" :order="1">
+<portal to="destination" :order="1">
   <p>some other content</p>
 </portal>
 
