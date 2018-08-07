@@ -23,10 +23,10 @@ You should use the `order` prop on the `Portal` to define the order in which the
 **Source**
 
 ```html
-<portal name="destination" :order="2">
+<portal to="destination" :order="2">
   <p>some content</p>
 </portal>
-<portal name="destination" :order="1">
+<portal to="destination" :order="1">
   <p>some other content</p>
 </portal>
 
