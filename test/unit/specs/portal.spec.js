@@ -53,12 +53,16 @@ describe('Portal', function() {
   })
 
   it('calls Wormhole.open with right content', function() {
-    createWrapper()
+    createWrapper({
+      targetClass: 'class1 class2',
+    })
     expect(Wormhole.open).toHaveBeenCalledWith(
       expect.objectContaining({
         to: 'destination',
         from: 'source',
         passengers: expect.any(Array),
+        class: ['class1', 'class2'],
+        order: 0,
       })
     )
   })
