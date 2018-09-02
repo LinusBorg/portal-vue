@@ -1,6 +1,6 @@
 /*
     portal-vue
-    Version: 1.4.0-beta.0
+    Version: 1.4.0-beta.1
     Licence: MIT
     (c) Thorsten Lünborg
   */
