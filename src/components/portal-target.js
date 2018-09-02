@@ -47,19 +47,6 @@ export default {
     this.unwatch()
   },
 
-  methods: {
-    emitChange(newTransports, oldTransports) {
-      if (this.multiple) {
-        this.$emit('change', [...newTransports], [...oldTransports])
-      } else {
-        const newTransport =
-          newTransports.length === 0 ? undefined : newTransports[0]
-        const oldTransport =
-          oldTransports.length === 0 ? undefined : oldTransports[0]
-        this.$emit('change', { ...newTransport }, { ...oldTransport })
-      }
-    },
-  },
   computed: {
     ownTransports() {
       const transports = this.transports[this.name] || []
@@ -71,22 +58,8 @@ export default {
     passengers() {
       return combinePassengers(this.ownTransports, this.slotProps)
     },
-    children() {
-      return this.passengers.length !== 0
-        ? this.passengers
-        : this.$slots.default || []
-    },
     hasAttributes() {
       return Object.keys(this.attributes).length > 0
-    },
-    noWrapper() {
-      const noWrapper = !this.hasAttributes && this.slim
-      if (noWrapper && this.children.length > 1) {
-        console.warn(
-          '[portal-vue]: PortalTarget with `slim` option received more than one child element.'
-        )
-      }
-      return noWrapper
     },
     withTransition() {
       return !!this.transition
@@ -120,15 +93,45 @@ export default {
     },
   },
 
+  methods: {
+    emitChange(newTransports, oldTransports) {
+      if (this.multiple) {
+        this.$emit('change', [...newTransports], [...oldTransports])
+      } else {
+        const newTransport =
+          newTransports.length === 0 ? undefined : newTransports[0]
+        const oldTransport =
+          oldTransports.length === 0 ? undefined : oldTransports[0]
+        this.$emit('change', { ...newTransport }, { ...oldTransport })
+      }
+    },
+    // can't be a computed prop because it has to "react" to $slot changes.
+    children() {
+      return this.passengers.length !== 0
+        ? this.passengers
+        : this.$slots.default || []
+    },
+    noWrapper() {
+      const noWrapper = !this.hasAttributes && this.slim
+      if (noWrapper && this.children().length > 1) {
+        console.warn(
+          '[portal-vue]: PortalTarget with `slim` option received more than one child element.'
+        )
+      }
+      return noWrapper
+    },
+  },
   render(h) {
     this.$options.abstract = true
-    const TransitionType = this.noWrapper ? 'transition' : 'transition-group'
+    const noWrapper = this.noWrapper()
+    const children = this.children()
+    const TransitionType = noWrapper ? 'transition' : 'transition-group'
     const Tag = this.tag
 
     if (this.withTransition) {
       return (
         <TransitionType {...this.transitionData} class="vue-portal-target">
-          {this.children}
+          {children}
         </TransitionType>
       )
     }
@@ -136,11 +139,11 @@ export default {
     // Solves a bug where Vue would sometimes duplicate elements upon changing multiple or disabled
     const wrapperKey = this.ownTransports.length
 
-    return this.noWrapper ? (
-      this.children[0]
+    return noWrapper ? (
+      children[0]
     ) : (
       <Tag class="vue-portal-target" {...this.attributes} key={wrapperKey}>
-        {this.children}
+        {children}
       </Tag>
     )
   },
