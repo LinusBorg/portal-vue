@@ -45,7 +45,6 @@ export default {
   },
   beforeDestroy() {
     this.unwatch()
-    this.$el.innerHTML = ''
   },
 
   methods: {
