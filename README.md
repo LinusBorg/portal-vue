@@ -8,8 +8,6 @@
 
 For more detailed documentation and additional Information, please visit <a href="http://linusborg.github.io/portal-vue">the docs</a>
 
-> The documentation is for version 1.3.0-beta, but all things except the sections about scoped slots apply to previous versions as well.
-
 ## Installation
 
 ```

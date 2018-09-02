@@ -214,8 +214,8 @@ Accepts a string containing a list of classes. These classes will be applied to 
 </p>
 
 <p class="warning">
-  <strong>Deprecation Warning</strong><br>
-  This feature will be removed in PortalVue 2.0. See [this issue](https://github.com/LinusBorg/portal-vue/issues/74).
+  <strong>Warning</strong><br>
+  This feature might change in PortalVue 2.0. It's not clear at the moment if those changes will be breaking or not. See [this issue](https://github.com/LinusBorg/portal-vue/issues/74).
 </p>
 
 Defines the name of the `Portal` component that the slot contents should be sent to. This mounts a new instance of the
