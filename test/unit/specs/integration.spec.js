@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import { mount, createLocalVue } from 'vue-test-utils'
+import { mount, createLocalVue } from '@vue/test-utils'
 import PortalVue from '../../../src/index'
 
 const Wormhole = PortalVue.Wormhole
@@ -18,6 +18,7 @@ function mountScenario(Component, options = {}, all = false) {
   const wrapper = mount(Component, {
     ...options,
     localVue,
+    sync: false,
   })
   const portal = wrapper[all ? 'findAll' : 'find'](PortalVue.Portal)
   const target = wrapper[all ? 'findAll' : 'find'](PortalVue.PortalTarget)
@@ -34,8 +35,8 @@ describe('Integration Tests', () => {
   })
 
   it('Happy Path (Simplest scenario)', () => {
-    const component = require('../resources/HappyPath.vue')
-    const { wrapper, ortal, target } = mountScenario(component)
+    const component = require('../resources/HappyPath.vue').default
+    const { wrapper, portal, target } = mountScenario(component)
 
     return waitTicks()
       .then(() => {
@@ -43,8 +44,8 @@ describe('Integration Tests', () => {
         expect(pArray.at(0).text()).toBe('Test1')
         expect(pArray.at(1).text()).toBe('Test2')
 
-        wrapper.vm.show = true
-        return waitTicks()
+        wrapper.setData({ show: true })
+        return waitTicks(2)
       })
       .then(() => {
         expect(wrapper.find('#additional').text()).toBe('Test3')
@@ -52,7 +53,7 @@ describe('Integration Tests', () => {
   })
 
   it('Scoped Slot (Happy Path)', () => {
-    const component = require('../resources/ScopedSlot.vue')
+    const component = require('../resources/ScopedSlot.vue').default
     const { portal, target } = mountScenario(component)
 
     return waitTicks().then(() => {
@@ -61,7 +62,7 @@ describe('Integration Tests', () => {
   })
 
   it('Portal: Disabled', () => {
-    const component = require('../resources/PortalDisabled.vue')
+    const component = require('../resources/PortalDisabled.vue').default
     const { portal, target } = mountScenario(component)
 
     return waitTicks()
@@ -78,7 +79,7 @@ describe('Integration Tests', () => {
   })
 
   it('Portal: Disabled with Scoped Slot', () => {
-    const component = require('../resources/PortalDisabledScoped.vue')
+    const component = require('../resources/PortalDisabledScoped.vue').default
     const { portal } = mountScenario(component)
 
     return waitTicks().then(() => {
@@ -87,7 +88,7 @@ describe('Integration Tests', () => {
   })
 
   it('Portal: Slim and disabled', () => {
-    const component = require('../resources/PortalSlim.vue')
+    const component = require('../resources/PortalSlim.vue').default
     const { portal } = mountScenario(component)
 
     return waitTicks().then(() => {
@@ -97,13 +98,13 @@ describe('Integration Tests', () => {
   })
 
   it('Portal: Switch Target', () => {
-    const component = require('../resources/PortalSwitchTarget.vue')
+    const component = require('../resources/PortalSwitchTarget.vue').default
     const { wrapper, portal: portals, target: targets } = mountScenario(
       component,
       {},
       true
     )
-    return waitTicks(1)
+    return waitTicks()
       .then(() => {
         expect(
           targets
@@ -114,6 +115,7 @@ describe('Integration Tests', () => {
         expect(targets.at(1).contains('p')).toBe(false)
 
         wrapper.vm.target = 'target2'
+        return waitTicks()
       })
       .then(() => {
         expect(
@@ -127,7 +129,7 @@ describe('Integration Tests', () => {
   })
 
   it('Target: Default content', () => {
-    const component = require('../resources/TargetDefaultContent.vue')
+    const component = require('../resources/TargetDefaultContent.vue').default
     const { portal, target } = mountScenario(component)
 
     return waitTicks()
@@ -143,7 +145,7 @@ describe('Integration Tests', () => {
   })
 
   it('Target: slim', () => {
-    const component = require('../resources/TargetSlim.vue')
+    const component = require('../resources/TargetSlim.vue').default
     const { portal, target } = mountScenario(component)
 
     return waitTicks().then(() => {
@@ -153,7 +155,7 @@ describe('Integration Tests', () => {
   })
 
   it('Target: Multiple Portals', () => {
-    const component = require('../resources/TargetMultiple.vue')
+    const component = require('../resources/TargetMultiple.vue').default
     const { wrapper, portal, target } = mountScenario(component)
 
     return waitTicks().then(() => {

@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import { mount } from 'vue-test-utils'
+import { mount } from '@vue/test-utils'
 
 jest.mock('@/components/wormhole')
 
@@ -8,9 +8,9 @@ const Wormhole = require('@/components/wormhole')
 
 // Utils
 
-function createWrapper (props = {}, options = {}) {
+function createWrapper(props = {}, options = {}) {
   return mount(PortalTarget, {
-    data () {
+    data() {
       return {
         transports: Wormhole.transports,
         firstRender: true,
@@ -26,19 +26,21 @@ function createWrapper (props = {}, options = {}) {
 
 let __id = 0
 
-function generateVNode () {
+function generateVNode() {
   const el = document.createElement('DIV')
   const wrapper = new Vue({
     el,
-    render (h) {
+    render(h) {
       __id++
-      return h('div', [h('span', { key: `key-${__id}`, class: 'testnode' }, 'Test')])
+      return h('div', [
+        h('span', { key: `key-${__id}`, class: 'testnode' }, 'Test'),
+      ])
     },
   })
   return wrapper._vnode.children
 }
 
-describe('PortalTarget', function () {
+describe('PortalTarget', function() {
   beforeEach(() => {
     // reset the mocked Wormhole's store.
     Wormhole.transports = {}
@@ -74,30 +76,36 @@ describe('PortalTarget', function () {
     expect(PortalTarget.abstract).toBe(false)
   })
 
-  it('renders slot content when no other content is available', function () {
-    const wrapper = createWrapper({}, {
-      slots: {
-        default: `<p class="default">Test</p>`,
-      },
-    })
+  it('renders slot content when no other content is available', function() {
+    const wrapper = createWrapper(
+      {},
+      {
+        slots: {
+          default: `<p class="default">Test</p>`,
+        },
+      }
+    )
 
     expect(wrapper.contains('p.default')).toBe(true)
   })
 
-  it('emits change event with the new last transport and old last transport when multiple is false', function () {
+  it('emits change event with the new last transport and old last transport when multiple is false', function() {
     const wrapper = createWrapper()
 
     const vNodes = Object.freeze([generateVNode()[0], generateVNode()[0]])
-    Vue.set(Wormhole.transports, 'target', [{
-      to: 'target',
-      from: 'source',
-      passengers: vNodes,
-    }])
+    Vue.set(Wormhole.transports, 'target', [
+      {
+        to: 'target',
+        from: 'source',
+        passengers: vNodes,
+      },
+    ])
 
     return Vue.nextTick().then(() => {
       expect(wrapper.emitted().change[0]).toMatchObject([
         expect.objectContaining({
-          to: 'target', from: 'source',
+          to: 'target',
+          from: 'source',
           passengers: vNodes,
         }),
         expect.objectContaining({}),
@@ -105,36 +113,44 @@ describe('PortalTarget', function () {
     })
   })
 
-  it('emits change event with the new and old transports when multiple is true', function () {
+  it('emits change event with the new and old transports when multiple is true', function() {
     const wrapper = createWrapper({ multiple: true })
 
     const vNodes = Object.freeze([generateVNode()[0], generateVNode()[0]])
-    const newTransports = [{
-      to: 'target',
-      from: 'source',
-      passengers: vNodes,
-    }, {
-      to: 'target',
-      from: 'source2',
-      passengers: vNodes,
-    }]
+    const newTransports = [
+      {
+        to: 'target',
+        from: 'source',
+        passengers: vNodes,
+      },
+      {
+        to: 'target',
+        from: 'source2',
+        passengers: vNodes,
+      },
+    ]
     Vue.set(Wormhole.transports, 'target', newTransports)
     const newerTransports = newTransports.slice(0)
     newerTransports.push({ to: 'target', from: 'source3', passengers: vNodes })
 
-    return wrapper.vm.$nextTick().then(() => {
-      expect(wrapper.emitted().change[0]).toMatchObject([
-        newTransports, expect.arrayContaining([]),
-      ])
+    return wrapper.vm
+      .$nextTick()
+      .then(() => {
+        expect(wrapper.emitted().change[0]).toMatchObject([
+          newTransports,
+          expect.arrayContaining([]),
+        ])
 
-      Wormhole.transports['target'] = newerTransports
+        Wormhole.transports['target'] = newerTransports
 
-      return wrapper.vm.$nextTick()
-    }).then(() => {
-      expect(wrapper.emitted().change[1]).toMatchObject([
-        newerTransports, newTransports,
-      ])
-    })
+        return wrapper.vm.$nextTick()
+      })
+      .then(() => {
+        expect(wrapper.emitted().change[1]).toMatchObject([
+          newerTransports,
+          newTransports,
+        ])
+      })
   })
 
   it('renders when a transition name is passed as a string', () => {

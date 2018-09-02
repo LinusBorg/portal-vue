@@ -1,24 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title>VuePortal Examples</title>
-  </head>
-  <body>
-    <div id="app">
 
-    </div>
-    <hr>
-    <h4>The following content is outside of the control of the Vue main instance</h4>
-    <p>But we can render stuff here nonetheless with the <i>mountTarget</i> Prop</p>
-    <div class="wrapper">
-      <div class="item destination">
-        <div id="external-target" class="test-external-target" style="border: 1px solid grey;">
-        </div>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>VuePortal Examples</title>
+</head>
+
+<body>
+  <div id="app">
+
+  </div>
+  <hr>
+  <h4>The following content is outside of the control of the Vue main instance</h4>
+  <p>But we can render stuff here nonetheless with the
+    <i>mountTarget</i> Prop</p>
+  <div class="wrapper">
+    <div class="item destination">
+      <div id="external-target" class="test-external-target" style="border: 1px solid grey;">
       </div>
     </div>
-    <script src="vendor.build.js"></script>
-    <script src="example.build.js"></script>
-  </body>
+  </div>
+  <script src="vendor.build.js"></script>
+  <script src="example.build.js"></script>
+  <div>
+    <div id="from">
+      <div class="v-portal" style="display: none;">
+
+      </div>
+    </div>
+    <div id="to">
+      <div class="vue-portal-target">
+        <p>Test1</p>
+        <p>Test2</p>
+        <!---->
+      </div>
+    </div>
+  </div>"
+</body>
+
 </html>

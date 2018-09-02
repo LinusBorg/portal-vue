@@ -1,4 +1,4 @@
-import { mount } from 'vue-test-utils'
+import { mount } from '@vue/test-utils'
 import Vue from 'vue'
 import { createEl } from '../utils'
 jest.mock('@/components/wormhole')

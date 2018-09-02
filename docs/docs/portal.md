@@ -1,6 +1,6 @@
 # Portal Component
 
-Wrap any content that you want to render somehwere else in a `<portal>` component.
+Wrap any content that you want to render somewhere else in a `<portal>` component.
 
 ## Example usage
 
@@ -23,6 +23,7 @@ Wrap any content that you want to render somehwere else in a `<portal>` componen
 When `true`, the slot content will _not_ be send through the portal to the defined PortalTarget.
 
 Instead, it will be rendered in place:
+
 **Source**
 
 ```html
@@ -49,7 +50,7 @@ Instead, it will be rendered in place:
 | -------- | -------- | --------------- |
 | `String` | no       | a random String |
 
-This optional prop can usually be left out, because `Portal` can generate a random string to provide a identifier for the source of the content being sent to the `PortalTarget`.
+This optional prop can usually be left out, because `Portal` can generate a random string to provide an identifier for the source of the content being sent to the `PortalTarget`.
 
 But it might be a good idea to name your `Portal` components so you can debug them easier if need would be.
 
@@ -61,7 +62,7 @@ But it might be a good idea to name your `Portal` components so you can debug th
 | ----------------- | -------- | --------------- |
 | `[String,Number]` | no\*     | a random String |
 
-This prop defines the order position in the outupt of the `PortalTarget`.
+This prop defines the order position in the output of the `PortalTarget`.
 
 <p class="tip">
   This prop is only useful when the Portal is sending content to a `PortalTarget` which has the `multiple` prop set.
@@ -95,7 +96,7 @@ This prop defines the order position in the outupt of the `PortalTarget`.
 | --------- | -------- | ------- |
 | `Boolean` | no       | `false` |
 
-When set to true, the component will check if the sent content has only one root node. If that is the case, the component will _not_ render a root node of its own but instead just output the conent as-is.
+When set to true, the component will check if the sent content has only one root node. If that is the case, the component will _not_ render a root node of its own but instead just output the content as-is.
 
 <p class="tip">This prop only has an effect when the 'disabled' prop is set as well</p>
 

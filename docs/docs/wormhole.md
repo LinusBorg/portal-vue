@@ -5,7 +5,7 @@ The Wormhole is not a component, it's an object that connects the `Portal`s to t
 You can use this object to programmatically send content to a `PortalTarget`,
 check weither a target exists, has content, and where that content was sent from.
 
-<p class="tip">This feature was introdcued with version `1.1.0`</p>
+<p class="tip">This feature was introduced with version `1.1.0`</p>
 
 ## Methods
 
@@ -18,10 +18,10 @@ The `open` method accepts one argument, an object with the following properties:
 | Property   | Required | Default | Explanation                                                       |
 | ---------- | -------- | ------- | ----------------------------------------------------------------- |
 | to         | yes      |         | The name of the `PortalTarget` to send to                         |
-| from       | yes      |         | The name of the `Portal` this conent comes from.                  |
+| from       | yes      |         | The name of the `Portal` this content comes from.                 |
 | passengers | no       |         | An array of vNodes - the content to be sent to the `PortalTarget` |
 
-Even if you ue this method programmatically and there is not source `Portal`, you still have to provide `from` - every content sent through the wormhole needs a source.
+Even if you use this method programmatically and there is not source `Portal`, you still have to provide `from` - every content sent through the wormhole needs a source.
 
 Examples:
 
@@ -134,7 +134,7 @@ Wormhole.getSourceFor('destination')
 
 `Wormhole.getContentFor(to)`
 
-Returns the content that is currently being displayed in a `PortalTarget` wiht the given `to` name.
+Returns the content that is currently being displayed in a `PortalTarget` with the given `to` name.
 
 Example:
 
