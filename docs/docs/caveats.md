@@ -4,11 +4,11 @@ Admittedly, portal-vue does a little bit of trickery to do what it does. With th
 
 ## Display in Devtools
 
-The Portal should be completely transparent. By that we mean hat calling `this.$parent` in a component withinh a portal slot should _not_ point to the `Portal` or `PortalTarget` component, but to the `Portal`'s parent copmponent. That way, code using `$parent` can work inside a Portal exactly the same as outside of it.
+The Portal should be completely transparent. By that we mean that calling `this.$parent` in a component within a portal slot should _not_ point to the `Portal` or `PortalTarget` component, but to the `Portal`'s parent copmponent. That way, code using `$parent` can work inside a Portal exactly the same as outside of it.
 
 For version **`<=1.2.0`**, we achieved that by making `Portal` and `PortalTarget` so-called `abstract` components. While you may never have heard of them, you know one already: `<transition>`. That had the side-effect that `Portal` and `PortalTarget` don't show up in the devtools.
 
-When we introduced support for scoped slots in version `1.3.0`, that strick didn't work anymore - abstract components can't receive scoped slots. So we had to use s small trick to keep `$parent` point to the real parent component while supporting scoped slots.
+When we introduced support for scoped slots in version `1.3.0`, that strick didn't work anymore - abstract components can't receive scoped slots. So we had to use small trick to keep `$parent` point to the real parent component while supporting scoped slots.
 
 The result of that trick is that in Devtools, a component that you nested inside of a `<portal>` element's slot will not show up as a child in the component tree, but as a sibling.
 

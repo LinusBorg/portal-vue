@@ -70,7 +70,7 @@ see the <a href="#" router-link="/docs/installation">Installation</a> page in th
 <portal to="destination" v-if="usePortal">
   <ul>
     <li>
-      When 'userPortal' evaluates to 'true', the portal's slot content will be rendered
+      When 'usePortal' evaluates to 'true', the portal's slot content will be rendered
       at the destination.
     </li>
     <li>
@@ -105,10 +105,10 @@ The order the content is rendered in can be adjusted through the `order` prop on
 **Source**
 
 ```html
-<portal name="destination" :order="2">
+<portal to="destination" :order="2">
   <p>some content</p>
 </portal>
-<portal name="destination" :order="1">
+<portal to="destination" :order="1">
   <p>some other content</p>
 </portal>
 
@@ -118,7 +118,7 @@ The order the content is rendered in can be adjusted through the `order` prop on
 **Result**
 
 ```html
-<div clas="vue-portal-target">
+<div class="vue-portal-target">
   <p>some other content</p>
   <p>some content</p>
 </div>
@@ -203,7 +203,7 @@ One important behaviour to know is this:
 ### Rendering outside of the Vue-App
 
 <p class="warning">
-  <strong>Depracation Warning</strong><br>
+  <strong>Deprecation Warning</strong><br>
   This feature will be removed in PortalVue 2.0. See [this issue](https://github.com/LinusBorg/portal-vue/issues/74).
 </p>
 

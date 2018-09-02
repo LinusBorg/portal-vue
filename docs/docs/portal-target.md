@@ -8,7 +8,7 @@ This component is an outlet for any content that was sent by a `<portal>` compon
 <portal-target name="destination" />
 ```
 
-<p class="info">This is an avstract component which means it will not be visible in vue-devtools</p>
+<p class="info">This is an abstract component which means it will not be visible in vue-devtools</p>
 
 ## Props API
 
@@ -23,10 +23,10 @@ You should use the `order` prop on the `Portal` to define the order in which the
 **Source**
 
 ```html
-<portal name="destination" :order="2">
+<portal to="destination" :order="2">
   <p>some content</p>
 </portal>
-<portal name="destination" :order="1">
+<portal to="destination" :order="1">
   <p>some other content</p>
 </portal>
 
@@ -36,7 +36,7 @@ You should use the `order` prop on the `Portal` to define the order in which the
 **Result**
 
 ```html
-<div clas="vue-portal-target">
+<div class="vue-portal-target">
   <p>some other content</p>
   <p>some content</p>
 </div>
@@ -193,11 +193,12 @@ Accepts an object whose keys match the transition component's events. Each key's
 Any existing slot content is rendered in case that no content from any source Portal is available.
 
 Example:
+
 **Source**
 
 ```html
 <portal-target name="destination" tag="span">
-  <p>This is rendered when no other content is avaiable.</p>
+  <p>This is rendered when no other content is available.</p>
 </portal-target>
 ```
 
@@ -205,7 +206,7 @@ Example:
 
 ```html
 <span class="vue-portal-target">
-  <p>This is rendered when no other content is avaiable.</p>
+  <p>This is rendered when no other content is available.</p>
 </span>
 ```
 
@@ -217,7 +218,7 @@ Example:
 
 Emitted everytime the component re-renders because the content from the `Portal` changed.
 
-it recives two arguments, each is an object with the following properties:
+it receives two arguments, each is an object with the following properties:
 
 | Property     | Type           | Description                                                          |
 | ------------ | -------------- | -------------------------------------------------------------------- |
