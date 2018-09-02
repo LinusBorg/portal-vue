@@ -60,7 +60,7 @@ export default {
   },
   watch: {
     to(newValue, oldValue) {
-      oldValue && this.clear(oldValue)
+      oldValue && oldValue !== newValue && this.clear(oldValue)
       this.sendUpdate()
     },
     targetEl(newValue, oldValue) {
