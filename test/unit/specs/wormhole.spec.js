@@ -2,7 +2,7 @@ import { Wormhole } from '@/components/wormhole'
 
 let wormhole
 
-describe.only('Wormhole', function () {
+describe('Wormhole', function() {
   beforeEach(() => {
     wormhole = new Wormhole({})
     wormhole.transports = {}
@@ -13,6 +13,8 @@ describe.only('Wormhole', function () {
       from: 'test-portal',
       to: 'target',
       passengers: ['Test'],
+      order: 0,
+      class: ['class1', 'class2'],
     })
 
     expect(wormhole.transports).toEqual({
@@ -21,12 +23,14 @@ describe.only('Wormhole', function () {
           from: 'test-portal',
           to: 'target',
           passengers: ['Test'],
+          order: 0,
+          class: ['class1', 'class2'],
         },
       ],
     })
   })
 
-  it('removes content on close()', function () {
+  it('removes content on close()', function() {
     const content = {
       from: 'test-portal',
       to: 'target',
@@ -84,14 +88,17 @@ describe.only('Wormhole', function () {
       passengers: ['Test2'],
     })
 
-    wormhole.close({
-      from: 'test-portal1',
-      to: 'target',
-    }, true) // force argument
+    wormhole.close(
+      {
+        from: 'test-portal1',
+        to: 'target',
+      },
+      true
+    ) // force argument
     expect(wormhole.transports).toEqual({ target: [] })
   })
 
-  it('hasTarget()', function () {
+  it('hasTarget()', function() {
     const check1 = wormhole.hasTarget('target')
     expect(check1).toBe(false)
 
@@ -104,7 +111,7 @@ describe.only('Wormhole', function () {
     expect(check2).toBe(true)
   })
 
-  it('hasContentFor()', function () {
+  it('hasContentFor()', function() {
     const check1 = wormhole.hasContentFor('target')
     expect(check1).toBe(false)
 
@@ -117,7 +124,7 @@ describe.only('Wormhole', function () {
     expect(check2).toBe(true)
   })
 
-  it('getSourceFor()', function () {
+  it('getSourceFor()', function() {
     const check1 = wormhole.getSourceFor('target')
     expect(check1).toBeUndefined()
 
@@ -130,7 +137,7 @@ describe.only('Wormhole', function () {
     expect(check2).toBe('source')
   })
 
-  it('getContentFor()', function () {
+  it('getContentFor()', function() {
     const check1 = wormhole.getContentFor('target')
     expect(check1).toBeUndefined()
 

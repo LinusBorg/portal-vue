@@ -16,6 +16,7 @@ import EmptyPortal from './components/empty-portal/index.vue'
 import DefaultSlotContent from './components/default-content-on-target/index.vue'
 import Transitions from './components/transitions/transitions.vue'
 import Multiple from './components/multiple/multiple.vue'
+import PropsToTarget from './components/props-to-target/PropsToTarget.vue'
 
 Vue.use(VueRouter)
 
@@ -79,6 +80,10 @@ const routes = [
   {
     path: '/multiple',
     component: Multiple,
+  },
+  {
+    path: '/propstotarget',
+    component: PropsToTarget,
   },
 ]
 

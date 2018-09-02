@@ -91,6 +91,12 @@ export default {
 
       return data
     },
+    transportedClasses() {
+      return this.ownTransports
+        .map(transport => transport.class)
+        .reduce((array, subarray) => array.concat(subarray), [])
+      //.filter((string, index, array) => array.indexOf(string) === index)
+    },
   },
 
   methods: {
@@ -142,7 +148,11 @@ export default {
     return noWrapper ? (
       children[0]
     ) : (
-      <Tag class="vue-portal-target" {...this.attributes} key={wrapperKey}>
+      <Tag
+        class={`vue-portal-target ${this.transportedClasses.join(' ')}`}
+        {...this.attributes}
+        key={wrapperKey}
+      >
         {children}
       </Tag>
     )

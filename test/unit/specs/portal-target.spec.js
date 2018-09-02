@@ -71,6 +71,29 @@ describe('PortalTarget', function() {
     expect(wrapper.is('.vue-portal-target')).toBe(true)
   })
 
+  it('correctly applies targetClasses', () => {
+    const vNodes = Object.freeze([generateVNode()[0], generateVNode()[0]])
+    Vue.set(Wormhole.transports, 'target', [
+      {
+        from: 'test-portal2',
+        to: 'target',
+        passengers: [vNodes[1]],
+        class: ['class2', 'class3'],
+      },
+      {
+        from: 'test-portal1',
+        to: 'target',
+        passengers: [vNodes[0]],
+        class: ['class1'],
+      },
+    ])
+    const wrapper = createWrapper({ multiple: true })
+    const classes = wrapper.classes()
+    console.log(classes)
+    expect(classes.includes('class1')).toBe(true)
+    expect(classes.includes('class2')).toBe(true)
+    expect(classes.includes('class3')).toBe(true)
+  })
   // check necessary because I regularly deactivate this during development
   it('is not an abstract component', () => {
     expect(PortalTarget.abstract).toBe(false)
