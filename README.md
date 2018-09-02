@@ -6,6 +6,8 @@
   <img src="http://linusborg.github.io/portal-vue/assets/logo.png" alt="PortalVue Logo">
 </p>
 
+> This branch is currently representing v1.4.0-beta.0
+
 For more detailed documentation and additional Information, please visit <a href="http://linusborg.github.io/portal-vue">the docs</a>
 
 ## Installation

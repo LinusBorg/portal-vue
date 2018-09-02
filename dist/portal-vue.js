@@ -1,6 +1,6 @@
 /*
     portal-vue
-    Version: 1.3.0
+    Version: 1.4.0-beta.0
     Licence: MIT
     (c) Thorsten Lünborg
   */
@@ -11,7 +11,7 @@
 	(global.PortalVue = factory(global.Vue));
 }(this, (function (Vue) { 'use strict';
 
-Vue = Vue && 'default' in Vue ? Vue['default'] : Vue;
+Vue = Vue && Vue.hasOwnProperty('default') ? Vue['default'] : Vue;
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
   return typeof obj;
@@ -284,7 +284,7 @@ function mergeFn (a, b) {
 }
 
 // import { transports } from './wormhole'
-var Target = {
+var PortalTarget = {
   abstract: false,
   name: 'portalTarget',
   props: {
@@ -335,21 +335,9 @@ var Target = {
   },
   beforeDestroy: function beforeDestroy() {
     this.unwatch();
-    this.$el.innerHTML = '';
   },
 
 
-  methods: {
-    emitChange: function emitChange(newTransports, oldTransports) {
-      if (this.multiple) {
-        this.$emit('change', [].concat(toConsumableArray(newTransports)), [].concat(toConsumableArray(oldTransports)));
-      } else {
-        var newTransport = newTransports.length === 0 ? undefined : newTransports[0];
-        var oldTransport = oldTransports.length === 0 ? undefined : oldTransports[0];
-        this.$emit('change', _extends({}, newTransport), _extends({}, oldTransport));
-      }
-    }
-  },
   computed: {
     ownTransports: function ownTransports() {
       var transports$$1 = this.transports[this.name] || [];
@@ -361,18 +349,8 @@ var Target = {
     passengers: function passengers() {
       return combinePassengers(this.ownTransports, this.slotProps);
     },
-    children: function children() {
-      return this.passengers.length !== 0 ? this.passengers : this.$slots.default || [];
-    },
     hasAttributes: function hasAttributes() {
       return Object.keys(this.attributes).length > 0;
-    },
-    noWrapper: function noWrapper() {
-      var noWrapper = !this.hasAttributes && this.slim;
-      if (noWrapper && this.children.length > 1) {
-        console.warn('[portal-vue]: PortalTarget with `slim` option received more than one child element.');
-      }
-      return noWrapper;
     },
     withTransition: function withTransition() {
       return !!this.transition;
@@ -406,32 +384,60 @@ var Target = {
         return transport.class;
       }).reduce(function (array, subarray) {
         return array.concat(subarray);
-      }, []).filter(function (string, index, array) {
-        return array.indexOf(string) === index;
-      });
+      }, []);
+      //.filter((string, index, array) => array.indexOf(string) === index)
     }
   },
 
+  methods: {
+    emitChange: function emitChange(newTransports, oldTransports) {
+      if (this.multiple) {
+        this.$emit('change', [].concat(toConsumableArray(newTransports)), [].concat(toConsumableArray(oldTransports)));
+      } else {
+        var newTransport = newTransports.length === 0 ? undefined : newTransports[0];
+        var oldTransport = oldTransports.length === 0 ? undefined : oldTransports[0];
+        this.$emit('change', _extends({}, newTransport), _extends({}, oldTransport));
+      }
+    },
+
+    // can't be a computed prop because it has to "react" to $slot changes.
+    children: function children() {
+      return this.passengers.length !== 0 ? this.passengers : this.$slots.default || [];
+    },
+    noWrapper: function noWrapper() {
+      var noWrapper = !this.hasAttributes && this.slim;
+      if (noWrapper && this.children().length > 1) {
+        console.warn('[portal-vue]: PortalTarget with `slim` option received more than one child element.');
+      }
+      return noWrapper;
+    }
+  },
   render: function render(h) {
     this.$options.abstract = true;
-    var TransitionType = this.noWrapper ? 'transition' : 'transition-group';
+    var noWrapper = this.noWrapper();
+    var children = this.children();
+    var TransitionType = noWrapper ? 'transition' : 'transition-group';
     var Tag = this.tag;
 
     if (this.withTransition) {
       return h(
         TransitionType,
         babelHelperVueJsxMergeProps([this.transitionData, { 'class': 'vue-portal-target' }]),
-        [this.children]
+        [children]
       );
     }
 
     // Solves a bug where Vue would sometimes duplicate elements upon changing multiple or disabled
     var wrapperKey = this.ownTransports.length;
 
-    return this.noWrapper ? this.children[0] : h(
+    return noWrapper ? children[0] : h(
       Tag,
-      babelHelperVueJsxMergeProps([{ 'class': 'vue-portal-target ' + this.transportedClasses.join(' ') }, this.attributes, { key: wrapperKey }]),
-      [this.children]
+      babelHelperVueJsxMergeProps([{
+        'class': 'vue-portal-target ' + this.transportedClasses.join(' ')
+      }, this.attributes, {
+        key: wrapperKey
+      }]),
+      [children]
     );
   }
 };
@@ -456,6 +462,7 @@ var Portal = {
       } },
     tag: { type: [String], default: 'DIV' },
     targetEl: { type: inBrowser ? [String, HTMLElement] : String },
+    targetClass: { type: String },
     to: {
       type: String,
       default: function _default() {
@@ -498,7 +505,7 @@ var Portal = {
 
   watch: {
     to: function to(newValue, oldValue) {
-      oldValue && this.clear(oldValue);
+      oldValue && oldValue !== newValue && this.clear(oldValue);
       this.sendUpdate();
     },
     targetEl: function targetEl(newValue, oldValue) {
@@ -516,19 +523,11 @@ var Portal = {
       var slotContent = this.normalizedSlots();
 
       if (slotContent) {
-        var classes = [this.$vnode.data.staticClass, this.$vnode.data.class].filter(function (string) {
-          return !!string && !!string.length;
-        }).map(function (string) {
-          return string.split(' ');
-        }).reduce(function (array, subarray) {
-          return array.concat(subarray);
-        }, []);
-
         wormhole.open({
           from: this.name,
           to: this.to,
           passengers: [].concat(toConsumableArray(slotContent)),
-          class: classes,
+          class: this.targetClass && this.targetClass.split(' '),
           order: this.order
         });
       } else {
@@ -555,7 +554,7 @@ var Portal = {
       }
 
       if (el) {
-        var newTarget = new Vue(_extends({}, Target, {
+        var newTarget = new Vue(_extends({}, PortalTarget, {
           parent: this,
           propsData: {
             name: this.to,
@@ -580,21 +579,13 @@ var Portal = {
     if (children.length && this.disabled) {
       // hack to make child components skip the portal when defining their $parent
       this.$options.abstract = true;
-      return children.length <= 1 && this.slim ? children[0] : h(
-        Tag,
-        null,
-        [this.normalizeChildren(children)]
-      );
+      return children.length <= 1 && this.slim ? children[0] : h(Tag, [this.normalizeChildren(children)]);
     } else {
-      return h(
-        Tag,
-        {
-          'class': 'v-portal',
-          style: 'display: none',
-          key: 'v-portal-placeholder'
-        },
-        []
-      );
+      return h(Tag, {
+        'class': 'v-portal',
+        style: 'display: none',
+        key: 'v-portal-placeholder'
+      });
       // h(this.tag, { class: { 'v-portal': true }, style: { display: 'none' }, key: 'v-portal-placeholder' })
     }
   }
@@ -604,7 +595,7 @@ function install(Vue$$1) {
   var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
   Vue$$1.component(opts.portalName || 'portal', Portal);
-  Vue$$1.component(opts.portalTargetName || 'portalTarget', Target);
+  Vue$$1.component(opts.portalTargetName || 'portalTarget', PortalTarget);
 }
 if (typeof window !== 'undefined' && window.Vue) {
   window.Vue.use({ install: install });
@@ -613,7 +604,7 @@ if (typeof window !== 'undefined' && window.Vue) {
 var index = {
   install: install,
   Portal: Portal,
-  PortalTarget: Target,
+  PortalTarget: PortalTarget,
   Wormhole: wormhole
 };
 
