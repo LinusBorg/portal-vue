@@ -124,8 +124,8 @@ When set to true, the component will check if the sent content has only one root
 
 This prop is only useful if:
 
-* the `disabled` prop is `true`, **and**
-* the `Portal`'s slot content is a [Scoped Slot](https://vuejs.org/v2/guide/components.html#Scoped-Slots).
+- the `disabled` prop is `true`, **and**
+- the `Portal`'s slot content is a [Scoped Slot](https://vuejs.org/v2/guide/components.html#Scoped-Slots).
 
 If that's the case, then the object you pass to `slotProps` is used to define the props that are passed to the scoped slot to display the content correctly in-place:
 
@@ -173,6 +173,34 @@ Defines the type of tag that should be rendered as a root element.
 <span class="vue-portal">
   <p>some content</p>
 </span>
+```
+
+### `targetClass`
+
+| Type     | Required | Default |
+| -------- | -------- | ------- |
+| `String` | no       | none    |
+
+Accepts a string containing a list of classes. These classes will be applied to the root element of the `PortalTarget`.
+
+**Source**
+
+```html
+<portal to="destination" target-class="class1 class2">
+  <p>some content</p>
+</portal>
+
+<portal-target name="destination"></portal-target>
+```
+
+**Result**
+
+```html
+<div class="vue-portal"></div>
+
+<div class="vue-portal-target class1 class2"
+  <p>some content</p>
+</div>
 ```
 
 ### `targetEl`
