@@ -58,8 +58,8 @@ see the <a href="#" router-link="/docs/installation">Installation</a> page in th
 ```html
 <portal to="destination" :disabled="true">
   <p>
-    This slot content will be rendered right here as long as the `disabled` prop evaluates to `false`,<br>
-    and will be rendered at the defined destination as when it is set to `true`
+    This slot content will be rendered right here as long as the `disabled` prop evaluates to `true`,<br>
+    and will be rendered at the defined destination as when it is set to `false` (which is the default).
   </p>
 </portal>
 ```
