@@ -22,6 +22,10 @@ The result of that trick is that in Devtools, a component that you nested inside
 <ComponentX>
 ```
 
+## local state lost when toggling `disabled`
+
+When togling the `<portal>` component's `disabled` state, components in the portal slot are destroyed and re-created, which means any changes to their local state are lost.
+
 ## provide/inject broken
 
 Due to the way that Vue resolves provides from parent components, it would look for provided objects in the parent of `<portal-target>`, so any `provide`d objects of a parent of `<portal>` will not be available to components within a portal - but it will have access to those provided by parents of the `<portal-target>`.
