@@ -44,6 +44,8 @@ Instead, it will be rendered in place:
 </div>
 ```
 
+<p class="warning">When togling between enabled/disabled state, components in the portal slot are destroyed and re-created, which means any changes to their local state are lost.</p>
+
 ### `name`
 
 | Type     | Required | Default         |
