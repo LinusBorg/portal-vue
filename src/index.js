@@ -3,8 +3,8 @@ import PortalTarget from './components/portal-target.js'
 import Wormhole from './components/wormhole.js'
 
 function install(Vue, opts = {}) {
-  Vue.component(opts.portalName || 'portal', Portal)
-  Vue.component(opts.portalTargetName || 'portalTarget', PortalTarget)
+  Vue.component(opts.portalName || 'Portal', Portal)
+  Vue.component(opts.portalTargetName || 'PortalTarget', PortalTarget)
 }
 if (typeof window !== 'undefined' && window.Vue) {
   window.Vue.use({ install: install })

@@ -594,8 +594,8 @@ var Portal = {
 function install(Vue$$1) {
   var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
-  Vue$$1.component(opts.portalName || 'portal', Portal);
-  Vue$$1.component(opts.portalTargetName || 'portalTarget', PortalTarget);
+  Vue$$1.component(opts.portalName || 'Portal', Portal);
+  Vue$$1.component(opts.portalTargetName || 'PortalTarget', PortalTarget);
 }
 if (typeof window !== 'undefined' && window.Vue) {
   window.Vue.use({ install: install });
