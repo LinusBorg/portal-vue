@@ -1,6 +1,6 @@
 const { resolve } = require('path')
 
-module.exports = function nuxtPortalVue (moduleOptions) {
+module.exports = function nuxtPortalVue(moduleOptions) {
   this.addPlugin({
     src: resolve(__dirname, 'plugin.js'),
     fileName: 'portal-vue.js',
