@@ -25,11 +25,9 @@ export const Wormhole = Vue.extend({
       } else {
         newTransports[currentIndex] = transport
       }
-      newTransports = stableSort(newTransports, function(a, b) {
+      this.transports[to] = stableSort(newTransports, function(a, b) {
         return a.order - b.order
       })
-
-      this.transports[to] = newTransports
     },
 
     close(transport, force = false) {
