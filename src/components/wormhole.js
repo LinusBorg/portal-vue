@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import { combinePassengers, freeze } from '../utils'
+import { combinePassengers, freeze, stableSort } from '../utils'
 const transports = {}
 
 export { transports }
@@ -25,11 +25,9 @@ export const Wormhole = Vue.extend({
       } else {
         newTransports[currentIndex] = transport
       }
-      newTransports.sort(function(a, b) {
+      this.transports[to] = stableSort(newTransports, function(a, b) {
         return a.order - b.order
       })
-
-      this.transports[to] = newTransports
     },
 
     close(transport, force = false) {

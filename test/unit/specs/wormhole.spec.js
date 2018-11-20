@@ -30,6 +30,82 @@ describe('Wormhole', function() {
     })
   })
 
+  it('does a stableSort when adding content to a target', () => {
+    wormhole.open({
+      from: 'test1',
+      order: 1,
+      to: 'target',
+      passengers: ['test'],
+      class: [],
+    })
+    wormhole.open({
+      from: 'test2',
+      order: 1,
+      to: 'target',
+      passengers: ['test'],
+      class: [],
+    })
+    wormhole.open({
+      from: 'test3',
+      order: 0,
+      to: 'target',
+      passengers: ['test'],
+      class: [],
+    })
+    wormhole.open({
+      from: 'test4',
+      order: 2,
+      to: 'target',
+      passengers: ['test'],
+      class: [],
+    })
+
+    const contents = wormhole.transports.target
+    const orders = contents.map(c => c.from)
+
+    expect(orders).toEqual(
+      expect.arrayContaining(['test3', 'test1', 'test2', 'test4'])
+    )
+  })
+
+  it('does stablesort when some transports are undefined', () => {
+    wormhole.open({
+      from: 'test1',
+      order: undefined,
+      to: 'target',
+      passengers: ['test'],
+      class: [],
+    })
+    wormhole.open({
+      from: 'test2',
+      order: undefined,
+      to: 'target',
+      passengers: ['test'],
+      class: [],
+    })
+    wormhole.open({
+      from: 'test3',
+      order: 0,
+      to: 'target',
+      passengers: ['test'],
+      class: [],
+    })
+    wormhole.open({
+      from: 'test4',
+      order: 2,
+      to: 'target',
+      passengers: ['test'],
+      class: [],
+    })
+
+    const contents = wormhole.transports.target
+    const orders = contents.map(c => c.from)
+
+    expect(orders).toEqual(
+      expect.arrayContaining(['test3', 'test1', 'test2', 'test4'])
+    )
+  })
+
   it('removes content on close()', function() {
     const content = {
       from: 'test-portal',
