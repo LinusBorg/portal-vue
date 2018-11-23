@@ -39,20 +39,12 @@ Vue.use(PortalVue)
 </portal-target>
 ```
 
-## Nuxt.js
-
-Install dependencies:
-
-```
-npm install -S portal-vue
-```
+## Nuxt module
 
 Add `portal-vue/nuxt` to modules section of `nuxt.config.js`
 
 ```javascript
 {
-  modules: [
-    'portal-vue/nuxt'
-  ]
+  modules: ['portal-vue/nuxt']
 }
 ```

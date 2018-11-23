@@ -48,6 +48,16 @@ Of course you can include PortalVue into your page as a local file on your serve
 
 The same rules and restrictions as for CDN apply.
 
+### Nuxt Module
+
+Add `portal-vue/nuxt` to modules section of `nuxt.config.js`
+
+```javascript
+{
+  modules: ['portal-vue/nuxt']
+}
+```
+
 ## Options
 
 When installing with `Vue.use()`, you can pass options to change the component names.
