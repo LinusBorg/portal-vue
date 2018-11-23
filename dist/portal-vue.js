@@ -1,6 +1,6 @@
 /*
     portal-vue
-    Version: 1.4.0
+    Version: 1.5.0
     Licence: MIT
     (c) Thorsten Lünborg
   */
@@ -141,6 +141,16 @@ function combinePassengers(transports) {
   }, []);
 }
 
+function stableSort(array, compareFn) {
+  return array.map(function (v, idx) {
+    return [idx, v];
+  }).sort(function (a, b) {
+    return this(a[1], b[1]) || a[0] - b[0];
+  }.bind(compareFn)).map(function (c) {
+    return c[1];
+  });
+}
+
 var transports = {};
 
 var Wormhole = Vue.extend({
@@ -169,11 +179,9 @@ var Wormhole = Vue.extend({
       } else {
         newTransports[currentIndex] = transport;
       }
-      newTransports.sort(function (a, b) {
+      this.transports[to] = stableSort(newTransports, function (a, b) {
         return a.order - b.order;
       });
-
-      this.transports[to] = newTransports;
     },
     close: function close(transport) {
       var force = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
