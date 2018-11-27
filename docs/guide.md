@@ -58,8 +58,10 @@ see the <a href="#" router-link="/docs/installation">Installation</a> page in th
 ```html
 <portal to="destination" :disabled="true">
   <p>
-    This slot content will be rendered right here as long as the `disabled` prop evaluates to `true`,<br>
-    and will be rendered at the defined destination as when it is set to `false` (which is the default).
+    This slot content will be rendered right here as long as the `disabled` prop
+    evaluates to `true`,<br />
+    and will be rendered at the defined destination as when it is set to `false`
+    (which is the default).
   </p>
 </portal>
 ```
@@ -70,11 +72,12 @@ see the <a href="#" router-link="/docs/installation">Installation</a> page in th
 <portal to="destination" v-if="usePortal">
   <ul>
     <li>
-      When 'usePortal' evaluates to 'true', the portal's slot content will be rendered
-      at the destination.
+      When 'usePortal' evaluates to 'true', the portal's slot content will be
+      rendered at the destination.
     </li>
     <li>
-      When it evaluates to 'false', the content will be removed from the destination
+      When it evaluates to 'false', the content will be removed from the
+      destination
     </li>
   </ul>
 </portal>
@@ -164,11 +167,7 @@ PortalVue can also be used with [Scoped Slots](https://vuejs.org/v2/guide/compon
 **Result:**
 
 ```html
-<div class="vue-portal-target">
-  <p>
-    Hello from the Target to You!
-  </p>
-</div>
+<div class="vue-portal-target"><p>Hello from the Target to You!</p></div>
 ```
 
 ### Transitions
@@ -197,15 +196,10 @@ However, if you use a `<portal-target>` for multiple `<portal>`s, you likely wan
 
 One important behaviour to know is this:
 
-* When the PortalTarget would render only one content element, a `<transition>` is created.
-* When it would render multiple elements, the rendered root wrapper element will be turned into a `<transition-group>` component instead.
+- When the PortalTarget would render only one content element, a `<transition>` is created.
+- When it would render multiple elements, the rendered root wrapper element will be turned into a `<transition-group>` component instead.
 
 ### Rendering outside of the Vue-App
-
-<p class="warning">
-  <strong>Deprecation Warning</strong><br>
-  This feature will be removed in PortalVue 2.0. See [this issue](https://github.com/LinusBorg/portal-vue/issues/74).
-</p>
 
 ```html
 <body>
