@@ -45,30 +45,6 @@
       ]
     }
   },
-  "babel": {
-    "presets": [
-      [
-        "es2015",
-        {
-          "modules": false
-        }
-      ],
-      "stage-3"
-    ],
-    "plugins": [
-      "transform-vue-jsx"
-    ],
-    "comments": true,
-    "env": {
-      "jest": true,
-      "test": {
-        "presets": [
-          "es2015",
-          "stage-3"
-        ]
-      }
-    }
-  },
   "devDependencies": {
     "@vue/test-utils": "1.0.0-beta.17",
     "babel": "^6.5.2",
