@@ -143,7 +143,7 @@ This can be useful if `<portal-target>`s wrapper element is creating problem for
 <portal-target name="destination" slim />
 ```
 
-The `slim` property also works on `<portal>` components when the are `disabled`.
+The `slim` property also works on `<portal>` components when they are `disabled`.
 
 ### Using Scoped Slots
 
