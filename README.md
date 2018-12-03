@@ -12,8 +12,12 @@ For more detailed documentation and additional Information, please visit <a href
 
 ## Installation
 
-```
-npm i portal-vue // v1.5.0 (stable)
+```bash
+npm i portal-vue
+
+# or
+
+yarn add portal-vue
 ```
 
 ```javascript
