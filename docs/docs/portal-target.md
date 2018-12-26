@@ -184,7 +184,7 @@ Accepts an object whose keys match the transition component's events. Each key's
 
 Any existing slot content is rendered in case that no content from any source Portal is available.
 
-<p class="waring>
+<p class="warning">
   Elements in the default slot should be properly keyed in order to prevent render update mistakes in some limited edge cases
 </p>
 
