@@ -29,14 +29,14 @@ function install(Vue: VueConstructor, options: PluginOptions = {}) {
 if (
   window.ROLLUP_BUILD_MODE === 'umd' &&
   typeof window !== 'undefined' &&
-  window.Vue
+  window.Vue &&
+  window.Vue === Vue
 ) {
   window.Vue.use({ install: install })
 }
 
 export default {
   install,
-  Portal,
-  PortalTarget,
-  Wormhole,
 }
+
+export { Portal, PortalTarget, Wormhole }
