@@ -3,25 +3,25 @@
     <div class="sidebar">
       <ul>
         <li v-for="target in routes" v-bind:key="target.path">
-          <router-link :to="target.path"> {{target.path}}</router-link>
+          <router-link :to="target.path"> {{ target.path }}</router-link>
         </li>
       </ul>
     </div>
-    <div class="viewport">
-      <router-view />
-    </div>
+    <div class="viewport"><router-view /></div>
   </div>
 </template>
 
-<script>
-  import { routes } from '../router'
+<script lang="ts">
+import Vue from 'vue'
+import { routes } from '../router'
 
-  export default {
-    name: 'App',
-    created () {
-      this.routes = routes
-    },
-  }
+export default Vue.extend({
+  name: 'App',
+  created() {
+    //@ts-ignore
+    this.routes = routes
+  },
+})
 </script>
 
 <style lang="scss">

@@ -3,14 +3,22 @@
     <div class="">
       <ul class="controls">
         <li class="controls--item">
-          <a href="#" class="controls--link" :class="{ 'controls--link-active': active === 'ss-A' }"
-            @click.prevent=" active = 'ss-A' ">
+          <a
+            href="#"
+            class="controls--link"
+            :class="{ 'controls--link-active': active === 'ss-A' }"
+            @click.prevent="active = 'ss-A'"
+          >
             Get Content from source A
           </a>
         </li>
         <li class="controls--item">
-          <a href="#" class="controls--link" :class="{ 'controls--link-active': active === 'ss-B' }"
-            @click.prevent=" active = 'ss-B' ">
+          <a
+            href="#"
+            class="controls--link"
+            :class="{ 'controls--link-active': active === 'ss-B' }"
+            @click.prevent="active = 'ss-B'"
+          >
             Get content from source B
           </a>
         </li>
@@ -30,18 +38,20 @@
   </div>
 </template>
 
-<script>
-  import portalSource from './source.vue'
-  import Destination from './destination.vue'
+<script lang="ts">
+import Vue from 'vue'
+import portalSource from './source.vue'
+import Destination from './destination.vue'
 
-  export default {
-    components: {
-      portalSource, Destination,
-    },
-    data () {
-      return {
-        active: 'ss-A',
-      }
-    },
-  }
+export default Vue.extend({
+  components: {
+    portalSource,
+    Destination,
+  },
+  data() {
+    return {
+      active: 'ss-A',
+    }
+  },
+})
 </script>

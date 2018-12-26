@@ -1,7 +1,24 @@
-node_modules/
-node-debug.log
-TODO.md
-yarn-error.log
-yarn.lock
-test/unit/coverage
-/coverage
+.DS_Store
+node_modules
+
+/tests/e2e/videos/
+/tests/e2e/screenshots/
+
+# local env files
+.env.local
+.env.*.local
+docs/.vuepress/dist
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw*

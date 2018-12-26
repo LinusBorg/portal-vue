@@ -10,21 +10,19 @@
       on the parent route. If neither sub-route is active, it uses the default
       title.
     </p>
+    <p>This allows sub-routes to set page elements in parent routes.</p>
+
     <p>
-      This allows sub-routes to set page elements in parent routes.
+      <strong><code>router-view</code> contents:</strong>
     </p>
 
-    <p><strong><code>router-view</code> contents:</strong></p>
-
-    <div class="router-view-box">
-      <router-view />
-    </div>
+    <div class="router-view-box"><router-view /></div>
   </div>
 </template>
 
 <style>
-  .router-view-box {
-    border: 1px solid black;
-    padding: 10px;
-  }
+.router-view-box {
+  border: 1px solid black;
+  padding: 10px;
+}
 </style>

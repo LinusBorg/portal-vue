@@ -13,15 +13,14 @@
   </div>
 </template>
 
-<script>
-  export default {
-    props: {
-      name: { type: String },
-      active: { type: String },
-    },
-  }
+<script lang="ts">
+import Vue from 'vue'
+export default Vue.extend({
+  props: {
+    name: { type: String },
+    active: { type: String },
+  },
+})
 </script>
 
-<style>
-
-</style>
+<style></style>

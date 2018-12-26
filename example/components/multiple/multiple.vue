@@ -1,52 +1,54 @@
 <template>
-    <div class="wrapper">
-      <src v-for="list in lists" :list="list" :key="list.id"></src>
-        <destination></destination>
-    </div>
+  <div class="wrapper">
+    <src v-for="list in lists" :list="list" :key="list.id"></src>
+    <destination></destination>
+  </div>
 </template>
 
-<script>
-    import Src from "./source.vue";
-    import Destination from './destination.vue';
+<script lang="ts">
+import Vue from 'vue'
+import Src from './source.vue'
+import Destination from './destination.vue'
 
-    const startingItems = [
-      'carrots',
-      'detergent',
-      'lego',
-      'mushrooms',
-      'pudding',
-      'risotto',
-      'spaghetti',
-      'super nintendo',
-      'teddy bear',
-      'train set',
-      'yoghurt',
-    ];
+const startingItems = [
+  'carrots',
+  'detergent',
+  'lego',
+  'mushrooms',
+  'pudding',
+  'risotto',
+  'spaghetti',
+  'super nintendo',
+  'teddy bear',
+  'train set',
+  'yoghurt',
+]
 
-    function pickStartItems(count) {
-      const items = []
-      for (let i = 0; i < count; i++) {
-        items.push(startingItems[Math.floor(Math.random() * startingItems.length)])
-      }
-      return items
+function pickStartItems(count: number) {
+  const items = []
+  for (let i = 0; i < count; i++) {
+    items.push(startingItems[Math.floor(Math.random() * startingItems.length)])
+  }
+  return items
+}
+
+export default Vue.extend({
+  components: { Src, Destination },
+  data() {
+    const lists = []
+    const names = ['Grocery List', 'Christmas Presents', 'Menu']
+    const orders = [2, 1, 3]
+    for (const id in names) {
+      lists.push({
+        id: orders[id],
+        name: names[id],
+        enabled: true,
+        items: pickStartItems(parseInt(id) + 2),
+      })
     }
-
-    export default {
-        components: {Src, Destination},
-      data() {
-          const lists = [];
-          const names = ['Grocery List', 'Christmas Presents', 'Menu'];
-          for (const id in names) {
-            lists.push({
-              id,
-              name: names[id],
-              enabled: true,
-              items: pickStartItems(parseInt(id) + 2),
-            })
-          }
-          return {
-            lists
-          }
-      }
+    return {
+      lists,
     }
+  },
+})
 </script>

@@ -1,26 +1,27 @@
 <template>
   <div class="item" :class="type">
-    <div v-if="$slots.header" class="header">
-      <slot name="header"/>
-    </div>
+    <div v-if="$slots.header" class="header"><slot name="header" /></div>
 
-    <div class="body">
-      <slot />
-    </div>
+    <div class="body"><slot /></div>
   </div>
 </template>
 
-<script>
-  const types = ['source', 'destination']
-  export default {
-    abstract: true,
-    props: {
-      type: {
-        type: String, required: true,
-        validator: (value) => types.indexOf(value) !== -1,
-      },
+<script lang="ts">
+import Vue from 'vue'
+
+const types = ['source', 'destination']
+
+export default Vue.extend({
+  // @ts-ignore
+  abstract: true,
+  props: {
+    type: {
+      type: String,
+      required: true,
+      validator: (value: string) => types.indexOf(value) !== -1,
     },
-  }
+  },
+})
 </script>
 
 <style lang="scss" scoped>

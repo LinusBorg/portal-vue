@@ -1,21 +1,27 @@
+---
+sidebar: auto
+---
+
 # Examples
 
-> This section cold need some more lovely examples. PRs are welcome :)
+:::tip Call for Examples
+This section is pretty empty right now. It could need some more lovely examples.
 
-## Starter
+PRs are welcome :)
+:::
+
+## Basic
 
 This is the starter example from the "Getting Started" page, demonstrating the basic usage.
 
-<iframe height='300' scrolling='no' title='PortalVue - Simple Example' src='//codepen.io/LinusBorg/embed/preview/QvVqpY/?height=265&theme-id=light&default-tab=html,result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='https://codepen.io/LinusBorg/pen/QvVqpY/'>PortalVue - Simple Example</a> by Thorsten Lünborg (<a href='http://codepen.io/LinusBorg'>@LinusBorg</a>) on <a href='http://codepen.io'>CodePen</a>.
-</iframe>
+<SplitDisplay active="code">
+  <Examples-Basic slot="example" />
+  <<< @/docs/.vuepress/components/Examples/Basic.vue{8,17}
+</SplitDisplay>
 
 ## Dynamic sidebar content
 
 By selectively rendering different `Portal` components that all send to the same `PortalTarget` (but not at the same time), we can replace the `PortalTarget`'s content on demand, e.g. to put something into a sidebar area from teh main component:
-
-<iframe height='300' scrolling='no' title='PortalVue - Switching a side menu' src='//codepen.io/LinusBorg/embed/preview/xdQZqa/?height=265&theme-id=light&default-tab=result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/LinusBorg/pen/xdQZqa/'>PortalVue - Switching a side menu</a> by Thorsten Lünborg (<a href='http://codepen.io/LinusBorg'>@LinusBorg</a>) on <a href='http://codepen.io'>CodePen</a>.
-</iframe>
-
 
 ## More to follow
 
