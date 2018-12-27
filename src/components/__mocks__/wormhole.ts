@@ -12,10 +12,11 @@ const wormhole = {
   unregisterSource: jest.fn().mockName('unregisterSource'),
   registerTarget: jest.fn().mockName('registerTarget'),
   unregisterTarget: jest.fn().mockName('registerTarget'),
+  hasSource: jest.fn().mockName('hasSource'),
   hasTarget: jest.fn().mockName('hasTarget'),
   transports,
   targets,
   sources,
 }
 
-export default wormhole
+export { wormhole }

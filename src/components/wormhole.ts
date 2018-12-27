@@ -107,4 +107,4 @@ export const Wormhole = Vue.extend({
 })
 
 const wormhole = new Wormhole(transports)
-export default wormhole
+export { wormhole }

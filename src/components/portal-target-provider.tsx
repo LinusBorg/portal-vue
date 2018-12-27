@@ -2,7 +2,7 @@ import Vue from 'vue'
 import { VNode } from 'vue'
 import Portal from './portal'
 import PortalTarget from './portal-target'
-import wormhole from './wormhole'
+import { wormhole } from './wormhole'
 
 let _id = 0
 

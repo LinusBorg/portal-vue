@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import { VNode } from 'vue'
 import { TransportInput, TransportVector } from '../types'
-import wormhole from './wormhole'
+import { wormhole } from './wormhole'
 
 let _id = 1
 

@@ -3,7 +3,7 @@ import { VueConstructor, PluginFunction } from 'vue'
 import Portal from '@/components/portal'
 import PortalTarget from '@/components/portal-target'
 import PortalTargetProvider from '@/components/portal-target-provider'
-import Wormhole from '@/components/wormhole'
+import { wormhole as Wormhole } from '@/components/wormhole'
 
 declare global {
   interface Window {

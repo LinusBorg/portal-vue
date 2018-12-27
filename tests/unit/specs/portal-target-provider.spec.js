@@ -6,7 +6,7 @@ import PortalTargetProvider from '@/components/portal-target-provider'
 jest.mock('@/components/wormhole')
 // const PortalVue = require('@/index').default
 // const PortalTargetProvider = require('@/components/portal-target-provider').default
-const wormhole = require('@/components/wormhole').default
+const wormhole = require('@/components/wormhole').wormhole
 
 Vue.use(PortalVue)
 function mountComp(component, opts) {

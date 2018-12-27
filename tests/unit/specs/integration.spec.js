@@ -1,10 +1,7 @@
 import Vue from 'vue'
 import { mount, createLocalVue } from '@vue/test-utils'
 import PortalVue from '../../../src'
-
-const Wormhole = PortalVue.Wormhole
-const Portal = PortalVue.Portal
-const PortalTarget = PortalVue.PortalTarget
+import { Portal, PortalTarget, Wormhole } from '../../../src'
 
 async function waitTicks(n = 1) {
   let p = Promise.resolve()

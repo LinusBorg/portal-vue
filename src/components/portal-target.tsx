@@ -3,7 +3,7 @@ import { VNode, VNodeData } from 'vue'
 import { combinePassengers } from '@/utils'
 import { Transport } from '../types'
 
-import wormhole from '@/components/wormhole'
+import { wormhole } from '@/components/wormhole'
 
 export default Vue.extend({
   name: 'portalTarget',
