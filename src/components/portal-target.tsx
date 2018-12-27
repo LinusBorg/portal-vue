@@ -133,9 +133,6 @@ export default Vue.extend({
       )
     }
 
-    // Solves a bug where Vue would sometimes duplicate elements upon changing multiple or disabled
-    const wrapperKey = '' + this.ownTransports.length
-
     return noWrapper
       ? children[0]
       : this.slim
@@ -144,7 +141,6 @@ export default Vue.extend({
           Tag,
           {
             class: { 'vue-portal-target': true },
-            key: wrapperKey,
           },
 
           children
