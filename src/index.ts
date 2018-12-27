@@ -39,4 +39,4 @@ export default {
   install,
 }
 
-export { Portal, PortalTarget, Wormhole }
+export { Portal, PortalTarget, PortalTargetProvider, Wormhole }
