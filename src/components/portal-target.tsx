@@ -1,9 +1,14 @@
 import Vue from 'vue'
-import { VNode, VNodeData } from 'vue'
+import { VNode, VueConstructor, ComponentOptions, PropOptions } from 'vue'
 import { combinePassengers } from '@/utils'
 import { Transport } from '../types'
 
 import { wormhole } from '@/components/wormhole'
+
+export type PropWithComponent =
+  | VueConstructor<Vue>
+  | ComponentOptions<Vue>
+  | string
 
 export default Vue.extend({
   name: 'portalTarget',
@@ -13,8 +18,9 @@ export default Vue.extend({
     slim: { type: Boolean, default: false },
     slotProps: { type: Object, default: () => ({}) },
     tag: { type: String, default: 'div' },
-    transition: { type: [Boolean, String, Object], default: false },
-    transitionEvents: { type: Object, default: () => ({}) },
+    transition: { type: [String, Object, Function] } as PropOptions<
+      PropWithComponent
+    >,
   },
   data() {
     return {
@@ -72,31 +78,6 @@ export default Vue.extend({
     withTransition(): boolean {
       return !!this.transition
     },
-    transitionData() {
-      const t = this.transition
-      const data: VNodeData = {}
-
-      // During first render, we render a dumb transition without any classes, events and a fake name
-      // We have to do this to emulate the normal behaviour of transitions without `appear`
-      // because in Portals, transitions can behave as if appear was defined under certain conditions.
-      if (this.firstRender && (typeof t === 'object' && !t.appear)) {
-        data.props = { name: '__notranstition__portal-vue__' }
-        return data
-      }
-
-      if (typeof t === 'string') {
-        data.props = { name: t }
-      } else if (typeof t === 'object') {
-        data.props = t
-      }
-      if (this.slim) {
-        //@ts-ignore
-        data.props.tag = this.tag
-      }
-      data.on = this.transitionEvents
-
-      return data
-    },
   },
 
   methods: {
@@ -122,14 +103,16 @@ export default Vue.extend({
   render(h): VNode {
     const noWrapper = this.noWrapper()
     const children = this.children()
-    const TransitionType = noWrapper ? 'transition' : 'transition-group'
+    const Transition = this.transition
     const Tag = this.tag
 
     if (this.withTransition) {
-      return (
-        <TransitionType {...this.transitionData} class="vue-portal-target">
-          {children}
-        </TransitionType>
+      return h(
+        Transition,
+        {
+          class: 'vue-portal-target',
+        },
+        children
       )
     }
 
