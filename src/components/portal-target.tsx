@@ -103,13 +103,17 @@ export default Vue.extend({
   render(h): VNode {
     const noWrapper = this.noWrapper()
     const children = this.children()
-    const Transition = this.transition
+    const { transition } = this
+    const Transition =
+      typeof transition === 'string' ? 'transition' : transition
     const Tag = this.tag
 
     if (this.withTransition) {
       return h(
         Transition,
         {
+          props:
+            typeof transition === 'string' ? { name: transition } : undefined,
           class: 'vue-portal-target',
         },
         children
