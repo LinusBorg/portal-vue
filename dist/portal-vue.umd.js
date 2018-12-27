@@ -1,8 +1,8 @@
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('vue')) :
-  typeof define === 'function' && define.amd ? define(['vue'], factory) :
-  (global.PortalVue = factory(global.Vue));
-}(this, (function (Vue) { 'use strict';
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('vue')) :
+  typeof define === 'function' && define.amd ? define(['exports', 'vue'], factory) :
+  (factory((global.PortalVue = {}),global.Vue));
+}(this, (function (exports,Vue) { 'use strict';
 
   Vue = Vue && Vue.hasOwnProperty('default') ? Vue['default'] : Vue;
 
@@ -529,15 +529,12 @@
         return h(TransitionType, babelHelperVueJsxMergeProps([this.transitionData, {
           "class": "vue-portal-target"
         }]), [children]);
-      } // Solves a bug where Vue would sometimes duplicate elements upon changing multiple or disabled
+      }
 
-
-      var wrapperKey = '' + this.ownTransports.length;
       return noWrapper ? children[0] : this.slim ? h() : h(Tag, {
         class: {
           'vue-portal-target': true
-        },
-        key: wrapperKey
+        }
       }, children);
     }
   });
@@ -651,19 +648,22 @@
     Vue$$1.component(options.portalTargetProviderName || 'PortalTargetProvider', PortalTargetProvider);
   }
 
-  if (typeof window !== 'undefined' && window.Vue) {
+  if (typeof window !== 'undefined' && window.Vue && window.Vue === Vue) {
     window.Vue.use({
       install: install
     });
   }
 
   var index = {
-    install: install,
-    Portal: Portal,
-    PortalTarget: PortalTarget,
-    Wormhole: wormhole
+    install: install
   };
 
-  return index;
+  exports.default = index;
+  exports.Portal = Portal;
+  exports.PortalTarget = PortalTarget;
+  exports.PortalTargetProvider = PortalTargetProvider;
+  exports.Wormhole = wormhole;
+
+  Object.defineProperty(exports, '__esModule', { value: true });
 
 })));

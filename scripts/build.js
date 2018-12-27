@@ -15,19 +15,13 @@ const merge = require('merge')
 const chalk = require('chalk')
 const rimraf = require('rimraf')
 const config = require('../rollup.config')
-const {
-  version,
-  name,
-  main,
-  module: moduleField,
-  browser,
-} = require('../package.json')
+const { version, name, main, module: moduleField } = require('../package.json')
 
 process.env.VERSION = version
 
 const plugins = [
   alias({
-    '@/': path.join(__dirname, '../src'),
+    '@/': path.join(process.cwd(), './src'),
   }),
   resolve(),
   commonjs(),
@@ -63,7 +57,7 @@ const filename = str => path.join(__dirname, '../', str)
 const builds = {
   umd: {
     output: {
-      file: filename(browser),
+      file: filename('dist/portal-vue.umd.js'),
       format: 'umd',
       name: 'PortalVue',
       globals: {

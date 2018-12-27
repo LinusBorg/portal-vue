@@ -523,15 +523,12 @@ var PortalTarget = Vue.extend({
       return h(TransitionType, babelHelperVueJsxMergeProps([this.transitionData, {
         "class": "vue-portal-target"
       }]), [children]);
-    } // Solves a bug where Vue would sometimes duplicate elements upon changing multiple or disabled
+    }
 
-
-    var wrapperKey = '' + this.ownTransports.length;
     return noWrapper ? children[0] : this.slim ? h() : h(Tag, {
       class: {
         'vue-portal-target': true
-      },
-      key: wrapperKey
+      }
     }, children);
   }
 });
@@ -646,11 +643,9 @@ function install(Vue$$1) {
 }
 
 var index = {
-  install: install,
-  Portal: Portal,
-  PortalTarget: PortalTarget,
-  Wormhole: wormhole
+  install: install
 };
 
 export default index;
+export { Portal, PortalTarget, PortalTargetProvider, wormhole as Wormhole };
 //# sourceMappingURL=portal-vue.esm.js.map
