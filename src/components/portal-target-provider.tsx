@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import { VNode, ComponentOptions } from 'vue'
+import { VNode, VueConstructor, ComponentOptions } from 'vue'
 import Portal from './portal'
 import PortalTarget from './portal-target'
 import { wormhole } from './wormhole'
@@ -15,7 +15,13 @@ interface hackCompOptions {
 
 const portalProps = ((Portal as unknown) as hackCompOptions).options.props
 
-export default Vue.extend({
+export type withPortalTarget = VueConstructor<
+  Vue & {
+    portalTarget: any
+  }
+>
+
+export default (Vue as withPortalTarget).extend({
   name: 'PortalTargetProvider',
   inheritAttrs: false,
   props: {
@@ -30,6 +36,11 @@ export default Vue.extend({
       default: (): object => `Target-${String(_id++)}` as any,
     },
   },
+  data() {
+    return {
+      props: { ...this.$props },
+    }
+  },
   created() {
     let el: HTMLElement | null = document.querySelector(this.mountTo)
 
@@ -40,8 +51,7 @@ export default Vue.extend({
       return
     }
 
-    const props = { ...this.$props }
-    ;(this as any).props = props
+    const props = this.props
 
     // Target alredy exists
     if (wormhole.targets[props.name]) {
@@ -61,7 +71,7 @@ export default Vue.extend({
       el = mountEl
     }
 
-    ;(this as any).portalTarget = new PortalTarget({
+    this.portalTarget = new PortalTarget({
       el,
       parent: this,
       propsData: {
@@ -71,17 +81,17 @@ export default Vue.extend({
     })
   },
   beforeDestroy() {
-    const target = (this as any).portalTarget
-    if ((this as any).props.append) {
+    const target = this.portalTarget
+    if (this.props.append) {
       const el = target.$el
       el.parentNode.removeChild(el)
     }
     target.$destroy()
   },
   render(h): VNode {
-    const props = (this as any).props
+    const props = this.props
 
-    if (!(this as any).portalTarget) {
+    if (!this.portalTarget) {
       console.warn("[portal-vue] Target wasn't mounted")
       return h()
     }
