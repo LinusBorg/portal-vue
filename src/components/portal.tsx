@@ -64,18 +64,18 @@ export default Vue.extend({
       }
       wormhole.close(closer)
     },
-    normalizedSlots(): Function[] | VNode[] {
+    normalizeSlots(): Function[] | VNode[] {
       return this.$scopedSlots.default
         ? [this.$scopedSlots.default]
         : this.$slots.default
     },
-    normalizeChildren(children: VNode[] | Function): VNode[] {
+    normalizeOwnChildren(children: VNode[] | Function): VNode[] {
       return typeof children === 'function'
         ? children(this.slotProps)
         : children
     },
     sendUpdate() {
-      const slotContent = this.normalizedSlots()
+      const slotContent = this.normalizeSlots()
       if (slotContent) {
         const transport: TransportInput = {
           from: this.name,
@@ -96,9 +96,9 @@ export default Vue.extend({
     const Tag = this.tag
     if (children.length && this.disabled) {
       return children.length <= 1 && this.slim ? (
-        this.normalizeChildren(children)[0]
+        this.normalizeOwnChildren(children)[0]
       ) : (
-        <Tag>{this.normalizeChildren(children)}</Tag>
+        <Tag>{this.normalizeOwnChildren(children)}</Tag>
       )
     } else {
       return this.slim
