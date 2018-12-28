@@ -6,6 +6,7 @@
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
     "serve": "vue-cli-service serve example/main.ts",
+    "serve:prod": "vue-cli-service serve --mode production example/main.ts",
     "build": "vue-cli-service build --target lib --name PortalVue --dest dist-webpack src/index.ts",
     "roll": "ROLL=1 node ./scripts/build && yarn minify",
     "minify": "minify dist/portal-vue.umd.js --out-file dist/portal-vue.umd.min.js",
