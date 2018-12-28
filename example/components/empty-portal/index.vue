@@ -17,5 +17,3 @@ import Vue from 'vue'
 // This Example is just used to test that an empty portal works as expected.
 export default Vue.extend({})
 </script>
-
-<style></style>

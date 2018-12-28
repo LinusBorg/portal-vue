@@ -27,15 +27,10 @@ const plugins = [
   commonjs(),
   typescript({
     typescript: require('typescript'),
+    tsconfig: 'scripts/tsconfig.json',
     useTsconfigDeclarationDir: true,
     cacheRoot: './node_modules/.cache/rpt2_cache',
-    clean: false,
-    tsConfigOverrides: {
-      declaration: true,
-      declarationDir: 'types',
-      allowJs: false,
-      checkJs: false,
-    },
+    clean: true,
   }),
   replace({
     'window.ROLLUP_BUILD_MODE': () =>

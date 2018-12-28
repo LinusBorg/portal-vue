@@ -4,8 +4,10 @@
     "module": "esnext",
     "strict": true,
     "jsx": "preserve",
-    "allowJs": true,
-    "checkJs": true,
+    "allowJs": false,
+    "checkJs": false,
+    "declaration": true,
+    "declarationDir": "../types",
     "importHelpers": true,
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
@@ -14,23 +16,11 @@
     "sourceMap": true,
     "baseUrl": ".",
     "types": ["node", "jest"],
-    //"declaration": true,
-    //"declarationDir": "types",
     "paths": {
-      "@/*": ["src/*"],
-      "portal-vue": ["./src/index"]
+      "@/*": ["../src/*"]
     },
     "lib": ["es2015", "dom", "dom.iterable", "scripthost"]
   },
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx",
-    "src/**/*.vue",
-    "example/**/*.ts",
-    "example/**/*.tsx",
-    "exmape/**/*.vue",
-    "tests/**/*.ts",
-    "tests/**/*.tsx"
-  ],
-  "exclude": ["node_modules"]
+  "include": ["../src/**/*.ts", "../src/**/*.tsx"],
+  "exclude": ["../node_modules", "../src/components/__mocks__"]
 }

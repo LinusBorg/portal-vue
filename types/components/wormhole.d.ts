@@ -30,4 +30,4 @@ declare const wormhole: import("vue/types/vue").CombinedVueInstance<{
     hasSource(to: string): boolean;
     $_getTransportIndex({ to, from }: TransportVector): number;
 } & Record<never, any> & Vue, object, object, object, Record<never, any>>;
-export default wormhole;
+export { wormhole };

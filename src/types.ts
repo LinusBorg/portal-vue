@@ -11,7 +11,7 @@ export interface Transports {
 export interface TransportInput {
   to: string
   from: string
-  order: number
+  order?: number
   passengers: Array<VNode | Function>
 }
 

@@ -8,7 +8,10 @@ declare const wormhole: {
     unregisterSource: jest.Mock<{}>;
     registerTarget: jest.Mock<{}>;
     unregisterTarget: jest.Mock<{}>;
+    hasSource: jest.Mock<{}>;
     hasTarget: jest.Mock<{}>;
     transports: {};
+    targets: {};
+    sources: {};
 };
-export default wormhole;
+export { wormhole };

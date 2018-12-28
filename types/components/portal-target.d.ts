@@ -5,7 +5,6 @@ declare const _default: import("vue").VueConstructor<{
     transports: import("../types").Transports;
     firstRender: boolean;
 } & {
-    emitChange(newTransports: Transport[], oldTransports: Transport[]): void;
     children(): VNode[];
     noWrapper(): boolean;
 } & {
