@@ -2,8 +2,8 @@ import Vue from 'vue';
 import { VNode } from 'vue';
 declare const _default: import("vue").VueConstructor<{
     clear(target?: string | undefined): void;
-    normalizedSlots(): VNode[] | Function[];
-    normalizeChildren(children: Function | VNode[]): VNode[];
+    normalizeSlots(): VNode[] | Function[];
+    normalizeOwnChildren(children: Function | VNode[]): VNode[];
     sendUpdate(): void;
 } & {
     disabled: boolean;

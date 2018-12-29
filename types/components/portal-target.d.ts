@@ -1,7 +1,8 @@
 import Vue from 'vue';
-import { VNode, VNodeData } from 'vue';
+import { VNode, VueConstructor, ComponentOptions } from 'vue';
 import { Transport } from '../types';
-declare const _default: import("vue").VueConstructor<{
+export declare type PropWithComponent = VueConstructor<Vue> | ComponentOptions<Vue> | string;
+declare const _default: VueConstructor<{
     transports: import("../types").Transports;
     firstRender: boolean;
 } & {
@@ -11,14 +12,12 @@ declare const _default: import("vue").VueConstructor<{
     ownTransports: Transport[];
     passengers: VNode[];
     withTransition: boolean;
-    transitionData: VNodeData;
 } & {
     multiple: boolean;
     name: string;
     slim: boolean;
     slotProps: any;
     tag: string;
-    transition: any;
-    transitionEvents: any;
+    transition: PropWithComponent;
 } & Vue>;
 export default _default;
