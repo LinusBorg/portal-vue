@@ -15,8 +15,8 @@
     "test:e2e": "vue-cli-service test:e2e"
   },
   "main": "dist/portal-vue.common.js",
-  "jsdelivr": "dist/portal-vue.umd.min.js",
   "module": "dist/portal-vue.esm.js",
+  "jsdelivr": "dist/portal-vue.umd.min.js",
   "unpkg": "dist/portal-vue.umd.min.js",
   "files": [
     "src",
