@@ -278,14 +278,14 @@ var Portal = Vue.extend({
       };
       wormhole.close(closer);
     },
-    normalizedSlots: function normalizedSlots() {
+    normalizeSlots: function normalizeSlots() {
       return this.$scopedSlots.default ? [this.$scopedSlots.default] : this.$slots.default;
     },
-    normalizeChildren: function normalizeChildren(children) {
+    normalizeOwnChildren: function normalizeOwnChildren(children) {
       return typeof children === 'function' ? children(this.slotProps) : children;
     },
     sendUpdate: function sendUpdate() {
-      var slotContent = this.normalizedSlots();
+      var slotContent = this.normalizeSlots();
 
       if (slotContent) {
         var transport = {
@@ -305,7 +305,7 @@ var Portal = Vue.extend({
     var Tag = this.tag;
 
     if (children.length && this.disabled) {
-      return children.length <= 1 && this.slim ? this.normalizeChildren(children)[0] : h(Tag, [this.normalizeChildren(children)]);
+      return children.length <= 1 && this.slim ? this.normalizeOwnChildren(children)[0] : h(Tag, [this.normalizeOwnChildren(children)]);
     } else {
       return this.slim ? h() : h(Tag, {
         class: {
@@ -319,62 +319,6 @@ var Portal = Vue.extend({
     }
   }
 });
-
-var nestRE = /^(attrs|props|on|nativeOn|class|style|hook)$/;
-
-var babelHelperVueJsxMergeProps = function mergeJSXProps(objs) {
-  return objs.reduce(function (a, b) {
-    var aa, bb, key, nestedKey, temp;
-
-    for (key in b) {
-      aa = a[key];
-      bb = b[key];
-
-      if (aa && nestRE.test(key)) {
-        // normalize class
-        if (key === 'class') {
-          if (typeof aa === 'string') {
-            temp = aa;
-            a[key] = aa = {};
-            aa[temp] = true;
-          }
-
-          if (typeof bb === 'string') {
-            temp = bb;
-            b[key] = bb = {};
-            bb[temp] = true;
-          }
-        }
-
-        if (key === 'on' || key === 'nativeOn' || key === 'hook') {
-          // merge functions
-          for (nestedKey in bb) {
-            aa[nestedKey] = mergeFn(aa[nestedKey], bb[nestedKey]);
-          }
-        } else if (Array.isArray(aa)) {
-          a[key] = aa.concat(bb);
-        } else if (Array.isArray(bb)) {
-          a[key] = [aa].concat(bb);
-        } else {
-          for (nestedKey in bb) {
-            aa[nestedKey] = bb[nestedKey];
-          }
-        }
-      } else {
-        a[key] = b[key];
-      }
-    }
-
-    return a;
-  }, {});
-};
-
-function mergeFn(a, b) {
-  return function () {
-    a && a.apply(this, arguments);
-    b && b.apply(this, arguments);
-  };
-}
 
 var PortalTarget = Vue.extend({
   name: 'portalTarget',
@@ -402,14 +346,7 @@ var PortalTarget = Vue.extend({
       default: 'div'
     },
     transition: {
-      type: [Boolean, String, Object],
-      default: false
-    },
-    transitionEvents: {
-      type: Object,
-      default: function _default() {
-        return {};
-      }
+      type: [String, Object, Function]
     }
   },
   data: function data() {
@@ -466,35 +403,6 @@ var PortalTarget = Vue.extend({
     },
     withTransition: function withTransition() {
       return !!this.transition;
-    },
-    transitionData: function transitionData() {
-      var t = this.transition;
-      var data = {}; // During first render, we render a dumb transition without any classes, events and a fake name
-      // We have to do this to emulate the normal behaviour of transitions without `appear`
-      // because in Portals, transitions can behave as if appear was defined under certain conditions.
-
-      if (this.firstRender && _typeof(t) === 'object' && !t.appear) {
-        data.props = {
-          name: '__notranstition__portal-vue__'
-        };
-        return data;
-      }
-
-      if (typeof t === 'string') {
-        data.props = {
-          name: t
-        };
-      } else if (_typeof(t) === 'object') {
-        data.props = t;
-      }
-
-      if (this.slim) {
-        //@ts-ignore
-        data.props.tag = this.tag;
-      }
-
-      data.on = this.transitionEvents;
-      return data;
     }
   },
   methods: {
@@ -516,13 +424,17 @@ var PortalTarget = Vue.extend({
   render: function render(h) {
     var noWrapper = this.noWrapper();
     var children = this.children();
-    var TransitionType = noWrapper ? 'transition' : 'transition-group';
+    var transition = this.transition;
+    var Transition = typeof transition === 'string' ? 'transition' : transition;
     var Tag = this.tag;
 
     if (this.withTransition) {
-      return h(TransitionType, babelHelperVueJsxMergeProps([this.transitionData, {
-        "class": "vue-portal-target"
-      }]), [children]);
+      return h(Transition, {
+        props: typeof transition === 'string' ? {
+          name: transition
+        } : undefined,
+        class: 'vue-portal-target'
+      }, children);
     }
 
     return noWrapper ? children[0] : this.slim ? h() : h(Tag, {
@@ -555,6 +467,11 @@ var PortalTargetProvider = Vue.extend({
       }
     }
   },
+  data: function data() {
+    return {
+      props: _objectSpread({}, this.$props)
+    };
+  },
   created: function created() {
     var el = document.querySelector(this.mountTo);
 
@@ -563,9 +480,7 @@ var PortalTargetProvider = Vue.extend({
       return;
     }
 
-    var props = _objectSpread({}, this.$props);
-
-    this.props = props; // Target alredy exists
+    var props = this.props; // Target alredy exists
 
     if (wormhole.targets[props.name]) {
       if (!props.force) {
@@ -582,6 +497,7 @@ var PortalTargetProvider = Vue.extend({
       el.appendChild(mountEl);
       el = mountEl;
     }
+
     this.portalTarget = new PortalTarget({
       el: el,
       parent: this,
