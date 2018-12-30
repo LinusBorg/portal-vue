@@ -1,8 +1,9 @@
 import { Wormhole } from '@/components/wormhole'
+import Vue from 'vue'
 
 let wormhole
 
-describe.only('Wormhole', function() {
+describe('Wormhole', function() {
   beforeEach(() => {
     wormhole = new Wormhole({})
     wormhole.transports = {}
@@ -103,9 +104,9 @@ describe.only('Wormhole', function() {
     const check1 = wormhole.hasTarget('target')
     expect(check1).toBe(false)
 
-    wormhole.registerTarget('target')
+    wormhole.registerTarget('target', new Vue({}))
     const check2 = wormhole.hasTarget('target')
-    expect(check2).toEqual(true)
+    expect(check2).toEqual(expect.any(Object))
 
     wormhole.unregisterTarget('target')
     const check3 = wormhole.hasTarget('target')
@@ -116,9 +117,9 @@ describe.only('Wormhole', function() {
     const check1 = wormhole.hasSource('source')
     expect(check1).toBe(false)
 
-    wormhole.registerSource('source')
+    wormhole.registerSource('source', new Vue({}))
     const check2 = wormhole.hasSource('source')
-    expect(check2).toEqual(true)
+    expect(check2).toEqual(expect.any(Object))
 
     wormhole.unregisterSource('source')
     const check3 = wormhole.hasSource('source')

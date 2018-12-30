@@ -132,7 +132,7 @@ describe('PortalTarget', function() {
       })
   })
 
-  it.only('renders when a transition name is passed as a string', () => {
+  it('renders when a transition name is passed as a string', () => {
     const wrapper = createWrapper({
       transition: 'fade',
     })
@@ -140,7 +140,7 @@ describe('PortalTarget', function() {
     expect(wrapper.element).not.toBe(undefined)
   })
 
-  it.only('renders when a transition name is passed as an component', () => {
+  it('renders when a transition name is passed as an component', () => {
     const Transition = require('../resources/CustomTransition').default
     const wrapper = createWrapper({
       transition: Transition,

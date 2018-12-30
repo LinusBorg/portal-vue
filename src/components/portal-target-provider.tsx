@@ -1,19 +1,14 @@
 import Vue from 'vue'
-import { VNode, VueConstructor, ComponentOptions } from 'vue'
+import { VNode, VueConstructor } from 'vue'
 import Portal from './portal'
 import PortalTarget from './portal-target'
 import { wormhole } from './wormhole'
 import { pick } from '@/utils'
 
 import { PortalProps } from '@/types'
+import { portalProps } from '@/utils/portalProps'
 
 let _id = 0
-
-interface hackCompOptions {
-  options: ComponentOptions<Vue>
-}
-
-const portalProps = ((Portal as unknown) as hackCompOptions).options.props
 
 export type withPortalTarget = VueConstructor<
   Vue & {
@@ -27,14 +22,10 @@ export default (Vue as withPortalTarget).extend({
   props: {
     ...portalProps,
     append: { type: [Boolean, String] },
-    force: {
+    bail: {
       type: Boolean,
     },
     mountTo: { type: String, required: true },
-    name: {
-      type: String,
-      default: (): object => `Target-${String(_id++)}` as any,
-    },
   },
   data() {
     return {
@@ -55,12 +46,13 @@ export default (Vue as withPortalTarget).extend({
 
     // Target alredy exists
     if (wormhole.targets[props.name]) {
-      if (!props.force) {
-        console.info(`[portal-vue]: Target ${props.name} is already mounted.
-        Make sure it's the right one`)
-
-        return
+      if (props.bail) {
+        console.warn(`[portal-vue]: Target ${props.name} is already mounted.
+        Aborting because 'bail: true' is set`)
+      } else {
+        this.portalTarget = wormhole.targets[props.name]
       }
+      return
     }
 
     const { append } = props
@@ -98,12 +90,12 @@ export default (Vue as withPortalTarget).extend({
     if (!this.$scopedSlots.default) {
       const props = pick<PortalProps, keyof PortalProps>(
         this.$props,
-        portalProps as (keyof PortalProps)[]
+        Object.keys(portalProps) as (keyof PortalProps)[]
       )
       return h(
         Portal,
         {
-          props: Object.assign(props, { name: this.name }),
+          props: Object.assign(props),
           attrs: this.$attrs,
           on: this.$listeners,
           scopedSlots: this.$scopedSlots,

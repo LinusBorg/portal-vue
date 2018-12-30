@@ -5,12 +5,12 @@ import {
   Transport,
   TransportInput,
   TransportVector,
-  StringBoolMap,
+  VMRegister,
 } from '@/types'
 
 const transports: Transports = {}
-const targets: StringBoolMap = {}
-const sources: StringBoolMap = {}
+const targets: VMRegister = {}
+const sources: VMRegister = {}
 
 export const Wormhole = Vue.extend({
   data: () => ({
@@ -69,29 +69,29 @@ export const Wormhole = Vue.extend({
         }
       }
     },
-    registerTarget(target: string, force?: boolean): void {
+    registerTarget(target: string, vm: Vue, force?: boolean): void {
       if (!force && this.targets[target]) {
         console.warn(`[portal-vue]: Target ${target} already exists`)
       }
-      this.$set(this.targets, target, true)
+      this.$set(this.targets, target, Object.freeze([vm]))
     },
     unregisterTarget(target: string) {
       this.$delete(this.targets, target)
     },
-    registerSource(source: string, force?: boolean): void {
+    registerSource(source: string, vm: Vue, force?: boolean): void {
       if (!force && this.sources[source]) {
         console.warn(`[portal-vue]: source ${source} already exists`)
       }
-      this.$set(this.sources, source, true)
+      this.$set(this.sources, source, Object.freeze([vm]))
     },
     unregisterSource(source: string) {
       this.$delete(this.sources, source)
     },
     hasTarget(to: string) {
-      return !!this.targets[to]
+      return !!this.targets[to] && this.targets[to][0]
     },
     hasSource(to: string) {
-      return !!this.sources[to]
+      return !!this.sources[to] && this.sources[to][0]
     },
 
     // Internal

@@ -37,7 +37,7 @@ export default Vue.extend({
       That can lead to unpredictable behaviour and should be avoided.
       `)
     }
-    wormhole.registerTarget(this.name)
+    wormhole.registerTarget(this.name, this)
   },
   watch: {
     ownTransports() {
@@ -49,7 +49,7 @@ export default Vue.extend({
        * This should warn as well ...
        */
       wormhole.unregisterTarget(oldVal)
-      wormhole.registerTarget(newVal)
+      wormhole.registerTarget(newVal, this)
     },
   },
   mounted() {

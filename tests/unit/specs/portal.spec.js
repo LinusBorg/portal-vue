@@ -6,8 +6,6 @@ jest.mock('@/components/wormhole')
 const Portal = require('@/components/portal').default
 const Wormhole = require('@/components/wormhole').wormhole
 
-console.log(Wormhole)
-
 function createWrapper(props = {}, options = {}) {
   return mount(Portal, {
     propsData: {

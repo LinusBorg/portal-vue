@@ -1,7 +1,11 @@
-import { VNode } from 'vue'
+import { default as Vue, VNode } from 'vue'
 
 export interface StringBoolMap {
   [key: string]: boolean
+}
+
+export interface VMRegister {
+  [key: string]: Readonly<Array<Vue>>
 }
 
 export interface Transports {

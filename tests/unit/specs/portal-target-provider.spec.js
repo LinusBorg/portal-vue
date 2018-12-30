@@ -2,10 +2,9 @@ import Vue from 'vue'
 import { mount, createLocalVue } from '@vue/test-utils'
 import PortalVue from '@/index'
 import PortalTargetProvider from '@/components/portal-target-provider'
+import { Portal } from '@/index'
 
 jest.mock('@/components/wormhole')
-// const PortalVue = require('@/index').default
-// const PortalTargetProvider = require('@/components/portal-target-provider').default
 const wormhole = require('@/components/wormhole').wormhole
 
 Vue.use(PortalVue)
@@ -45,6 +44,28 @@ describe('PortalTargetProvider', () => {
     const { provider } = mountComp(PortalTargetProvider, {
       propsData: {
         mountTo: '#target',
+        name: 'source',
+        to: 'target',
+        append: true,
+        order: 1,
+        tag: 'span',
+      },
+    })
+
+    const portal = provider.find(Portal)
+
+    expect(portal.vm.$props).toMatchObject({
+      name: 'source',
+      to: 'target',
+      order: 1,
+      tag: 'span',
+    })
+  })
+
+  it('works with a portal in the scoped slot', () => {
+    const { provider } = mountComp(PortalTargetProvider, {
+      propsData: {
+        mountTo: '#target',
       },
       scopedSlots: {
         default: '<portal :to="props.to" name="X"><p>Test</p></portal>',
@@ -62,11 +83,13 @@ describe('PortalTargetProvider', () => {
   it('appends child to mountpoint', () => {
     const { provider } = mountComp(PortalTargetProvider, {
       propsData: {
+        name: 'source',
+        to: 'target',
         mountTo: '#target',
         append: true,
       },
-      scopedSlots: {
-        default: '<portal :to="props.to" name="X"><p>Test</p></portal>',
+      slots: {
+        default: '<p>Test</p>',
       },
     })
 
@@ -76,11 +99,13 @@ describe('PortalTargetProvider', () => {
   it('removes appended child on destroy', () => {
     const { provider } = mountComp(PortalTargetProvider, {
       propsData: {
+        name: 'source',
+        to: 'target',
         mountTo: '#target',
         append: true,
       },
-      scopedSlots: {
-        default: '<portal :to="props.to" name="X"><p>Test</p></portal>',
+      slots: {
+        default: '<p>Test</p>',
       },
     })
     const el = document.querySelector('#target')
@@ -95,21 +120,48 @@ describe('PortalTargetProvider', () => {
       propsData: {
         mountTo: '#target',
         append: true,
-        name: name,
+        to: name,
+        name: 'source',
       },
-      scopedSlots: {
-        default: '<portal :to="props.to" name="X"><p>Test</p></portal>',
+      slots: {
+        default: '<p>Test</p>',
       },
     })
     expect(wormhole.open).toHaveBeenCalledWith(
       expect.objectContaining({
-        from: 'X',
+        from: 'source',
         to: name, // expect.any(String),
         passengers: expect.any(Array),
       })
     )
   })
-  it("doesn't overwrite an an existing target", () => {
+
+  it('recycles an existing target if one wiht the same name is found', () => {
+    const name = 'CustomTarget'
+    wormhole.targets = {
+      [name]: true,
+    }
+    const { provider } = mountComp(PortalTargetProvider, {
+      propsData: {
+        mountTo: '#target',
+        append: true,
+        to: name,
+        name: 'source',
+      },
+      slots: {
+        default: '<p>Test</p>',
+      },
+    })
+    expect(wormhole.open).toHaveBeenCalledWith(
+      expect.objectContaining({
+        from: 'source',
+        to: name, // expect.any(String),
+        passengers: expect.any(Array),
+      })
+    )
+  })
+
+  it('bails when an existing target is found if bail is set', () => {
     const name = 'CustomTarget'
     wormhole.targets = {
       [name]: true,
@@ -119,36 +171,13 @@ describe('PortalTargetProvider', () => {
         mountTo: '#target',
         append: true,
         name: name,
+        to: 'source',
+        bail: true,
       },
-      scopedSlots: {
-        default: '<portal :to="props.to" name="X"><p>Test</p></portal>',
+      slots: {
+        default: '<p>Test</p>',
       },
     })
     expect(wormhole.open).not.toHaveBeenCalled()
-  })
-
-  it('allows to force overwrite an existing target', () => {
-    const name = 'CustomTarget'
-    wormhole.targets = {
-      [name]: true,
-    }
-    const { provider } = mountComp(PortalTargetProvider, {
-      propsData: {
-        mountTo: '#target',
-        append: true,
-        name: name,
-        force: true,
-      },
-      scopedSlots: {
-        default: '<portal :to="props.to" name="X"><p>Test</p></portal>',
-      },
-    })
-    expect(wormhole.open).toHaveBeenCalledWith(
-      expect.objectContaining({
-        from: 'X',
-        to: name, // expect.any(String),
-        passengers: expect.any(Array),
-      })
-    )
   })
 })
