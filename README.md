@@ -6,16 +6,18 @@
   <img src="http://linusborg.github.io/portal-vue/assets/logo.png" alt="PortalVue Logo">
 </p>
 
-> This branch is currently representing v1.4.0-beta.1
-> Install with `npm install portal-vue@next`
+> Install with `npm install portal-vue`
 
 For more detailed documentation and additional Information, please visit <a href="http://linusborg.github.io/portal-vue">the docs</a>
 
 ## Installation
 
-```
-npm i portal-vue // v1.3.0 (stable)
-npm i portal-vue@next // v1.4.0-beta.1 (current beta)
+```bash
+npm i portal-vue
+
+# or
+
+yarn add portal-vue
 ```
 
 ```javascript

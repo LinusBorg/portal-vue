@@ -1,0 +1,19 @@
+{
+  "presets": [
+    [
+      "es2015",
+      {
+        "modules": false
+      }
+    ],
+    "stage-3"
+  ],
+  "plugins": ["transform-vue-jsx"],
+  "comments": true,
+  "env": {
+    "jest": true,
+    "test": {
+      "presets": ["es2015", "stage-3"]
+    }
+  }
+}

@@ -142,16 +142,12 @@ export default {
       )
     }
 
-    // Solves a bug where Vue would sometimes duplicate elements upon changing multiple or disabled
-    const wrapperKey = this.ownTransports.length
-
     return noWrapper ? (
       children[0]
     ) : (
       <Tag
         class={`vue-portal-target ${this.transportedClasses.join(' ')}`}
         {...this.attributes}
-        key={wrapperKey}
       >
         {children}
       </Tag>

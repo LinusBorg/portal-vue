@@ -26,7 +26,9 @@ Even if you use this method programmatically and there is not source `Portal`, y
 Examples:
 
 ```javascript
-import { Wormhole } from 'portal-vue'
+import PortalVue from 'portal-vue'
+
+const Wormhole = PortalVue.Wormhole
 
 methods: {
   sendToPortalTarget() {

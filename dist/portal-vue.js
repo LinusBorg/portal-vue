@@ -1,6 +1,6 @@
 /*
     portal-vue
-    Version: 1.5.0
+    Version: 1.5.1
     Licence: MIT
     (c) Thorsten Lünborg
   */
@@ -435,16 +435,11 @@ var PortalTarget = {
       );
     }
 
-    // Solves a bug where Vue would sometimes duplicate elements upon changing multiple or disabled
-    var wrapperKey = this.ownTransports.length;
-
     return noWrapper ? children[0] : h(
       Tag,
       babelHelperVueJsxMergeProps([{
         'class': 'vue-portal-target ' + this.transportedClasses.join(' ')
-      }, this.attributes, {
-        key: wrapperKey
-      }]),
+      }, this.attributes]),
       [children]
     );
   }

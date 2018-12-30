@@ -9,12 +9,10 @@ This is the recommended way to install this Plugin.
 Install with npm as a dependency:
 
 ```bash
-npm i portal-vue # v1.3.0 (stable)
-npm i portal-vue@next # v1.4.0-beta.1 (current beta)
+npm i portal-vue
 
 # or with yarn, respectively:
 yarn add portal-vue
-yarn add portal-vue@next
 ```
 
 Then include the package in your application and register it with Vue:
@@ -78,12 +76,12 @@ If you don't want to register the components globally, don't do `Vue.use('Portal
 Instead, import the component(s) in those components that you need them in and register them locally:
 
 ```javascript
-import { Portal, PortalTarget } from 'portal-vue'
+import PortalVue from 'portal-vue'
 
 export default {
   components: {
-    Portal,
-    PortalTarget,
+    Portal: PortalVue.Portal,
+    PortalTarget: PortalVue.PortalTarget,
   },
 }
 ```

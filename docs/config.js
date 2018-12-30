@@ -10,7 +10,7 @@ docute.init({
       title: 'Documentation',
       type: 'dropdown',
       items: [
-        { title: 'Current: v1.4.0-beta.1', path: '#' },
+        { title: 'Current: v1.5.0', path: '#' },
         { title: 'Installation Instructions', type: 'label' },
         { title: 'Installation', path: '/docs/installation' },
         { type: 'sep' },

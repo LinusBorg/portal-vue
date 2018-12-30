@@ -10,3 +10,5 @@ example/
 test/
 
 logo.xcf
+
+.babelrc

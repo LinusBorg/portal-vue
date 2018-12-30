@@ -1,6 +1,6 @@
 {
   "name": "portal-vue",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "description": "A Vue component to render elements outside of a component's template, elsewhere in the DOM",
   "main": "dist/portal-vue.js",
   "files": [
@@ -43,30 +43,6 @@
         "error",
         "always-multiline"
       ]
-    }
-  },
-  "babel": {
-    "presets": [
-      [
-        "es2015",
-        {
-          "modules": false
-        }
-      ],
-      "stage-3"
-    ],
-    "plugins": [
-      "transform-vue-jsx"
-    ],
-    "comments": true,
-    "env": {
-      "jest": true,
-      "test": {
-        "presets": [
-          "es2015",
-          "stage-3"
-        ]
-      }
     }
   },
   "devDependencies": {
