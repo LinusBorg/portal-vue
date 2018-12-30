@@ -89,7 +89,6 @@ describe('PortalTarget', function() {
     ])
     const wrapper = createWrapper({ multiple: true })
     const classes = wrapper.classes()
-    console.log(classes)
     expect(classes.includes('class1')).toBe(true)
     expect(classes.includes('class2')).toBe(true)
     expect(classes.includes('class3')).toBe(true)

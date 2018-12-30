@@ -23,12 +23,8 @@ You should use the `order` prop on the `Portal` to define the order in which the
 **Source**
 
 ```html
-<portal to="destination" :order="2">
-  <p>some content</p>
-</portal>
-<portal to="destination" :order="1">
-  <p>some other content</p>
-</portal>
+<portal to="destination" :order="2"> <p>some content</p> </portal>
+<portal to="destination" :order="1"> <p>some other content</p> </portal>
 
 <portal-target name="destination" multiple />
 ```
@@ -61,12 +57,9 @@ When set to true, the component will check if the sent content has only one root
 **Source**
 
 ```html
-<portal to="destination">
-  <p>Only one content element</p>
-</portal>
+<portal to="destination"> <p>Only one content element</p> </portal>
 
-<portal-target name="destination" slim>
-</portal-target>
+<portal-target name="destination" slim> </portal-target>
 ```
 
 **Result**
@@ -93,9 +86,7 @@ The `slotProps` object is used as props to render the scoped slot from a `<porta
 
 ```html
 <portal to="destination">
-  <p slot-scope="props">
-    This scoped slot content is so {{ props.state }}
-  </p>
+  <p slot-scope="props">This scoped slot content is so {{ props.state }}</p>
 </portal>
 
 <portal-target name="destination" slot-props="{state: 'cool!'}" />
@@ -104,11 +95,7 @@ The `slotProps` object is used as props to render the scoped slot from a `<porta
 **Result**
 
 ```html
-<div class="vue-portal-target">
-  <p>
-    This scoped slot content is so cool!
-  </p>
-</div>
+<div class="vue-portal-target"><p>This scoped slot content is so cool!</p></div>
 ```
 
 It has a counterpart of the same name on the `<portal>` component to pass props to the slot content when the `<portal>` is disabled.
@@ -149,14 +136,18 @@ plain wrapper element that is usually rendered.
 
 It accepts:
 
-* a `Boolean` value: will render `<transition-group>` without any options
-* a `String` value: will render `<transition-group>` with the `name` prop set to that string.
-* an `Object`: will render `<transition-group>` with the object's content passed as props.
+- a `Boolean` value: will render `<transition-group>` without any options
+- a `String` value: will render `<transition-group>` with the `name` prop set to that string.
+- an `Object`: will render `<transition-group>` with the object's content passed as props.
 
 Its content should mimic the props interface of Vue's `<transition>` component, e.g.:
 
 ```html
-<portal-target name="dest" slim :transition="{name: 'fade', mode: 'out-in'}">
+<portal-target
+  name="dest"
+  slim
+  :transition="{name: 'fade', mode: 'out-in'}"
+></portal-target>
 ```
 
 #### Slim Mode
@@ -181,7 +172,8 @@ Accepts an object whose keys match the transition component's events. Each key's
 <portal-target
   name="dest"
   :transition="{name: 'fade'}"
-  :transition-events="{ enter: handleEnter, leave: handleLeave }">
+  :transition-events="{ enter: handleEnter, leave: handleLeave }"
+></portal-target>
 ```
 
 ## Slots API
@@ -192,13 +184,19 @@ Accepts an object whose keys match the transition component's events. Each key's
 
 Any existing slot content is rendered in case that no content from any source Portal is available.
 
+<p class="warning">
+  Elements in the default slot should be properly keyed in order to prevent render update mistakes in some limited edge cases
+</p>
+
 Example:
 
 **Source**
 
 ```html
 <portal-target name="destination" tag="span">
-  <p>This is rendered when no other content is available.</p>
+  <p :key="my-random-key">
+    This is rendered when no other content is available.
+  </p>
 </portal-target>
 ```
 
@@ -229,18 +227,21 @@ The first object represents the new conent, the second one the old content.
 
 ```html
 <template>
-  <portal-target name="destination" @change="handleUpdate"/>
+  <portal-target name="destination" @change="handleUpdate" />
 </template>
 
 <script>
-export default {
-  methods: {
-    handleUpdate({ from, passengers }, { from: oldFrom, passengers: newPassengers }) {
-      if (from !== oldFrom) {
-        console.log('This new content is from a different <Portal>!')
-      }
-    }
+  export default {
+    methods: {
+      handleUpdate(
+        { from, passengers },
+        { from: oldFrom, passengers: newPassengers }
+      ) {
+        if (from !== oldFrom) {
+          console.log('This new content is from a different <Portal>!')
+        }
+      },
+    },
   }
-}
 </script>
 ```

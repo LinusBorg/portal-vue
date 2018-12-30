@@ -7,7 +7,7 @@
     </div>
     <div id="to">
       <portal-target name="target">
-        <p>Default Content</p>
+        <p :key="_uid">Default Content</p>
       </portal-target>
     </div>
   </div>
@@ -15,6 +15,6 @@
 <script>
 export default {
   data: () => ({ disabled: false }),
-}
+};
 </script>
 

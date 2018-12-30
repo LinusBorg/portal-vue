@@ -63,13 +63,13 @@ describe('Integration Tests', () => {
 
   it('Portal: Disabled', () => {
     const component = require('../resources/PortalDisabled.vue').default
-    const { portal, target } = mountScenario(component)
+    const { wrapper, portal, target } = mountScenario(component)
 
     return waitTicks()
       .then(() => {
         expect(target.find('p').text()).toBe('Test')
 
-        portal.vm.disabled = true
+        wrapper.vm.disabled = true
         return portal.vm.$nextTick()
       })
       .then(() => {
@@ -130,13 +130,13 @@ describe('Integration Tests', () => {
 
   it('Target: Default content', () => {
     const component = require('../resources/TargetDefaultContent.vue').default
-    const { portal, target } = mountScenario(component)
+    const { wrapper, portal, target } = mountScenario(component)
 
     return waitTicks()
       .then(() => {
         expect(target.find('p').text()).toBe('Portal Content')
 
-        portal.vm.disabled = true
+        wrapper.vm.disabled = true
         return waitTicks()
       })
       .then(() => {
