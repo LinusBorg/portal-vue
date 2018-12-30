@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import { mount, createLocalVue } from '@vue/test-utils'
 import PortalVue from '@/index'
-import PortalTargetProvider from '@/components/portal-target-provider'
+import MountingPortal from '@/components/mounting-portal'
 import { Portal } from '@/index'
 
 jest.mock('@/components/wormhole')
@@ -22,7 +22,7 @@ function mountComp(component, opts) {
   }
 }
 
-describe('PortalTargetProvider', () => {
+describe('MountingPortal', () => {
   beforeEach(() => {
     // remove the old element, if present
     const el = document.querySelector('#target')
@@ -41,7 +41,7 @@ describe('PortalTargetProvider', () => {
   })
 
   it('works', () => {
-    const { provider } = mountComp(PortalTargetProvider, {
+    const { provider } = mountComp(MountingPortal, {
       propsData: {
         mountTo: '#target',
         name: 'source',
@@ -63,7 +63,7 @@ describe('PortalTargetProvider', () => {
   })
 
   it('works with a portal in the scoped slot', () => {
-    const { provider } = mountComp(PortalTargetProvider, {
+    const { provider } = mountComp(MountingPortal, {
       propsData: {
         mountTo: '#target',
       },
@@ -81,7 +81,7 @@ describe('PortalTargetProvider', () => {
   })
 
   it('appends child to mountpoint', () => {
-    const { provider } = mountComp(PortalTargetProvider, {
+    const { provider } = mountComp(MountingPortal, {
       propsData: {
         name: 'source',
         to: 'target',
@@ -97,7 +97,7 @@ describe('PortalTargetProvider', () => {
   })
 
   it('removes appended child on destroy', () => {
-    const { provider } = mountComp(PortalTargetProvider, {
+    const { provider } = mountComp(MountingPortal, {
       propsData: {
         name: 'source',
         to: 'target',
@@ -116,7 +116,7 @@ describe('PortalTargetProvider', () => {
 
   it('allows to define the target name', () => {
     const name = 'CustomTarget'
-    const { provider } = mountComp(PortalTargetProvider, {
+    const { provider } = mountComp(MountingPortal, {
       propsData: {
         mountTo: '#target',
         append: true,
@@ -141,7 +141,7 @@ describe('PortalTargetProvider', () => {
     wormhole.targets = {
       [name]: true,
     }
-    const { provider } = mountComp(PortalTargetProvider, {
+    const { provider } = mountComp(MountingPortal, {
       propsData: {
         mountTo: '#target',
         append: true,
@@ -166,7 +166,7 @@ describe('PortalTargetProvider', () => {
     wormhole.targets = {
       [name]: true,
     }
-    const { provider } = mountComp(PortalTargetProvider, {
+    const { provider } = mountComp(MountingPortal, {
       propsData: {
         mountTo: '#target',
         append: true,

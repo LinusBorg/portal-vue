@@ -3,7 +3,7 @@
     <h5>Mount a &lt;portal-target&gt;</h5>
     <button @click="toggle">toggle portal &amp; target</button>
     <button @click="target = ''">Unset targetEl</button>
-    <PortalTargetProvider
+    <MountingPortal
       mountTo="#external-target"
       name="external-target-name"
       append
@@ -24,7 +24,7 @@
           <test />
         </div>
       </portal>
-    </PortalTargetProvider>
+    </MountingPortal>
   </div>
 </template>
 

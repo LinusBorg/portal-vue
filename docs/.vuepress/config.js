@@ -42,8 +42,8 @@ module.exports = {
               { text: 'Portal', link: '/api/portal' },
               { text: 'PortalTarget', link: '/api/portal-target' },
               {
-                text: 'PortalTargetProvider',
-                link: '/api/portal-target-provider',
+                text: 'MountingPortal',
+                link: '/api/mounting-portal',
               },
             ],
           },

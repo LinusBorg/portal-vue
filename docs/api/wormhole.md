@@ -1,6 +1,6 @@
 ---
 sidebar: auto
-prev: ./portal-target-provider
+prev: ./mounting-portal
 next: false
 ---
 

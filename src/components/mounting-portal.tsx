@@ -17,7 +17,7 @@ export type withPortalTarget = VueConstructor<
 >
 
 export default (Vue as withPortalTarget).extend({
-  name: 'PortalTargetProvider',
+  name: 'MountingPortal',
   inheritAttrs: false,
   props: {
     ...portalProps,
@@ -103,7 +103,7 @@ export default (Vue as withPortalTarget).extend({
         this.$slots.default
       )
     }
-    debugger
+
     let content: VNode = (this.$scopedSlots.default({
       to: props.name,
     }) as unknown) as VNode
@@ -113,7 +113,7 @@ export default (Vue as withPortalTarget).extend({
     if (Array.isArray(content)) {
       content = content[0]
     }
-    debugger
+
     if (!content) return h()
     return content
   },

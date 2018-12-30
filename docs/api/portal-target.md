@@ -1,7 +1,7 @@
 ---
 sidebar: auto
 prev: ./portal
-next: ./portal-target-provider
+next: ./mounting-portal
 ---
 
 # PortalTarget

@@ -90,17 +90,17 @@ One important behaviour to know is this:
 
 ## Rendering outside of the Vue-App <Badge text="2.0.0+"/>
 
-If you want to render your content to a place outside of the control of your Vue app, Portal-Vue also got your covered. It gives you a special `<PortalTargetProvider>` component that mounts a `<PortalTarget>` to any element in the DOM - you just define it with a normal DOM selector.
+If you want to render your content to a place outside of the control of your Vue app, Portal-Vue also got your covered. It gives you a special `<MountingPortal>` component that mounts a `<PortalTarget>` to any element in the DOM - you just define it with a normal DOM selector.
 
 It then provides the (auto-generated) name of the generated Target to its children through a scoped slot.
 
 ```html
 <div id="app">
-  <PortalTargetProvider mountTo="#widget" append>
+  <MountingPortal mountTo="#widget" append>
     <portal name="source" slot-scope="{to}" :to="to">
       <p>Content for the Portal</p>
     </portal>
-  </PortalTargetProvider>
+  </MountingPortal>
 <div>
 
 <script>
@@ -108,11 +108,11 @@ It then provides the (auto-generated) name of the generated Target to its childr
 </script>
 <aside id="widget" class="widget-sidebar">
   This Element is not controlled by our Vue-App,
-  but we can create a <portal-target> here with <PortalTargetProvider>.
+  but we can create a <portal-target> here with <MountingPortal>.
 </aside>
 ```
 
-When `<PortalTargetProvider>` is destroyed, it takes are of removing the `<PortalTarget>` and the element it created for it.
+When `<MountingPortal>` is destroyed, it takes are of removing the `<PortalTarget>` and the element it created for it.
 
 :::tip
 When the `append` prop is set, the Target will be mounted to as a child of the specified element instead of replacing it.

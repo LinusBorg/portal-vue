@@ -4,7 +4,7 @@ prev: ./portal-target
 next: ./wormhole
 ---
 
-# PortalTargetProvider
+# MountingPortal
 
 This component's job is to mount a `<PortalTarget>` to a DOM Element outside of the DOM. That Element is defined with a Selector String (i.e. `#target-id`).
 
@@ -15,11 +15,11 @@ It also makes sure to clean up and remove the `<PortalTarget>` when it's being d
 ## Example Usage
 
 ```html {}
-<PortalTargetProvider mountTo="#targetId" append>
+<MountingPortal mountTo="#targetId" append>
   <portal slot-scope="{to}" :to="to" name="source">
     <p>This is the content for the portal</p>
   </portal>
-</PortalTargetProvider>
+</MountingPortal>
 ```
 
 ## Props
@@ -44,7 +44,7 @@ If `true`, a `<div>` will be appended to the target element defined by [`mountTo
 | --------- | -------- | ------- |
 | `Boolean` | yes      | `false` |
 
-If a [`name`](#name) for the Target was given, you can come across duplicates. If a Target with that name already exists, `PortalTargetProvider` will re-use the already existing Target instead of mounting a new one.
+If a [`name`](#name) for the Target was given, you can come across duplicates. If a Target with that name already exists, `MountingPortal` will re-use the already existing Target instead of mounting a new one.
 
 This may not be a problem if you intend to send content from multiple sources and can't be sure if the shared PortalTarget already exists.
 

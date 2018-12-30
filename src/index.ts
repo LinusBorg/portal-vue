@@ -2,7 +2,7 @@ import Vue from 'vue'
 import { VueConstructor, PluginFunction } from 'vue'
 import Portal from '@/components/portal'
 import PortalTarget from '@/components/portal-target'
-import PortalTargetProvider from '@/components/portal-target-provider'
+import MountingPortal from '@/components/mounting-portal'
 import { wormhole as Wormhole } from '@/components/wormhole'
 
 declare global {
@@ -15,15 +15,15 @@ declare global {
 interface PluginOptions {
   portalName?: string
   portalTargetName?: string
-  portalTargetProviderName?: string
+  MountingPortalName?: string
 }
 
 function install(Vue: VueConstructor, options: PluginOptions = {}) {
   Vue.component(options.portalName || 'Portal', Portal)
   Vue.component(options.portalTargetName || 'PortalTarget', PortalTarget)
   Vue.component(
-    options.portalTargetProviderName || 'PortalTargetProvider',
-    PortalTargetProvider
+    options.MountingPortalName || 'MountingPortal',
+    MountingPortal
   )
 }
 if (
@@ -39,4 +39,4 @@ export default {
   install,
 }
 
-export { Portal, PortalTarget, PortalTargetProvider, Wormhole }
+export { Portal, PortalTarget, MountingPortal, Wormhole }

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <PortalTargetProvider mountTo="#message-target" append>
+    <MountingPortal mountTo="#message-target" append>
       <Portal v-if="show" slot-scope="{ to }" :to="to" name="msgSource">
         <div class="note">
           <div class="note-inner">
@@ -16,7 +16,7 @@
           </div>
         </div>
       </Portal>
-    </PortalTargetProvider>
+    </MountingPortal>
   </div>
 </template>
 

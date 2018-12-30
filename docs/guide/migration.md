@@ -23,7 +23,7 @@ That allows us to provide warnings if you try to create a component with a name 
 
 You can also check for this programmatically with [`Wormhole.hasSource() / .hasTarget()`](../api/wormhole.md#)
 
-### PortalTargetProvider
+### MountingPortal
 
 ## Things we changed
 
