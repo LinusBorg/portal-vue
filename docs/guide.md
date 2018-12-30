@@ -204,7 +204,7 @@ One important behaviour to know is this:
 ```html
 <body>
   <div id="app">
-    <portal name="" target-el="#widget">
+    <portal target-el="#widget">
       <p>
         PortalVue will dynamically mount an  instance of <portal-target> in place of the Element
         with `id="widget"`, and this paragraph will be rendered inside of it.
