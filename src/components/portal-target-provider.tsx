@@ -1,15 +1,25 @@
 import Vue from 'vue'
-import { VNode } from 'vue'
+import { VNode, ComponentOptions } from 'vue'
 import Portal from './portal'
 import PortalTarget from './portal-target'
 import { wormhole } from './wormhole'
+import { pick } from '@/utils'
+
+import { PortalProps } from '@/types'
 
 let _id = 0
+
+interface hackCompOptions {
+  options: ComponentOptions<Vue>
+}
+
+const portalProps = ((Portal as unknown) as hackCompOptions).options.props
 
 export default Vue.extend({
   name: 'PortalTargetProvider',
   inheritAttrs: false,
   props: {
+    ...portalProps,
     append: { type: [Boolean, String] },
     force: {
       type: Boolean,
@@ -76,10 +86,20 @@ export default Vue.extend({
       return h()
     }
     if (!this.$scopedSlots.default) {
-      console.error(
-        `[portal-vue]: <PortalTargetProvider> expects to be passed a scoped slot.`
+      const props = pick<PortalProps, keyof PortalProps>(
+        this.$props,
+        portalProps as (keyof PortalProps)[]
       )
-      return h()
+      return h(
+        Portal,
+        {
+          props: Object.assign(props, { name: this.name }),
+          attrs: this.$attrs,
+          on: this.$listeners,
+          scopedSlots: this.$scopedSlots,
+        },
+        this.$slots.default
+      )
     }
     debugger
     let content: VNode = (this.$scopedSlots.default({
@@ -93,13 +113,6 @@ export default Vue.extend({
     }
     debugger
     if (!content) return h()
-
-    if (content.componentOptions && content.componentOptions.Ctor !== Portal) {
-      console.error(
-        `[portal-vue]: First and only child element of <PortalTargetrovider> has to be an instance of <Portal>`
-      )
-      return h()
-    }
     return content
   },
 })

@@ -9,7 +9,9 @@ module.exports = {
 
     config.resolve.alias.set(
       'portal-vue$',
-      path.join(__dirname, main /*'./dist/portal-vue.esm.js'*/)
+      process.env.NODE_ENV === 'development'
+        ? path.join(__dirname, './src/index')
+        : path.join(__dirname, main /*'./dist/portal-vue.esm.js'*/)
     )
   },
 }

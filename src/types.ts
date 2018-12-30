@@ -26,3 +26,13 @@ export interface TransportVector {
   to: string
   from: string
 }
+
+export type PortalProps = Partial<{
+  disabled: boolean
+  name: string
+  order: number
+  slim: boolean
+  slotProps: object
+  tag: string
+  to: string
+}>
