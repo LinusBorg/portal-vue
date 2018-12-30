@@ -1,4 +1,10 @@
-import { default as Vue, VNode } from 'vue'
+import {
+  default as Vue,
+  VNode,
+  PropOptions,
+  VueConstructor,
+  ComponentOptions,
+} from 'vue'
 
 export interface StringBoolMap {
   [key: string]: boolean
@@ -31,6 +37,11 @@ export interface TransportVector {
   from: string
 }
 
+export type PropWithComponent =
+  | VueConstructor<Vue>
+  | ComponentOptions<Vue>
+  | string
+
 export type PortalProps = Partial<{
   disabled: boolean
   name: string
@@ -39,4 +50,14 @@ export type PortalProps = Partial<{
   slotProps: object
   tag: string
   to: string
+}>
+
+export type PortalTargetProps = Partial<{
+  multiple: boolean
+  name: string
+  slim: boolean
+  slotProps: object
+  tag: string
+  transition: PropOptions<PropWithComponent>
+  transitionGroup: boolean
 }>

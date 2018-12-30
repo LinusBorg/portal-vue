@@ -1,12 +1,11 @@
 import Vue from 'vue'
-import { VNode, VueConstructor } from 'vue'
+import { VNode, VueConstructor, PropOptions } from 'vue'
 import Portal from './portal'
 import PortalTarget from './portal-target'
 import { wormhole } from './wormhole'
 import { pick } from '@/utils'
 
-import { PortalProps } from '@/types'
-import { portalProps } from '@/utils/portalProps'
+import { PropWithComponent } from '@/types'
 
 let _id = 0
 
@@ -16,21 +15,54 @@ export type withPortalTarget = VueConstructor<
   }
 >
 
+const portalProps = [
+  'disabled',
+  'name',
+  'order',
+  'slim',
+  'slotProps',
+  'tag',
+  'to',
+]
+
+const targetProps = ['multiple', 'transition', 'transitionGroup']
+
 export default (Vue as withPortalTarget).extend({
   name: 'MountingPortal',
   inheritAttrs: false,
   props: {
-    ...portalProps,
     append: { type: [Boolean, String] },
     bail: {
       type: Boolean,
     },
     mountTo: { type: String, required: true },
-  },
-  data() {
-    return {
-      props: { ...this.$props },
-    }
+
+    // Portal
+    disabled: { type: Boolean },
+    // name for the portal
+    name: {
+      type: String,
+      default: (): object => ('mounted_' + String(_id++)) as any,
+    },
+    order: { type: Number, default: 0 },
+    slim: { type: Boolean },
+    slotProps: { type: Object, default: () => ({}) },
+    tag: { type: String, default: 'DIV' },
+    // name for the target
+    to: {
+      type: String,
+      default: (): object =>
+        String(Math.round(Math.random() * 10000000)) as any,
+    },
+
+    // Target
+    multiple: { type: Boolean, default: false },
+    targetSlotProps: { type: Object, default: () => ({}) },
+    targetTag: { type: String, default: 'div' },
+    transition: { type: [String, Object, Function] } as PropOptions<
+      PropWithComponent
+    >,
+    transitionGroup: { type: Boolean },
   },
   created() {
     let el: HTMLElement | null = document.querySelector(this.mountTo)
@@ -42,9 +74,9 @@ export default (Vue as withPortalTarget).extend({
       return
     }
 
-    const props = this.props
+    const props = this.$props
 
-    // Target alredy exists
+    // Target already exists
     if (wormhole.targets[props.name]) {
       if (props.bail) {
         console.warn(`[portal-vue]: Target ${props.name} is already mounted.
@@ -63,39 +95,42 @@ export default (Vue as withPortalTarget).extend({
       el = mountEl
     }
 
+    // get props for target from $props
+    // we have to rename a few of them
+    const _props = pick(this.$props, targetProps)
+    _props.tag = this.targetTag
+    _props.slotSprop = this.targetSlotProps
+    _props.name = this.to
+
     this.portalTarget = new PortalTarget({
       el,
-      parent: this,
-      propsData: {
-        name: props.name,
-        ...this.$attrs,
-      },
+      // parent: this,
+      propsData: _props,
     })
   },
+
   beforeDestroy() {
     const target = this.portalTarget
-    if (this.props.append) {
+    if (this.append) {
       const el = target.$el
       el.parentNode.removeChild(el)
     }
     target.$destroy()
   },
-  render(h): VNode {
-    const props = this.props
 
+  render(h): VNode {
     if (!this.portalTarget) {
       console.warn("[portal-vue] Target wasn't mounted")
       return h()
     }
+
+    // if there's no scoped slot, we create a <Portal> ourselves
     if (!this.$scopedSlots.default) {
-      const props = pick<PortalProps, keyof PortalProps>(
-        this.$props,
-        Object.keys(portalProps) as (keyof PortalProps)[]
-      )
+      const props = pick(this.$props, portalProps)
       return h(
         Portal,
         {
-          props: Object.assign(props),
+          props: props,
           attrs: this.$attrs,
           on: this.$listeners,
           scopedSlots: this.$scopedSlots,
@@ -104,8 +139,9 @@ export default (Vue as withPortalTarget).extend({
       )
     }
 
+    // else, we render the scoped slot
     let content: VNode = (this.$scopedSlots.default({
-      to: props.name,
+      to: this.to,
     }) as unknown) as VNode
 
     // if user used <template> for the scoped slot
@@ -115,6 +151,7 @@ export default (Vue as withPortalTarget).extend({
     }
 
     if (!content) return h()
+
     return content
   },
 })

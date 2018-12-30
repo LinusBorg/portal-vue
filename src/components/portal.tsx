@@ -2,13 +2,24 @@ import Vue from 'vue'
 import { VNode } from 'vue'
 import { TransportInput, TransportVector } from '../types'
 import { wormhole } from './wormhole'
-import { portalProps } from '@/utils/portalProps'
 
 let _id = 1
 
 export default Vue.extend({
   name: 'portal',
-  props: portalProps,
+  props: {
+    disabled: { type: Boolean },
+    name: { type: String, default: (): object => String(_id++) as any },
+    order: { type: Number, default: 0 },
+    slim: { type: Boolean },
+    slotProps: { type: Object, default: () => ({}) },
+    tag: { type: String, default: 'DIV' },
+    to: {
+      type: String,
+      default: (): object =>
+        String(Math.round(Math.random() * 10000000)) as any,
+    },
+  },
   created() {
     if (wormhole.hasSource(this.name)) {
       console.warn(`

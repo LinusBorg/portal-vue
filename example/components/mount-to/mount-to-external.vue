@@ -1,15 +1,17 @@
 <template>
   <div>
     <h5>Mount a &lt;portal-target&gt;</h5>
-    <button @click="toggle">toggle portal &amp; target</button>
+    <button @click="toggleAuto">toggle auto portal &amp; target</button>
+    <button @click="toggleManual">toggle manual portal &amp; target</button>
     <button @click="target = ''">Unset targetEl</button>
-    <MountingPortal
-      mountTo="#external-target"
-      name="external-target-name"
-      append
-    >
+
+    <MountingPortal mountTo="#external-target" append v-if="showAuto">
+      <p>Hello from an automatically generated Portal <i>and</i> Target</p>
+    </MountingPortal>
+
+    <MountingPortal mountTo="#external-target" to="external-target-name" append>
       <portal
-        :disabled="!show"
+        :disabled="!showManual"
         slot-scope="{
           to,
         }"
@@ -35,12 +37,16 @@ export default Vue.extend({
   components: { Test }, // testing that `parent` option works
   data() {
     return {
-      show: false,
+      showManual: false,
+      showAuto: false,
     }
   },
   methods: {
-    toggle() {
-      this.show = !this.show
+    toggleManual() {
+      this.showManual = !this.showManual
+    },
+    toggleAuto() {
+      this.showAuto = !this.showAuto
     },
   },
 })

@@ -39,6 +39,7 @@
           style="position: relative"
           name="group-transition"
           transition="fade"
+          transitionGroup
         />
       </container>
     </div>

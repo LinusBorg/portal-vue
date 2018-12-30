@@ -1,14 +1,9 @@
 import Vue from 'vue'
-import { VNode, VueConstructor, ComponentOptions, PropOptions } from 'vue'
+import { VNode, PropOptions } from 'vue'
 import { combinePassengers } from '@/utils'
-import { Transport } from '../types'
+import { Transport, PropWithComponent } from '../types'
 
 import { wormhole } from '@/components/wormhole'
-
-export type PropWithComponent =
-  | VueConstructor<Vue>
-  | ComponentOptions<Vue>
-  | string
 
 export default Vue.extend({
   name: 'portalTarget',
