@@ -4,15 +4,15 @@
       <ul class="controls">
         <li class="controls--item">
           Transition from source:
-          <a href="#" class="controls--link" @click.prevent="toggleSource">
-            Toggle
-          </a>
+          <a href="#" class="controls--link" @click.prevent="toggleSource"
+            >Toggle</a
+          >
         </li>
         <li class="controls--item">
           Transition in target:
-          <a href="#" class="controls--link" @click.prevent="toggleTarget">
-            Toggle
-          </a>
+          <a href="#" class="controls--link" @click.prevent="toggleTarget"
+            >Toggle</a
+          >
         </li>
         <li class="controls--item">
           Transition-Group:
@@ -20,9 +20,8 @@
             href="#"
             class="controls--link"
             @click.prevent="showGroupItem = !showGroupItem"
+            >Toggle</a
           >
-            Toggle
-          </a>
         </li>
       </ul>
     </div>
@@ -34,22 +33,12 @@
 
         <h4>Transition defined on the PortalTarget component</h4>
 
-        <portal-target
-          name="target-transitions"
-          slim
-          :transition="{ name: 'fade', mode: 'out-in' }"
-          :transition-events="{ enter: log }"
-        />
+        <portal-target name="target-transitions" slim transition="fade" />
 
         <portal-target
           style="position: relative"
           name="group-transition"
-          :transition="{
-            name: 'fade',
-            leaveToClass: 'fade-group-leave-to',
-            moveClass: 'fade-group-move',
-          }"
-          :transition-events="{ enter: log }"
+          transition="fade"
         />
       </container>
     </div>

@@ -21,6 +21,7 @@ export default Vue.extend({
     transition: { type: [String, Object, Function] } as PropOptions<
       PropWithComponent
     >,
+    transitionGroup: { type: Boolean },
   },
   data() {
     return {
@@ -105,7 +106,11 @@ export default Vue.extend({
     const children = this.children()
     const { transition } = this
     const Transition =
-      typeof transition === 'string' ? 'transition' : transition
+      typeof transition === 'string'
+        ? this.transitionGroup
+          ? 'transition-group'
+          : 'transition'
+        : transition
     const Tag = this.tag
 
     if (this.withTransition) {
