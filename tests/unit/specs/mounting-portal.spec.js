@@ -68,13 +68,13 @@ describe('MountingPortal', () => {
         mountTo: '#target',
       },
       scopedSlots: {
-        default: '<portal :to="props.to" name="X"><p>Test</p></portal>',
+        manual: '<portal :to="props.to" name="X"><p>Test</p></portal>',
       },
     })
     expect(wormhole.open).toHaveBeenCalledWith(
       expect.objectContaining({
         from: 'X',
-        to: provider.vm.name, // expect.any(String),
+        to: provider.vm.to, // expect.any(String),
         passengers: expect.any(Array),
       })
     )

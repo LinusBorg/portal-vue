@@ -124,8 +124,8 @@ export default (Vue as withPortalTarget).extend({
       return h()
     }
 
-    // if there's no scoped slot, we create a <Portal> ourselves
-    if (!this.$scopedSlots.default) {
+    // if there's no "manual" scoped slot, so we create a <Portal> ourselves
+    if (!this.$scopedSlots.manual) {
       const props = pick(this.$props, portalProps)
       return h(
         Portal,
@@ -140,7 +140,7 @@ export default (Vue as withPortalTarget).extend({
     }
 
     // else, we render the scoped slot
-    let content: VNode = (this.$scopedSlots.default({
+    let content: VNode = (this.$scopedSlots.manual({
       to: this.to,
     }) as unknown) as VNode
 
