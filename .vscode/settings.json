@@ -1,4 +1,6 @@
 {
   "editor.formatOnSave": true,
   "eslint.autoFixOnSave": true,
+
+  "markdownlint.ignore": ["docs/**"]
 }
