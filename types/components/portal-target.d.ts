@@ -1,8 +1,7 @@
 import Vue from 'vue';
-import { VNode, VueConstructor, ComponentOptions } from 'vue';
-import { Transport } from '../types';
-export declare type PropWithComponent = VueConstructor<Vue> | ComponentOptions<Vue> | string;
-declare const _default: VueConstructor<{
+import { VNode } from 'vue';
+import { Transport, PropWithComponent } from '../types';
+declare const _default: import("vue").VueConstructor<{
     transports: import("../types").Transports;
     firstRender: boolean;
 } & {
@@ -19,5 +18,6 @@ declare const _default: VueConstructor<{
     slotProps: any;
     tag: string;
     transition: PropWithComponent;
+    transitionGroup: boolean;
 } & Vue>;
 export default _default;

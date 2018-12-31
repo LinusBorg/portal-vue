@@ -20,40 +20,6 @@
     return _typeof(obj);
   }
 
-  function _defineProperty(obj, key, value) {
-    if (key in obj) {
-      Object.defineProperty(obj, key, {
-        value: value,
-        enumerable: true,
-        configurable: true,
-        writable: true
-      });
-    } else {
-      obj[key] = value;
-    }
-
-    return obj;
-  }
-
-  function _objectSpread(target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i] != null ? arguments[i] : {};
-      var ownKeys = Object.keys(source);
-
-      if (typeof Object.getOwnPropertySymbols === 'function') {
-        ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {
-          return Object.getOwnPropertyDescriptor(source, sym).enumerable;
-        }));
-      }
-
-      ownKeys.forEach(function (key) {
-        _defineProperty(target, key, source[key]);
-      });
-    }
-
-    return target;
-  }
-
   function _toConsumableArray(arr) {
     return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread();
   }
@@ -97,6 +63,15 @@
     }).map(function (c) {
       return c[1];
     });
+  }
+  function pick(obj, keys) {
+    return keys.reduce(function (acc, key) {
+      if (obj.hasOwnProperty(key)) {
+        acc[key] = obj[key];
+      }
+
+      return acc;
+    }, {});
   }
 
   var transports = {};
@@ -167,31 +142,31 @@
           }
         }
       },
-      registerTarget: function registerTarget(target, force) {
+      registerTarget: function registerTarget(target, vm, force) {
         if (!force && this.targets[target]) {
           console.warn("[portal-vue]: Target ".concat(target, " already exists"));
         }
 
-        this.$set(this.targets, target, true);
+        this.$set(this.targets, target, Object.freeze([vm]));
       },
       unregisterTarget: function unregisterTarget(target) {
         this.$delete(this.targets, target);
       },
-      registerSource: function registerSource(source, force) {
+      registerSource: function registerSource(source, vm, force) {
         if (!force && this.sources[source]) {
           console.warn("[portal-vue]: source ".concat(source, " already exists"));
         }
 
-        this.$set(this.sources, source, true);
+        this.$set(this.sources, source, Object.freeze([vm]));
       },
       unregisterSource: function unregisterSource(source) {
         this.$delete(this.sources, source);
       },
       hasTarget: function hasTarget(to) {
-        return !!this.targets[to];
+        return !!this.targets[to] && this.targets[to][0];
       },
       hasSource: function hasSource(to) {
-        return !!this.sources[to];
+        return !!this.sources[to] && this.sources[to][0];
       },
       // Internal
       $_getTransportIndex: function $_getTransportIndex(_ref) {
@@ -252,7 +227,7 @@
         console.warn("\n      [portal-vue] - There already exists another <Portal> with name '".concat(this.name, "'.\n      That can lead to unpredictable behaviour and should be avoided.\n      "));
       }
 
-      wormhole.registerSource(this.name);
+      wormhole.registerSource(this.name, this);
     },
     mounted: function mounted() {
       if (!this.disabled) {
@@ -353,6 +328,9 @@
       },
       transition: {
         type: [String, Object, Function]
+      },
+      transitionGroup: {
+        type: Boolean
       }
     },
     data: function data() {
@@ -366,7 +344,7 @@
         console.warn("\n      [portal-vue] - There already exists another <PortalTarget> with name '".concat(this.name, "'.\n      That can lead to unpredictable behaviour and should be avoided.\n      "));
       }
 
-      wormhole.registerTarget(this.name);
+      wormhole.registerTarget(this.name, this);
     },
     watch: {
       ownTransports: function ownTransports() {
@@ -378,7 +356,7 @@
          * This should warn as well ...
          */
         wormhole.unregisterTarget(oldVal);
-        wormhole.registerTarget(newVal);
+        wormhole.registerTarget(newVal, this);
       }
     },
     mounted: function mounted() {
@@ -431,7 +409,7 @@
       var noWrapper = this.noWrapper();
       var children = this.children();
       var transition = this.transition;
-      var Transition = typeof transition === 'string' ? 'transition' : transition;
+      var Transition = typeof transition === 'string' ? this.transitionGroup ? 'transition-group' : 'transition' : transition;
       var Tag = this.tag;
 
       if (this.withTransition) {
@@ -452,31 +430,78 @@
   });
 
   var _id$1 = 0;
-  var PortalTargetProvider = Vue.extend({
-    name: 'PortalTargetProvider',
+  var portalProps = ['disabled', 'name', 'order', 'slim', 'slotProps', 'tag', 'to'];
+  var targetProps = ['multiple', 'transition', 'transitionGroup'];
+  var MountingPortal = Vue.extend({
+    name: 'MountingPortal',
     inheritAttrs: false,
     props: {
       append: {
         type: [Boolean, String]
       },
-      force: {
+      bail: {
         type: Boolean
       },
       mountTo: {
         type: String,
         required: true
       },
+      // Portal
+      disabled: {
+        type: Boolean
+      },
+      // name for the portal
       name: {
         type: String,
         default: function _default() {
-          return "Target-".concat(String(_id$1++));
+          return 'mounted_' + String(_id$1++);
         }
+      },
+      order: {
+        type: Number,
+        default: 0
+      },
+      slim: {
+        type: Boolean
+      },
+      slotProps: {
+        type: Object,
+        default: function _default() {
+          return {};
+        }
+      },
+      tag: {
+        type: String,
+        default: 'DIV'
+      },
+      // name for the target
+      to: {
+        type: String,
+        default: function _default() {
+          return String(Math.round(Math.random() * 10000000));
+        }
+      },
+      // Target
+      multiple: {
+        type: Boolean,
+        default: false
+      },
+      targetSlotProps: {
+        type: Object,
+        default: function _default() {
+          return {};
+        }
+      },
+      targetTag: {
+        type: String,
+        default: 'div'
+      },
+      transition: {
+        type: [String, Object, Function]
+      },
+      transitionGroup: {
+        type: Boolean
       }
-    },
-    data: function data() {
-      return {
-        props: _objectSpread({}, this.$props)
-      };
     },
     created: function created() {
       var el = document.querySelector(this.mountTo);
@@ -486,13 +511,16 @@
         return;
       }
 
-      var props = this.props; // Target alredy exists
+      var props = this.$props; // Target already exists
 
       if (wormhole.targets[props.name]) {
-        if (!props.force) {
-          console.info("[portal-vue]: Target ".concat(props.name, " is already mounted.\n        Make sure it's the right one"));
-          return;
+        if (props.bail) {
+          console.warn("[portal-vue]: Target ".concat(props.name, " is already mounted.\n        Aborting because 'bail: true' is set"));
+        } else {
+          this.portalTarget = wormhole.targets[props.name];
         }
+
+        return;
       }
 
       var append = props.append;
@@ -502,20 +530,25 @@
         var mountEl = document.createElement(type);
         el.appendChild(mountEl);
         el = mountEl;
-      }
+      } // get props for target from $props
+      // we have to rename a few of them
 
+
+      var _props = pick(this.$props, targetProps);
+
+      _props.tag = this.targetTag;
+      _props.slotSprop = this.targetSlotProps;
+      _props.name = this.to;
       this.portalTarget = new PortalTarget({
         el: el,
-        parent: this,
-        propsData: _objectSpread({
-          name: props.name
-        }, this.$attrs)
+        // parent: this,
+        propsData: _props
       });
     },
     beforeDestroy: function beforeDestroy() {
       var target = this.portalTarget;
 
-      if (this.props.append) {
+      if (this.append) {
         var el = target.$el;
         el.parentNode.removeChild(el);
       }
@@ -523,21 +556,25 @@
       target.$destroy();
     },
     render: function render(h) {
-      var props = this.props;
-
       if (!this.portalTarget) {
         console.warn("[portal-vue] Target wasn't mounted");
         return h();
-      }
+      } // if there's no "manual" scoped slot, so we create a <Portal> ourselves
 
-      if (!this.$scopedSlots.default) {
-        console.error("[portal-vue]: <PortalTargetProvider> expects to be passed a scoped slot.");
-        return h();
-      }
 
-      debugger;
-      var content = this.$scopedSlots.default({
-        to: props.name
+      if (!this.$scopedSlots.manual) {
+        var props = pick(this.$props, portalProps);
+        return h(Portal, {
+          props: props,
+          attrs: this.$attrs,
+          on: this.$listeners,
+          scopedSlots: this.$scopedSlots
+        }, this.$slots.default);
+      } // else, we render the scoped slot
+
+
+      var content = this.$scopedSlots.manual({
+        to: this.to
       }); // if user used <template> for the scoped slot
       // content will be an array
 
@@ -545,14 +582,7 @@
         content = content[0];
       }
 
-      debugger;
       if (!content) return h();
-
-      if (content.componentOptions && content.componentOptions.Ctor !== Portal) {
-        console.error("[portal-vue]: First and only child element of <PortalTargetrovider> has to be an instance of <Portal>");
-        return h();
-      }
-
       return content;
     }
   });
@@ -561,7 +591,7 @@
     var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
     Vue$$1.component(options.portalName || 'Portal', Portal);
     Vue$$1.component(options.portalTargetName || 'PortalTarget', PortalTarget);
-    Vue$$1.component(options.portalTargetProviderName || 'PortalTargetProvider', PortalTargetProvider);
+    Vue$$1.component(options.MountingPortalName || 'MountingPortal', MountingPortal);
   }
 
   if (typeof window !== 'undefined' && window.Vue && window.Vue === Vue) {
@@ -577,7 +607,7 @@
   exports.default = index;
   exports.Portal = Portal;
   exports.PortalTarget = PortalTarget;
-  exports.PortalTargetProvider = PortalTargetProvider;
+  exports.MountingPortal = MountingPortal;
   exports.Wormhole = wormhole;
 
   Object.defineProperty(exports, '__esModule', { value: true });
