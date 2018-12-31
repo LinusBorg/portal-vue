@@ -78,7 +78,6 @@ Props working the same:
 
 - `multiple`
 - `transition`
-- `transitionGroup`
 
 ## Slots
 

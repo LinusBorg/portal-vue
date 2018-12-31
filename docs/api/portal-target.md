@@ -6,7 +6,7 @@ next: ./mounting-portal
 
 # PortalTarget
 
-This component is an outlet for any content that was sent by a `<portal>` component. It renders received content and doesn't do much else.
+This component is an outlet for any content that was sent by a `<Portal>` component. It renders received content and doesn't do much else.
 
 ## Example usage
 
@@ -27,17 +27,10 @@ You should use the `order` prop on the `<Portal>` to define the order in which t
 **Source**
 
 ```html {10}
-<portal to="destination" :order="2">
-  <p>some content</p>
-</portal>
-<portal to="destination" :order="1">
-  <p>some other content</p>
-</portal>
+<portal to="destination" :order="2"> <p>some content</p> </portal>
+<portal to="destination" :order="1"> <p>some other content</p> </portal>
 
-<portal-target
-  name="destination"
-  multiple
-/>
+<portal-target name="destination" multiple />
 ```
 
 **Result**
@@ -55,7 +48,7 @@ You should use the `order` prop on the `<Portal>` to define the order in which t
 | -------- | -------- | ------- |
 | `String` | yes      | none    |
 
-Defines the name of this portal-target. `<portal>` components can send content to this instance by this name.
+Defines the name of this portal-target. `<Portal>` components can send content to this instance by this name.
 
 ### `slim`
 
@@ -70,10 +63,7 @@ When set to true, the component will check if the sent content has only one root
 ```html {5}
 <portal to="destination"> <p>Only one content element</p> </portal>
 
-<portal-target
-  name="destination"
-  slim
-/>
+<portal-target name="destination" slim />
 ```
 
 **Result**
@@ -92,25 +82,20 @@ When there's no content and `slim` is set, the target doesn't render an empty `<
 | -------- | -------- | ------- |
 | `Object` | no       | `{}`    |
 
-<p class="tip">
-  This prop is only useful when the PortalTarget received content from a [scoped Slot](https://vuejs.org/v2/guide/components.html#Scoped-Slots) of a `<Portal>`.
-</p>
+::: tip
+This prop is only useful when the PortalTarget received content from a [scoped Slot](https://vuejs.org/v2/guide/components.html#Scoped-Slots) of a `<Portal>`.
+:::
 
-The `slotProps` object is used as props to render the scoped slot from a `<portal>`.
+The `slotProps` object is used as props to render the scoped slot from a `<Portal>`.
 
 **Source**
 
 ```html {2,9}
 <portal to="destination">
-  <p slot-scope="props">
-    This scoped slot content is so {{ props.state }}
-  </p>
+  <p slot-scope="props">This scoped slot content is so {{ props.state }}</p>
 </portal>
 
-<portal-target
-  name="destination"
-  slot-props="{state: 'cool!'}"
-/>
+<portal-target name="destination" slot-props="{state: 'cool!'}" />
 ```
 
 **Result**
@@ -119,7 +104,7 @@ The `slotProps` object is used as props to render the scoped slot from a `<porta
 <div class="vue-portal-target"><p>This scoped slot content is so cool!</p></div>
 ```
 
-It has a counterpart of the same name on the `<portal>` component to pass props to the slot content when the `<portal>` is disabled.
+It has a counterpart of the same name on the `<Portal>` component to pass props to the slot content when the `<Portal>` is disabled.
 
 ### `tag`
 
@@ -132,17 +117,14 @@ Defines the type of tag that should be rendered as a root component.
 **Source**
 
 ```html {3}
-<portal-target
-  name="destination"
-  tag="span"
-/>
+<portal-target name="destination" tag="span" />
 ```
 
 **Result**
 
 ```html {1}
 <span class="vue-portal-target">
-  <!-- any content from <portal> component may be rendered here -->
+  <!-- any content from <Portal> component may be rendered here -->
 </span>
 ```
 
@@ -158,18 +140,40 @@ plain wrapper element that is usually rendered.
 
 It accepts:
 
-- a `Boolean` value: will render `<transition-group>` without any options
 - a `String` value: will render `<transition-group>` with the `name` prop set to that string.
-- an `Object`: will render `<transition-group>` with the object's content passed as props.
+- a `Component`: will render `<transition-group>` with the object's content passed as props.
 
-Its content should mimic the props interface of Vue's `<transition>` component, e.g.:
+Example with string:
 
 ```html {4}
-<portal-target
-  name="dest"
-  slim
-  :transition="{name: 'fade', mode: 'out-in'}"
-></portal-target>
+<portal-target name="dest" slim transition="fade"></portal-target>
+```
+
+Example with Component
+
+```html
+<portal-target name="dest" slim :transition="fadeTransition"></portal-target>
+```
+
+```javascript
+computed: {
+  fadeTransition() {
+    return {
+      functional: true,
+      render(h) {
+        h('transition', { name: 'fade', mode: 'out-in' })
+      }
+    }
+  },
+  globalTransitionComponent() {
+    // instead of creating the Transition component locally like above,
+    // you probably would like to re-use a component, that you registered
+    // either globally or locally.
+    return Vue.component('yourGloballyregisteredComponent')
+    // or
+    return this.$options.components('yourLocallyregisteredComponent')
+  }
+}
 ```
 
 #### Slim Mode
@@ -178,7 +182,7 @@ When [`slim`](#slim) is also specified, it will render a `<transition>` instead 
 
 You can use the `transitionEvents` prop to pass event listeners for that transition.
 
-### `transitionEvents` <Badge text="1.2.0+"/>
+### `transitionEvents` <Badge text="removed in 2.0.0" type="error"/>
 
 | Type     | Required | Default |
 | -------- | -------- | ------- |
@@ -191,7 +195,7 @@ Accepts an object whose keys match the transition component's events. Each key's
 ```html {4}
 <portal-target
   name="dest"
-  :transition="{name: 'fade'}"
+  transition="fade"
   :transition-events="{ enter: handleEnter, leave: handleLeave }"
 ></portal-target>
 ```
@@ -256,20 +260,17 @@ The first argument is represents the current contents, the second one the previo
 
 ```html {4}
 <template>
-  <portal-target
-    name="destination"
-    @change="handleUpdate"
-  />
+  <portal-target name="destination" @change="handleUpdate" />
 </template>
 
 <script>
-export default {
-  methods: {
-    handleUpdate(newContent, oldContent) {
-      // do something with the info.
-    }
+  export default {
+    methods: {
+      handleUpdate(newContent, oldContent) {
+        // do something with the info.
+      },
+    },
   }
-}
 </script>
 ```
 

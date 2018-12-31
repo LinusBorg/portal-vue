@@ -6,7 +6,7 @@ next: ./portal-target
 
 # Portal Component
 
-Wrap any content that you want to render somewhere else in a `<portal>` component.
+Wrap any content that you want to render somewhere else in a `<Portal>` component.
 
 ## Example usage
 
@@ -69,19 +69,15 @@ But it might be a good idea to name your `<Portal>` components so you can debug 
 
 This prop defines the order position in the output of the `<PortalTarget>`.
 
-<p class="tip">
-  This prop is only useful when the Portal is sending content to a `<PortalTarget>` which has the `multiple` prop set.
-</p>
+::: tip
+This prop is only useful when the Portal is sending content to a `<PortalTarget>` which has the `multiple` prop set.
+:::
 
 **Source**
 
 ```html
-<portal name="destination" :order="2">
-  <p>some content</p>
-</portal>
-<portal name="destination" :order="1">
-  <p>some other content</p>
-</portal>
+<portal name="destination" :order="2"> <p>some content</p> </portal>
+<portal name="destination" :order="1"> <p>some other content</p> </portal>
 
 <portal-target name="destination" multiple />
 ```
@@ -254,13 +250,9 @@ This defines the name of the `<PortalTarget>` component that the slot content sh
 **Source**
 
 ```html
-<portal to="destination">
-  <p>some content</p>
-</portal>
+<portal to="destination"> <p>some content</p> </portal>
 
-<div class="target">
- <portal-target name="destination" />
-</div>
+<div class="target"><portal-target name="destination" /></div>
 ```
 
 **Result**

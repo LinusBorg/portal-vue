@@ -328,9 +328,6 @@
       },
       transition: {
         type: [String, Object, Function]
-      },
-      transitionGroup: {
-        type: Boolean
       }
     },
     data: function data() {
@@ -384,9 +381,6 @@
       },
       passengers: function passengers() {
         return combinePassengers(this.ownTransports, this.slotProps);
-      },
-      withTransition: function withTransition() {
-        return !!this.transition;
       }
     },
     methods: {
@@ -409,14 +403,15 @@
       var noWrapper = this.noWrapper();
       var children = this.children();
       var transition = this.transition;
-      var Transition = typeof transition === 'string' ? this.transitionGroup ? 'transition-group' : 'transition' : transition;
+      var Transition = typeof transition === 'string' ? this.slim ? 'transition' : 'transition-group' : transition;
       var Tag = this.tag;
 
-      if (this.withTransition) {
+      if (Transition) {
         return h(Transition, {
-          props: typeof transition === 'string' ? {
-            name: transition
-          } : undefined,
+          props: {
+            name: typeof transition === 'string' ? transition : undefined,
+            tag: !!this.slim && this.tag
+          },
           class: 'vue-portal-target'
         }, children);
       }
@@ -431,7 +426,7 @@
 
   var _id$1 = 0;
   var portalProps = ['disabled', 'name', 'order', 'slim', 'slotProps', 'tag', 'to'];
-  var targetProps = ['multiple', 'transition', 'transitionGroup'];
+  var targetProps = ['multiple', 'transition'];
   var MountingPortal = Vue.extend({
     name: 'MountingPortal',
     inheritAttrs: false,

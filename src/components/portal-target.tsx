@@ -16,7 +16,6 @@ export default Vue.extend({
     transition: { type: [String, Object, Function] } as PropOptions<
       PropWithComponent
     >,
-    transitionGroup: { type: Boolean },
   },
   data() {
     return {
@@ -71,9 +70,6 @@ export default Vue.extend({
     passengers(): VNode[] {
       return combinePassengers(this.ownTransports, this.slotProps)
     },
-    withTransition(): boolean {
-      return !!this.transition
-    },
   },
 
   methods: {
@@ -102,18 +98,20 @@ export default Vue.extend({
     const { transition } = this
     const Transition =
       typeof transition === 'string'
-        ? this.transitionGroup
-          ? 'transition-group'
-          : 'transition'
+        ? this.slim
+          ? 'transition'
+          : 'transition-group'
         : transition
     const Tag = this.tag
 
-    if (this.withTransition) {
+    if (Transition) {
       return h(
         Transition,
         {
-          props:
-            typeof transition === 'string' ? { name: transition } : undefined,
+          props: {
+            name: typeof transition === 'string' ? transition : undefined,
+            tag: !!this.slim && this.tag,
+          },
           class: 'vue-portal-target',
         },
         children

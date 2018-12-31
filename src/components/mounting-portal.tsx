@@ -25,7 +25,7 @@ const portalProps = [
   'to',
 ]
 
-const targetProps = ['multiple', 'transition', 'transitionGroup']
+const targetProps = ['multiple', 'transition']
 
 export default (Vue as withPortalTarget).extend({
   name: 'MountingPortal',

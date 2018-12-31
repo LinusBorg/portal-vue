@@ -10,7 +10,6 @@ declare const _default: import("vue").VueConstructor<{
 } & {
     ownTransports: Transport[];
     passengers: VNode[];
-    withTransition: boolean;
 } & {
     multiple: boolean;
     name: string;
@@ -18,6 +17,5 @@ declare const _default: import("vue").VueConstructor<{
     slotProps: any;
     tag: string;
     transition: PropWithComponent;
-    transitionGroup: boolean;
 } & Vue>;
 export default _default;
