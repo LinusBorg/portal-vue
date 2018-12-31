@@ -21,10 +21,7 @@ interface PluginOptions {
 function install(Vue: VueConstructor, options: PluginOptions = {}) {
   Vue.component(options.portalName || 'Portal', Portal)
   Vue.component(options.portalTargetName || 'PortalTarget', PortalTarget)
-  Vue.component(
-    options.MountingPortalName || 'MountingPortal',
-    MountingPortal
-  )
+  Vue.component(options.MountingPortalName || 'MountingPortal', MountingPortal)
 }
 if (
   window.ROLLUP_BUILD_MODE === 'umd' &&
