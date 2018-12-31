@@ -5,7 +5,7 @@ export default ({ Vue }) => {
   Vue.use(VueResize)
   Vue.prototype.$__VERSION__ = process.env.VERSION
 
-  if (window) {
+  if (typeof window !== 'undefined') {
     if (!document.querySelector('#message-target')) {
       const el = document.createElement('DIV')
       el.id = 'message-target'

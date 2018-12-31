@@ -499,6 +499,7 @@ var MountingPortal = Vue.extend({
     }
   },
   created: function created() {
+    if (typeof document === 'undefined') return;
     var el = document.querySelector(this.mountTo);
 
     if (!el) {

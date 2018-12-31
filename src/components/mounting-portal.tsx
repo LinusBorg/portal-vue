@@ -65,6 +65,7 @@ export default (Vue as withPortalTarget).extend({
     transitionGroup: { type: Boolean },
   },
   created() {
+    if (typeof document === 'undefined') return
     let el: HTMLElement | null = document.querySelector(this.mountTo)
 
     if (!el) {
