@@ -20,9 +20,9 @@ This component is an outlet for any content that was sent by a `<portal>` compon
 
 ### `multiple` <Badge text="1.2.0+"/>
 
-When `multiple` is `true`, the portal will be able to receive and render content from multiple `Portal` component at the same time.
+When `multiple` is `true`, the portal will be able to receive and render content from multiple `<Portal>` component at the same time.
 
-You should use the `order` prop on the `Portal` to define the order in which the contents should be rendered:
+You should use the `order` prop on the `<Portal>` to define the order in which the contents should be rendered:
 
 **Source**
 
@@ -93,7 +93,7 @@ When there's no content and `slim` is set, the target doesn't render an empty `<
 | `Object` | no       | `{}`    |
 
 <p class="tip">
-  This prop is only useful when the PortalTarget received content from a [scoped Slot](https://vuejs.org/v2/guide/components.html#Scoped-Slots) of a `Portal`.
+  This prop is only useful when the PortalTarget received content from a [scoped Slot](https://vuejs.org/v2/guide/components.html#Scoped-Slots) of a `<Portal>`.
 </p>
 
 The `slotProps` object is used as props to render the scoped slot from a `<portal>`.
@@ -153,7 +153,7 @@ Defines the type of tag that should be rendered as a root component.
 | `Boolean|String|Object` | no       | none    |
 
 This property is used to configure a transition for the portal content. By default, it will render
-a `<transition-group>`, which will respect the `PortalTarget`'s [`tag`](#tag) property and will render instead of the
+a `<transition-group>`, which will respect the `<PortalTarget>`'s [`tag`](#tag) property and will render instead of the
 plain wrapper element that is usually rendered.
 
 It accepts:
@@ -248,7 +248,7 @@ Example:
 
 ### `change`
 
-Emitted everytime the component re-renders because the content from the `Portal` changed.
+Emitted everytime the component re-renders because the content from the `<Portal>` changed.
 
 It receives two arguments, each is a `Boolean`, indicating the absense or presence of content for the target.
 

@@ -57,9 +57,9 @@ Instead, it will be rendered in place:
 | -------- | -------- | --------------- |
 | `String` | no       | a random String |
 
-This optional prop can usually be left out, because `Portal` can generate a random string to provide an identifier for the source of the content being sent to the `PortalTarget`.
+This optional prop can usually be left out, because `<Portal>` can generate a random string to provide an identifier for the source of the content being sent to the `<PortalTarget>`.
 
-But it might be a good idea to name your `Portal` components so you can debug them easier if need would be.
+But it might be a good idea to name your `<Portal>` components so you can debug them easier if need would be.
 
 ### `order` <Badge text="1.2.0+"/>
 
@@ -67,10 +67,10 @@ But it might be a good idea to name your `Portal` components so you can debug th
 | ----------------- | -------- | --------------- |
 | `[String,Number]` | no\*     | a random String |
 
-This prop defines the order position in the output of the `PortalTarget`.
+This prop defines the order position in the output of the `<PortalTarget>`.
 
 <p class="tip">
-  This prop is only useful when the Portal is sending content to a `PortalTarget` which has the `multiple` prop set.
+  This prop is only useful when the Portal is sending content to a `<PortalTarget>` which has the `multiple` prop set.
 </p>
 
 **Source**
@@ -132,7 +132,7 @@ When there's no content and `slim` is set, the portal doesn't render an empty `<
 This prop is only useful if:
 
 - the `disabled` prop is `true`, **and**
-- the `Portal`'s slot content is a [Scoped Slot](https://vuejs.org/v2/guide/components.html#Scoped-Slots).
+- the `<Portal>`'s slot content is a [Scoped Slot](https://vuejs.org/v2/guide/components.html#Scoped-Slots).
 
 If that's the case, then the object you pass to `slotProps` is used to define the props that are passed to the scoped slot to display the content correctly in-place:
 
@@ -178,7 +178,7 @@ Defines the type of tag that should be rendered as a root element.
 | -------- | -------- | ------- |
 | `String` | no       | none    |
 
-Accepts a string containing a list of classes. These classes will be applied to the root element of the `PortalTarget`.
+Accepts a string containing a list of classes. These classes will be applied to the root element of the `<PortalTarget>`.
 
 **Source**
 
@@ -215,8 +215,8 @@ Accepts a string containing a list of classes. These classes will be applied to 
   This feature might change in PortalVue 2.0. It's not clear at the moment if those changes will be breaking or not. See [this issue](https://github.com/LinusBorg/portal-vue/issues/74).
 </p>
 
-Defines the name of the `Portal` component that the slot contents should be sent to. This mounts a new instance of the
-`PortalTarget` component.
+Defines the name of the `<Portal>` component that the slot contents should be sent to. This mounts a new instance of the
+`<PortalTarget>` component.
 
 <p class="warning">
   This feature should be used on elements <strong>outside</strong> of the scope of your Vue app,
@@ -249,7 +249,7 @@ You _can_ use it inside of the Vue-controlled part of your page, It works for th
 | -------- | --------------------------------------- | --------------- |
 | `String` | yes, unless `targetEl` prop is provided | a random String |
 
-This defines the name of the `PortalTarget` component that the slot content should be rendered in.
+This defines the name of the `<PortalTarget>` component that the slot content should be rendered in.
 
 **Source**
 

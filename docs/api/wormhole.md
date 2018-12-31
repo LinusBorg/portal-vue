@@ -6,9 +6,9 @@ next: false
 
 # Wormhole Object
 
-The Wormhole is not a component, it's an object that connects the `Portal`s to their `<PortalTarget>`s.
+The Wormhole is not a component, it's an object that connects the `<Portal>`s to their `<PortalTarget>`s.
 
-Usually, you will never need to use this object, but you _can_ use this object to programmatically send content to a `PortalTarget`, check weither a target exists, and other stuff.
+Usually, you will never need to use this object, but you _can_ use this object to programmatically send content to a `<PortalTarget>`, check weither a target exists, and other stuff.
 
 :::tip Hint
 This feature was introduced with version `1.1.0`
@@ -34,11 +34,11 @@ The `open` method accepts one argument, an object with the following properties:
 
 | Property   | Required | Default | Explanation                                                       |
 | ---------- | -------- | ------- | ----------------------------------------------------------------- |
-| to         | yes      |         | The name of the `PortalTarget` to send to                         |
-| from       | yes      |         | The name of the `Portal` this content comes from.                 |
-| passengers | no       |         | An array of vNodes - the content to be sent to the `PortalTarget` |
+| to         | yes      |         | The name of the `<PortalTarget>` to send to                         |
+| from       | yes      |         | The name of the `<Portal>` this content comes from.                 |
+| passengers | no       |         | An array of vNodes - the content to be sent to the `<PortalTarget>` |
 
-Even if you use this method programmatically and there is not source `Portal`, you still have to provide `from` - every content sent through the wormhole needs a source.
+Even if you use this method programmatically and there is not source `<Portal>`, you still have to provide `from` - every content sent through the wormhole needs a source.
 
 Examples:
 
@@ -67,7 +67,7 @@ This is the programmatic equivalent of the following:
 
 ### close()
 
-As the name suggests, this is the counterpart to `open()`. It's used to remove content from a `PortalTarget`.
+As the name suggests, this is the counterpart to `open()`. It's used to remove content from a `<PortalTarget>`.
 
 It accepts two arguments, an object and an optional `force` flag.
 
@@ -75,13 +75,13 @@ It accepts two arguments, an object and an optional `force` flag.
 
 | Argument/Property | Required | Default | Explanation                                                                                      |
 | ----------------- | -------- | ------- | ------------------------------------------------------------------------------------------------ |
-| to                | yes      |         | The name of the `PortalTarget` whose content should be removed                                   |
+| to                | yes      |         | The name of the `<PortalTarget>` whose content should be removed                                   |
 | from              | no       |         | Name of the Portal that the content was created with. Can be left out if the `force` flag is set |
-| force             | no       | false   | If this is true, the `PortalTarget`s content will be removed even if `from` doesn't match        |
+| force             | no       | false   | If this is true, the `<PortalTarget>`s content will be removed even if `from` doesn't match        |
 
 Why do you have to provide the `from` name (or use `force`)?
 
-The close() method is also used by `Portal` components to remove the content from a `PortalTarget` when the `Portal` is being destroyed. But that should only remove the content if it still actually is the content from that `Portal`. If another `Portal` have overridden our content before the first one gets destroyed, we have to keep the content instead of removing it.
+The close() method is also used by `<Portal>` components to remove the content from a `<PortalTarget>` when the `<Portal>` is being destroyed. But that should only remove the content if it still actually is the content from that `<Portal>`. If another `<Portal>` have overridden our content before the first one gets destroyed, we have to keep the content instead of removing it.
 
 We can override this behaviour with the `force` argument.
 
@@ -129,7 +129,7 @@ Wormhole.hasSource('origin')
 
 `Wormhole.hasTarget(to)`
 
-Returns `true` if there's a `PortalTarget` with the given name active.
+Returns `true` if there's a `<PortalTarget>` with the given name active.
 
 Example:
 

@@ -45,7 +45,7 @@ Just include the script tag _after_ the one of Vue.js
 The components will be named `<portal>` and `<portal-target>`, respectively.
 
 :::tip
-PortalVue provides a UMD [build](#builds) (`/dist/portal-vue.umd.min.js`) which auto-installs itself when included via a script tag.
+PortalVue provides a UMD [build](#builds) (`/dist/portal-vue.umd.min.js`) which should be used in browsers, and which auto-installs itself when included via a script tag.
 
 Unpkg and jsdelivr automatically give you this build. if you include it from another source, make sure to include the right one.
 :::
@@ -88,12 +88,13 @@ If you don't want to register the components globally, don't do `Vue.use('Portal
 Instead, import the component(s) in those components that you need them in and register them locally:
 
 ```javascript
-import { Portal, PortalTarget } from 'portal-vue'
+import { Portal, PortalTarget, MountingPortal } from 'portal-vue'
 
 export default {
   components: {
     Portal,
     PortalTarget,
+    MountingPortal,
   },
 }
 ```
