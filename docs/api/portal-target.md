@@ -146,7 +146,7 @@ Defines the type of tag that should be rendered as a root component.
 </span>
 ```
 
-### `transition` <Badge text="1.2.0+"/>
+### `transition` <Badge text=" changed in 2.0.0+"/>
 
 | Type                    | Required | Default |
 | ----------------------- | -------- | ------- |

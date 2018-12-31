@@ -32,7 +32,10 @@ This can be useful if `<portal-target>`s wrapper element is creating problem for
 <portal to="destination">
   <div>
     <p>This content has a single root node (the div)</p>
-    <p>Therefore, we can tell the PortalTarget to do without a root element of its own</p>
+    <p>
+      Therefore, we can tell the PortalTarget to do without a root element of
+      its own
+    </p>
   </div>
 </portal>
 
@@ -46,13 +49,12 @@ The `slim` property also works on `<portal>` components when the are `disabled` 
 PortalVue can also be used with [Scoped Slots](https://vuejs.org/v2/guide/components.html#Scoped-Slots)! This allows you to send a scoped slot to a PortalTarget, which can then provide props for the slot content:
 
 ```html
-<portal to="destination">
-  <p slot-scope="{message}">
-    {{message}}
-  </p>
-</portal>
+<portal to="destination"> <p slot-scope="{message}">{{message}}</p> </portal>
 
-<portal-target name="destination" :slot-props="{message: 'Hello from the Target to You!'}" />
+<portal-target
+  name="destination"
+  :slot-props="{message: 'Hello from the Target to You!'}"
+/>
 ```
 
 **Result:**
@@ -96,10 +98,8 @@ It then provides the (auto-generated) name of the generated Target to its childr
 
 ```html
 <div id="app">
-  <MountingPortal mountTo="#widget" append>
-    <portal name="source" slot-scope="{to}" :to="to">
-      <p>Content for the Portal</p>
-    </portal>
+  <MountingPortal mountTo="#widget" name="source" append>
+    <p>Content for the Target</p>
   </MountingPortal>
 <div>
 
@@ -112,12 +112,14 @@ It then provides the (auto-generated) name of the generated Target to its childr
 </aside>
 ```
 
-When `<MountingPortal>` is destroyed, it takes are of removing the `<PortalTarget>` and the element it created for it.
+When `<MountingPortal>` is destroyed, it takes are of destroying the `<PortalTarget>`.
 
 :::tip
 When the `append` prop is set, the Target will be mounted to as a child of the specified element instead of replacing it.
 
 This is great if you want to mount more than one PortalTarget there, for example.
+
+When `append` is used, `<MountingPortal>` will also remove the appended element when destroying the `<PortalTarget>`
 :::
 
 ### `targetEl` - The Old Way <Badge type="warning" text="1.* only"/>

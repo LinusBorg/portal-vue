@@ -6,7 +6,7 @@ next: false
 
 # Wormhole Object
 
-The Wormhole is not a component, it's an object that connects the `Portal`s to their `PortalTarget`s.
+The Wormhole is not a component, it's an object that connects the `Portal`s to their `<PortalTarget>`s.
 
 Usually, you will never need to use this object, but you _can_ use this object to programmatically send content to a `PortalTarget`, check weither a target exists, and other stuff.
 
@@ -15,7 +15,7 @@ This feature was introduced with version `1.1.0`
 :::
 
 :::warning Public API
-The wormhole object exposes quite a view properties and methods. With regard to semver, only the properties and methods documented below are considered part of the public API.
+The wormhole object exposes quite a few properties and methods. With regard to semver, only the properties and methods documented below are considered part of the public API.
 
 Use any other properties at your own risk.
 :::
@@ -125,7 +125,7 @@ Wormhole.hasSource('origin')
 // => true/false
 ```
 
-### hasTarget() <Badge text="changed in 2.0.0" type=Warning>
+### hasTarget() <Badge text="changed in 2.0.0" type=warning />
 
 `Wormhole.hasTarget(to)`
 
