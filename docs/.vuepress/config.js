@@ -1,7 +1,7 @@
 const webpack = require('webpack')
 const { version } = require('../../package.json')
 module.exports = {
-  base: '/portal-vue/',
+  base: process.env.PORTAL_VUE_DOCS_PATH || '/portal-vue/',
   title: 'Portal-Vue',
   description:
     "A Vue component to render your component's template anywhere in the DOM.",
