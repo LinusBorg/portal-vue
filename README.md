@@ -1,31 +1,54 @@
-# portal-vue
+# PortalVue
 
-## Project setup
-```
-yarn install
-```
+> A Portal Component for Vuejs, to render DOM outside of a component, anywhere in the document.
 
-### Compiles and hot-reloads for development
-```
-yarn run serve
-```
+## This is the README of the 2.0.0-beta `next`-branch
 
-### Compiles and minifies for production
-```
-yarn run build
-```
+<p style="tex-align: center">
+  <img src="http://linusborg.github.io/portal-vue/assets/logo.png" alt="PortalVue Logo">
+</p>
 
-### Lints and fixes files
-```
-yarn run lint
-```
+> Install with `npm install portal-vue`
 
-### Run your unit tests
-```
-yarn run test:unit
+For more detailed documentation and additional Information, please visit <a href="https://portal-vue-next-preview.netlify.com/">the docs for this beta</a>
+
+## Installation
+
+```bash
+npm i portal-vue
+
+# or
+
+yarn add portal-vue
 ```
 
-### Run your end-to-end tests
+```javascript
+import PortalVue from 'portal-vue'
+Vue.use(PortalVue)
 ```
-yarn run test:e2e
+
+## Usage
+
+```html
+<portal to="destination">
+  <p>This slot content will be rendered wherever the <portal-target> with name 'destination'
+    is  located.</p>
+</portal>
+
+<portal-target name="destination">
+  <!--
+  This component can be located anwhere in your App.
+  The slot content of the above portal component will be rendered here.
+  -->
+</portal-target>
+```
+
+## Nuxt module
+
+Add `portal-vue/nuxt` to modules section of `nuxt.config.js`
+
+```javascript
+{
+  modules: ['portal-vue/nuxt']
+}
 ```
