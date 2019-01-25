@@ -64,6 +64,7 @@
     "ts-jest": "^23.0.0",
     "typescript": "^3.0.0",
     "vue-class-component": "^6.2.0",
+    "vue-no-ssr": "^1.1.1",
     "vue-property-decorator": "^7.0.0",
     "vue-resize": "^0.4.4",
     "vue-template-compiler": "^2.5.11",

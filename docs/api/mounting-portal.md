@@ -16,8 +16,12 @@ Appart from that, this component behaves like a normal `<Portal>` - but to make 
 
 <!-- prettier-ignore -->
 ```html {}
-<MountingPortal mountTo="#targetId" append>
-  <portal slot-scope="{to}" :to="to" name="source">
+<MountingPortal 
+  mountTo="#targetId"
+  append
+  :to="to" 
+  name="source">
+  <portal slot-scope="{to}" >
     <p>This is the content for the portal</p>
   </portal>
 </MountingPortal>

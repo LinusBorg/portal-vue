@@ -1,7 +1,7 @@
 <template>
   <div>
-    <MountingPortal mountTo="#message-target"  append>
-      <Portal v-if="show" slot="manual" slot-scope="{ to }" :to="to" name="msgSource"
+    <no-ssr>
+      <MountingPortal v-if="show" :to="to" name="msgSource" mountTo="#message-target" append>
         <div class="note">
           <div class="note-inner">
             <span class="title">Docs for {{$__VERSION__}}</span>
@@ -15,8 +15,8 @@
             <button @click="close" class="button">Close Message</button>
           </div>
         </div>
-      </Portal>
-    </MountingPortal>
+      </MountingPortal>
+    </no-ssr>
   </div>
 </template>
 
