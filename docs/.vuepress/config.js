@@ -1,7 +1,7 @@
 const webpack = require('webpack')
 const { version } = require('../../package.json')
 module.exports = {
-  base: process.env.PORTAL_VUE_DOCS_PATH || '/portal-vue/',
+  base: process.env.PORTAL_VUE_DOCS_PATH || '/portal-vue/',
   title: 'Portal-Vue',
   description:
     "A Vue component to render your component's template anywhere in the DOM.",
@@ -67,6 +67,6 @@ module.exports = {
 
 function genOldDocsLink() {
   return this.process.env.NODE_ENV === 'production'
-    ? 'https://linusborg.github.io/portal-vue/v1/index.html#/guide'
-    : 'http://localhost:8080/portal-vue/v1/index.html#/guide'
+    ? 'https://linusborg.github.io/portal-vue/index.html#/guide'
+    : 'http://localhost:8080/portal-vue/index.html#/guide'
 }
