@@ -14,6 +14,7 @@ Appart from that, this component behaves like a normal `<Portal>` - but to make 
 
 ## Example Usage
 
+<!-- prettier-ignore -->
 ```html {}
 <MountingPortal mountTo="#targetId" append>
   <portal slot-scope="{to}" :to="to" name="source">
@@ -93,6 +94,7 @@ This component expects to receive a default scoped slot. If it's not passed, an 
 
 If you don't want to have `<MountingPortal>` create the portal for you, you can instead pass it a scopedSlot named `manual` which will receive the `to` name for the created `<PortalTarget>`, so you can set up the `<Portal>` yourself however you please.
 
+<!-- prettier-ignore -->
 ```html
 <MountingPortal mountTo="#target-id">
   <div slot="manual" slot-scope="{to}" class="some-styles">

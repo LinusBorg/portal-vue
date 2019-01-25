@@ -32,8 +32,8 @@ The `open` method accepts one argument, an object with the following properties:
 
 `Wormhole.open({to, from, passengers})`
 
-| Property   | Required | Default | Explanation                                                       |
-| ---------- | -------- | ------- | ----------------------------------------------------------------- |
+| Property   | Required | Default | Explanation                                                         |
+| ---------- | -------- | ------- | ------------------------------------------------------------------- |
 | to         | yes      |         | The name of the `<PortalTarget>` to send to                         |
 | from       | yes      |         | The name of the `<Portal>` this content comes from.                 |
 | passengers | no       |         | An array of vNodes - the content to be sent to the `<PortalTarget>` |
@@ -59,6 +59,7 @@ methods: {
 
 This is the programmatic equivalent of the following:
 
+<!-- prettier-ignore -->
 ```html
 <portal to="destination" name="my-portal">
   <p>This will be displayed in the Target!</p>
@@ -75,9 +76,9 @@ It accepts two arguments, an object and an optional `force` flag.
 
 | Argument/Property | Required | Default | Explanation                                                                                      |
 | ----------------- | -------- | ------- | ------------------------------------------------------------------------------------------------ |
-| to                | yes      |         | The name of the `<PortalTarget>` whose content should be removed                                   |
+| to                | yes      |         | The name of the `<PortalTarget>` whose content should be removed                                 |
 | from              | no       |         | Name of the Portal that the content was created with. Can be left out if the `force` flag is set |
-| force             | no       | false   | If this is true, the `<PortalTarget>`s content will be removed even if `from` doesn't match        |
+| force             | no       | false   | If this is true, the `<PortalTarget>`s content will be removed even if `from` doesn't match      |
 
 Why do you have to provide the `from` name (or use `force`)?
 

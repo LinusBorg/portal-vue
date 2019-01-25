@@ -43,6 +43,7 @@ Also, the code of the Examples uses the Single-File-Component Format ("`.vue`" f
 
 ### The Basics
 
+<!-- prettier-ignore -->
 ```html
 <portal to="destination">
   <p>This slot content will be rendered wherever the
@@ -66,6 +67,7 @@ Also, the code of the Examples uses the Single-File-Component Format ("`.vue`" f
 
 ### Enabling/Disabling the Portal
 
+<!-- prettier-ignore -->
 ```html
 <portal to="destination" :disabled="true">
   <p>
@@ -84,6 +86,7 @@ Also, the code of the Examples uses the Single-File-Component Format ("`.vue`" f
 
 ### Conditional rendering with v-if
 
+<!-- prettier-ignore -->
 ```html
 <portal to="destination" v-if="usePortal">
   <ul>
@@ -110,6 +113,7 @@ The `<portal-target>` component has a `multiple` mode, which allows to render co
 
 The order the content is rendered in can be adjusted through the `order` prop on the `<portal>` components:
 
+<!-- prettier-ignore -->
 ```html
 <portal to="destination" :order="2">
   <p>some content</p>
@@ -123,6 +127,7 @@ The order the content is rendered in can be adjusted through the `order` prop on
 
 **Result**
 
+<!-- prettier-ignore -->
 ```html
 <div class="vue-portal-target">
   <p>some other content</p>
@@ -151,6 +156,7 @@ With PortalVue, you can render your modal/overlay/dropdown component to a `<port
 
 Now you can position your components with `position: absolute` instead
 
+<!-- prettier-ignore -->
 ```html
 <body>
   <div id="app" style="position: relative;">

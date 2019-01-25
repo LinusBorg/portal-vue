@@ -10,6 +10,7 @@ next: ./caveats
 
 The `to` prop of `<portal>` and the `name` prop of `<portal-target>` can be changed dynamically with `v-bind`, allowing you to send content of one `<portal>` to a different `<portal-target>`, or switch the source of a `<portal-target>` from one `<portal>` to another.
 
+<!-- prettier-ignore -->
 ```html
 <portal v-bind:to="name">
   Content will be dynamically sent to the destination that `name` evaluates to
@@ -28,6 +29,7 @@ However, if you know that you will send content with a single root element only,
 
 This can be useful if `<portal-target>`s wrapper element is creating problem for your styling.
 
+<!-- prettier-ignore -->
 ```html
 <portal to="destination">
   <div>
@@ -48,8 +50,11 @@ The `slim` property also works on `<portal>` components when the are `disabled` 
 
 PortalVue can also be used with [Scoped Slots](https://vuejs.org/v2/guide/components.html#Scoped-Slots)! This allows you to send a scoped slot to a PortalTarget, which can then provide props for the slot content:
 
+<!-- prettier-ignore -->
 ```html
-<portal to="destination"> <p slot-scope="{message}">{{message}}</p> </portal>
+<portal to="destination">
+  <p slot-scope="{message}">{{message}}</p>
+</portal>
 
 <portal-target
   name="destination"
@@ -59,14 +64,18 @@ PortalVue can also be used with [Scoped Slots](https://vuejs.org/v2/guide/compon
 
 **Result:**
 
+<!-- prettier-ignore -->
 ```html
-<div class="vue-portal-target"><p>Hello from the Target to You!</p></div>
+<div class="vue-portal-target">
+  <p>Hello from the Target to You!</p>
+</div>
 ```
 
 ## Transitions <Badge text="1.2.0+"/>
 
 You can pass transitions to a `<portal>` without problems. It will behave just the same when the content is being rendered in the `<portal-target>`:
 
+<!-- prettier-ignore -->
 ```html
 <portal to="destination">
   <transition name="fade">
@@ -78,6 +87,7 @@ You can pass transitions to a `<portal>` without problems. It will behave just t
 
 However, if you use a `<portal-target>` for multiple `<portal>`s, you likely want to define the transition on the target end instead. This is also supported:
 
+<!-- prettier-ignore -->
 ```html
 <portal-target
   :transition="{ name: 'fade'}"
@@ -96,6 +106,7 @@ If you want to render your content to a place outside of the control of your Vue
 
 It then provides the (auto-generated) name of the generated Target to its children through a scoped slot.
 
+<!-- prettier-ignore -->
 ```html
 <div id="app">
   <MountingPortal mountTo="#widget" name="source" append>
@@ -124,7 +135,8 @@ When `append` is used, `<MountingPortal>` will also remove the appended element 
 
 ### `targetEl` - The Old Way <Badge type="warning" text="1.* only"/>
 
-```html{3}
+<!-- prettier-ignore -->
+```html {3}
 <body>
   <div id="app">
     <portal name="" target-el="#widget">

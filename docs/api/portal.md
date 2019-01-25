@@ -35,17 +35,23 @@ Instead, it will be rendered in place:
 
 **Source**
 
+<!-- prettier-ignore -->
 ```html
 <div class="wrapper">
-  <portal :disabled="true"> <p>some content</p> </portal>
+  <portal :disabled="true">
+    <p>some content</p> 
+  /portal>
 </div>
 ```
 
 **Result**
 
+<!-- prettier-ignore -->
 ```html
 <div class="wrapper">
-  <div class="vue-portal"><p>some content</p></div>
+  <div class="vue-portal">
+    <p>some content</p>
+  </div>
 </div>
 ```
 
@@ -75,6 +81,7 @@ This prop is only useful when the Portal is sending content to a `<PortalTarget>
 
 **Source**
 
+<!-- prettier-ignore -->
 ```html
 <portal name="destination" :order="2"> <p>some content</p> </portal>
 <portal name="destination" :order="1"> <p>some other content</p> </portal>
@@ -84,6 +91,7 @@ This prop is only useful when the Portal is sending content to a `<PortalTarget>
 
 **Result**
 
+<!-- prettier-ignore -->
 ```html
 <div class="vue-portal-target">
   <p>some other content</p>
@@ -103,6 +111,7 @@ When set to true, the component will check if the sent content has only one root
 
 **Source**
 
+<!-- prettier-ignore -->
 ```html
 <portal to="destination" slim disabled>
   <p>Only one content element</p>
@@ -136,6 +145,7 @@ It has a (more useful) counterpart in the `<portal-target>` component
 
 **Source**
 
+<!-- prettier-ignore -->
 ```html
 <portal to="destination" disabled slot-props="{state: 'disabled!'}">
   <p slot-scope="props">This scoped slot content is {{ props.state }}</p>
@@ -144,6 +154,7 @@ It has a (more useful) counterpart in the `<portal-target>` component
 
 **Result**
 
+<!-- prettier-ignore -->
 ```html
 <div class="vue-portal"><p>This scoped slot content is disabled</p></div>
 ```
@@ -158,14 +169,20 @@ Defines the type of tag that should be rendered as a root element.
 
 **Source**
 
+<!-- prettier-ignore -->
 ```html
-<portal disabled tag="span"> <p>some content</p> </portal>
+<portal disabled tag="span">
+  <p>some content</p>
+</portal>
 ```
 
 **Result**
 
+<!-- prettier-ignore -->
 ```html
-<span class="vue-portal"> <p>some content</p> </span>
+<span class="vue-portal"> 
+  <p>some content</p> 
+</span>
 ```
 
 ### `targetClass` <Badge text="removed in 2.0.0" type="error"/>
@@ -178,6 +195,7 @@ Accepts a string containing a list of classes. These classes will be applied to 
 
 **Source**
 
+<!-- prettier-ignore -->
 ```html
 <portal to="destination" target-class="class1 class2">
   <p>some content</p>
@@ -188,6 +206,7 @@ Accepts a string containing a list of classes. These classes will be applied to 
 
 **Result**
 
+<!-- prettier-ignore -->
 ```html
 <div class="vue-portal"></div>
 
@@ -225,18 +244,26 @@ You _can_ use it inside of the Vue-controlled part of your page, It works for th
 
 **Source**
 
+<!-- prettier-ignore -->
 ```html
-<portal to="destination" target-el="#render-here"> <p>some content</p> </portal>
+<portal to="destination" target-el="#render-here">
+  <p>some content</p> 
+</portal>
 
-<div id="render-here" class="someclass"><!-- nothing necessary here --></div>
+<div id="render-here" class="someclass">
+  <!-- nothing necessary here -->
+</div>
 ```
 
 **Result**
 
+<!-- prettier-ignore -->
 ```html
 <div class="vue-portal"></div>
 
-<div id="render-here" class="someclass"><p>some content</p></div>
+<div id="render-here" class="someclass">
+  <p>some content</p>
+</div>
 ```
 
 ### `to`
@@ -249,18 +276,26 @@ This defines the name of the `<PortalTarget>` component that the slot content sh
 
 **Source**
 
+<!-- prettier-ignore -->
 ```html
-<portal to="destination"> <p>some content</p> </portal>
+<portal to="destination">
+  <p>some content</p>
+</portal>
 
-<div class="target"><portal-target name="destination" /></div>
+<div class="target">
+  <portal-target name="destination" />
+</div>
 ```
 
 **Result**
 
+<!-- prettier-ignore -->
 ```html
 <div class="vue-portal"></div>
 
 <div class="target">
-  <div class="vue-portal-target"><p>some content</p></div>
+  <div class="vue-portal-target">
+    <p>some content</p>
+  </div>
 </div>
 ```

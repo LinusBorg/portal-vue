@@ -15,7 +15,7 @@ This is the recommended way to install this Plugin.
 Install with npm as a dependency:
 
 ```bash
-npm i portal-vue // current:
+npm i portal-vue
 
 # or with yarn, respectively:
 yarn add portal-vue
@@ -24,8 +24,7 @@ yarn add portal-vue
 Then include the package in your application and install the plugin:
 
 ```javascript
-import PortalVue from 'portal-vue' // as ES6 module
-var PortalVue = require('portal-vue') // OR as a commonjs require
+import PortalVue from 'portal-vue'
 
 Vue.use(PortalVue)
 ```
@@ -50,14 +49,10 @@ PortalVue provides a UMD [build](#builds) (`/dist/portal-vue.umd.min.js`) which 
 Unpkg and jsdelivr automatically give you this build. if you include it from another source, make sure to include the right one.
 :::
 
-:::warning
-Make sure to use the umd (`portal-vue.umd(.min).js`)
-:::
-
 ### Nuxt Module
 
 :::tip Hint
-Only relevant for users of the [NuxtJs](https://nuxtjs.org) framework
+Only relevant for users of the [Nuxt](https://nuxtjs.org) framework
 :::
 
 First install from NPM, then add `portal-vue/nuxt` to modules section of `nuxt.config.js`

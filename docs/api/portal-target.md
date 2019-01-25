@@ -26,15 +26,21 @@ You should use the `order` prop on the `<Portal>` to define the order in which t
 
 **Source**
 
+<!-- prettier-ignore -->
 ```html {10}
-<portal to="destination" :order="2"> <p>some content</p> </portal>
-<portal to="destination" :order="1"> <p>some other content</p> </portal>
+<portal to="destination" :order="2">
+  <p>some content</p>
+</portal>
+<portal to="destination" :order="1">
+  <p>some other content</p>
+</portal>
 
 <portal-target name="destination" multiple />
 ```
 
 **Result**
 
+<!-- prettier-ignore -->
 ```html
 <div class="vue-portal-target">
   <p>some other content</p>
@@ -60,6 +66,7 @@ When set to true, the component will check if the sent content has only one root
 
 **Source**
 
+<!-- prettier-ignore -->
 ```html {5}
 <portal to="destination"> <p>Only one content element</p> </portal>
 
@@ -68,6 +75,7 @@ When set to true, the component will check if the sent content has only one root
 
 **Result**
 
+<!-- prettier-ignore -->
 ```html
 <p>Only one content element</p>
 ```
@@ -90,6 +98,7 @@ The `slotProps` object is used as props to render the scoped slot from a `<Porta
 
 **Source**
 
+<!-- prettier-ignore -->
 ```html {2,9}
 <portal to="destination">
   <p slot-scope="props">This scoped slot content is so {{ props.state }}</p>
@@ -100,8 +109,11 @@ The `slotProps` object is used as props to render the scoped slot from a `<Porta
 
 **Result**
 
+<!-- prettier-ignore -->
 ```html
-<div class="vue-portal-target"><p>This scoped slot content is so cool!</p></div>
+<div class="vue-portal-target">
+  <p>This scoped slot content is so cool!</p>
+</div>
 ```
 
 It has a counterpart of the same name on the `<Portal>` component to pass props to the slot content when the `<Portal>` is disabled.
@@ -116,12 +128,14 @@ Defines the type of tag that should be rendered as a root component.
 
 **Source**
 
+<!-- prettier-ignore -->
 ```html {3}
 <portal-target name="destination" tag="span" />
 ```
 
 **Result**
 
+<!-- prettier-ignore -->
 ```html {1}
 <span class="vue-portal-target">
   <!-- any content from <Portal> component may be rendered here -->
@@ -145,14 +159,23 @@ It accepts:
 
 Example with string:
 
+<!-- prettier-ignore -->
 ```html {4}
-<portal-target name="dest" slim transition="fade"></portal-target>
+<portal-target
+  name="dest" 
+  slim
+  transition="fade">
+</portal-target>
 ```
 
 Example with Component
 
+<!-- prettier-ignore -->
 ```html
-<portal-target name="dest" slim :transition="fadeTransition"></portal-target>
+<portal-target 
+  name="dest" slim 
+  :transition="fadeTransition">
+</portal-target>
 ```
 
 ```javascript
@@ -192,6 +215,7 @@ You can use the `transitionEvents` prop to pass event listeners for that transit
 
 Accepts an object whose keys match the transition component's events. Each key's value should be a callback function for the transition.
 
+<!-- prettier-ignore -->
 ```html {4}
 <portal-target
   name="dest"
@@ -210,6 +234,7 @@ Example:
 
 **Source**
 
+<!-- prettier-ignore -->
 ```html {2}
 <portal-target name="destination" tag="span">
   <p>This is rendered when no other content is available.</p>
@@ -218,6 +243,7 @@ Example:
 
 **Result**
 
+<!-- prettier-ignore -->
 ```html
 <span class="vue-portal-target">
   <p>This is rendered when no other content is available.</p>
@@ -232,6 +258,7 @@ Example:
 
 **Source**
 
+<!-- prettier-ignore -->
 ```html {1-3}
 <portal-target name="destination" :slotScope="{ message: 'Hi!' }">
   <p slot-scope="props">
@@ -242,6 +269,7 @@ Example:
 
 **Result**
 
+<!-- prettier-ignore -->
 ```html
 <div class="vue-portal-target">
   <p>This is rendered when no other content is available.</p>
@@ -258,6 +286,7 @@ It receives two arguments, each is a `Boolean`, indicating the absense or presen
 
 The first argument is represents the current contents, the second one the previous contents (just like the arguments of a `watch` handler in a Vue component)
 
+<!-- prettier-ignore -->
 ```html {4}
 <template>
   <portal-target name="destination" @change="handleUpdate" />
