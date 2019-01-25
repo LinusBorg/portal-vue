@@ -7,7 +7,7 @@
     "allowJs": false,
     "checkJs": false,
     "declaration": true,
-    "declarationDir": "../types",
+    "declarationDir": "../types/lib",
     "importHelpers": true,
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,

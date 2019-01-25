@@ -77,6 +77,7 @@ const builds = {
 }
 
 rimraf.sync('./dist/**')
+rimraf.sync('./types/lib/**')
 
 const logErr = e => {
   console.log(`⚠️ Build failed. An error occured:
