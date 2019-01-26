@@ -12,9 +12,10 @@ const replace = require('rollup-plugin-replace')
 const alias = require('rollup-plugin-import-alias')
 const analyzer = require('rollup-plugin-analyzer').plugin
 const merge = require('merge')
+const clone = require('clone-deep')
 const chalk = require('chalk')
 const rimraf = require('rimraf')
-const config = require('../rollup.config')
+const config = require('./rollup.config')
 const { version, name, main, module: moduleField } = require('../package.json')
 
 process.env.VERSION = version
@@ -50,6 +51,20 @@ config.input.plugins = (config.plugins || []).concat(plugins)
 
 const filename = str => path.join(__dirname, '../', str)
 const builds = {
+  cjs: {
+    output: {
+      file: filename(main),
+      format: 'cjs',
+      sourcemap: true,
+    },
+  },
+  esm: {
+    output: {
+      file: filename(moduleField),
+      format: 'esm',
+      sourcemap: true,
+    },
+  },
   umd: {
     output: {
       file: filename('dist/portal-vue.umd.js'),
@@ -60,41 +75,28 @@ const builds = {
       },
     },
   },
-  esm: {
-    output: {
-      file: filename(moduleField),
-      format: 'esm',
-      sourcemap: true,
-    },
-  },
-  cjs: {
-    output: {
-      file: filename(main),
-      format: 'cjs',
-      sourcemap: true,
-    },
-  },
 }
 
-rimraf.sync('./dist/**')
-rimraf.sync('./types/lib/**')
+rimraf.sync('../dist/**')
+rimraf.sync('../types/lib/**')
 
 const logErr = e => {
   console.log(`⚠️ Build failed. An error occured:
   `)
-  console.log(e.stack)
+  console.log(e)
 }
 const buildPromise = Object.keys(builds).reduce((promise, key) => {
-  const mergedConfig = merge({}, config, builds[key])
+  const mergedConfig = merge.recursive({}, clone(config), builds[key])
+  console.log({ ...mergedConfig, ...{ plugins: undefined } })
   console.log(`🏗 Building ${chalk.red(key)} version for ${name} ...
     `)
 
   const bundlePromise = promise.then(() => {
     process.env.ROLLUP_BUILD_MODE = key
-    return rollup.rollup(mergedConfig.input)
+    return rollup.rollup(mergedConfig.input).catch(logErr)
   })
   const writePromise = bundlePromise.then(bundle => {
-    return bundle.write(mergedConfig.output)
+    return bundle.write(mergedConfig.output).catch(logErr)
   })
 
   return writePromise
