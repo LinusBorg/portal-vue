@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import { Transports, TransportInput, TransportVector, VMRegister } from '@/types';
+import { Transports, TransportInput, TransportVector, VMRegister } from '../types';
 export declare const Wormhole: import("vue").VueConstructor<{
     transports: Transports;
     targets: VMRegister;

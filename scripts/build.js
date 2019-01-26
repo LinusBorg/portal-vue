@@ -34,7 +34,7 @@ const plugins = [
     clean: true,
   }),
   replace({
-    'window.ROLLUP_BUILD_MODE': () =>
+    'process.env.ROLLUP_BUILD_MODE': () =>
       JSON.stringify(process.env.ROLLUP_BUILD_MODE),
   }),
   babel({
@@ -87,7 +87,6 @@ const logErr = e => {
 }
 const buildPromise = Object.keys(builds).reduce((promise, key) => {
   const mergedConfig = merge.recursive({}, clone(config), builds[key])
-  console.log({ ...mergedConfig, ...{ plugins: undefined } })
   console.log(`🏗 Building ${chalk.red(key)} version for ${name} ...
     `)
 

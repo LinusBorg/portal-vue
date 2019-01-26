@@ -9,15 +9,14 @@ export default Vue.extend({
   name: 'portal',
   props: {
     disabled: { type: Boolean },
-    name: { type: String, default: (): object => String(_id++) as any },
+    name: { type: String, default: () => String(_id++) },
     order: { type: Number, default: 0 },
     slim: { type: Boolean },
     slotProps: { type: Object, default: () => ({}) },
     tag: { type: String, default: 'DIV' },
     to: {
       type: String,
-      default: (): object =>
-        String(Math.round(Math.random() * 10000000)) as any,
+      default: () => String(Math.round(Math.random() * 10000000)),
     },
   },
   created() {
@@ -64,7 +63,7 @@ export default Vue.extend({
       }
       wormhole.close(closer)
     },
-    normalizeSlots(): Function[] | VNode[] {
+    normalizeSlots(): Function[] | VNode[] | undefined {
       return this.$scopedSlots.default
         ? [this.$scopedSlots.default]
         : this.$slots.default

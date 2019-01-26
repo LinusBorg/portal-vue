@@ -1,30 +1,30 @@
 import Vue from 'vue'
 import { VueConstructor, PluginFunction } from 'vue'
-import Portal from '@/components/portal'
-import PortalTarget from '@/components/portal-target'
-import MountingPortal from '@/components/mounting-portal'
-import { wormhole as Wormhole } from '@/components/wormhole'
+import Portal from './components/portal'
+import PortalTarget from './components/portal-target'
+import MountingPortal from './components/mounting-portal'
+import { wormhole as Wormhole } from './components/wormhole'
 
 declare global {
   interface Window {
-    Vue: VueConstructor
-    ROLLUP_BUILD_MODE: string
+    Vue?: VueConstructor<Vue>
   }
 }
 
-interface PluginOptions {
+export interface PluginOptions {
   portalName?: string
   portalTargetName?: string
   MountingPortalName?: string
 }
 
-function install(Vue: VueConstructor, options: PluginOptions = {}) {
+function install(Vue: VueConstructor<Vue>, options: PluginOptions = {}) {
   Vue.component(options.portalName || 'Portal', Portal)
   Vue.component(options.portalTargetName || 'PortalTarget', PortalTarget)
   Vue.component(options.MountingPortalName || 'MountingPortal', MountingPortal)
 }
 if (
-  window.ROLLUP_BUILD_MODE === 'umd' &&
+  // @ts-ignore
+  process.env.ROLLUP_BUILD_MODE === 'umd' &&
   typeof window !== 'undefined' &&
   window.Vue &&
   window.Vue === Vue

@@ -600,7 +600,8 @@
     Vue$$1.component(options.MountingPortalName || 'MountingPortal', MountingPortal);
   }
 
-  if (typeof window !== 'undefined' && window.Vue && window.Vue === Vue) {
+  if ( // @ts-ignore
+  typeof window !== 'undefined' && window.Vue && window.Vue === Vue) {
     window.Vue.use({
       install: install
     });
@@ -619,4 +620,3 @@
   Object.defineProperty(exports, '__esModule', { value: true });
 
 })));
-//# sourceMappingURL=portal-vue.umd.js.map

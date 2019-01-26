@@ -6,7 +6,7 @@ import {
   TransportInput,
   TransportVector,
   VMRegister,
-} from '@/types'
+} from '../types'
 
 const transports: Transports = {}
 const targets: VMRegister = {}

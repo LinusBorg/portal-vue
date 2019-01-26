@@ -5,7 +5,7 @@ import PortalTarget from './portal-target'
 import { wormhole } from './wormhole'
 import { pick } from '@/utils'
 
-import { PropWithComponent } from '@/types'
+import { PropWithComponent } from '../types'
 
 let _id = 0
 
@@ -42,7 +42,7 @@ export default (Vue as withPortalTarget).extend({
     // name for the portal
     name: {
       type: String,
-      default: (): object => ('mounted_' + String(_id++)) as any,
+      default: () => 'mounted_' + String(_id++),
     },
     order: { type: Number, default: 0 },
     slim: { type: Boolean },
@@ -51,8 +51,7 @@ export default (Vue as withPortalTarget).extend({
     // name for the target
     to: {
       type: String,
-      default: (): object =>
-        String(Math.round(Math.random() * 10000000)) as any,
+      default: () => String(Math.round(Math.random() * 10000000)),
     },
 
     // Target
