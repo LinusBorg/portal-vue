@@ -4,7 +4,7 @@ module.exports = process.env.ROLL
       plugins: ['@babel/proposal-object-rest-spread', 'transform-vue-jsx'],
     }
   : {
-      presets: ['@vue/app'],
+      presets: ['@vue/app', { useBuiltIns: false, polyfills: false }],
       env: {
         test: {
           presets: [['@vue/app', { modules: 'commonjs', useBuiltIns: false }]],
