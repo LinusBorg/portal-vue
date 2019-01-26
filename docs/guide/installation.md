@@ -15,10 +15,10 @@ This is the recommended way to install this Plugin.
 Install with npm as a dependency:
 
 ```bash
-npm i portal-vue
+npm i portal-vue@next
 
 # or with yarn, respectively:
-yarn add portal-vue
+yarn add portal-vue@next
 ```
 
 Then include the package in your application and install the plugin:
@@ -38,7 +38,7 @@ Just include the script tag _after_ the one of Vue.js
 
 ```html
 <scipt src="http://unpkg/vue/dist/vue.js"></scipt>
-<script src="http://unpkg.com/portal-vue"></script>
+<script src="http://unpkg.com/portal-vue@next"></script>
 ```
 
 The components will be named `<portal>` and `<portal-target>`, respectively.

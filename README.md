@@ -15,11 +15,11 @@ For more detailed documentation and additional Information, please visit <a href
 ## Installation
 
 ```bash
-npm i portal-vue
+npm i portal-vue@next
 
 # or
 
-yarn add portal-vue
+yarn add portal-vue@nxt
 ```
 
 ```javascript
