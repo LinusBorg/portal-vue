@@ -1,6 +1,8 @@
-module.exports = `
+module.exports = version => `
  /*! 
   * portal-vue © Thorsten Lünborg, 2018 
+  * 
+  * Version: ${version}
   * 
   * LICENCE: MIT 
   * 

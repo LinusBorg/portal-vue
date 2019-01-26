@@ -15,10 +15,8 @@ const merge = require('merge')
 const clone = require('clone-deep')
 const chalk = require('chalk')
 const rimraf = require('rimraf')
+const { name, main, module: moduleField } = require('../package.json')
 const config = require('./rollup.config')
-const { version, name, main, module: moduleField } = require('../package.json')
-
-process.env.VERSION = version
 
 const plugins = [
   alias({

@@ -2,6 +2,8 @@
  /*! 
   * portal-vue © Thorsten Lünborg, 2018 
   * 
+  * Version: 2.0.0-beta.0
+  * 
   * LICENCE: MIT 
   * 
   * https://github.com/linusborg/portal-vue

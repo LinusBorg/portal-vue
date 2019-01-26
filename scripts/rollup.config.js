@@ -1,3 +1,4 @@
+const { version } = require('../package.json')
 const path = require('path')
 module.exports = {
   input: {
@@ -5,7 +6,7 @@ module.exports = {
     external: ['vue'],
   },
   output: {
-    banner: require('./banner.js'),
+    banner: require('./banner.js')(version),
     // dir: path.join(__dirname, '../dist'),
     exports: 'named',
     file: '', // set in ./scripts/build
