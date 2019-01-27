@@ -22,6 +22,20 @@ Due to the way that Vue resolves provides from parent components, it would look 
 
 For the same reason, `this.$parent` will not give your the parent of the `<Portal>`, it will give your the `<PortalTarget>`, so code relying on `$parent` might break
 
+## \$refs
+
+In rare cases, you might want to access a DOM element / component that is within the Portal content via a `ref`. This works, but sometimes requires a double `$nextTick`:
+
+```javascript
+this.$nextTick().then(
+  this.$nextTick(() => {
+    this.$refs.yourRef // element should now be in the DOM.
+  })
+)
+```
+
+the reason is that depending on the secnario, it _can_ take one tick for the content to be sent to the [Wormhole](../api/wormhole.md) (the middleman between `<Portal>` and `<PortalTarget>`), and another one to be picked up by the `<PortalTarget>`.
+
 ## Server-Side Rendering
 
 When you use [Vue's SSR capabilities](https://ssr.vuejs.org), portal-vue can't work reliably because Vue renders the page directly to a string, there are not reactive updates applied. That means that a `<portal-target>` appearing before a `<portal>` will render an empty div on the server whereas it will render the sent content on the client, resulting in a hydration vdom mismatch error.
