@@ -1,5 +1,6 @@
 /* global docuteIframe docute */
-docute.init({
+new Docute({
+  target: '#app',
   landing: true,
   home: 'guide.md',
   nav: [
