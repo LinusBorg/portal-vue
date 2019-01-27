@@ -1,4 +1,4 @@
-/* global docuteIframe docute */
+/* global docuteIframe Docute */
 new Docute({
   target: '#app',
   landing: true,
