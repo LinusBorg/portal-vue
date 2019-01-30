@@ -1,8 +1,8 @@
 
  /*! 
-  * portal-vue © Thorsten Lünborg, 2018 
+  * portal-vue © Thorsten Lünborg, 2019 
   * 
-  * Version: 2.0.0-beta.0
+  * Version: 2.0.0-beta.1
   * 
   * LICENCE: MIT 
   * 
