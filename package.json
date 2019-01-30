@@ -1,6 +1,6 @@
 {
   "name": "portal-vue",
-  "version": "2.0.0-beta.1",
+  "version": "2.0.0-beta.2",
   "private": false,
   "scripts": {
     "docs:dev": "vuepress dev docs",
@@ -26,9 +26,8 @@
   ],
   "sideeffects": false,
   "types": "./types/index.d.ts",
-  "dependencies": {
-    "vue": "^2.5.17",
-    "vue-router": "^3.0.1"
+  "peerDependencies": {
+    "vue": "^2.5.18"
   },
   "devDependencies": {
     "@babel/runtime-corejs2": "^7.1.5",
@@ -64,10 +63,12 @@
     "sass-loader": "^7.0.3",
     "ts-jest": "^23.0.0",
     "typescript": "^3.0.0",
+    "vue": "^2.5.18",
     "vue-class-component": "^6.2.0",
     "vue-no-ssr": "^1.1.1",
     "vue-property-decorator": "^7.0.0",
     "vue-resize": "^0.4.4",
+    "vue-router": "^3.0.1",
     "vue-template-compiler": "^2.5.11",
     "vuepress": "^0.14.8"
   },
