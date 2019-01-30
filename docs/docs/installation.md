@@ -27,13 +27,13 @@ Vue.use(PortalVue)
 ### CDN
 
 PortalVue is available through a couple of CDNs, I recommend
-<a href="hhtp://www.unpkg.com">unpkg.com</a>
+<a href="http://www.unpkg.com">unpkg.com</a>
 
 Just include the script tag _after_ the one of Vue.js
 
 ```html
-<scipt src="http://unpkg/vue/dist/vue.js"></scipt>
-<script src="http://unpkg.com/portal-vue.js"></script>
+<scipt src="https://unpkg.com/vue/dist/vue.js"></scipt>
+<script src="https://unpkg.com/portal-vue/dist/portal-vue.js"></script>
 ```
 
 In this case, the plugin will auto-install itself, so there is no need to call Vue.use().
