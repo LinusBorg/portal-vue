@@ -1,6 +1,6 @@
 module.exports = version => `
  /*! 
-  * portal-vue © Thorsten Lünborg, 2018 
+  * portal-vue © Thorsten Lünborg, ${new Date().getFullYear()} 
   * 
   * Version: ${version}
   * 
