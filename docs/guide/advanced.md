@@ -85,7 +85,24 @@ You can pass transitions to a `<portal>` without problems. It will behave just t
 </portal>
 ```
 
-However, if you use a `<portal-target>` for multiple `<portal>`s, you likely want to define the transition on the target end instead. This is also supported:
+However, if you use a `<portal-target>` for multiple `<portal>`s, you likely want to define the transition on the target end instead. This is also supported.
+
+::: warning
+This API underwent a significant change in the 2.0.0 release. Below, examples for both old and new snytax are given. Keep an eye on the version badges next to them.
+:::
+
+#### New Syntax <Badge text="2.0.0+" />
+
+<!-- prettier-ignore -->
+```html
+<portal-target
+  transition="fade"
+/>
+```
+
+Here, the string `'fade'` would be expected to be the name of a globally registered component that wraps a `<transition>` component ([see Vue docs on reusable transitions](https://vuejs.org/v2/guide/transitions.html#Reusable-Transitions)). You can also pass a componnt options object or a constrcutor. We have [more examples](../api/portal-target.md#transition) in the API docs.
+
+#### Old Syntax <Badge text=">=1.2 <2.0" type="warning" />
 
 <!-- prettier-ignore -->
 ```html
