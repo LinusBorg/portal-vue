@@ -93,7 +93,7 @@ export default Vue.extend({
     const children: VNode[] | Function =
       this.$slots.default || this.$scopedSlots.default || []
     const Tag = this.tag
-    if (children.length && this.disabled) {
+    if (children && this.disabled) {
       return children.length <= 1 && this.slim ? (
         this.normalizeOwnChildren(children)[0]
       ) : (

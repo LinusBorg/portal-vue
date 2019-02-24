@@ -48,12 +48,12 @@ export default Vue.extend({
     },
   },
   mounted() {
-    this.$nextTick(() => {
-      if (this.transition) {
+    if (this.transition) {
+      this.$nextTick(() => {
         // only when we have a transition, because it causes a re-render
         this.firstRender = false
-      }
-    })
+      })
+    }
   },
   beforeDestroy() {
     wormhole.unregisterTarget(this.name)
@@ -83,7 +83,7 @@ export default Vue.extend({
     },
     // can't be a computed prop because it has to "react" to this.children().
     noWrapper() {
-      const noWrapper = this.slim
+      const noWrapper = this.slim && !this.transition
       if (noWrapper && this.children().length > 1) {
         console.warn(
           '[portal-vue]: PortalTarget with `slim` option received more than one child element.'
@@ -95,36 +95,19 @@ export default Vue.extend({
   render(h): VNode {
     const noWrapper = this.noWrapper()
     const children = this.children()
-    const { transition } = this
-    const Transition =
-      typeof transition === 'string'
-        ? this.slim
-          ? 'transition'
-          : 'transition-group'
-        : transition
-    const Tag = this.tag
-
-    if (Transition) {
-      return h(
-        Transition,
-        {
-          props: {
-            name: typeof transition === 'string' ? transition : undefined,
-            tag: !!this.slim && this.tag,
-          },
-          class: 'vue-portal-target',
-        },
-        children
-      )
-    }
+    const Tag = this.transition || this.tag
 
     return noWrapper
       ? children[0]
-      : this.slim
+      : this.slim && !Tag
       ? h()
       : h(
           Tag,
           {
+            props: {
+              // if we have a transition component, pass the tag if it exists
+              tag: this.transition && this.tag ? this.tag : undefined,
+            },
             class: { 'vue-portal-target': true },
           },
 

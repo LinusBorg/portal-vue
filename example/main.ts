@@ -4,18 +4,55 @@ import App from './components/App.vue'
 import PortalContainer from './components/portal-container.vue'
 import router from './router'
 
-import PortalVue from 'portal-vue'
+// import PortalVue from 'portal-vue'
 
 import './styles/index.scss'
 
-// var PortalVue =
-//   process.env.NODE_ENV === 'production'
-//     ? require('../dist/portal-vue.common').default
-//     : require('../src/index.ts').default
+var PortalVue =
+  process.env.NODE_ENV === 'production'
+    ? require('../dist/portal-vue.common').default
+    : require('../src/index.ts').default
 
 Vue.config.productionTip = false
 
 Vue.use(PortalVue)
+
+Vue.component(
+  'fade',
+  Vue.extend({
+    functional: true,
+    render: (h, { children }) => {
+      return h(
+        'transition',
+        {
+          props: {
+            mode: 'out-in',
+            name: 'fade',
+          },
+        },
+        children
+      )
+    },
+  })
+)
+
+Vue.component(
+  'fadeGroup',
+  Vue.extend({
+    functional: true,
+    render: (h, { children }) => {
+      return h(
+        'transition-group',
+        {
+          props: {
+            name: 'fade',
+          },
+        },
+        children
+      )
+    },
+  })
+)
 
 Vue.component('container', PortalContainer)
 

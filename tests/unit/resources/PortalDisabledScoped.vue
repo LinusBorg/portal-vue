@@ -1,9 +1,7 @@
 <template>
   <div>
     <portal to="target" disabled :slot-props="{ message: 'Hi!' }">
-      <p slot-scope="{ message }">
-        Hi!
-      </p>
+      <p slot-scope="{ message }">{{ message }}</p>
     </portal>
   </div>
 </template>

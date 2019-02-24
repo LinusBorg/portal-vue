@@ -199,11 +199,13 @@ computed: {
 }
 ```
 
+:::tip Resuable Transition components
+The Vue documentation has a [section about creating resusable transititions](https://vuejs.org/v2/guide/transitions.html#Reusable-Transitions) with components
+:::
+
 #### Slim Mode
 
 When [`slim`](#slim) is also specified, it will render a `<transition>` instead of a `<transition-group>`.
-
-You can use the `transitionEvents` prop to pass event listeners for that transition.
 
 ### `transitionEvents` <Badge text="removed in 2.0.0" type="error"/>
 

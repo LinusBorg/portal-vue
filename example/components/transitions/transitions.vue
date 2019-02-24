@@ -38,8 +38,7 @@
         <portal-target
           style="position: relative"
           name="group-transition"
-          transition="fade"
-          transitionGroup
+          transition="fadeGroup"
         />
       </container>
     </div>
