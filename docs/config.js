@@ -1,30 +1,37 @@
 /* global docuteIframe Docute */
 new Docute({
   target: '#app',
-  landing: true,
-  home: 'guide.md',
   nav: [
-    { title: 'PortalVue', path: '/' },
-    { title: 'Usage Guide', path: '/guide' },
-    { title: 'Examples', path: '/examples' },
+    { title: 'PortalVue', link: '/' },
+
     {
       title: 'Documentation',
-      type: 'dropdown',
-      items: [
-        { title: 'Current: v1.5.0', path: '#' },
-        { title: 'Installation Instructions', type: 'label' },
-        { title: 'Installation', path: '/docs/installation' },
-        { type: 'sep' },
-        { title: 'Components', type: 'label' },
-        { title: 'Portal', path: '/docs/portal' },
-        { title: 'PortalTarget', path: '/docs/portal-target' },
-        { title: 'Special Objects', type: 'label' },
-        { title: 'Wormhole', path: '/docs/wormhole' },
+      link: '/guide',
+    },
+    {
+      title: 'Github',
+      link: 'https://github.com/linusborg/portal-vue',
+    },
+  ],
+  sidebar: [
+    {
+      title: 'Guide',
+      links: [
+        { title: 'Usage Guide', link: '/guide' },
+        { title: 'Examples', link: '/examples' },
       ],
     },
-    { title: 'Caveats', path: '/docs/caveats' },
+    {
+      title: 'API Documentation',
+      links: [
+        { title: 'Portal', link: '/docs/portal' },
+        { title: 'PortalTarget', link: '/docs/portal-target' },
+        { title: 'Wormhole', link: '/docs/wormhole' },
+      ],
+    },
+    {
+      title: 'Other',
+      links: [{ title: 'Caveats', link: '/docs/caveats' }],
+    },
   ],
-  repo: 'linusborg/portal-vue',
-  twitter: 'Linus_Borg',
-  plugins: [docuteIframe()],
 })
