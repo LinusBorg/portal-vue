@@ -2,6 +2,11 @@
   "name": "portal-vue",
   "version": "2.0.0-beta.3",
   "licence": "MIT",
+  "repository": "https://github.com/LinusBorg/portal-vue",
+  "author": {
+    "name": "Thorsten Lünborg",
+    "url": "htps://github.com/LinusBorg/"
+  },
   "private": false,
   "scripts": {
     "docs:dev": "vuepress dev docs",
