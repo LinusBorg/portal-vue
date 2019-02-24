@@ -4,6 +4,8 @@
 
 ## This is the README of the 2.0.0-beta `next`-branch
 
+See `develop` or `master` branch for current stable.
+
 <p style="tex-align: center">
   <img src="http://linusborg.github.io/portal-vue/assets/logo.png" alt="PortalVue Logo">
 </p>
