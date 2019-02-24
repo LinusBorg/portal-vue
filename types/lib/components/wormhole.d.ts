@@ -4,6 +4,7 @@ export declare const Wormhole: import("vue").VueConstructor<{
     transports: Transports;
     targets: VMRegister;
     sources: VMRegister;
+    trackInstances: boolean;
 } & {
     open(transport: TransportInput): void;
     close(transport: TransportVector, force?: boolean): void;
@@ -19,6 +20,7 @@ declare const wormhole: import("vue/types/vue").CombinedVueInstance<{
     transports: Transports;
     targets: VMRegister;
     sources: VMRegister;
+    trackInstances: boolean;
 } & {
     open(transport: TransportInput): void;
     close(transport: TransportVector, force?: boolean): void;

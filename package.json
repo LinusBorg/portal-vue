@@ -1,6 +1,6 @@
 {
   "name": "portal-vue",
-  "version": "2.0.0-beta.2",
+  "version": "2.0.0-beta.3",
   "private": false,
   "scripts": {
     "docs:dev": "vuepress dev docs",

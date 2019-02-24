@@ -2,7 +2,7 @@
  /*! 
   * portal-vue © Thorsten Lünborg, 2019 
   * 
-  * Version: 2.0.0-beta.2
+  * Version: 2.0.0-beta.3
   * 
   * LICENCE: MIT 
   * 
@@ -94,7 +94,8 @@
       return {
         transports: transports,
         targets: targets,
-        sources: sources
+        sources: sources,
+        trackInstances: true
       };
     },
     methods: {
@@ -155,7 +156,7 @@
         }
       },
       registerTarget: function registerTarget(target, vm, force) {
-        if (!force && this.targets[target]) {
+        if (this.trackInstances && !force && this.targets[target]) {
           console.warn("[portal-vue]: Target ".concat(target, " already exists"));
         }
 
@@ -165,7 +166,7 @@
         this.$delete(this.targets, target);
       },
       registerSource: function registerSource(source, vm, force) {
-        if (!force && this.sources[source]) {
+        if (this.trackInstances && !force && this.sources[source]) {
           console.warn("[portal-vue]: source ".concat(source, " already exists"));
         }
 
@@ -235,10 +236,6 @@
       }
     },
     created: function created() {
-      if (wormhole.hasSource(this.name)) {
-        console.warn("\n      [portal-vue] - There already exists another <Portal> with name '".concat(this.name, "'.\n      That can lead to unpredictable behaviour and should be avoided.\n      "));
-      }
-
       wormhole.registerSource(this.name, this);
     },
     mounted: function mounted() {
@@ -297,7 +294,7 @@
       var children = this.$slots.default || this.$scopedSlots.default || [];
       var Tag = this.tag;
 
-      if (children.length && this.disabled) {
+      if (children && this.disabled) {
         return children.length <= 1 && this.slim ? this.normalizeOwnChildren(children)[0] : h(Tag, [this.normalizeOwnChildren(children)]);
       } else {
         return this.slim ? h() : h(Tag, {
@@ -349,10 +346,6 @@
       };
     },
     created: function created() {
-      if (wormhole.hasTarget(this.name)) {
-        console.warn("\n      [portal-vue] - There already exists another <PortalTarget> with name '".concat(this.name, "'.\n      That can lead to unpredictable behaviour and should be avoided.\n      "));
-      }
-
       wormhole.registerTarget(this.name, this);
     },
     watch: {
@@ -371,12 +364,12 @@
     mounted: function mounted() {
       var _this = this;
 
-      this.$nextTick(function () {
-        if (_this.transition) {
+      if (this.transition) {
+        this.$nextTick(function () {
           // only when we have a transition, because it causes a re-render
           _this.firstRender = false;
-        }
-      });
+        });
+      }
     },
     beforeDestroy: function beforeDestroy() {
       wormhole.unregisterTarget(this.name);
@@ -402,7 +395,7 @@
       },
       // can't be a computed prop because it has to "react" to this.children().
       noWrapper: function noWrapper() {
-        var noWrapper = this.slim;
+        var noWrapper = this.slim && !this.transition;
 
         if (noWrapper && this.children().length > 1) {
           console.warn('[portal-vue]: PortalTarget with `slim` option received more than one child element.');
@@ -414,21 +407,12 @@
     render: function render(h) {
       var noWrapper = this.noWrapper();
       var children = this.children();
-      var transition = this.transition;
-      var Transition = typeof transition === 'string' ? this.slim ? 'transition' : 'transition-group' : transition;
-      var Tag = this.tag;
-
-      if (Transition) {
-        return h(Transition, {
-          props: {
-            name: typeof transition === 'string' ? transition : undefined,
-            tag: !!this.slim && this.tag
-          },
-          class: 'vue-portal-target'
-        }, children);
-      }
-
-      return noWrapper ? children[0] : this.slim ? h() : h(Tag, {
+      var Tag = this.transition || this.tag;
+      return noWrapper ? children[0] : this.slim && !Tag ? h() : h(Tag, {
+        props: {
+          // if we have a transition component, pass the tag if it exists
+          tag: this.transition && this.tag ? this.tag : undefined
+        },
         class: {
           'vue-portal-target': true
         }
