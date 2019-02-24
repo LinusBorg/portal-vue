@@ -20,14 +20,6 @@ export default Vue.extend({
     },
   },
   created() {
-    if (wormhole.hasSource(this.name)) {
-      console.warn(`
-      [portal-vue] - There already exists another <Portal> with name '${
-        this.name
-      }'.
-      That can lead to unpredictable behaviour and should be avoided.
-      `)
-    }
     wormhole.registerSource(this.name, this)
   },
   mounted() {

@@ -24,14 +24,6 @@ export default Vue.extend({
     }
   },
   created() {
-    if (wormhole.hasTarget(this.name)) {
-      console.warn(`
-      [portal-vue] - There already exists another <PortalTarget> with name '${
-        this.name
-      }'.
-      That can lead to unpredictable behaviour and should be avoided.
-      `)
-    }
     wormhole.registerTarget(this.name, this)
   },
   watch: {

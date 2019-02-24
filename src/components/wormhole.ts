@@ -17,6 +17,7 @@ export const Wormhole = Vue.extend({
     transports,
     targets,
     sources,
+    trackInstances: true,
   }),
   methods: {
     open(transport: TransportInput) {
@@ -70,7 +71,7 @@ export const Wormhole = Vue.extend({
       }
     },
     registerTarget(target: string, vm: Vue, force?: boolean): void {
-      if (!force && this.targets[target]) {
+      if (this.trackInstances && !force && this.targets[target]) {
         console.warn(`[portal-vue]: Target ${target} already exists`)
       }
       this.$set(this.targets, target, Object.freeze([vm]))
@@ -79,7 +80,7 @@ export const Wormhole = Vue.extend({
       this.$delete(this.targets, target)
     },
     registerSource(source: string, vm: Vue, force?: boolean): void {
-      if (!force && this.sources[source]) {
+      if (this.trackInstances && !force && this.sources[source]) {
         console.warn(`[portal-vue]: source ${source} already exists`)
       }
       this.$set(this.sources, source, Object.freeze([vm]))

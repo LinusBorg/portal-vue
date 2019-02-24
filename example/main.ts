@@ -13,6 +13,9 @@ var PortalVue =
     ? require('../dist/portal-vue.common').default
     : require('../src/index.ts').default
 
+// const Wormhole = require('../src/index.ts').Wormhole
+// Wormhole.trackInstances = false
+
 Vue.config.productionTip = false
 
 Vue.use(PortalVue)

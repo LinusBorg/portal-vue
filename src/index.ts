@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import { VueConstructor, PluginFunction } from 'vue'
+import { VueConstructor } from 'vue'
 import Portal from './components/portal'
 import PortalTarget from './components/portal-target'
 import MountingPortal from './components/mounting-portal'
