@@ -1,6 +1,7 @@
 {
   "name": "portal-vue",
   "version": "2.0.0-beta.3",
+  "licence": "MIT",
   "private": false,
   "scripts": {
     "docs:dev": "vuepress dev docs",
@@ -70,7 +71,7 @@
     "vue-property-decorator": "^7.0.0",
     "vue-resize": "^0.4.4",
     "vue-router": "^3.0.1",
-    "vue-template-compiler": "^2.5.11",
+    "vue-template-compiler": "^2.5.18",
     "vuepress": "^0.14.8"
   },
   "resolutions": {
