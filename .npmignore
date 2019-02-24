@@ -1,0 +1,7 @@
+/.circleci
+/.vscode
+/example
+/docs
+/public
+/scripts
+/tests
