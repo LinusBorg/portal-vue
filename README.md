@@ -2,6 +2,12 @@
 
 > A Portal Component for Vuejs, to render DOM outside of a component, anywhere in the document.
 
+## BETA For upcoming v2.0
+
+> This is the current stable `develop` branch with v1.5.
+> We are about to release a new major version, which you can check out now, as it's in beta!
+> See the `next` branch or visit https://portal-vue-next-preview.netlify.com/
+
 <p style="tex-align: center">
   <img src="http://linusborg.github.io/portal-vue/assets/logo.png" alt="PortalVue Logo">
 </p>
