@@ -31,7 +31,6 @@
     "nuxt",
     "types"
   ],
-  "sideEffects": false,
   "types": "./types/index.d.ts",
   "peerDependencies": {
     "vue": "^2.5.18"
