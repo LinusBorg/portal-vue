@@ -53,6 +53,7 @@ workflows:
           filters:
             branches:
               only:
+                - next
                 - develop
                 - master
       - exec_unit_tests:
