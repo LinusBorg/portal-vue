@@ -20,10 +20,9 @@ Appart from that, this component behaves like a normal `<Portal>` - but to make 
   mountTo="#targetId"
   append
   :to="to" 
-  name="source">
-  <portal slot-scope="{to}" >
-    <p>This is the content for the portal</p>
-  </portal>
+  name="source"
+>
+  <p>This is the content for the portal</p>
 </MountingPortal>
 ```
 
