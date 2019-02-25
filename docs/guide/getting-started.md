@@ -104,7 +104,7 @@ Also, the code of the Examples uses the Single-File-Component Format ("`.vue`" f
 
 <SplitDisplay>
   <Examples-Conditional slot="example"/>
-  <<< @/docs/.vuepress/components/Examples/Conditional.vue{3,11,16}
+  <<< @/docs/.vuepress/components/Examples/Conditional.vue{3,13}
 </SplitDisplay>
 
 ### Multiple Portals, one Target
@@ -139,7 +139,7 @@ The order the content is rendered in can be adjusted through the `order` prop on
 
 <SplitDisplay>
   <Examples-Multiple slot="example"/>
-  <<< @/docs/.vuepress/components/Examples/Multiple.vue{17}
+  <<< @/docs/.vuepress/components/Examples/Multiple.vue{6,12,17}
 </SplitDisplay>
 
 ## Use Cases
