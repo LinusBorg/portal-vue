@@ -27,6 +27,7 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+@import '~vue-resize/dist/vue-resize.css'
 
 .container {
   position: relative;

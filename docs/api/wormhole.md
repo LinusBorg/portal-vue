@@ -20,10 +20,6 @@ The wormhole object exposes quite a few properties and methods. With regard to s
 Use any other properties at your own risk.
 :::
 
-## Properties
-
-### TBD
-
 ## Methods
 
 ### open()

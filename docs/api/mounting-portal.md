@@ -20,10 +20,9 @@ Appart from that, this component behaves like a normal `<Portal>` - but to make 
   mountTo="#targetId"
   append
   :to="to" 
-  name="source">
-  <portal slot-scope="{to}" >
-    <p>This is the content for the portal</p>
-  </portal>
+  name="source"
+>
+  <p>This is the content for the portal</p>
 </MountingPortal>
 ```
 
@@ -41,7 +40,7 @@ All of these props are _not_ dynamic. That means changing their values after ini
 
 If `true`, a `<div>` will be appended to the target element defined by [`mountTo`](#mountto) and the `<PortalTarget>` will be mounted to this new child element.
 
-`append` can also be a string, in which case it's assumed to be a valid HTMLElement name, and the element that's created won't be a `<div>` but instead whatever that string defines (i.e. `''span'`). PAssing a component name will _not_ work.
+`append` can also be a string, in which case it's assumed to be a valid HTMLElement name, and the element that's created won't be a `<div>` but instead whatever that string defines (i.e. `'span'`). PAssing a component name will _not_ work.
 
 ### bail
 
@@ -51,7 +50,7 @@ If `true`, a `<div>` will be appended to the target element defined by [`mountTo
 
 If a [`name`](#name) for the Target was given, you can come across duplicates. If a Target with that name already exists, `MountingPortal` will usually re-use the already existing Target instead of mounting a new one.
 
-This mis generally advantagous as you if you intend to send content from multiple sources to the same target and can't be sure if the shared `<PortalTarget>` already exists.
+This is generally advantagous: if you intend to send content from multiple sources to the same target and can't be sure if the shared `<PortalTarget>` already exists.
 
 However, if you set the `bail` prop, the component will not re-use an already existing target and instead abort and log a warning to the console.
 
@@ -88,7 +87,7 @@ Props working the same:
 
 This component expects to receive a default scoped slot. If it's not passed, an an error will be logged
 
-### `manual`
+### The `manual` slot
 
 #### `to` (prop)
 
