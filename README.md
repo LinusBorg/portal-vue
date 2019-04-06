@@ -2,15 +2,15 @@
 
 > A Portal Component for Vuejs, to render DOM outside of a component, anywhere in the document.
 
-See `develop` or `master` branch for current stable.
-
 <p style="tex-align: center">
   <img src="http://linusborg.github.io/portal-vue/assets/logo.png" alt="PortalVue Logo">
 </p>
 
 > Install with `npm install portal-vue`
 
-For more detailed documentation and additional Information, please visit <a href="https://portal-vue-next-preview.netlify.com/">the docs for this beta</a>
+For more detailed documentation and additional Information, [please visit the docs](https://portal-vue.linusb.org).
+
+> Looking for version 1.\*? [Docs for version 1 are here](https://v1.portal-vue.linusb.org)
 
 ## Installation
 
