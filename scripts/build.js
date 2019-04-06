@@ -15,7 +15,7 @@ const merge = require('merge')
 const clone = require('clone-deep')
 const chalk = require('chalk')
 const rimraf = require('rimraf')
-const { name, main, module: moduleField } = require('../package.json')
+const { browser, name, main, module: moduleField } = require('../package.json')
 const config = require('./rollup.config')
 
 const plugins = [
@@ -51,7 +51,7 @@ const filename = str => path.join(__dirname, '../', str)
 const builds = {
   cjs: {
     output: {
-      file: filename(main),
+      file: filename(browser),
       format: 'cjs',
       sourcemap: true,
     },
@@ -65,7 +65,7 @@ const builds = {
   },
   umd: {
     output: {
-      file: filename('dist/portal-vue.umd.js'),
+      file: filename(main),
       format: 'umd',
       name: 'PortalVue',
       globals: {

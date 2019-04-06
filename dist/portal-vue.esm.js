@@ -2,7 +2,7 @@
  /*! 
   * portal-vue © Thorsten Lünborg, 2019 
   * 
-  * Version: 2.0.0-beta.3
+  * Version: 2.0.0
   * 
   * LICENCE: MIT 
   * 
