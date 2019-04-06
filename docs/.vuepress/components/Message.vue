@@ -9,7 +9,8 @@
               These docs are for the current beta version {{$__VERSION__}}.
               <br>If you are looking for the v1 docs, they can be found here:
             </p>
-            <a class="link" href="/portal-vue/v1/index.html#/guide">Documentation for v1.*
+            <a class="link" href="/portal-vue/v1/index.html#/guide">
+              Documentation for v1.*
               <OutboundLink/>
             </a>
             <button @click="close" class="button">Close Message</button>
@@ -21,7 +22,8 @@
 </template>
 
 <script>
-export default {
+import Vue from 'vue'
+export default Vue.extend({
   data: () => ({
     show: true,
   }),
@@ -30,7 +32,7 @@ export default {
       this.show = false
     },
   },
-}
+})
 </script>
 
 <style scoped lang="stylus">

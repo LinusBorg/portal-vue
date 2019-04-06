@@ -59,15 +59,9 @@ module.exports = {
         link: '/examples',
       },
       {
-        text: 'Old docs (v1)',
-        link: genOldDocsLink(),
+        text: 'Docs for v1',
+        link: 'https://v1.portal-vue.linus.borg',
       },
     ],
   },
-}
-
-function genOldDocsLink() {
-  return this.process.env.NODE_ENV === 'production'
-    ? 'https://linusborg.github.io/portal-vue/index.html#/guide'
-    : 'http://localhost:8080/portal-vue/index.html#/guide'
 }

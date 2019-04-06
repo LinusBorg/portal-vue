@@ -1,6 +1,5 @@
 <template>
   <div>
-    <Message/>
     <div class="box">
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -42,7 +41,8 @@
         <line x1="250" y1="20" x2="250" y2="200" stroke="#DA9022"></line>
       </svg>
     </div>
-    <h1 class="h1">PortalVue
+    <h1 class="h1">
+      PortalVue
       <Badge :text="$__VERSION__" type="warn" vertical="middle"/>
     </h1>
     <p

@@ -15,10 +15,10 @@ This is the recommended way to install this Plugin.
 Install with npm as a dependency:
 
 ```bash
-npm i portal-vue@next
+npm i portal-vue
 
 # or with yarn, respectively:
-yarn add portal-vue@next
+yarn add portal-vue
 ```
 
 Then include the package in your application and install the plugin:
