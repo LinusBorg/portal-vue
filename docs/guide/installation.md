@@ -38,7 +38,7 @@ Just include the script tag _after_ the one of Vue.js
 
 ```html
 <scipt src="http://unpkg/vue/dist/vue.js"></scipt>
-<script src="http://unpkg.com/portal-vue@next"></script>
+<script src="http://unpkg.com/portal-vue"></script>
 ```
 
 The components will be named `<portal>` and `<portal-target>`, respectively.

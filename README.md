@@ -2,8 +2,6 @@
 
 > A Portal Component for Vuejs, to render DOM outside of a component, anywhere in the document.
 
-## This is the README of the 2.0.0-beta `next`-branch
-
 See `develop` or `master` branch for current stable.
 
 <p style="tex-align: center">
@@ -17,11 +15,11 @@ For more detailed documentation and additional Information, please visit <a href
 ## Installation
 
 ```bash
-npm i portal-vue@next
+npm i portal-vue
 
 # or
 
-yarn add portal-vue@nxt
+yarn add portal-vue
 ```
 
 ```javascript
