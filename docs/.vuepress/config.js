@@ -60,7 +60,7 @@ module.exports = {
       },
       {
         text: 'Docs for v1',
-        link: 'https://v1.portal-vue.linus.borg',
+        link: 'https://v1.portal-vue.linusb.org',
       },
     ],
   },
