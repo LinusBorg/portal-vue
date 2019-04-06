@@ -1,6 +1,6 @@
 /* global docuteIframe Docute */
 
-Vue.component('logo', {
+Vue.component("logo", {
   template: `<div>
     <div class="box">
       <svg
@@ -92,41 +92,45 @@ Vue.component('logo', {
   </v-style>
       </div>
   `,
-})
+});
 
 new Docute({
-  target: '#app',
+  target: "#app",
   nav: [
-    { title: 'PortalVue', link: '/' },
+    { title: "PortalVue (v1)", link: "/" },
 
     {
-      title: 'Documentation',
-      link: '/guide',
+      title: "Documentation",
+      link: "/guide",
     },
     {
-      title: 'Github',
-      link: 'https://github.com/linusborg/portal-vue',
+      title: "Docs for v2",
+      link: "https://portal-vue.linusb.org",
+    },
+    {
+      title: "Github",
+      link: "https://github.com/linusborg/portal-vue",
     },
   ],
   sidebar: [
     {
-      title: 'Guide',
+      title: "Guide",
       links: [
-        { title: 'Usage Guide', link: '/guide' },
-        { title: 'Examples', link: '/examples' },
+        { title: "Usage Guide", link: "/guide" },
+        { title: "Examples", link: "/examples" },
       ],
     },
     {
-      title: 'API Documentation',
+      title: "API Documentation",
       links: [
-        { title: 'Portal', link: '/docs/portal' },
-        { title: 'PortalTarget', link: '/docs/portal-target' },
-        { title: 'Wormhole', link: '/docs/wormhole' },
+        { title: "Portal", link: "/docs/portal" },
+        { title: "PortalTarget", link: "/docs/portal-target" },
+        { title: "Wormhole", link: "/docs/wormhole" },
       ],
     },
     {
-      title: 'Other',
-      links: [{ title: 'Caveats', link: '/docs/caveats' }],
+      title: "Other",
+      links: [{ title: "Caveats", link: "/docs/caveats" }],
     },
   ],
-})
+});
