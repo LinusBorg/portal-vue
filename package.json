@@ -19,7 +19,7 @@
     "build": "npm run lint && cross-env NODE_ENV=production rollup -c build/rollup.conf.prod.js && uglifyjs dist/portal-vue.js -c -m > dist/portal-vue.min.js",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --watch --config build/webpack.conf.js --inline --hot",
     "prod": "NODE_ENV=production webpack-dev-server --watch --config build/webpack.conf.js --inline --hot",
-    "docs:dev": "docute ./docs --watch",
+    "docs:dev": "serve ./docs",
     "docs:deploy": "gh-pages -d docs",
     "test": "jest --config test/unit/jest.conf.js --coverage",
     "test:watch": "jest --config test/unit/jest.conf.js --watch"
@@ -62,8 +62,6 @@
     "babel-preset-stage-3": "^6.24.1",
     "cross-env": "^5.1.2",
     "css-loader": "^0.28.7",
-    "docute": "^3.4.9",
-    "docute-cli": "^0.6.0",
     "eslint": "^4.15.0",
     "eslint-friendly-formatter": "^3.0.0",
     "eslint-plugin-vue": "^4.2.0",
@@ -89,5 +87,7 @@
     "webpack-dev-server": "^2.11.0",
     "webpack-merge": "^4.1.1"
   },
-  "dependencies": {}
+  "dependencies": {
+    "serve": "^10.1.2"
+  }
 }

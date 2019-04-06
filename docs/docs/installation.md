@@ -1,5 +1,8 @@
 # Installation
 
+> This is the documentation for the legacy version 1.\* of portal-vue.
+> You can find the [docs for the new version 2.\* here](https://portal-vue.linusb.org)
+
 ## Possible ways to install
 
 ### NPM
@@ -18,10 +21,10 @@ yarn add portal-vue
 Then include the package in your application and register it with Vue:
 
 ```javascript
-import PortalVue from 'portal-vue' // as ES6 module
-var PortalVue = require('portal-vue') // OR as a commonjs require
+import PortalVue from "portal-vue"; // as ES6 module
+var PortalVue = require("portal-vue"); // OR as a commonjs require
 
-Vue.use(PortalVue)
+Vue.use(PortalVue);
 ```
 
 ### CDN
@@ -52,7 +55,7 @@ Add `portal-vue/nuxt` to modules section of `nuxt.config.js`
 
 ```javascript
 {
-  modules: ['portal-vue/nuxt']
+  modules: ["portal-vue/nuxt"];
 }
 ```
 
@@ -62,9 +65,9 @@ When installing with `Vue.use()`, you can pass options to change the component n
 
 ```javascript
 Vue.use(PortalVue, {
-  portalName: 'my-portal', // default: 'portal'
-  portalTargetName: 'my-target', // default:'portal-target'
-})
+  portalName: "my-portal", // default: 'portal'
+  portalTargetName: "my-target" // default:'portal-target'
+});
 ```
 
 These options would make the components available globally as `<my-portal>` and `<my-target>` respectively.
@@ -76,12 +79,12 @@ If you don't want to register the components globally, don't do `Vue.use('Portal
 Instead, import the component(s) in those components that you need them in and register them locally:
 
 ```javascript
-import PortalVue from 'portal-vue'
+import PortalVue from "portal-vue";
 
 export default {
   components: {
     Portal: PortalVue.Portal,
-    PortalTarget: PortalVue.PortalTarget,
-  },
-}
+    PortalTarget: PortalVue.PortalTarget
+  }
+};
 ```
