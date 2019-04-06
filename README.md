@@ -3,7 +3,7 @@
 > A Portal Component for Vuejs, to render DOM outside of a component, anywhere in the document.
 
 <p style="tex-align: center">
-  <img src="http://linusborg.github.io/portal-vue/assets/logo.png" alt="PortalVue Logo">
+  <img src="https://portal-vue.linusb.org/logo.png" alt="PortalVue Logo">
 </p>
 
 > Install with `npm install portal-vue`
