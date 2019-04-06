@@ -154,7 +154,7 @@ plain wrapper element that is usually rendered.
 
 It accepts:
 
-- a `String` value: will render `<transition-group>` with the `name` prop set to that string.
+- a `String` value: will render a globally registered component of this name.
 - a `Component`: will render `<transition-group>` with the object's content passed as props.
 
 Example with string:
@@ -168,7 +168,7 @@ Example with string:
 </portal-target>
 ```
 
-Example with Component
+Example with Component:
 
 <!-- prettier-ignore -->
 ```html
@@ -183,8 +183,8 @@ computed: {
   fadeTransition() {
     return {
       functional: true,
-      render(h) {
-        h('transition', { name: 'fade', mode: 'out-in' })
+      render(h, context) {
+        return h('transition', { props: { name: 'fade', mode: 'out-in' } }, context.children)
       }
     }
   },
