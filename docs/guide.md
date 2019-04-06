@@ -1,5 +1,8 @@
 # Getting Started with PortalVue
 
+> This is the documentation for the legacy version 1.\* of portal-vue.
+> You can find the [docs for the new version 2.\* here](https://portal-vue.linusb.org)
+
 ## What is PortalVue?
 
 PortalVue is a set of two components that allow you to render a component's template
@@ -43,9 +46,9 @@ yarn add portal-vue
 Add it to your application:
 
 ```javascript
-import PortalVue from 'portal-vue'
+import PortalVue from "portal-vue";
 
-Vue.use(PortalVue)
+Vue.use(PortalVue);
 ```
 
 For more detailed installation instructions, additional options and installation via CDN,
@@ -139,7 +142,10 @@ This can be useful if `<portal-target>`s wrapper element is creating problem for
 <portal to="destination">
   <div>
     <p>This content has a single root node (the div)</p>
-    <p>Therefore, we can tell the PortalTarget to do without a root element of its own</p>
+    <p>
+      Therefore, we can tell the PortalTarget to do without a root element of
+      its own
+    </p>
   </div>
 </portal>
 
@@ -161,7 +167,10 @@ PortalVue can also be used with [Scoped Slots](https://vuejs.org/v2/guide/compon
   </p>
 </portal>
 
-<portal-target name="destination" :slot-props="{message: 'Hello from the Target to You!'}" />
+<portal-target
+  name="destination"
+  :slot-props="{message: 'Hello from the Target to You!'}"
+/>
 ```
 
 **Result:**
