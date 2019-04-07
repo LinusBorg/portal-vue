@@ -217,54 +217,9 @@ Accepts a string containing a list of classes. These classes will be applied to 
 
 ### `targetEl` <Badge text="removed in 2.0.0" type="error"/>
 
-| Type                    | Required | Default |
-| ----------------------- | -------- | ------- |
-| `[String, HTMLElement]` | no       | none    |
+This prop has been removed in favour of the new [`<MountingPortal>` component](./mounting-portal.md).
 
-<p class="tip">
-  Type HTMElement is not allowed when using Vue SSR.
-</p>
-
-<p class="warning">
-  <strong>Warning</strong><br>
-  This feature might change in PortalVue 2.0. It's not clear at the moment if those changes will be breaking or not. See [this issue](https://github.com/LinusBorg/portal-vue/issues/74).
-</p>
-
-Defines the name of the `<Portal>` component that the slot contents should be sent to. This mounts a new instance of the
-`<PortalTarget>` component.
-
-<p class="warning">
-  This feature should be used on elements <strong>outside</strong> of the scope of your Vue app,
-  because it replaces the target element while mounting the Portal instance, which can lead to unwanted
-  side effects in your Vue App.
-
-You _can_ use it inside of the Vue-controlled part of your page, It works for the most part, but be warned that this is not thoroughly tested.
-
-</p>
-
-**Source**
-
-<!-- prettier-ignore -->
-```html
-<portal to="destination" target-el="#render-here">
-  <p>some content</p> 
-</portal>
-
-<div id="render-here" class="someclass">
-  <!-- nothing necessary here -->
-</div>
-```
-
-**Result**
-
-<!-- prettier-ignore -->
-```html
-<div class="vue-portal"></div>
-
-<div id="render-here" class="someclass">
-  <p>some content</p>
-</div>
-```
+[You can find infos about this prop in the v1 docs](https://v1.portal-vue.linusb.org/#/docs/portal#targetel)
 
 ### `to`
 
