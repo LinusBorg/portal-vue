@@ -4,6 +4,10 @@ sidebar: false
 
 <Hero />
 
+<div style="display: flex; justify-content: center; margin: 30px auto;">
+  <KoFiButton />
+</div>
+
 ## Usage example
 
 ```html
