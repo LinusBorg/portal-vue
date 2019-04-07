@@ -2,7 +2,10 @@
 
 > A Portal Component for Vuejs, to render DOM outside of a component, anywhere in the document.
 
-## BETA For upcoming v2.0
+## Legacy
+
+> This branch contains v1.\*, you can find the current version in the `develop` / `master` branch
+
 
 > This is the current stable `develop` branch with v1.5.
 > We are about to release a new major version, which you can check out now, as it's in beta!
