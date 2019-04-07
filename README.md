@@ -7,11 +7,11 @@
   <img src="https://portal-vue.linusb.org/logo.png" alt="PortalVue Logo">
 </p>
 
+<p>
 <a href='https://ko-fi.com/R6R7QW4D' target='_blank'>
   <img height='36' style='border:0px;height:36px;margin-bottom:30px;' src='https://az743702.vo.msecnd.net/cdn/kofi4.png?v=2' border='0' alt='Buy Me a Coffee at ko-fi.com' />
 </a>
-
-> Install with `npm install portal-vue`
+<p>
 
 For more detailed documentation and additional Information, [please visit the docs](https://portal-vue.linusb.org).
 
