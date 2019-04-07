@@ -1,4 +1,4 @@
-<template functional>
+<template>
   <div class="btn-container">
     <a
       title="Support me on ko-fi.com"
@@ -8,7 +8,8 @@
       target="_blank"
     >
       <span class="kofitext">
-        <img src="https://ko-fi.com/img/cuplogo.svg" class="kofiimg">Support me with a coffee
+        <img src="https://ko-fi.com/img/cuplogo.svg" class="kofiimg">
+        <slot/>
       </span>
     </a>
   </div>
