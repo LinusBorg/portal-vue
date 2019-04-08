@@ -28,7 +28,7 @@ export default Vue.extend({
   },
   watch: {
     ownTransports() {
-      this.$emit('change', this.children().length > 1)
+      this.$emit('change', this.children().length > 0)
     },
     name(newVal, oldVal) {
       /**
