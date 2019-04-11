@@ -2,7 +2,7 @@
  /*! 
   * portal-vue © Thorsten Lünborg, 2019 
   * 
-  * Version: 2.0.0
+  * Version: 2.0.1
   * 
   * LICENCE: MIT 
   * 
@@ -350,7 +350,7 @@
     },
     watch: {
       ownTransports: function ownTransports() {
-        this.$emit('change', this.children().length > 1);
+        this.$emit('change', this.children().length > 0);
       },
       name: function name(newVal, oldVal) {
         /**
