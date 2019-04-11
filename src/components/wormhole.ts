@@ -89,12 +89,14 @@ export const Wormhole = Vue.extend({
       this.$delete(this.sources, source)
     },
     hasTarget(to: string) {
-      return !!this.targets[to] && this.targets[to][0]
+      return !!(this.targets[to] && this.targets[to][0])
     },
     hasSource(to: string) {
-      return !!this.sources[to] && this.sources[to][0]
+      return !!(this.sources[to] && this.sources[to][0])
     },
-
+    hasContentFor(to: string) {
+      return !!this.transports[to] && !!this.transports[to].length
+    },
     // Internal
     $_getTransportIndex({ to, from }: TransportVector): number {
       for (const i in this.transports[to]) {
