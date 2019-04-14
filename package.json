@@ -37,6 +37,7 @@
   },
   "devDependencies": {
     "@babel/runtime-corejs2": "^7.1.5",
+    "@linusborg/vue-ko-fi-button": "^0.1.0",
     "@types/jest": "^23.1.4",
     "@vue/cli-plugin-babel": "^3.1.0",
     "@vue/cli-plugin-e2e-cypress": "^3.1.0",

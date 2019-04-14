@@ -5,9 +5,11 @@ sidebar: false
 <Hero />
 
 <div style="display: flex; justify-content: center; margin: 30px auto;">
-  <KoFiButton>
-    Support me with a coffee
-  </KoFiButton>
+  <KoFiButton
+    username="linusborg"
+    title="Support me with a coffee?"
+    color="rgb(208,126,27)"
+  />
 </div>
 
 ## Usage example
