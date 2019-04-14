@@ -109,7 +109,7 @@ methods: {
 }
 ```
 
-### hasTarget() <Badge text="2.0.0+"/>
+### hasSource() <Badge text="2.0.0+"/>
 
 `Wormhole.hasSource(from)`
 
@@ -132,5 +132,18 @@ Example:
 
 ```javascript
 Wormhole.hasTarget('destination')
+// => true/false
+```
+
+### hasContentFor() <Badge text="changed in 2.1.0" type=warning />
+
+`Wormhole.hasContentFor(to)`
+
+Returns `true` if there's a `<PortalTarget>` with a name of `to` _and_ it currently has content to show.
+
+Example:
+
+```javascript
+Wormhole.hasContentFor('destination')
 // => true/false
 ```
