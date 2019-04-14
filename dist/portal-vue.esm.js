@@ -2,7 +2,7 @@
  /*! 
   * portal-vue © Thorsten Lünborg, 2019 
   * 
-  * Version: 2.0.1
+  * Version: 2.1.0
   * 
   * LICENCE: MIT 
   * 
@@ -170,10 +170,13 @@ var Wormhole = Vue.extend({
       this.$delete(this.sources, source);
     },
     hasTarget: function hasTarget(to) {
-      return !!this.targets[to] && this.targets[to][0];
+      return !!(this.targets[to] && this.targets[to][0]);
     },
     hasSource: function hasSource(to) {
-      return !!this.sources[to] && this.sources[to][0];
+      return !!(this.sources[to] && this.sources[to][0]);
+    },
+    hasContentFor: function hasContentFor(to) {
+      return !!this.transports[to] && !!this.transports[to].length;
     },
     // Internal
     $_getTransportIndex: function $_getTransportIndex(_ref) {
