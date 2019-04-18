@@ -2,7 +2,7 @@
  /*! 
   * portal-vue © Thorsten Lünborg, 2019 
   * 
-  * Version: 2.1.0
+  * Version: 2.1.1
   * 
   * LICENCE: MIT 
   * 
@@ -530,7 +530,7 @@ var MountingPortal = Vue.extend({
     _props.name = this.to;
     this.portalTarget = new PortalTarget({
       el: el,
-      // parent: this,
+      parent: this.$parent || this,
       propsData: _props
     });
   },
