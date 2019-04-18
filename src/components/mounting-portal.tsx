@@ -104,7 +104,7 @@ export default (Vue as withPortalTarget).extend({
 
     this.portalTarget = new PortalTarget({
       el,
-      // parent: this,
+      parent: this.$parent || this,
       propsData: _props,
     })
   },
