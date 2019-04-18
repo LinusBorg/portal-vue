@@ -1384,6 +1384,11 @@
     cssnano-preset-default "^4.0.0"
     postcss "^7.0.0"
 
+"@linusborg/vue-ko-fi-button@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@linusborg/vue-ko-fi-button/-/vue-ko-fi-button-0.1.0.tgz#1d82a081b67058501f2b9572bae1a998e90d1324"
+  integrity sha512-sTNTDkoQl8UxIGHB3pFJ/2vzrfAZcU6J3BH/utRPN5exjsHM2vYfYEDz3IHAhO0/kiHsZwk+hyErW0w0/sjfvg==
+
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/@mrmlnc/readdir-enhanced/-/readdir-enhanced-2.2.1.tgz#524af240d1a360527b730475ecfa1344aa540dde"
