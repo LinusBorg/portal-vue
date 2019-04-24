@@ -2,7 +2,7 @@
  /*! 
   * portal-vue © Thorsten Lünborg, 2019 
   * 
-  * Version: 2.1.1
+  * Version: 2.1.2
   * 
   * LICENCE: MIT 
   * 
@@ -52,6 +52,7 @@ function _nonIterableSpread() {
   throw new TypeError("Invalid attempt to spread non-iterable instance");
 }
 
+var inBrowser = typeof window !== 'undefined';
 function freeze(item) {
   if (Array.isArray(item) || _typeof(item) === 'object') {
     return Object.freeze(item);
@@ -95,11 +96,12 @@ var Wormhole = Vue.extend({
       transports: transports,
       targets: targets,
       sources: sources,
-      trackInstances: true
+      trackInstances: inBrowser
     };
   },
   methods: {
     open: function open(transport) {
+      if (!inBrowser) return;
       var to = transport.to,
           from = transport.from,
           passengers = transport.passengers,
@@ -156,6 +158,8 @@ var Wormhole = Vue.extend({
       }
     },
     registerTarget: function registerTarget(target, vm, force) {
+      if (!inBrowser) return;
+
       if (this.trackInstances && !force && this.targets[target]) {
         console.warn("[portal-vue]: Target ".concat(target, " already exists"));
       }
@@ -166,6 +170,8 @@ var Wormhole = Vue.extend({
       this.$delete(this.targets, target);
     },
     registerSource: function registerSource(source, vm, force) {
+      if (!inBrowser) return;
+
       if (this.trackInstances && !force && this.sources[source]) {
         console.warn("[portal-vue]: source ".concat(source, " already exists"));
       }

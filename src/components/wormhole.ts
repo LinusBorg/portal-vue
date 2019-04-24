@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import { freeze, stableSort } from '../utils'
+import { freeze, inBrowser, stableSort } from '../utils'
 import {
   Transports,
   Transport,
@@ -17,10 +17,11 @@ export const Wormhole = Vue.extend({
     transports,
     targets,
     sources,
-    trackInstances: true,
+    trackInstances: inBrowser,
   }),
   methods: {
     open(transport: TransportInput) {
+      if (!inBrowser) return
       const { to, from, passengers, order = Infinity } = transport
       if (!to || !from || !passengers) return
 
@@ -71,6 +72,7 @@ export const Wormhole = Vue.extend({
       }
     },
     registerTarget(target: string, vm: Vue, force?: boolean): void {
+      if (!inBrowser) return
       if (this.trackInstances && !force && this.targets[target]) {
         console.warn(`[portal-vue]: Target ${target} already exists`)
       }
@@ -80,6 +82,7 @@ export const Wormhole = Vue.extend({
       this.$delete(this.targets, target)
     },
     registerSource(source: string, vm: Vue, force?: boolean): void {
+      if (!inBrowser) return
       if (this.trackInstances && !force && this.sources[source]) {
         console.warn(`[portal-vue]: source ${source} already exists`)
       }

@@ -35,24 +35,3 @@ this.$nextTick().then(
 ```
 
 the reason is that depending on the secnario, it _can_ take one tick for the content to be sent to the [Wormhole](../api/wormhole.md) (the middleman between `<Portal>` and `<PortalTarget>`), and another one to be picked up by the `<PortalTarget>`.
-
-## Server-Side Rendering
-
-When you use [Vue's SSR capabilities](https://ssr.vuejs.org), portal-vue can't work reliably because Vue renders the page directly to a string, there are not reactive updates applied. That means that a `<portal-target>` appearing before a `<portal>` will render an empty div on the server whereas it will render the sent content on the client, resulting in a hydration vdom mismatch error.
-
-### Solution
-
-[@egoist](https://github.com/egoist) has written a _really_ tiny [component called `<no-ssr>`](https://github.com/egoist/vue-no-ssr), which can solve this problem. You wrap your `<portal-target>` elements in it, and it will prevent rendering on the server as well as on the client during hydration, preventing the error described above. Immediatly after hyration, it will render the previously "hidden" content, so that the `<portal-target>` will render its content. Usually the user can hardly notice this as the update is near-immediate.
-
-Example:
-
-```html
-<no-ssr>
-  <portal-target name="destination">
-</no-ssr>
-
-<!-- with placeholder text, usually not necessary -->
-<no-ssr placeholder="Loading...">
-  <portal-target name="destination">
-</no-ssr>
-```
