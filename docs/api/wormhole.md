@@ -10,10 +10,6 @@ The Wormhole is not a component, it's an object that connects the `<Portal>`s to
 
 Usually, you will never need to use this object, but you _can_ use this object to programmatically send content to a `<PortalTarget>`, check weither a target exists, and other stuff.
 
-:::tip Hint
-This feature was introduced with version `1.1.0`
-:::
-
 :::warning Public API
 The wormhole object exposes quite a few properties and methods. With regard to semver, only the properties and methods documented below are considered part of the public API.
 
@@ -61,6 +57,11 @@ This is the programmatic equivalent of the following:
   <p>This will be displayed in the Target!</p>
 </portal>
 ```
+
+::: tip Server-Side Rendering
+For the reasons layed out in [the section about SSR](../guide/SSR.md), this method won't do anything during Server-Side Rendering. Portal'ing of the content will only happen on the client.
+Make sure to Read the linked section for more information.
+:::
 
 ### close()
 
@@ -122,6 +123,11 @@ Wormhole.hasSource('origin')
 // => true/false
 ```
 
+::: tip Server-Side Rendering
+For the reasons layed out in [the section about SSR](../guide/SSR.md), this method will aleways return `false` during Server-Side Rendering.
+Make sure to Read the linked section for more information.
+:::
+
 ### hasTarget() <Badge text="changed in 2.0.0" type=warning />
 
 `Wormhole.hasTarget(to)`
@@ -135,6 +141,11 @@ Wormhole.hasTarget('destination')
 // => true/false
 ```
 
+::: tip Server-Side Rendering
+For the reasons layed out in [the section about SSR](../guide/SSR.md), this method will aleways return `false` during Server-Side Rendering.
+Make sure to Read the linked section for more information.
+:::
+
 ### hasContentFor() <Badge text="changed in 2.1.0" type=warning />
 
 `Wormhole.hasContentFor(to)`
@@ -147,3 +158,8 @@ Example:
 Wormhole.hasContentFor('destination')
 // => true/false
 ```
+
+::: tip Server-Side Rendering
+For the reasons layed out in [the section about SSR](../guide/SSR.md), this method will aleways return `false` during Server-Side Rendering.
+Make sure to Read the linked section for more information.
+:::

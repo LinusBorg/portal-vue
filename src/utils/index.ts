@@ -1,6 +1,8 @@
 import { VNode } from 'vue'
 import { Transport } from '../types'
 
+export const inBrowser = typeof window !== 'undefined'
+
 export function freeze<R>(item: R[]): ReadonlyArray<R> {
   if (Array.isArray(item) || typeof item === 'object') {
     return Object.freeze(item)
