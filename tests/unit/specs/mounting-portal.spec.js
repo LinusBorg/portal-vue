@@ -181,7 +181,7 @@ describe('MountingPortal', () => {
     expect(wormhole.open).not.toHaveBeenCalled()
   })
 
-  it.only('Passes all target props to the PortalTarget instance', async () => {
+  it('Passes all target props to the PortalTarget instance', async () => {
     const { provider } = mountComp(MountingPortal, {
       propsData: {
         mountTo: '#target',
