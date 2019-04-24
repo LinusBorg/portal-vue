@@ -2,7 +2,7 @@
  /*! 
   * portal-vue © Thorsten Lünborg, 2019 
   * 
-  * Version: 2.1.2
+  * Version: 2.1.3
   * 
   * LICENCE: MIT 
   * 
@@ -480,6 +480,9 @@ var MountingPortal = Vue.extend({
       type: Boolean,
       default: false
     },
+    targetSlim: {
+      type: Boolean
+    },
     targetSlotProps: {
       type: Object,
       default: function _default() {
@@ -492,9 +495,6 @@ var MountingPortal = Vue.extend({
     },
     transition: {
       type: [String, Object, Function]
-    },
-    transitionGroup: {
-      type: Boolean
     }
   },
   created: function created() {
@@ -531,8 +531,9 @@ var MountingPortal = Vue.extend({
 
     var _props = pick(this.$props, targetProps);
 
+    _props.slim = this.targetSlim;
     _props.tag = this.targetTag;
-    _props.slotSprop = this.targetSlotProps;
+    _props.slotProps = this.targetSlotProps;
     _props.name = this.to;
     this.portalTarget = new PortalTarget({
       el: el,
