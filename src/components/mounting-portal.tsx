@@ -56,12 +56,12 @@ export default (Vue as withPortalTarget).extend({
 
     // Target
     multiple: { type: Boolean, default: false },
+    targetSlim: { type: Boolean },
     targetSlotProps: { type: Object, default: () => ({}) },
     targetTag: { type: String, default: 'div' },
     transition: { type: [String, Object, Function] } as PropOptions<
       PropWithComponent
     >,
-    transitionGroup: { type: Boolean },
   },
   created() {
     if (typeof document === 'undefined') return
@@ -98,8 +98,9 @@ export default (Vue as withPortalTarget).extend({
     // get props for target from $props
     // we have to rename a few of them
     const _props = pick(this.$props, targetProps)
+    _props.slim = this.targetSlim
     _props.tag = this.targetTag
-    _props.slotSprop = this.targetSlotProps
+    _props.slotProps = this.targetSlotProps
     _props.name = this.to
 
     this.portalTarget = new PortalTarget({
