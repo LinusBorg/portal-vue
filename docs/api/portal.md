@@ -40,7 +40,7 @@ Instead, it will be rendered in place:
 <div class="wrapper">
   <portal :disabled="true">
     <p>some content</p> 
-  /portal>
+  </portal>
 </div>
 ```
 
@@ -55,7 +55,7 @@ Instead, it will be rendered in place:
 </div>
 ```
 
-<p class="warning">When togling between enabled/disabled state, components in the portal slot are destroyed and re-created, which means any changes to their local state are lost.</p>
+<p class="warning">When toggling between enabled/disabled state, components in the portal slot are destroyed and re-created, which means any changes to their local state are lost.</p>
 
 ### `name`
 
