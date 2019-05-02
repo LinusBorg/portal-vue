@@ -42,7 +42,7 @@ Vue.use(PortalVue)
 
 <portal-target name="destination">
   <!--
-  This component can be located anwhere in your App.
+  This component can be located anywhere in your App.
   The slot content of the above portal component will be rendered here.
   -->
 </portal-target>
