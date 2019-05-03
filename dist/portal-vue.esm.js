@@ -2,7 +2,7 @@
  /*! 
   * portal-vue © Thorsten Lünborg, 2019 
   * 
-  * Version: 2.1.3
+  * Version: 2.1.4
   * 
   * LICENCE: MIT 
   * 
@@ -239,7 +239,11 @@ var Portal = Vue.extend({
     }
   },
   created: function created() {
-    wormhole.registerSource(this.name, this);
+    var _this = this;
+
+    this.$nextTick(function () {
+      wormhole.registerSource(_this.name, _this);
+    });
   },
   mounted: function mounted() {
     if (!this.disabled) {
@@ -349,7 +353,11 @@ var PortalTarget = Vue.extend({
     };
   },
   created: function created() {
-    wormhole.registerTarget(this.name, this);
+    var _this = this;
+
+    this.$nextTick(function () {
+      wormhole.registerTarget(_this.name, _this);
+    });
   },
   watch: {
     ownTransports: function ownTransports() {
@@ -365,12 +373,12 @@ var PortalTarget = Vue.extend({
     }
   },
   mounted: function mounted() {
-    var _this = this;
+    var _this2 = this;
 
     if (this.transition) {
       this.$nextTick(function () {
         // only when we have a transition, because it causes a re-render
-        _this.firstRender = false;
+        _this2.firstRender = false;
       });
     }
   },
