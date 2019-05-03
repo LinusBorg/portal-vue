@@ -20,7 +20,9 @@ export default Vue.extend({
     },
   },
   created() {
-    wormhole.registerSource(this.name, this)
+    this.$nextTick(() => {
+      wormhole.registerSource(this.name, this)
+    })
   },
   mounted() {
     if (!this.disabled) {

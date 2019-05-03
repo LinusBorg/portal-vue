@@ -24,7 +24,9 @@ export default Vue.extend({
     }
   },
   created() {
-    wormhole.registerTarget(this.name, this)
+    this.$nextTick(() => {
+      wormhole.registerTarget(this.name, this)
+    })
   },
   watch: {
     ownTransports() {
