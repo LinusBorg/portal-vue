@@ -100,6 +100,44 @@ describe('Wormhole', function() {
     expect(wormhole.transports).toEqual({ target: [] })
   })
 
+  it('removes content on close() when force=true and from=undefined', () => {
+    wormhole.open({
+      from: 'test-portal',
+      to: 'target',
+      passengers: ['Test'],
+    })
+
+    wormhole.close(
+      {
+        to: 'target',
+      },
+      true
+    ) // force argument
+    expect(wormhole.transports).toEqual({ target: [] })
+  })
+
+  it('closes all transports to the same target when force=true and from=undefined', () => {
+    wormhole.open({
+      from: 'test-portal1',
+      to: 'target',
+      passengers: ['Test1'],
+    })
+
+    wormhole.open({
+      from: 'test-portal2',
+      to: 'target',
+      passengers: ['Test2'],
+    })
+
+    wormhole.close(
+      {
+        to: 'target',
+      },
+      true
+    ) // force argument
+    expect(wormhole.transports).toEqual({ target: [] })
+  })
+
   it('hasTarget()', function() {
     const check1 = wormhole.hasTarget('target')
     expect(check1).toBe(false)
