@@ -37,7 +37,7 @@ PortalVue is available through a couple of CDNs, I recommend
 Just include the script tag _after_ the one of Vue.js
 
 ```html
-<scipt src="http://unpkg/vue/dist/vue.js"></scipt>
+<scipt src="http://unpkg.com/vue/dist/vue.js"></scipt>
 <script src="http://unpkg.com/portal-vue"></script>
 ```
 
