@@ -17,7 +17,7 @@ Wrap any content that you want to render somewhere else in a `<Portal>` componen
   target-el="#target"
   :disabled="isDisabled"
 >
-  <p>This coonent will be sent through the portal</p>
+  <p>This content will be sent through the portal</p>
 </portal>
 ```
 
@@ -29,7 +29,7 @@ Wrap any content that you want to render somewhere else in a `<Portal>` componen
 | --------- | -------- | ------- |
 | `Boolean` | no       | `false` |
 
-When `true`, the slot content will _not_ be send through the portal to the defined PortalTarget.
+When `true`, the slot content will _not_ be sent through the portal to the defined PortalTarget.
 
 Instead, it will be rendered in place:
 
@@ -156,7 +156,7 @@ It has a (more useful) counterpart in the `<portal-target>` component
 
 <!-- prettier-ignore -->
 ```html
-<div class="vue-portal"><p>This scoped slot content is disabled</p></div>
+<div class="vue-portal"><p>This scoped slot content is disabled!</p></div>
 ```
 
 ### `tag`
