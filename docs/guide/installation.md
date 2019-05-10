@@ -37,7 +37,7 @@ PortalVue is available through a couple of CDNs, I recommend
 Just include the script tag _after_ the one of Vue.js
 
 ```html
-<scipt src="http://unpkg.com/vue/dist/vue.js"></scipt>
+<script src="http://unpkg.com/vue/dist/vue.js"></script>
 <script src="http://unpkg.com/portal-vue"></script>
 ```
 
@@ -113,16 +113,16 @@ When including Portal-vue from a CDN, make sure you get one of the of UMD builds
 
 **About CDNs**: `unpkg.com` and `jsdelivr.com` will load the umd lib automatically.
 
-If you include it form other sources directly in you HTML, make sure to import `portal-vue/dist/portal-vue.umd.min.js`
+If you include it from other sources directly in your HTML, make sure to import `portal-vue/dist/portal-vue.umd.min.js`
 
 ### Commonjs
 
-This is the defaulf main file of the package.
+This is the default main file of the package.
 
-Webpack 1 doesn't support commonjs, neither do some dev tools, like jest don't either. So this is a sensible default to use.
+Webpack 1 doesn't support commonjs, neither do some dev tools, like jest doesn't either. So this is a sensible default to use.
 
 ### ESM
 
 Webpack >=2, rollup and parcel all can natively understand ESModules, so this is the best build to use with those bundlers.
 
-The ESM version is marked as the default export of `package.json` for consumers that understand the `"module"` field in `package.json` (which is true for all the aforementioned bundlers), so doing `import PortalVue from 'portal-vue'` will automatically give your the ESM build if the bundler supports it.
+The ESM version is marked as the default export of `package.json` for consumers that understand the `"module"` field in `package.json` (which is true for all the aforementioned bundlers), so doing `import PortalVue from 'portal-vue'` will automatically give you the ESM build if the bundler supports it.
