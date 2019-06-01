@@ -54,7 +54,7 @@ export const Wormhole = Vue.extend({
 
     close(transport: TransportVector, force = false) {
       const { to, from } = transport
-      if (!to || !from) return
+      if (!to || (!from && force === false)) return
       if (!this.transports[to]) {
         return
       }
