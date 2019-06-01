@@ -17,8 +17,7 @@
     "minify": "minify dist/portal-vue.umd.js --out-file dist/portal-vue.umd.min.js",
     "lint": "vue-cli-service lint",
     "test": "yarn test:unit",
-    "test:unit": "vue-cli-service test:unit",
-    "test:e2e": "vue-cli-service test:e2e"
+    "test:unit": "vue-cli-service test:unit"
   },
   "main": "dist/portal-vue.umd.js",
   "module": "dist/portal-vue.esm.js",
