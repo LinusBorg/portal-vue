@@ -1,6 +1,6 @@
 {
   "name": "portal-vue",
-  "version": "2.1.4",
+  "version": "2.1.5",
   "license": "MIT",
   "repository": "https://github.com/LinusBorg/portal-vue",
   "author": {
@@ -17,8 +17,7 @@
     "minify": "minify dist/portal-vue.umd.js --out-file dist/portal-vue.umd.min.js",
     "lint": "vue-cli-service lint",
     "test": "yarn test:unit",
-    "test:unit": "vue-cli-service test:unit",
-    "test:e2e": "vue-cli-service test:e2e"
+    "test:unit": "vue-cli-service test:unit"
   },
   "main": "dist/portal-vue.umd.js",
   "module": "dist/portal-vue.esm.js",
@@ -40,7 +39,6 @@
     "@linusborg/vue-ko-fi-button": "^0.1.0",
     "@types/jest": "^23.1.4",
     "@vue/cli-plugin-babel": "^3.1.0",
-    "@vue/cli-plugin-e2e-cypress": "^3.1.0",
     "@vue/cli-plugin-eslint": "^3.1.0",
     "@vue/cli-plugin-typescript": "^3.1.0",
     "@vue/cli-plugin-unit-jest": "^3.1.0",

@@ -286,8 +286,6 @@ Emitted everytime the component re-renders because the content from the `<Portal
 
 It receives two arguments, each is a `Boolean`, indicating the absense or presence of content for the target.
 
-The first argument is represents the current contents, the second one the previous contents (just like the arguments of a `watch` handler in a Vue component)
-
 <!-- prettier-ignore -->
 ```html {4}
 <template>

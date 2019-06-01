@@ -29,11 +29,11 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { Wormhole } from 'portal-vue'
-// const { Wormhole } =
-//   process.env.NODE_ENV === 'production'
-//     ? require('@/../dist/portal-vue.common.js')
-//     : require('@/index').default
+
+const { Wormhole } =
+  process.env.NODE_ENV === 'production'
+    ? require('@/../dist/portal-vue.common.js')
+    : require('@/index').default
 
 export default Vue.extend({
   data() {
