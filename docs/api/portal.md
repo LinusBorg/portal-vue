@@ -191,6 +191,10 @@ Defines the type of tag that should be rendered as a root element.
 | -------- | -------- | ------- |
 | `String` | no       | none    |
 
+::: danger
+Use `class` directly instead of `targetClass`.
+:::
+
 Accepts a string containing a list of classes. These classes will be applied to the root element of the `<PortalTarget>`.
 
 **Source**
