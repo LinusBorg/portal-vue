@@ -59,6 +59,10 @@ We removed the following methods:
 - `Wormhole.getSourceFor()`
 - `Wormhole.getContentFor()`
 
+We removed the following props from `<portal>`.
+- `targetClass`: To migrate, use `class` directly.
+- `targetEl` - see below
+
 ## Things we fixed
 
 ### Various problems with `Portal.targetEl` prop
