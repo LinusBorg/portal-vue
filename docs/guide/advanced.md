@@ -23,11 +23,11 @@ The `to` prop of `<portal>` and the `name` prop of `<portal-target>` can be chan
 
 ## "Slim" - removing the wrapper
 
-Vue components always need a single root element. Since `<portal-target>` can't know in advance weither or not it will receive content with more than one root element, it will render a wrapper element around the content to provide a single root node.
+Vue components always need a single root element. Since `<portal-target>` can't know in advance whether or not it will receive content with more than one root element, it will render a wrapper element around the content to provide a single root node.
 
 However, if you know that you will send content with a single root element only, you can use the `slim` prop to tell `<portal-target>` to render that element only and do without the wrapper element.
 
-This can be useful if `<portal-target>`s wrapper element is creating problem for your styling.
+This can be useful if `<portal-target>`s wrapper element is creating problems for your styling.
 
 <!-- prettier-ignore -->
 ```html
@@ -44,7 +44,7 @@ This can be useful if `<portal-target>`s wrapper element is creating problem for
 <portal-target name="destination" slim />
 ```
 
-The `slim` property also works on `<portal>` components when the are `disabled` (see [here](../api/portal.md#slim)).
+The `slim` property also works on `<portal>` components when they are `disabled` (see [here](../api/portal.md#slim)).
 
 ## Scoped Slots <Badge text="1.3.0+" />
 
