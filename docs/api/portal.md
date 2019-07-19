@@ -69,9 +69,9 @@ But it might be a good idea to name your `<Portal>` components so you can debug 
 
 ### `order` <Badge text="1.2.0+"/>
 
-| Type              | Required | Default         |
-| ----------------- | -------- | --------------- |
-| `[String,Number]` | no\*     | a random String |
+| Type     | Required | Default |
+| -------- | -------- | ------- |
+| `Number` | no\*     | 0       |
 
 This prop defines the order position in the output of the `<PortalTarget>`.
 
