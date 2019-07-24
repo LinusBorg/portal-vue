@@ -150,7 +150,7 @@ In older browsers, `position: fixed` works unreliably when the element with that
 
 But we normally need it to render components like modals, dialogs, notifications, snackbars and similar UI elements in a fixed position.
 
-Also, z-indices can be a problem when trying to render things on top of each other somehwere in the DOM.
+Also, z-indices can be a problem when trying to render things on top of each other somewhere in the DOM.
 
 With PortalVue, you can render your modal/overlay/dropdown component to a `<portal-target>` that you can position as the very last in the page's `body`, making styling and positioning much easier and less error-prone.
 
