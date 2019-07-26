@@ -264,7 +264,7 @@ Example:
 ```html {1-3}
 <portal-target name="destination" :slotScope="{ message: 'Hi!' }">
   <p slot-scope="props">
-    {{props.mesage}} This is rendered when no other content is available.
+    {{props.message}} This is rendered when no other content is available.
   </p>
 </portal-target>
 ```
