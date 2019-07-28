@@ -28,7 +28,7 @@ The `open` method accepts one argument, an object with the following properties:
 | ---------- | -------- | ------- | ------------------------------------------------------------------- |
 | to         | yes      |         | The name of the `<PortalTarget>` to send to                         |
 | from       | yes      |         | The name of the `<Portal>` this content comes from.                 |
-| passengers | no       |         | An array of vNodes - the content to be sent to the `<PortalTarget>` |
+| passengers | yes      |         | An array of vNodes - the content to be sent to the `<PortalTarget>` |
 
 Even if you use this method programmatically and there is not source `<Portal>`, you still have to provide `from` - every content sent through the wormhole needs a source.
 
