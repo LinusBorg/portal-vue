@@ -2,7 +2,7 @@
  /*! 
   * portal-vue © Thorsten Lünborg, 2019 
   * 
-  * Version: 2.1.5
+  * Version: 2.1.6
   * 
   * LICENCE: MIT 
   * 
@@ -138,7 +138,7 @@
         var force = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
         var to = transport.to,
             from = transport.from;
-        if (!to || !from) return;
+        if (!to || !from && force === false) return;
 
         if (!this.transports[to]) {
           return;
