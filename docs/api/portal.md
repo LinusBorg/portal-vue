@@ -147,7 +147,7 @@ It has a (more useful) counterpart in the `<portal-target>` component
 
 <!-- prettier-ignore -->
 ```html
-<portal to="destination" disabled slot-props="{state: 'disabled!'}">
+<portal to="destination" disabled :slot-props="{state: 'disabled!'}">
   <p slot-scope="props">This scoped slot content is {{ props.state }}</p>
 </portal>
 ```
