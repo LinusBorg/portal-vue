@@ -6,7 +6,7 @@ next: ./wormhole
 
 # MountingPortal
 
-This component extends the behaviour of a normal `<Portal>` by also mounting a `<PortalTarget>` to a DOM Element that the developer specifics with a _selector string_. (i.e. `#target-id`).
+This component extends the behaviour of a normal `<Portal>` by also mounting a `<PortalTarget>` to a DOM Element that the developer specifies with a _selector string_. (i.e. `#target-id`).
 
 It also makes sure to clean up and remove the `<PortalTarget>` when it's being destroyed.
 
@@ -85,7 +85,7 @@ Props working the same:
 
 ## Slots
 
-This component expects to receive a default scoped slot. If it's not passed, an an error will be logged
+This component expects to receive a default scoped slot. If it's not passed, an error will be logged.
 
 ### The `manual` slot
 

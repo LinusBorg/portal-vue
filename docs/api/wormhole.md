@@ -24,12 +24,12 @@ The `open` method accepts one argument, an object with the following properties:
 
 `Wormhole.open({to, from, passengers})`
 
-| Property   | Required | Default  | Explanation                                                         |
-| ---------- | -------- | -------- | ------------------------------------------------------------------- |
-| to         | yes      |          | The name of the `<PortalTarget>` to send to                         |
-| from       | yes      |          | The name of the `<Portal>` this content comes from.                 |
-| passengers | yes      |          | An array of vNodes - the content to be sent to the `<PortalTarget>` |
-| order      | no       | Infinity | a number indicating the order when multipe sources for a target are used |
+| Property   | Required | Default  | Explanation                                                               |
+| ---------- | -------- | -------- | ------------------------------------------------------------------------- |
+| to         | yes      |          | The name of the `<PortalTarget>` to send to                               |
+| from       | yes      |          | The name of the `<Portal>` this content comes from.                       |
+| passengers | yes      |          | An array of vNodes - the content to be sent to the `<PortalTarget>`       |
+| order      | no       | Infinity | a number indicating the order when multiple sources for a target are used |
 
 Even if you use this method programmatically and there is not source `<Portal>`, you still have to provide `from` - every content sent through the wormhole needs a source.
 
@@ -60,7 +60,7 @@ This is the programmatic equivalent of the following:
 ```
 
 ::: tip Server-Side Rendering
-For the reasons layed out in [the section about SSR](../guide/SSR.md), this method won't do anything during Server-Side Rendering. Portal'ing of the content will only happen on the client.
+For the reasons laid out in [the section about SSR](../guide/SSR.md), this method won't do anything during Server-Side Rendering. Portal'ing of the content will only happen on the client.
 Make sure to Read the linked section for more information.
 :::
 
@@ -125,7 +125,7 @@ Wormhole.hasSource('origin')
 ```
 
 ::: tip Server-Side Rendering
-For the reasons layed out in [the section about SSR](../guide/SSR.md), this method will aleways return `false` during Server-Side Rendering.
+For the reasons laid out in [the section about SSR](../guide/SSR.md), this method will aleways return `false` during Server-Side Rendering.
 Make sure to Read the linked section for more information.
 :::
 
@@ -143,7 +143,7 @@ Wormhole.hasTarget('destination')
 ```
 
 ::: tip Server-Side Rendering
-For the reasons layed out in [the section about SSR](../guide/SSR.md), this method will aleways return `false` during Server-Side Rendering.
+For the reasons laid out in [the section about SSR](../guide/SSR.md), this method will aleways return `false` during Server-Side Rendering.
 Make sure to Read the linked section for more information.
 :::
 
@@ -161,6 +161,6 @@ Wormhole.hasContentFor('destination')
 ```
 
 ::: tip Server-Side Rendering
-For the reasons layed out in [the section about SSR](../guide/SSR.md), this method will aleways return `false` during Server-Side Rendering.
+For the reasons laid out in [the section about SSR](../guide/SSR.md), this method will always return `false` during Server-Side Rendering.
 Make sure to Read the linked section for more information.
 :::

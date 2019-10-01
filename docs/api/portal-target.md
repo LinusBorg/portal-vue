@@ -284,7 +284,7 @@ Example:
 
 Emitted everytime the component re-renders because the content from the `<Portal>` changed.
 
-It receives two arguments, each is a `Boolean`, indicating the absense or presence of content for the target.
+It receives two arguments, each is a `Boolean`, indicating the absence or presence of content for the target.
 
 <!-- prettier-ignore -->
 ```html {4}
