@@ -10,7 +10,7 @@ Admittedly, portal-vue does a little bit of trickery to do what it does. With th
 
 ## Local state lost when toggling `disabled`
 
-When togling the `<portal>` component's `disabled` state, components in the portal slot are destroyed and re-created, which means any changes to their local state are lost.
+When toggling the `<portal>` component's `disabled` state, components in the portal slot are destroyed and re-created, which means any changes to their local state are lost.
 
 if you need to persist state, use some sort of [state management](https://portal-vue-next-preview.netlify.com/)
 
@@ -20,7 +20,7 @@ Due to the way that Vue resolves provides from parent components, it would look 
 
 ## `$parent`
 
-For the same reason, `this.$parent` will not give your the parent of the `<Portal>`, it will give your the `<PortalTarget>`, so code relying on `$parent` might break
+For the same reason, `this.$parent` will not give you the parent of the `<Portal>`, it will give you the `<PortalTarget>`, so code relying on `$parent` might break.
 
 ## `$refs`
 
@@ -34,4 +34,4 @@ this.$nextTick().then(
 )
 ```
 
-the reason is that depending on the secnario, it _can_ take one tick for the content to be sent to the [Wormhole](../api/wormhole.md) (the middleman between `<Portal>` and `<PortalTarget>`), and another one to be picked up by the `<PortalTarget>`.
+the reason is that depending on the scenario, it _can_ take one tick for the content to be sent to the [Wormhole](../api/wormhole.md) (the middleman between `<Portal>` and `<PortalTarget>`), and another one to be picked up by the `<PortalTarget>`.
