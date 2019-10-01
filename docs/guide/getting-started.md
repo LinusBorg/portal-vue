@@ -79,7 +79,7 @@ Also, the code of the Examples uses the Single-File-Component Format ("`.vue`" f
   <p>
     This slot content will be rendered right here as long as the `disabled` prop
     evaluates to `true`,<br />
-    and will be rendered at the defined destination as when it is set to `false`
+    and will be rendered at the defined destination when it is set to `false`
     (which is the default).
   </p>
 </portal>
@@ -97,12 +97,12 @@ Also, the code of the Examples uses the Single-File-Component Format ("`.vue`" f
 <portal to="destination" v-if="usePortal">
   <ul>
     <li>
-      When 'usePortal' evaluates to 'true', the portal's slot content will be
+      When 'usePortal' evaluates to 'true', the portal's slot content is
       rendered at the destination.
     </li>
     <li>
-      When it evaluates to 'false', the content will be removed from the
-      destination
+      When it evaluates to 'false', the content is removed from the
+      destination.
     </li>
   </ul>
 </portal>
