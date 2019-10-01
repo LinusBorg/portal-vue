@@ -9,13 +9,13 @@ When using [Vue's SSR capabilities](https://ssr.vuejs.org), portal-vue can't wor
 
 ### Disabling the portal on the server
 
-For the aforementioned reasons, starting with <Badge text="2.1.2" />, content won't be cached in the Wormhole anymore when on the server. Consequently, the HTML rendered by the server won't contain any DOM nodes in place of any `<portal-target>`
+For the aforementioned reasons, starting with <Badge text="2.1.2" />, content won't be cached in the Wormhole anymore when on the server. Consequently, the HTML rendered by the server won't contain any DOM nodes in place of any `<portal-target>`.
 
 ### Handling on the client
 
 We want to display the `<portal-target>` content on the client, though. In order to prevent any hydration mismatches, we can use a _really_ tiny [component called `<no-ssr>`](https://github.com/egoist/vue-no-ssr), written by [@egoist](https://github.com/egoist), which can solve this problem.
 
-We wrap oour `<portal-target>` elements in it, and it will prevent rendering on the server as well as on the client during hydration, preventing the error described above. Immediatly _after_ hyration, it will render the previously "hidden" content, so that the `<portal-target>` will render its content. Usually the user can hardly notice this as the update is near-immediate.
+We wrap oour `<portal-target>` elements in it, and it will prevent rendering on the server as well as on the client during hydration, preventing the error described above. Immediately _after_ hyration, it will render the previously "hidden" content, so that the `<portal-target>` will render its content. Usually the user can hardly notice this as the update is near-immediate.
 
 Example:
 
