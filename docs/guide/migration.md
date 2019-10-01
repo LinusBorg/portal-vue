@@ -26,9 +26,9 @@ You can also check for this programmatically with [`Wormhole.hasSource() / .hasT
 
 ### MountingPortal
 
-The new `<MountingPortal>` component is a wrapper around the normal `<Portal>`. It's job is to mount a `<PortalTarget>` for the `<Portal>` to send its content to.
+The new `<MountingPortal>` component is a wrapper around the normal `<Portal>`. Its job is to mount a `<PortalTarget>` for the `<Portal>` to send its content to.
 
-This job was previously solved through the `targetEl` prop on the `<Portal>` itself, but the functionality was insuffient and broke more easily.
+This job was previously solved through the `targetEl` prop on the `<Portal>` itself, but the functionality was insufficient and broke more easily.
 
 [See API Docs for MountingPortal](../api/mounting-portal.md)
 
