@@ -44,7 +44,7 @@ This can be useful if `<portal-target>`s wrapper element is creating problem for
 <portal-target name="destination" slim />
 ```
 
-The `slim` property also works on `<portal>` components when the are `disabled` (see [here](../api/portal.md#slim)).
+The `slim` property also works on `<portal>` components when they are `disabled` (see [here](../api/portal.md#slim)).
 
 ## Scoped Slots <Badge text="1.3.0+" />
 
@@ -143,11 +143,11 @@ It then provides the (auto-generated) name of the generated Target to its childr
 When `<MountingPortal>` is destroyed, it takes care of destroying the `<PortalTarget>`.
 
 :::tip
-When the `append` prop is set, the Target will be mounted to as a child of the specified element instead of replacing it.
+When the `append` prop is set, the Target is mounted as a child of the specified element instead of replacing it.
 
 This is great if you want to mount more than one PortalTarget there, for example.
 
-When `append` is used, `<MountingPortal>` will also remove the appended element when destroying the `<PortalTarget>`
+When `<PortalTarget>` is destroyed, and `append` is set, `<MountingPortal>` also removes the appended element.
 :::
 
 ### `targetEl` - The Old Way <Badge type="warning" text="1.* only"/>
@@ -158,7 +158,7 @@ When `append` is used, `<MountingPortal>` will also remove the appended element 
   <div id="app">
     <portal name="" target-el="#widget">
       <p>
-        PortalVue will dynamically mount an  instance of <portal-target>
+        PortalVue will dynamically mount an instance of <portal-target>
         in place of the Element with `id="widget"`,
         and this paragraph will be rendered inside of it.
       </p>
@@ -170,5 +170,5 @@ When `append` is used, `<MountingPortal>` will also remove the appended element 
 :::warning
 This feature had a couple of problems that were the trigger to revamp it for 2.0 as can be seen above.
 
-It was both a bit buggy and made the code harder to maintain, so we extracted it into a separate component for 2.0
+It was both a bit buggy and made the code harder to maintain, so we extracted it into a separate component for 2.0.
 :::
