@@ -31,7 +31,7 @@ module.exports = {
           { text: 'Getting Started', link: '/guide/getting-started' },
           { text: "What's new in 2.0", link: '/guide/migration' },
           { text: 'Advanced Usage', link: '/guide/advanced' },
-          { text: 'SSR', link: '/guide/SSR' },
+          { text: 'SSR', link: '/guide/ssr' },
           { text: 'Caveats', link: '/guide/caveats' },
         ],
       },
