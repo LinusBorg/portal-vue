@@ -21,7 +21,7 @@ This is the starter example from the "Getting Started" page, demonstrating the b
 
 ## Dynamic sidebar content
 
-By selectively rendering different `<Portal>` components that all send to the same `<PortalTarget>` (but not at the same time), we can replace the `<PortalTarget>`'s content on demand, e.g. to put something into a sidebar area from teh main component:
+By selectively rendering different `<Portal>` components that all send to the same `<PortalTarget>` (but not at the same time), we can replace the `<PortalTarget>`'s content on demand, e.g. to put something into a sidebar area from the main component:
 
 ## More to follow
 
