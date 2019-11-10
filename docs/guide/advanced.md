@@ -88,7 +88,7 @@ You can pass transitions to a `<portal>` without problems. It will behave just t
 However, if you use a `<portal-target>` for multiple `<portal>`s, you likely want to define the transition on the target end instead. This is also supported.
 
 ::: warning
-This API underwent a significant change in the 2.0.0 release. Below, examples for both old and new snytax are given. Keep an eye on the version badges next to them.
+This API underwent a significant change in the 2.0.0 release. Below, examples for both old and new syntax are given. Keep an eye on the version badges next to them.
 :::
 
 #### New Syntax <Badge text="2.0.0+" />
