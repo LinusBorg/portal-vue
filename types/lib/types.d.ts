@@ -22,7 +22,7 @@ export interface Transport {
 }
 export interface TransportVector {
     to: string;
-    from: string;
+    from?: string;
 }
 export declare type PropWithComponent = VueConstructor<Vue> | ComponentOptions<Vue> | string;
 export declare type PortalProps = Partial<{

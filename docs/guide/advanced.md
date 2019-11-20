@@ -140,7 +140,7 @@ It then provides the (auto-generated) name of the generated Target to its childr
 </aside>
 ```
 
-When `<MountingPortal>` is destroyed, it takes are of destroying the `<PortalTarget>`.
+When `<MountingPortal>` is destroyed, it takes care of destroying the `<PortalTarget>`.
 
 :::tip
 When the `append` prop is set, the Target will be mounted to as a child of the specified element instead of replacing it.

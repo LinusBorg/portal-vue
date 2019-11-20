@@ -84,7 +84,7 @@ describe('PortalTarget', function() {
   it('emits change event', function() {
     const wrapper = createWrapper()
 
-    const vNodes = Object.freeze([generateVNode()[0], generateVNode()[0]])
+    const vNodes = Object.freeze([generateVNode()[0]])
     Vue.set(Wormhole.transports, 'target', [
       {
         to: 'target',
@@ -94,7 +94,7 @@ describe('PortalTarget', function() {
     ])
 
     return Vue.nextTick().then(() => {
-      expect(wrapper.emitted().change[0][0]).toEqual(expect.any(Boolean))
+      expect(wrapper.emitted().change[0][0]).toBe(true)
     })
   })
 

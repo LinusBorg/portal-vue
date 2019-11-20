@@ -34,7 +34,7 @@ export interface Transport {
 
 export interface TransportVector {
   to: string
-  from: string
+  from?: string
 }
 
 export type PropWithComponent =

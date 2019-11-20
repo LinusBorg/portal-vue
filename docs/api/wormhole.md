@@ -10,10 +10,6 @@ The Wormhole is not a component, it's an object that connects the `<Portal>`s to
 
 Usually, you will never need to use this object, but you _can_ use this object to programmatically send content to a `<PortalTarget>`, check weither a target exists, and other stuff.
 
-:::tip Hint
-This feature was introduced with version `1.1.0`
-:::
-
 :::warning Public API
 The wormhole object exposes quite a few properties and methods. With regard to semver, only the properties and methods documented below are considered part of the public API.
 
@@ -28,11 +24,12 @@ The `open` method accepts one argument, an object with the following properties:
 
 `Wormhole.open({to, from, passengers})`
 
-| Property   | Required | Default | Explanation                                                         |
-| ---------- | -------- | ------- | ------------------------------------------------------------------- |
-| to         | yes      |         | The name of the `<PortalTarget>` to send to                         |
-| from       | yes      |         | The name of the `<Portal>` this content comes from.                 |
-| passengers | no       |         | An array of vNodes - the content to be sent to the `<PortalTarget>` |
+| Property   | Required | Default  | Explanation                                                         |
+| ---------- | -------- | -------- | ------------------------------------------------------------------- |
+| to         | yes      |          | The name of the `<PortalTarget>` to send to                         |
+| from       | yes      |          | The name of the `<Portal>` this content comes from.                 |
+| passengers | yes      |          | An array of vNodes - the content to be sent to the `<PortalTarget>` |
+| order      | no       | Infinity | a number indicating the order when multipe sources for a target are used |
 
 Even if you use this method programmatically and there is not source `<Portal>`, you still have to provide `from` - every content sent through the wormhole needs a source.
 
@@ -61,6 +58,11 @@ This is the programmatic equivalent of the following:
   <p>This will be displayed in the Target!</p>
 </portal>
 ```
+
+::: tip Server-Side Rendering
+For the reasons layed out in [the section about SSR](../guide/SSR.md), this method won't do anything during Server-Side Rendering. Portal'ing of the content will only happen on the client.
+Make sure to Read the linked section for more information.
+:::
 
 ### close()
 
@@ -109,7 +111,7 @@ methods: {
 }
 ```
 
-### hasTarget() <Badge text="2.0.0+"/>
+### hasSource() <Badge text="2.0.0+"/>
 
 `Wormhole.hasSource(from)`
 
@@ -121,6 +123,11 @@ Example:
 Wormhole.hasSource('origin')
 // => true/false
 ```
+
+::: tip Server-Side Rendering
+For the reasons layed out in [the section about SSR](../guide/SSR.md), this method will aleways return `false` during Server-Side Rendering.
+Make sure to Read the linked section for more information.
+:::
 
 ### hasTarget() <Badge text="changed in 2.0.0" type=warning />
 
@@ -134,3 +141,26 @@ Example:
 Wormhole.hasTarget('destination')
 // => true/false
 ```
+
+::: tip Server-Side Rendering
+For the reasons layed out in [the section about SSR](../guide/SSR.md), this method will aleways return `false` during Server-Side Rendering.
+Make sure to Read the linked section for more information.
+:::
+
+### hasContentFor() <Badge text="changed in 2.1.0" type=warning />
+
+`Wormhole.hasContentFor(to)`
+
+Returns `true` if there's a `<PortalTarget>` with a name of `to` _and_ it currently has content to show.
+
+Example:
+
+```javascript
+Wormhole.hasContentFor('destination')
+// => true/false
+```
+
+::: tip Server-Side Rendering
+For the reasons layed out in [the section about SSR](../guide/SSR.md), this method will aleways return `false` during Server-Side Rendering.
+Make sure to Read the linked section for more information.
+:::

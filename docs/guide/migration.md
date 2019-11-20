@@ -4,7 +4,7 @@ prev: ./caveats
 next: false
 ---
 
-## About 2.0.0
+# About 2.0.0
 
 Version 2.0.0 doesn't introduce many new features, but some - and also, some breaking changes - some in the form of different behaviour, some in the form of removal of functionality we deem to not be worth their weight.
 

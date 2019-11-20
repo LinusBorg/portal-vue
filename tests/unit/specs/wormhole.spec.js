@@ -100,13 +100,51 @@ describe('Wormhole', function() {
     expect(wormhole.transports).toEqual({ target: [] })
   })
 
+  it('removes content on close() when force=true and from=undefined', () => {
+    wormhole.open({
+      from: 'test-portal',
+      to: 'target',
+      passengers: ['Test'],
+    })
+
+    wormhole.close(
+      {
+        to: 'target',
+      },
+      true
+    ) // force argument
+    expect(wormhole.transports).toEqual({ target: [] })
+  })
+
+  it('closes all transports to the same target when force=true and from=undefined', () => {
+    wormhole.open({
+      from: 'test-portal1',
+      to: 'target',
+      passengers: ['Test1'],
+    })
+
+    wormhole.open({
+      from: 'test-portal2',
+      to: 'target',
+      passengers: ['Test2'],
+    })
+
+    wormhole.close(
+      {
+        to: 'target',
+      },
+      true
+    ) // force argument
+    expect(wormhole.transports).toEqual({ target: [] })
+  })
+
   it('hasTarget()', function() {
     const check1 = wormhole.hasTarget('target')
     expect(check1).toBe(false)
 
     wormhole.registerTarget('target', new Vue({}))
     const check2 = wormhole.hasTarget('target')
-    expect(check2).toEqual(expect.any(Object))
+    expect(check2).toEqual(true)
 
     wormhole.unregisterTarget('target')
     const check3 = wormhole.hasTarget('target')
@@ -119,10 +157,25 @@ describe('Wormhole', function() {
 
     wormhole.registerSource('source', new Vue({}))
     const check2 = wormhole.hasSource('source')
-    expect(check2).toEqual(expect.any(Object))
+    expect(check2).toEqual(true)
 
     wormhole.unregisterSource('source')
     const check3 = wormhole.hasSource('source')
     expect(check3).toEqual(false)
+  })
+
+  it('hasContentFor() returns boolean depending on content', () => {
+    expect(wormhole.hasContentFor('test')).toBe(false)
+    wormhole.open({
+      to: 'test',
+      from: 'test-source',
+      passengers: ['fakeVNode'],
+    })
+    expect(wormhole.hasContentFor('test')).toBe(true)
+    wormhole.close({
+      to: 'test',
+      from: 'test-source',
+    })
+    expect(wormhole.hasContentFor('test')).toBe(false)
   })
 })

@@ -23,6 +23,10 @@ This is the starter example from the "Getting Started" page, demonstrating the b
 
 By selectively rendering different `<Portal>` components that all send to the same `<PortalTarget>` (but not at the same time), we can replace the `<PortalTarget>`'s content on demand, e.g. to put something into a sidebar area from teh main component:
 
+::: warning Missing
+The example is still missing, haven't gotten around to migrating it from [this codepen of v1](https://codepen.io/LinusBorg/pen/xdQZqa)
+:::
+
 ## More to follow
 
-More examples are in the works and will follow soon!
+More examples will hopefully follow soon. Send me some suggestions!

@@ -36,6 +36,15 @@ function mountScenario(Component, options = {}, all = false) {
 
 describe('Integration Tests', () => {
   beforeEach(() => {
+    const el = document.querySelector('#target')
+    if (el) {
+      el.parentNode.removeChild(el)
+    }
+    // ad a fresh version to the body
+    const newEl = document.createElement('DIV')
+    newEl.id = 'target'
+    document.body.appendChild(newEl)
+
     Wormhole.transports = {}
     Wormhole.targets = {}
     Wormhole.sources = {}
@@ -158,5 +167,32 @@ describe('Integration Tests', () => {
     expect(pWrapper.length).toBe(2)
     expect(pWrapper.at(0).text()).toBe('Content2')
     expect(pWrapper.at(1).text()).toBe('Content1')
+  })
+
+  it('MountingPortal sets parent of PortalTarget to its parent', async () => {
+    const spy = jest.fn()
+    const Component = {
+      template: `
+      <div>
+        <MountingPortal mountTo="#target" >
+          <Child />
+        </MountingPortal>
+      </div>
+      `,
+      components: {
+        Child: {
+          template: `<div />`,
+          created() {
+            spy(this.$parent.$parent)
+          },
+        },
+      },
+    }
+    const { wrapper } = mountScenario(Component)
+
+    await Vue.nextTick()
+    const parent = spy.mock.calls[0][0]
+    expect(parent).toBeDefined()
+    expect(spy.mock.calls[0][0]).toBe(wrapper.vm)
   })
 })

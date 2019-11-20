@@ -11,6 +11,12 @@ next: ./advanced
 PortalVue is a set of two components that allow you to render a component's template
 (or a part of it) anywhere in the document - even outside the part controlled by your Vue App!
 
+::: tip Alternative: VueSimplePortal
+`PortalVue` offers quite a lot of functionality allowing for some creative use cases. However, for the most common use case (render .e.g a modal at the end of `<body>`), most of that isn't required.
+
+So if you are just looking for a solution to that one problem, have a look at my new second portal project, [`@linusborg/vue-simple-portal`](https://github.com/LinusBorg/vue-simple-portal)
+:::
+
 ## Setup
 
 Install Package:

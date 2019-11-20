@@ -136,7 +136,7 @@ describe('MountingPortal', () => {
     )
   })
 
-  it('recycles an existing target if one wiht the same name is found', () => {
+  it('recycles an existing target if one with the same name is found', () => {
     const name = 'CustomTarget'
     wormhole.targets = {
       [name]: true,
@@ -179,5 +179,34 @@ describe('MountingPortal', () => {
       },
     })
     expect(wormhole.open).not.toHaveBeenCalled()
+  })
+
+  it('Passes all target props to the PortalTarget instance', async () => {
+    const { provider } = mountComp(MountingPortal, {
+      propsData: {
+        mountTo: '#target',
+        multiple: true,
+        targetSlim: true,
+        targetTag: 'span',
+        targetSlotProps: { slotProps: true },
+        transition: 'fade',
+      },
+      slots: {
+        default: '<p>Test</p>',
+      },
+    })
+
+    await Vue.nextTick()
+
+    const target = provider.vm.portalTarget
+
+    expect(target.$props).toMatchObject({
+      name: expect.any(String),
+      multiple: true,
+      slim: true,
+      tag: 'span',
+      slotProps: expect.objectContaining({ slotProps: true }),
+      transition: 'fade',
+    })
   })
 })

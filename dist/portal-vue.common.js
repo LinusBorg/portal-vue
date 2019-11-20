@@ -2,7 +2,7 @@
  /*! 
   * portal-vue © Thorsten Lünborg, 2019 
   * 
-  * Version: 2.0.0
+  * Version: 2.1.6
   * 
   * LICENCE: MIT 
   * 
@@ -52,6 +52,7 @@ function _nonIterableSpread() {
   throw new TypeError("Invalid attempt to spread non-iterable instance");
 }
 
+var inBrowser = typeof window !== 'undefined';
 function freeze(item) {
   if (Array.isArray(item) || _typeof(item) === 'object') {
     return Object.freeze(item);
@@ -95,11 +96,12 @@ var Wormhole = Vue.extend({
       transports: transports,
       targets: targets,
       sources: sources,
-      trackInstances: true
+      trackInstances: inBrowser
     };
   },
   methods: {
     open: function open(transport) {
+      if (!inBrowser) return;
       var to = transport.to,
           from = transport.from,
           passengers = transport.passengers,
@@ -136,7 +138,7 @@ var Wormhole = Vue.extend({
       var force = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
       var to = transport.to,
           from = transport.from;
-      if (!to || !from) return;
+      if (!to || !from && force === false) return;
 
       if (!this.transports[to]) {
         return;
@@ -156,6 +158,8 @@ var Wormhole = Vue.extend({
       }
     },
     registerTarget: function registerTarget(target, vm, force) {
+      if (!inBrowser) return;
+
       if (this.trackInstances && !force && this.targets[target]) {
         console.warn("[portal-vue]: Target ".concat(target, " already exists"));
       }
@@ -166,6 +170,8 @@ var Wormhole = Vue.extend({
       this.$delete(this.targets, target);
     },
     registerSource: function registerSource(source, vm, force) {
+      if (!inBrowser) return;
+
       if (this.trackInstances && !force && this.sources[source]) {
         console.warn("[portal-vue]: source ".concat(source, " already exists"));
       }
@@ -176,10 +182,13 @@ var Wormhole = Vue.extend({
       this.$delete(this.sources, source);
     },
     hasTarget: function hasTarget(to) {
-      return !!this.targets[to] && this.targets[to][0];
+      return !!(this.targets[to] && this.targets[to][0]);
     },
     hasSource: function hasSource(to) {
-      return !!this.sources[to] && this.sources[to][0];
+      return !!(this.sources[to] && this.sources[to][0]);
+    },
+    hasContentFor: function hasContentFor(to) {
+      return !!this.transports[to] && !!this.transports[to].length;
     },
     // Internal
     $_getTransportIndex: function $_getTransportIndex(_ref) {
@@ -236,7 +245,11 @@ var Portal = Vue.extend({
     }
   },
   created: function created() {
-    wormhole.registerSource(this.name, this);
+    var _this = this;
+
+    this.$nextTick(function () {
+      wormhole.registerSource(_this.name, _this);
+    });
   },
   mounted: function mounted() {
     if (!this.disabled) {
@@ -346,11 +359,15 @@ var PortalTarget = Vue.extend({
     };
   },
   created: function created() {
-    wormhole.registerTarget(this.name, this);
+    var _this = this;
+
+    this.$nextTick(function () {
+      wormhole.registerTarget(_this.name, _this);
+    });
   },
   watch: {
     ownTransports: function ownTransports() {
-      this.$emit('change', this.children().length > 1);
+      this.$emit('change', this.children().length > 0);
     },
     name: function name(newVal, oldVal) {
       /**
@@ -362,12 +379,12 @@ var PortalTarget = Vue.extend({
     }
   },
   mounted: function mounted() {
-    var _this = this;
+    var _this2 = this;
 
     if (this.transition) {
       this.$nextTick(function () {
         // only when we have a transition, because it causes a re-render
-        _this.firstRender = false;
+        _this2.firstRender = false;
       });
     }
   },
@@ -477,6 +494,9 @@ var MountingPortal = Vue.extend({
       type: Boolean,
       default: false
     },
+    targetSlim: {
+      type: Boolean
+    },
     targetSlotProps: {
       type: Object,
       default: function _default() {
@@ -489,9 +509,6 @@ var MountingPortal = Vue.extend({
     },
     transition: {
       type: [String, Object, Function]
-    },
-    transitionGroup: {
-      type: Boolean
     }
   },
   created: function created() {
@@ -528,12 +545,13 @@ var MountingPortal = Vue.extend({
 
     var _props = pick(this.$props, targetProps);
 
+    _props.slim = this.targetSlim;
     _props.tag = this.targetTag;
-    _props.slotSprop = this.targetSlotProps;
+    _props.slotProps = this.targetSlotProps;
     _props.name = this.to;
     this.portalTarget = new PortalTarget({
       el: el,
-      // parent: this,
+      parent: this.$parent || this,
       propsData: _props
     });
   },

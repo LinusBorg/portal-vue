@@ -12,8 +12,9 @@ export declare const Wormhole: import("vue").VueConstructor<{
     unregisterTarget(target: string): void;
     registerSource(source: string, vm: Vue, force?: boolean | undefined): void;
     unregisterSource(source: string): void;
-    hasTarget(to: string): Vue;
-    hasSource(to: string): Vue;
+    hasTarget(to: string): true;
+    hasSource(to: string): true;
+    hasContentFor(to: string): boolean;
     $_getTransportIndex({ to, from }: TransportVector): number;
 } & Record<never, any> & Vue>;
 declare const wormhole: import("vue/types/vue").CombinedVueInstance<{
@@ -28,8 +29,9 @@ declare const wormhole: import("vue/types/vue").CombinedVueInstance<{
     unregisterTarget(target: string): void;
     registerSource(source: string, vm: Vue, force?: boolean | undefined): void;
     unregisterSource(source: string): void;
-    hasTarget(to: string): Vue;
-    hasSource(to: string): Vue;
+    hasTarget(to: string): true;
+    hasSource(to: string): true;
+    hasContentFor(to: string): boolean;
     $_getTransportIndex({ to, from }: TransportVector): number;
 } & Record<never, any> & Vue, object, object, object, Record<never, any>>;
 export { wormhole };

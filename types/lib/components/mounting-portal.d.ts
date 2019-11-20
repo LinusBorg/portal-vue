@@ -16,10 +16,10 @@ declare const _default: VueConstructor<{
     tag: string;
     to: string;
     multiple: boolean;
+    targetSlim: boolean;
     targetSlotProps: any;
     targetTag: string;
     transition: PropWithComponent;
-    transitionGroup: boolean;
 } & Vue & {
     portalTarget: any;
 }>;

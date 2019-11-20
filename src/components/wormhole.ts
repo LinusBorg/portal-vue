@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import { freeze, stableSort } from '../utils'
+import { freeze, inBrowser, stableSort } from '../utils'
 import {
   Transports,
   Transport,
@@ -17,10 +17,11 @@ export const Wormhole = Vue.extend({
     transports,
     targets,
     sources,
-    trackInstances: true,
+    trackInstances: inBrowser,
   }),
   methods: {
     open(transport: TransportInput) {
+      if (!inBrowser) return
       const { to, from, passengers, order = Infinity } = transport
       if (!to || !from || !passengers) return
 
@@ -53,7 +54,7 @@ export const Wormhole = Vue.extend({
 
     close(transport: TransportVector, force = false) {
       const { to, from } = transport
-      if (!to || !from) return
+      if (!to || (!from && force === false)) return
       if (!this.transports[to]) {
         return
       }
@@ -71,6 +72,7 @@ export const Wormhole = Vue.extend({
       }
     },
     registerTarget(target: string, vm: Vue, force?: boolean): void {
+      if (!inBrowser) return
       if (this.trackInstances && !force && this.targets[target]) {
         console.warn(`[portal-vue]: Target ${target} already exists`)
       }
@@ -80,6 +82,7 @@ export const Wormhole = Vue.extend({
       this.$delete(this.targets, target)
     },
     registerSource(source: string, vm: Vue, force?: boolean): void {
+      if (!inBrowser) return
       if (this.trackInstances && !force && this.sources[source]) {
         console.warn(`[portal-vue]: source ${source} already exists`)
       }
@@ -89,12 +92,14 @@ export const Wormhole = Vue.extend({
       this.$delete(this.sources, source)
     },
     hasTarget(to: string) {
-      return !!this.targets[to] && this.targets[to][0]
+      return !!(this.targets[to] && this.targets[to][0])
     },
     hasSource(to: string) {
-      return !!this.sources[to] && this.sources[to][0]
+      return !!(this.sources[to] && this.sources[to][0])
     },
-
+    hasContentFor(to: string) {
+      return !!this.transports[to] && !!this.transports[to].length
+    },
     // Internal
     $_getTransportIndex({ to, from }: TransportVector): number {
       for (const i in this.transports[to]) {

@@ -1,5 +1,6 @@
 <template lang="html">
-  <div class="split-container">
+  <div class="split-container" ref="cont">
+    <resize-observer @notify="handleResize"/>
     <button
       class="split-tab-button"
       :class="isActive('example')"
@@ -24,7 +25,7 @@
     >
       Example+Code
     </button>
-    <div class="split">
+    <div class="split" :class="column ? 'column' : ''">
       <div
         v-if="exampleVisible"
         class="split-example"
@@ -50,6 +51,8 @@ export default Vue.extend({
   data() {
     return {
       display: this.active,
+      column: false,
+      width: Infinity,
     }
   },
   props: {
@@ -58,15 +61,37 @@ export default Vue.extend({
       default: 'example',
     },
   },
+  mounted() {
+    this.$nextTick(this.handleResize)
+  },
   computed: {
+    /**
+     * @return {boolean}
+     */
     exampleVisible() {
       return this.display === 'example' || this.display === 'both'
     },
+    /**
+     * @returns { boolean }
+     */
     codeVisible() {
       return this.display === 'code' || this.display === 'both'
     },
   },
   methods: {
+    handleResize() {
+      const el = this.$refs.cont
+      console.log('yay', el)
+      if (el && el instanceof HTMLElement) {
+        const { width } = el.getBoundingClientRect()
+        this.width = width
+        if (width < 800) {
+          this.column = true
+        } else {
+          this.column = false
+        }
+      }
+    },
     /**
      * @param {string} type
      */
@@ -82,6 +107,10 @@ export default Vue.extend({
   },
 })
 </script>
+
+<style>
+@import '~vue-resize/dist/vue-resize.css';
+</style>
 
 <style lang="stylus" scoped>
 .split-container {
@@ -112,10 +141,18 @@ export default Vue.extend({
   display: flex;
   margin: 0 -10px;
 
+  &.column {
+    flex-direction: column;
+
+    & > div {
+      width: auto;
+    }
+  }
+
   & > div {
     padding: 0 10px;
-    flex-grow: 1;
-    width: 50%;
+    flex: 1 1 auto;
+    width: 50%; // width: 50%;
   }
 }
 

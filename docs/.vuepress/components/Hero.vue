@@ -43,7 +43,7 @@
     </div>
     <h1 class="h1">
       PortalVue
-      <Badge :text="$__VERSION__" type="warn" vertical="middle"/>
+      <Badge :text="$__VERSION__" type="tip" vertical="middle"/>
     </h1>
     <p
       style="text-align: center;"

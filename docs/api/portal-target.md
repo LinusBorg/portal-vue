@@ -48,6 +48,11 @@ You should use the `order` prop on the `<Portal>` to define the order in which t
 </div>
 ```
 
+:::warning Usage with `slim`
+`multiple` may not behave as expected when its `<PortalTarget>` is also in `slim` mode because `slim` attempts to 
+assign the content's root node as the `<PortalTarget>`'s root node, thereby _only_ rendering the first of all incoming nodes.
+:::
+
 ### `name`
 
 | Type     | Required | Default |
@@ -154,7 +159,7 @@ plain wrapper element that is usually rendered.
 
 It accepts:
 
-- a `String` value: will render `<transition-group>` with the `name` prop set to that string.
+- a `String` value: will render a globally registered component of this name.
 - a `Component`: will render `<transition-group>` with the object's content passed as props.
 
 Example with string:
@@ -168,7 +173,7 @@ Example with string:
 </portal-target>
 ```
 
-Example with Component
+Example with Component:
 
 <!-- prettier-ignore -->
 ```html
@@ -183,8 +188,8 @@ computed: {
   fadeTransition() {
     return {
       functional: true,
-      render(h) {
-        h('transition', { name: 'fade', mode: 'out-in' })
+      render(h, context) {
+        return h('transition', { props: { name: 'fade', mode: 'out-in' } }, context.children)
       }
     }
   },
@@ -264,7 +269,7 @@ Example:
 ```html {1-3}
 <portal-target name="destination" :slotScope="{ message: 'Hi!' }">
   <p slot-scope="props">
-    {{props.mesage}} This is rendered when no other content is available.
+    {{props.message}} This is rendered when no other content is available.
   </p>
 </portal-target>
 ```
@@ -285,8 +290,6 @@ Example:
 Emitted everytime the component re-renders because the content from the `<Portal>` changed.
 
 It receives two arguments, each is a `Boolean`, indicating the absense or presence of content for the target.
-
-The first argument is represents the current contents, the second one the previous contents (just like the arguments of a `watch` handler in a Vue component)
 
 <!-- prettier-ignore -->
 ```html {4}
