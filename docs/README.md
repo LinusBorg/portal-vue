@@ -25,7 +25,7 @@ sidebar: false
 <portal-target name="destination">
   <!--
   This component can be located anwhere in your App
-  (i.e. right before the </body> tag, for good for overlays).
+  (i.e. right before the </body> tag, good for overlays).
   The slot content of the above portal component will be rendered here.
   -->
 </portal-target>
