@@ -15,7 +15,7 @@ For the aforementioned reasons, starting with <Badge text="2.1.2" />, content wo
 
 We want to display the `<portal-target>` content on the client, though. In order to prevent any hydration mismatches, we can use a _really_ tiny [component called `<no-ssr>`](https://github.com/egoist/vue-no-ssr), written by [@egoist](https://github.com/egoist), which can solve this problem.
 
-We wrap oour `<portal-target>` elements in it, and it will prevent rendering on the server as well as on the client during hydration, preventing the error described above. Immediatly _after_ hyration, it will render the previously "hidden" content, so that the `<portal-target>` will render its content. Usually the user can hardly notice this as the update is near-immediate.
+We wrap our `<portal-target>` elements in it, and it will prevent rendering on the server as well as on the client during hydration, preventing the error described above. Immediatly _after_ hyration, it will render the previously "hidden" content, so that the `<portal-target>` will render its content. Usually the user can hardly notice this as the update is near-immediate.
 
 Example:
 
