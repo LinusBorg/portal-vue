@@ -48,6 +48,11 @@ You should use the `order` prop on the `<Portal>` to define the order in which t
 </div>
 ```
 
+:::warning Usage with `slim`
+`multiple` may not behave as expected when its `<PortalTarget>` is also in `slim` mode because `slim` attempts to 
+assign the content's root node as the `<PortalTarget>`'s root node, thereby _only_ rendering the first of all incoming nodes.
+:::
+
 ### `name`
 
 | Type     | Required | Default |
