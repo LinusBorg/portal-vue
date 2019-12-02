@@ -28,7 +28,7 @@ yarn add portal-vue
 ```
 
 ```javascript
-import PortalVue from 'portal-vue'
+import PortalVue from 'vue-portal'
 Vue.use(PortalVue)
 ```
 
