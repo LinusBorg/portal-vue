@@ -52,3 +52,10 @@ export function pick<T extends object, K extends keyof T>(
     {} as Pick<T, K>
   )
 }
+
+export function isHTMLElement(target: HTMLElement | string) {
+  if (typeof target === 'string') {
+    return false
+  }
+  return target && target.nodeType && target.nodeType === 1
+}

@@ -62,9 +62,9 @@ That might lead to some unpredictable behaviour, use at your own risk
 
 | Type     | Required | Default |
 | -------- | -------- | ------- |
-| `String` | yes      | `false` |
+| `String`/`HTMLElement` | yes      | `false` |
 
-A querySelector String defining the DOM element to mount the `<PortalTarget>` to.
+A querySelector String or HTMLElement defining the DOM element to mount the `<PortalTarget>` to.
 
 ## Portal Props
 

@@ -3,7 +3,7 @@ import { VNode, VueConstructor, PropOptions } from 'vue'
 import Portal from './portal'
 import PortalTarget from './portal-target'
 import { wormhole } from './wormhole'
-import { pick } from '@/utils'
+import { pick, isHTMLElement } from '@/utils'
 
 import { PropWithComponent } from '../types'
 
@@ -12,6 +12,7 @@ let _id = 0
 export type withPortalTarget = VueConstructor<
   Vue & {
     portalTarget: any
+    mountTo: any
   }
 >
 
@@ -35,7 +36,9 @@ export default (Vue as withPortalTarget).extend({
     bail: {
       type: Boolean,
     },
-    mountTo: { type: String, required: true },
+    mountTo: {
+      required: true,
+    },
 
     // Portal
     disabled: { type: Boolean },
@@ -65,7 +68,9 @@ export default (Vue as withPortalTarget).extend({
   },
   created() {
     if (typeof document === 'undefined') return
-    let el: HTMLElement | null = document.querySelector(this.mountTo)
+    let el: HTMLElement | null = isHTMLElement(this.mountTo)
+      ? this.mountTo
+      : document.querySelector(this.mountTo)
 
     if (!el) {
       console.error(
