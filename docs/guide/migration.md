@@ -40,8 +40,8 @@ Setting a Transition for the `<PortalTarget>` now requires a locally or globally
 
 More info:
 
-- [Guide](../api/portal-target.md#transistion)
-- [API Docs](./advanced.md#transitions)
+- [Guide](./advanced.md#transitions)
+- [API Docs](../api/portal-target.md#transistion)
 
 ### PortalTarget `@change` event
 
