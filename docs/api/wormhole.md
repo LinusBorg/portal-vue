@@ -8,7 +8,7 @@ next: false
 
 The Wormhole is not a component, it's an object that connects the `<Portal>`s to their `<PortalTarget>`s.
 
-Usually, you will never need to use this object, but you _can_ use this object to programmatically send content to a `<PortalTarget>`, check weither a target exists, and other stuff.
+Usually, you will never need to use this object, but you _can_ use this object to programmatically send content to a `<PortalTarget>`, check whether a target exists, and other stuff.
 
 :::warning Public API
 The wormhole object exposes quite a few properties and methods. With regard to semver, only the properties and methods documented below are considered part of the public API.
