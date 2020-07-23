@@ -22,6 +22,10 @@ Due to the way that Vue resolves provides from parent components, it would look 
 
 For the same reason, `this.$parent` will not give your the parent of the `<Portal>`, it will give your the `<PortalTarget>`, so code relying on `$parent` might break
 
+### [vue-router](https://router.vuejs.org)
+
+`<router-view>` internally walks the $parent chain to find out how many (if any) parent <router-view> components there are. Therefore `<router-view>` inside a `<portal>` will not be able to properly match its nested routes. See [#289](https://github.com/LinusBorg/portal-vue/issues/289) for discussion.
+
 ## `$refs`
 
 In rare cases, you might want to access a DOM element / component that is within the Portal content via a `ref`. This works, but sometimes requires a double `$nextTick`:
