@@ -125,7 +125,7 @@ Wormhole.hasSource('origin')
 ```
 
 ::: tip Server-Side Rendering
-For the reasons layed out in [the section about SSR](../guide/SSR.md), this method will aleways return `false` during Server-Side Rendering.
+For the reasons layed out in [the section about SSR](../guide/SSR.md), this method will always return `false` during Server-Side Rendering.
 Make sure to Read the linked section for more information.
 :::
 
@@ -143,7 +143,7 @@ Wormhole.hasTarget('destination')
 ```
 
 ::: tip Server-Side Rendering
-For the reasons layed out in [the section about SSR](../guide/SSR.md), this method will aleways return `false` during Server-Side Rendering.
+For the reasons layed out in [the section about SSR](../guide/SSR.md), this method will always return `false` during Server-Side Rendering.
 Make sure to Read the linked section for more information.
 :::
 
@@ -161,6 +161,6 @@ Wormhole.hasContentFor('destination')
 ```
 
 ::: tip Server-Side Rendering
-For the reasons layed out in [the section about SSR](../guide/SSR.md), this method will aleways return `false` during Server-Side Rendering.
+For the reasons layed out in [the section about SSR](../guide/SSR.md), this method will always return `false` during Server-Side Rendering.
 Make sure to Read the linked section for more information.
 :::
