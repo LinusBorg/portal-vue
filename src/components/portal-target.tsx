@@ -1,5 +1,4 @@
 import {
-  computed,
   defineComponent,
   PropType,
   h,
@@ -34,11 +33,12 @@ export default defineComponent({
     const wormhole = useWormhole()
 
     const allTransports = wormhole.transports
-    const myTransports = computed(() => {
+
+    const myTransports = () => {
       const transports = allTransports[props.name] ?? []
       const vnodes = transports.flatMap((t) => t.passengers(props.slotProps))
       return vnodes
-    })
+    }
     return () => {
       const transition = props.transition
         ? typeof props.transition === 'string'
@@ -46,9 +46,9 @@ export default defineComponent({
           : props.transition
         : undefined
       if (transition) {
-        return h(transition, myTransports.value)
+        return h(transition, myTransports)
       } else {
-        return myTransports.value
+        return myTransports()
       }
     }
   },
