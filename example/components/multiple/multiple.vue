@@ -6,7 +6,7 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import { defineComponent } from 'vue'
 import Src from './source.vue'
 import Destination from './destination.vue'
 
@@ -32,7 +32,7 @@ function pickStartItems(count: number) {
   return items
 }
 
-export default Vue.extend({
+export default defineComponent({
   components: { Src, Destination },
   data() {
     const lists = []

@@ -35,10 +35,10 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import { defineComponent } from 'vue'
 import Test from '../test-component.vue'
 
-export default Vue.extend({
+export default defineComponent({
   components: { Test },
   props: {},
   data() {

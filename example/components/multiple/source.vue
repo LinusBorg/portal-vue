@@ -25,9 +25,9 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import { defineComponent } from 'vue'
 
-export default Vue.extend({
+export default defineComponent({
   props: {
     list: {
       type: Object,
@@ -48,6 +48,7 @@ export default Vue.extend({
     },
 
     togglePortal() {
+      // eslint-disable-next-line vue/no-mutating-props
       this.list.enabled = !this.list.enabled
     },
   },

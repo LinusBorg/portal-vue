@@ -1,4 +1,4 @@
-import Vue from 'vue'
+import { createApp, defineComponent, h, Transition, TransitionGroup } from 'vue'
 
 import App from './components/App.vue'
 import PortalContainer from './components/portal-container.vue'
@@ -8,7 +8,7 @@ import router from './router'
 
 import './styles/index.scss'
 
-var PortalVue =
+const PortalVue =
   process.env.NODE_ENV === 'production'
     ? require('../dist/portal-vue.common').default
     : require('../src/index.ts').default
@@ -16,51 +16,41 @@ var PortalVue =
 // const Wormhole = require('../src/index.ts').Wormhole
 // Wormhole.trackInstances = false
 
-Vue.config.productionTip = false
+// Vue.config.productionTip = false
 
-Vue.use(PortalVue)
+const app = createApp(App)
 
-Vue.component(
+app.use(router)
+
+app.use(PortalVue)
+
+app.component(
   'fade',
-  Vue.extend({
-    functional: true,
-    render: (h, { children }) => {
-      return h(
-        'transition',
-        {
-          props: {
-            mode: 'out-in',
-            name: 'fade',
-          },
-        },
-        children
-      )
-    },
+  defineComponent((_, { slots }) => {
+    return h(
+      Transition,
+      {
+        mode: 'out-in',
+        name: 'fade',
+      },
+      slots.default && slots.default()
+    )
   })
 )
 
-Vue.component(
+app.component(
   'fadeGroup',
-  Vue.extend({
-    functional: true,
-    render: (h, { children }) => {
-      return h(
-        'transition-group',
-        {
-          props: {
-            name: 'fade',
-          },
-        },
-        children
-      )
-    },
+  defineComponent((_, { slots }) => {
+    return h(
+      TransitionGroup,
+      {
+        name: 'fade',
+      },
+      slots.default && slots.default()
+    )
   })
 )
 
-Vue.component('container', PortalContainer)
+app.component('container', PortalContainer)
 
-new Vue({
-  el: '#app',
-  router,
-  render: h => h(App),
-})
+app.mount('#app')

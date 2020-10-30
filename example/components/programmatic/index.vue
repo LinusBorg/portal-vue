@@ -28,24 +28,21 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import { defineComponent, h } from 'vue'
 
 const { Wormhole } =
   process.env.NODE_ENV === 'production'
     ? require('@/../dist/portal-vue.common.js')
     : require('@/index').default
 
-export default Vue.extend({
+export default defineComponent({
   data() {
     return {}
   },
   methods: {
     open() {
       const passengers = [
-        this.$createElement(
-          'p',
-          'Test-Text from the parent, sent with a button click'
-        ),
+        h('p', 'Test-Text from the parent, sent with a button click'),
       ]
       Wormhole.open({
         to: 'programmatic-target',

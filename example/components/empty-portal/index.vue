@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import { defineComponent } from 'vue'
 // This Example is just used to test that an empty portal works as expected.
-export default Vue.extend({})
+export default defineComponent({})
 </script>

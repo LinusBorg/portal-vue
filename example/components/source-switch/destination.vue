@@ -11,10 +11,10 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import { defineComponent } from 'vue'
 import { Transport } from '@/types'
 
-export default Vue.extend({
+export default defineComponent({
   props: ['source'],
   data() {
     return {

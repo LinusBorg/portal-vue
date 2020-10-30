@@ -31,11 +31,11 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import { defineComponent } from 'vue'
 import portalSource from './source-comp.vue'
 import portalDestination from './destination.vue'
 
-export default Vue.extend({
+export default defineComponent({
   data() {
     return {
       showDestination: true,

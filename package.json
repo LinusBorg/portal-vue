@@ -67,7 +67,7 @@
     "sass-loader": "^10.0.3",
     "typescript": "~3.9.3",
     "vue": "^3.0.0-0",
-    "vue-router": "^3.0.1",
+    "vue-router": "^4.0.0-0",
     "vuepress": "1.7.1"
   },
   "gitHooks": {

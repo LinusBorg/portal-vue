@@ -12,9 +12,7 @@
     <MountingPortal mountTo="#external-target" to="external-target-name" append>
       <portal
         :disabled="!showManual"
-        slot-scope="{
-          to,
-        }"
+        slot-scope="{ to }"
         :to="to"
         name="external-portal"
       >
@@ -31,9 +29,9 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import { defineComponent } from 'vue'
 import Test from '../test-component.vue'
-export default Vue.extend({
+export default defineComponent({
   components: { Test }, // testing that `parent` option works
   data() {
     return {

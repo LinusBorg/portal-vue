@@ -29,26 +29,24 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import { defineComponent, h } from 'vue'
 import { VNode } from 'vue'
 
-export default Vue.extend({
+export default defineComponent({
   name: 'compAsRoot',
   data() {
     return { disabled: true, testProp: 'Test!!' }
   },
   components: {
-    test: Vue.extend({
+    test: defineComponent({
       props: {
         testProp: String,
       },
-      render(h): VNode {
+      render(): VNode {
         return h('DIV', [
           h(
             'p',
-            `This was rendered with a component as the root element in the portal: ${
-              this.testProp
-            }`
+            `This was rendered with a component as the root element in the portal: ${this.testProp}`
           ),
         ])
       },

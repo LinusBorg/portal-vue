@@ -37,11 +37,11 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import { defineComponent } from 'vue'
 import SourceComp from './source-comp.vue'
 import Destination from './destination.vue'
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     SourceComp,
     Destination,

@@ -12,10 +12,10 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import { defineComponent } from 'vue'
 import { routes } from '../router'
 
-export default Vue.extend({
+export default defineComponent({
   name: 'App',
   created() {
     //@ts-ignore

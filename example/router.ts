@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import VueRouter from 'vue-router'
+import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 
 import ToggleExample from './components/toggle/toggle-example.vue'
 import TargetSwitch from './components/target-switch/target-switch.vue'
@@ -17,9 +17,7 @@ import DefaultSlotContent from './components/default-content-on-target/index.vue
 import Transitions from './components/transitions/transitions.vue'
 import Multiple from './components/multiple/multiple.vue'
 
-Vue.use(VueRouter)
-
-const routes = [
+const routes: RouteRecordRaw[] = [
   {
     path: '/',
     redirect: '/toggle',
@@ -82,8 +80,8 @@ const routes = [
   },
 ]
 
-const router = new VueRouter({
-  mode: 'history',
+const router = createRouter({
+  history: createWebHistory(),
   routes,
 })
 
