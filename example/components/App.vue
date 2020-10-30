@@ -17,9 +17,10 @@ import { routes } from '../router'
 
 export default defineComponent({
   name: 'App',
-  created() {
-    //@ts-ignore
-    this.routes = routes
+  setup() {
+    return {
+      routes,
+    }
   },
 })
 </script>
