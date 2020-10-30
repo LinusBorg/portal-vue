@@ -24,32 +24,26 @@ app.use(router)
 
 app.use(PortalVue)
 
-app.component(
-  'fade',
-  defineComponent((_, { slots }) => {
-    return h(
-      Transition,
-      {
-        mode: 'out-in',
-        name: 'fade',
-      },
-      slots.default && slots.default()
-    )
-  })
-)
+app.component('fade', (_, { slots }) => {
+  return h(
+    Transition,
+    {
+      mode: 'out-in',
+      name: 'fade',
+    },
+    slots.default
+  )
+})
 
-app.component(
-  'fadeGroup',
-  defineComponent((_, { slots }) => {
-    return h(
-      TransitionGroup,
-      {
-        name: 'fade',
-      },
-      slots.default && slots.default()
-    )
-  })
-)
+app.component('fadeGroup', (_, { slots }) => {
+  return h(
+    TransitionGroup,
+    {
+      name: 'fade',
+    },
+    slots.default
+  )
+})
 
 app.component('container', PortalContainer)
 

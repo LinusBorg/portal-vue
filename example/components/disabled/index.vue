@@ -9,7 +9,7 @@
             :class="{ 'controls--link-active': !disabled }"
             @click.prevent="disabled = !disabled"
           >
-            {{ this.disabled ? 'Enable' : 'Disable' }}
+            {{ disabled ? 'Enable' : 'Disable' }}
           </a>
         </li>
       </ul>

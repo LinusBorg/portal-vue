@@ -1,11 +1,6 @@
 <template>
   <div>
-    <portal-target
-      :name="source"
-      @change="handleChange"
-      slim
-      :transition="{ name: 'fade', mode: 'out-in' }"
-    />
+    <portal-target :name="source" @change="handleChange" transition="fade" />
     <p>The current source is named: {{ currentSource }}</p>
   </div>
 </template>
