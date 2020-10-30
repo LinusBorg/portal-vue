@@ -19,7 +19,7 @@
       "@/*": ["src/*"],
       "portal-vue": ["./src/index"]
     },
-    "lib": ["es2015", "dom", "dom.iterable", "ScriptHost"]
+    "lib": ["es2019", "dom", "dom.iterable", "ScriptHost"]
   },
   "include": [
     "src/**/*.ts",

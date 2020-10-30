@@ -1,17 +1,7 @@
-import {
-  default as Vue,
-  VNode,
-  PropOptions,
-  VueConstructor,
-  ComponentOptions,
-} from 'vue'
+import { default as Vue, VNode, ComponentOptions, Slot, Component } from 'vue'
 
 export interface StringBoolMap {
   [key: string]: boolean
-}
-
-export interface VMRegister {
-  [key: string]: Readonly<Array<Vue>>
 }
 
 export interface Transports {
@@ -22,25 +12,20 @@ export interface TransportInput {
   to: string
   from: string
   order?: number
-  passengers: Array<VNode | Function>
+  passengers: Slot
 }
 
 export interface Transport {
   to: string
   from: string
   order: number
-  passengers: ReadonlyArray<VNode | Function>
+  passengers: Slot
 }
 
 export interface TransportVector {
   to: string
   from?: string
 }
-
-export type PropWithComponent =
-  | VueConstructor<Vue>
-  | ComponentOptions<Vue>
-  | string
 
 export type PortalProps = Partial<{
   disabled: boolean
@@ -58,6 +43,12 @@ export type PortalTargetProps = Partial<{
   slim: boolean
   slotProps: object
   tag: string
-  transition: PropOptions<PropWithComponent>
+  transition: Component
   transitionGroup: boolean
+}>
+
+export type Wormhole = Readonly<{
+  open: (t: Transport) => void
+  close: (t: TransportVector) => void
+  transports: Transports
 }>

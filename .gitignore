@@ -24,3 +24,6 @@ yarn-error.log*
 *.sw*
 
 TODO.md
+
+*_OLD.ts
+*_OLD.tsx
