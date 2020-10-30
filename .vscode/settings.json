@@ -1,11 +1,12 @@
 {
   "editor.formatOnSave": true,
 
-  "markdownlint.ignore": [
-    "docs/**"
-  ],
+  "markdownlint.ignore": ["docs/**"],
+
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   },
-  "todo-tree.tree.showBadges": true
+  "todo-tree.tree.showBadges": true,
+
+  "vetur.experimental.templateInterpolationService": true
 }
