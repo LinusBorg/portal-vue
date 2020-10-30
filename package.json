@@ -5,7 +5,7 @@
   "repository": "https://github.com/LinusBorg/portal-vue",
   "author": {
     "name": "Thorsten Lünborg",
-    "url": "htps://github.com/LinusBorg/"
+    "url": "https://github.com/LinusBorg/"
   },
   "private": false,
   "scripts": {
@@ -32,68 +32,49 @@
   ],
   "types": "./types/index.d.ts",
   "peerDependencies": {
-    "vue": "^2.5.18"
+    "vue": "^3.0.0-0"
   },
   "devDependencies": {
-    "@babel/runtime-corejs2": "^7.1.5",
-    "@linusborg/vue-ko-fi-button": "^0.1.0",
-    "@types/jest": "^23.1.4",
-    "@vue/cli-plugin-babel": "^3.1.0",
-    "@vue/cli-plugin-eslint": "^3.1.0",
-    "@vue/cli-plugin-typescript": "^3.1.0",
-    "@vue/cli-plugin-unit-jest": "^3.1.0",
-    "@vue/cli-service": "^3.1.0",
-    "@vue/eslint-config-prettier": "^4.0.0",
-    "@vue/eslint-config-typescript": "^3.1.0",
-    "@vue/test-utils": "^1.0.0-beta.26",
-    "babel-core": "7.0.0-bridge.0",
-    "babel-eslint": "^10.0.1",
+    "@types/jest": "^24.0.15",
+    "@typescript-eslint/eslint-plugin": "^4.6.0",
+    "@typescript-eslint/parser": "^4.6.0",
+    "@vue/cli-plugin-babel": "^4.5.8",
+    "@vue/cli-plugin-eslint": "^4.5.8",
+    "@vue/cli-plugin-typescript": "^4.5.8",
+    "@vue/cli-plugin-unit-jest": "^4.5.8",
+    "@vue/cli-service": "^4.5.8",
+    "@vue/eslint-config-prettier": "^6.0.0",
+    "@vue/eslint-config-typescript": "^7.0.0",
+    "@vue/test-utils": "^2.0.0-0",
     "babel-minify": "^0.5.0",
     "clone-deep": "^4.0.1",
-    "eslint": "^5.8.0",
-    "eslint-plugin-vue": "^5.0.0-0",
-    "lint-staged": "^7.2.0",
+    "eslint": "^6.7.2",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-vue": "^7.1.0",
+    "lint-staged": "^10.4.2",
     "merge": "^1.2.1",
-    "nanoid": "^2.0.0",
+    "nanoid": "^3.1.13",
     "node-sass": "^4.9.2",
-    "prettier-eslint": "^8.8.2",
-    "rollup": "^0.67.3",
-    "rollup-plugin-analyzer": "^2.1.0",
+    "prettier-eslint": "^11.0.0",
+    "rollup": "2.32.1",
+    "rollup-plugin-analyzer": "^3.3.0",
     "rollup-plugin-babel": "^4.0.3",
-    "rollup-plugin-commonjs": "^9.2.0",
+    "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-import-alias": "^1.0.5",
-    "rollup-plugin-node-resolve": "^3.4.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-replace": "^2.1.0",
-    "rollup-plugin-typescript2": "^0.18.0",
-    "sass-loader": "^7.0.3",
-    "ts-jest": "^23.0.0",
-    "typescript": "^3.0.0",
-    "vue": "^2.6.7",
-    "vue-class-component": "^6.2.0",
-    "vue-no-ssr": "^1.1.1",
-    "vue-property-decorator": "^7.0.0",
-    "vue-resize": "^0.4.4",
+    "rollup-plugin-typescript2": "^0.28.0",
+    "sass-loader": "^10.0.3",
+    "typescript": "~3.9.3",
+    "vue": "^3.0.0-0",
     "vue-router": "^3.0.1",
-    "vue-template-compiler": "^2.5.18",
-    "vuepress": "0.14.8"
-  },
-  "resolutions": {
-    "babel-core": "7.0.0-bridge.0",
-    "@babel/core": "^7.1.0"
+    "vuepress": "1.7.1"
   },
   "gitHooks": {
     "pre-commit": "lint-staged"
   },
   "lint-staged": {
-    "*.js": [
-      "vue-cli-service lint",
-      "git add"
-    ],
-    "*.vue": [
-      "vue-cli-service lint",
-      "git add"
-    ],
-    ".tsx?": [
+    "*.{js,jsx,vue,ts,tsx}": [
       "vue-cli-service lint",
       "git add"
     ]

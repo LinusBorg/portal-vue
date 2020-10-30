@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "target": "esnext",
-    "module": "esnext",
+    "target": "ES2019",
+    "module": "ES2020",
     "strict": true,
     "jsx": "preserve",
     "allowJs": true,
@@ -10,7 +10,6 @@
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "experimentalDecorators": true,
     "sourceMap": true,
     "baseUrl": ".",
     "types": ["node", "jest"],
@@ -20,7 +19,7 @@
       "@/*": ["src/*"],
       "portal-vue": ["./src/index"]
     },
-    "lib": ["es2015", "dom", "dom.iterable", "scripthost"]
+    "lib": ["es2015", "dom", "dom.iterable", "ScriptHost"]
   },
   "include": [
     "src/**/*.ts",
@@ -28,7 +27,7 @@
     "src/**/*.vue",
     "example/**/*.ts",
     "example/**/*.tsx",
-    "exmape/**/*.vue",
+    "example/**/*.vue",
     "tests/**/*.ts",
     "tests/**/*.tsx"
   ],
