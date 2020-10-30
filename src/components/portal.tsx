@@ -40,8 +40,8 @@ export function usePortal(props: PortalProps, slots: Slots) {
 
   function clear(target?: string) {
     wormhole.close({
-      to: props.to,
-      from: target ?? props.name,
+      to: target ?? props.to,
+      from: props.name,
     })
   }
   onMounted(() => {
@@ -66,7 +66,7 @@ export function usePortal(props: PortalProps, slots: Slots) {
     () => props.to,
     (newTo, oldTo) => {
       if (oldTo && oldTo !== newTo) {
-        clear()
+        clear(oldTo)
       }
       sendUpdate()
     }
@@ -91,7 +91,7 @@ export default defineComponent({
 
     return () => {
       if (props.disabled && slots.default) {
-        return h(Fragment, slots.default)
+        return slots.default(props.slotProps)
       } else {
         return null
       }
