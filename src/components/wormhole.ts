@@ -15,7 +15,7 @@ export function createWormhole(): Wormhole {
       transports[to] = []
     }
 
-    const currentTransports = transports[to]
+    const currentTransports = Array.from(transports[to])
 
     const newTransport = {
       to,
@@ -32,7 +32,7 @@ export function createWormhole(): Wormhole {
     }
 
     transports[to] = stableSort<Transport>(
-      transports[to],
+      currentTransports,
       (a: Transport, b: Transport) => a.order - b.order
     )
   }
