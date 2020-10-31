@@ -8,5 +8,8 @@
   },
   "todo-tree.tree.showBadges": true,
 
-  "vetur.experimental.templateInterpolationService": true
+  "vetur.experimental.templateInterpolationService": true,
+  "cSpell.words": [
+    "scripthost"
+  ]
 }
