@@ -33,7 +33,7 @@
 
         <h4>Transition defined on the PortalTarget component</h4>
 
-        <portal-target name="target-transitions" slim transition="fade" />
+        <portal-target name="target-transitions" transition="fade" />
 
         <portal-target
           style="position: relative"

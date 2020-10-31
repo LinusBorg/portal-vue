@@ -16,6 +16,13 @@ import { useWormhole } from '@/composables/wormhole'
 type TransitionComponent = PropType<
   ComponentOptions<any> | FunctionalComponent | string
 >
+
+export const PortalTargetContent: FunctionalComponent<{
+  content: VNode | VNode[] | undefined
+}> = (props) => {
+  return props.content
+}
+
 export default defineComponent({
   name: 'portalTarget',
   props: {
@@ -75,12 +82,17 @@ export default defineComponent({
           ? resolveComponent(props.transition)
           : props.transition
         : undefined
-      if (transition) {
-        return h(transition, slotVnodes.value.vnodesFn)
-      } else if (slotVnodes.value.vnodes.length) {
-        return slotVnodes.value.vnodes
+      const hasContent = !!slotVnodes.value.vnodes.length
+      if (hasContent) {
+        if (transition) {
+          return h(PortalTargetContent, {
+            content: h(transition, slotVnodes.value.vnodesFn),
+          })
+        } else if (slotVnodes.value.vnodes.length) {
+          return slotVnodes.value.vnodes
+        }
       } else {
-        return slots.default?.()
+        slots.default?.()
       }
     }
   },
@@ -89,10 +101,4 @@ export default defineComponent({
 function useParentInjector(parent: ComponentInternalInstance) {
   const vm = getCurrentInstance()
   vm!.parent = parent
-}
-
-export const PortalTargetContent: FunctionalComponent<{ content: VNode[] }> = (
-  props
-) => {
-  return props.content
 }
