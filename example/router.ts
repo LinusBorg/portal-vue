@@ -15,7 +15,7 @@ import ScopedSlots from './components/scoped-slots/index.vue'
 import EmptyPortal from './components/empty-portal/index.vue'
 import DefaultSlotContent from './components/default-content-on-target/index.vue'
 // import Transitions from './components/transitions/transitions.vue'
-// import Multiple from './components/multiple/multiple.vue'
+import Multiple from './components/multiple/multiple.vue'
 
 const routes: RouteRecordRaw[] = [
   {
@@ -74,10 +74,10 @@ const routes: RouteRecordRaw[] = [
   //   path: '/Mount-to-external-element',
   //   component: MountToExternal,
   // },
-  // {
-  //   path: '/multiple',
-  //   component: Multiple,
-  // },
+  {
+    path: '/multiple',
+    component: Multiple,
+  },
 ]
 
 const router = createRouter({
