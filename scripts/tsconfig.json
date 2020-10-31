@@ -19,7 +19,7 @@
     "paths": {
       "@/*": ["../src/*"]
     },
-    "lib": ["es2015", "dom", "dom.iterable", "scripthost"]
+    "lib": ["es2015", "dom", "dom.iterable", "ScriptHost"]
   },
   "include": ["../src/**/*.ts", "../src/**/*.tsx"],
   "exclude": ["../node_modules", "../src/components/__mocks__"]
