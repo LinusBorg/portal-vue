@@ -1,7 +1,8 @@
 import { Wormhole } from '@/types'
-import { inject, InjectionKey } from 'vue'
+import { inject, InjectionKey, provide } from 'vue'
 
 export const wormholeSymbol = Symbol('wormhole') as InjectionKey<Wormhole>
+
 export function useWormhole() {
   const wh = inject(wormholeSymbol)
 
@@ -12,4 +13,8 @@ export function useWormhole() {
   }
 
   return wh
+}
+
+export function provideWormhole(wormhole: Wormhole) {
+  provide(wormholeSymbol, wormhole)
 }

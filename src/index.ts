@@ -1,10 +1,14 @@
 import Portal from './components/portal'
-import PortalTarget from './components/portal-target'
+import PortalTarget, { PortalTargetContent } from './components/portal-target'
 import MountingPortal from './components/mounting-portal'
 import { wormhole as defaultWormhole } from './components/wormhole'
 import { App } from 'vue'
 import { Wormhole as TWormhole } from './types'
-import { useWormhole, wormholeSymbol } from './composables/wormhole'
+import {
+  useWormhole,
+  provideWormhole,
+  wormholeSymbol,
+} from './composables/wormhole'
 
 export interface PluginOptions {
   portalName?: string
@@ -27,6 +31,14 @@ export default {
 }
 
 export const plugin = install
-
-export { Portal, PortalTarget, MountingPortal, useWormhole }
 export const Wormhole = defaultWormhole
+
+export {
+  Portal,
+  PortalTarget,
+  PortalTargetContent,
+  MountingPortal,
+  useWormhole,
+  provideWormhole,
+  TWormhole,
+}
