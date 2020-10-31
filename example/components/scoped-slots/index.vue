@@ -9,7 +9,7 @@
             :class="{ 'controls--link-active': !scopedSlot }"
             @click.prevent="scopedSlot = !scopedSlot"
           >
-            {{ this.scopedSlot ? 'Enable' : 'Disable' }}
+            {{ scopedSlot ? 'Enable' : 'Disable' }}
           </a>
         </li>
       </ul>
@@ -21,7 +21,7 @@
           :disabled="scopedSlot"
           :slot-props="{ message: 'Message for local!!' }"
         >
-          <template slot-scope="{ message }" slot="default">
+          <template #default="{ message }" slot="default">
             <p>
               This content was created with a scoped Slot.<br />
               When Portal is disabled, this paragraph is rendered in the left

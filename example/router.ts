@@ -5,7 +5,7 @@ import ToggleExample from './components/toggle/toggle-example.vue'
 import TargetSwitch from './components/target-switch/target-switch.vue'
 import SourceSwitch from './components/source-switch/source-switch.vue'
 import Disabled from './components/disabled/index.vue'
-// import ScopedSlots from './components/scoped-slots/index.vue'
+import ScopedSlots from './components/scoped-slots/index.vue'
 // import CompAsRoot from './components/comp-as-root/comp-as-root.vue'
 // import Programmatic from './components/programmatic/index.vue'
 // import RouterViewWithPortals from './components/router-view-with-portals/index.vue'
@@ -38,10 +38,10 @@ const routes: RouteRecordRaw[] = [
     path: '/disabled',
     component: Disabled,
   },
-  // {
-  //   path: '/scoped',
-  //   component: ScopedSlots,
-  // },
+  {
+    path: '/scoped',
+    component: ScopedSlots,
+  },
   // {
   //   path: '/component-as-root-element',
   //   component: CompAsRoot,
