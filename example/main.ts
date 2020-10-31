@@ -30,6 +30,7 @@ app.component('fade', (_, { slots }) => {
     {
       mode: 'out-in',
       name: 'fade',
+      appear: true,
     },
     slots.default
   )
@@ -40,6 +41,7 @@ app.component('fadeGroup', (_, { slots }) => {
     TransitionGroup,
     {
       name: 'fade',
+      appear: true,
     },
     slots.default
   )
