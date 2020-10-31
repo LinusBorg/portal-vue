@@ -20,6 +20,12 @@
   </div>
 </template>
 
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({})
+</script>
+
 <style>
 .router-view-box {
   border: 1px solid black;

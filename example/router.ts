@@ -8,9 +8,9 @@ import Disabled from './components/disabled/index.vue'
 import ScopedSlots from './components/scoped-slots/index.vue'
 import CompAsRoot from './components/comp-as-root/comp-as-root.vue'
 import Programmatic from './components/programmatic/index.vue'
-// import RouterViewWithPortals from './components/router-view-with-portals/index.vue'
-// import RouterViewWithPortalsA from './components/router-view-with-portals/a.vue'
-// import RouterViewWithPortalsB from './components/router-view-with-portals/b.vue'
+import RouterViewWithPortals from './components/router-view-with-portals/index.vue'
+import RouterViewWithPortalsA from './components/router-view-with-portals/a.vue'
+import RouterViewWithPortalsB from './components/router-view-with-portals/b.vue'
 // import MountToExternal from './components/mount-to/mount-to-external.vue'
 import EmptyPortal from './components/empty-portal/index.vue'
 import DefaultSlotContent from './components/default-content-on-target/index.vue'
@@ -54,14 +54,14 @@ const routes: RouteRecordRaw[] = [
     path: '/programmatic',
     component: Programmatic,
   },
-  // {
-  //   path: '/router-view-with-portals',
-  //   component: RouterViewWithPortals,
-  //   children: [
-  //     { path: 'a', component: RouterViewWithPortalsA },
-  //     { path: 'b', component: RouterViewWithPortalsB },
-  //   ],
-  // },
+  {
+    path: '/router-view-with-portals',
+    component: RouterViewWithPortals,
+    children: [
+      { path: 'a', alias: '', component: RouterViewWithPortalsA },
+      { path: 'b', component: RouterViewWithPortalsB },
+    ],
+  },
   {
     path: '/default-slot-content-for-target',
     component: DefaultSlotContent,
