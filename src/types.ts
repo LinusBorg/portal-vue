@@ -51,4 +51,6 @@ export type Wormhole = Readonly<{
   open: (t: Transport) => void
   close: (t: TransportVector) => void
   transports: Transports
+  targets: string[]
+  sources: string[]
 }>
