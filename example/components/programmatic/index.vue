@@ -33,7 +33,7 @@ import { defineComponent, h } from 'vue'
 const { Wormhole } =
   process.env.NODE_ENV === 'production'
     ? require('@/../dist/portal-vue.common.js')
-    : require('@/index').default
+    : require('@/index')
 
 export default defineComponent({
   data() {
@@ -41,7 +41,7 @@ export default defineComponent({
   },
   methods: {
     open() {
-      const passengers = [
+      const passengers = () => [
         h('p', 'Test-Text from the parent, sent with a button click'),
       ]
       Wormhole.open({
@@ -60,7 +60,7 @@ export default defineComponent({
       )
     },
     checkTarget() {
-      const res = Wormhole.hasTarget('programmatic-target')
+      const res = Wormhole.targets.includes('programmatic-target')
       window.alert(`Does 'programmatic-target exist'? \n${res}`)
     },
   },

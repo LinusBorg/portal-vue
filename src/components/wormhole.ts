@@ -45,11 +45,14 @@ export function createWormhole(): Wormhole {
     }
 
     if (force) {
-      transports[to] = []
+      delete transports[to]
     } else {
       const index = currentTransports.findIndex((t) => t.from === from)
       if (index !== -1) {
         currentTransports.splice(index, 1)
+        if ((currentTransports.length = 0)) {
+          delete transports[to]
+        }
       }
     }
   }

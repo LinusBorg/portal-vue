@@ -7,7 +7,7 @@ import SourceSwitch from './components/source-switch/source-switch.vue'
 import Disabled from './components/disabled/index.vue'
 import ScopedSlots from './components/scoped-slots/index.vue'
 // import CompAsRoot from './components/comp-as-root/comp-as-root.vue'
-// import Programmatic from './components/programmatic/index.vue'
+import Programmatic from './components/programmatic/index.vue'
 // import RouterViewWithPortals from './components/router-view-with-portals/index.vue'
 // import RouterViewWithPortalsA from './components/router-view-with-portals/a.vue'
 // import RouterViewWithPortalsB from './components/router-view-with-portals/b.vue'
@@ -50,10 +50,10 @@ const routes: RouteRecordRaw[] = [
     path: '/empty',
     component: EmptyPortal,
   },
-  // {
-  //   path: '/programmatic',
-  //   component: Programmatic,
-  // },
+  {
+    path: '/programmatic',
+    component: Programmatic,
+  },
   // {
   //   path: '/router-view-with-portals',
   //   component: RouterViewWithPortals,
