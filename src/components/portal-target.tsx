@@ -8,6 +8,7 @@ import {
   ComponentInternalInstance,
   getCurrentInstance,
   computed,
+  watch,
   VNode,
 } from 'vue'
 import { useWormhole } from '@/composables/wormhole'
@@ -60,6 +61,12 @@ export default defineComponent({
         }
       }
     )
+
+    watch(slotVnodes, ({ vnodes }) => {
+      const hasContent = vnodes.length > 0
+      const sources = allTransports[props.name]?.map((t) => t.from)
+      emit('change', { hasContent, sources })
+    })
 
     return () => {
       const transition = props.transition
