@@ -13,7 +13,7 @@ import ScopedSlots from './components/scoped-slots/index.vue'
 // import RouterViewWithPortalsB from './components/router-view-with-portals/b.vue'
 // import MountToExternal from './components/mount-to/mount-to-external.vue'
 import EmptyPortal from './components/empty-portal/index.vue'
-// import DefaultSlotContent from './components/default-content-on-target/index.vue'
+import DefaultSlotContent from './components/default-content-on-target/index.vue'
 // import Transitions from './components/transitions/transitions.vue'
 // import Multiple from './components/multiple/multiple.vue'
 
@@ -62,10 +62,10 @@ const routes: RouteRecordRaw[] = [
   //     { path: 'b', component: RouterViewWithPortalsB },
   //   ],
   // },
-  // {
-  //   path: '/default-slot-content-for-target',
-  //   component: DefaultSlotContent,
-  // },
+  {
+    path: '/default-slot-content-for-target',
+    component: DefaultSlotContent,
+  },
   // {
   //   path: '/transitions',
   //   component: Transitions,
