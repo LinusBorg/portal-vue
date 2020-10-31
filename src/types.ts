@@ -47,10 +47,25 @@ export type PortalTargetProps = Partial<{
   transitionGroup: boolean
 }>
 
-export type Wormhole = Readonly<{
+export type Wormhole = DeepReadonly<{
   open: (t: Transport) => void
   close: (t: TransportVector) => void
   transports: Transports
   targets: string[]
   sources: string[]
 }>
+
+// https://stackoverflow.com/posts/49670389/revisions
+type DeepReadonly<T> = T extends (infer R)[]
+  ? DeepReadonlyArray<R>
+  : T extends Function
+  ? T
+  : T extends object
+  ? DeepReadonlyObject<T>
+  : T
+
+interface DeepReadonlyArray<T> extends ReadonlyArray<DeepReadonly<T>> {}
+
+type DeepReadonlyObject<T> = {
+  readonly [P in keyof T]: DeepReadonly<T[P]>
+}

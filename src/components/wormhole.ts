@@ -68,7 +68,7 @@ export function createWormhole(): Wormhole {
     transports,
     targets,
     sources,
-  }) as Wormhole // TODO: fix weird Readonly type issue
+  })
 }
 
 export const wormhole = createWormhole()
