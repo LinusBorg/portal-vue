@@ -1,8 +1,6 @@
 import { useWormhole } from '@/composables/wormhole'
 import {
   defineComponent,
-  Fragment,
-  h,
   onBeforeUnmount,
   onMounted,
   onUpdated,
@@ -65,6 +63,7 @@ export function usePortal(props: PortalProps, slots: Slots) {
   watch(
     () => props.to,
     (newTo, oldTo) => {
+      if (props.disabled) return
       if (oldTo && oldTo !== newTo) {
         clear(oldTo)
       }
