@@ -30,6 +30,8 @@ export default defineComponent({
     },
   },
   setup(props, { emit, slots }) {
+    // TODO: validate if parent injection works
+    // depends on MountingPortalTarget
     if (props.__parent) {
       useParentInjector(props.__parent)
     }
