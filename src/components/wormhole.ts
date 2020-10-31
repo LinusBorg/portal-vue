@@ -1,21 +1,26 @@
-import { Transports, Transport, TransportVector, Wormhole } from '@/types'
+import {
+  TransportsHub,
+  TransportInput,
+  Transport,
+  TransportCloser,
+  Wormhole,
+} from '@/types'
 import { inBrowser, stableSort } from '@/utils'
 import { computed, reactive, readonly } from 'vue'
 
 export function createWormhole(): Wormhole {
-  const transports: Transports = reactive({})
+  const transports: TransportsHub = reactive(new Map())
 
-  function open(transport: Transport) {
+  function open(transport: TransportInput) {
     if (!inBrowser) return
 
     const { to, from, passengers, order = Infinity } = transport
     if (!to || !from || !passengers) return
 
-    if (!transports[to]) {
-      transports[to] = []
+    if (!transports.has(to)) {
+      transports.set(to, new Map())
     }
-
-    const currentTransports = Array.from(transports[to])
+    const transportsForTarget = transports.get(to)!
 
     const newTransport = {
       to,
@@ -24,46 +29,38 @@ export function createWormhole(): Wormhole {
       order,
     } as Transport
 
-    const index = currentTransports.findIndex((t) => t.from === from)
-    if (index === -1) {
-      currentTransports.push(newTransport)
-    } else {
-      currentTransports[index] = newTransport
-    }
+    transportsForTarget.set(from, newTransport)
+  }
 
-    transports[to] = stableSort<Transport>(
-      currentTransports,
+  function close(transport: TransportCloser) {
+    const { to, from } = transport
+    if (!to || !from) return
+    const transportsForTarget = transports.get(to)
+    if (!transportsForTarget) {
+      return
+    }
+    transportsForTarget.delete(from)
+    if (!transportsForTarget.size) {
+      transports.delete(to)
+    }
+  }
+
+  function getContentForTarget(target: string) {
+    const transportsForTarget = transports.get(target)
+    if (!transportsForTarget) return []
+
+    return stableSort(
+      [...(transportsForTarget?.values() || [])],
       (a: Transport, b: Transport) => a.order - b.order
     )
   }
-  function close(transport: TransportVector) {
-    const { to, from } = transport
-    if (!to || !from) return
-    const currentTransports = transports[to]
-    if (!currentTransports) {
-      return
-    }
-    const index = currentTransports.findIndex((t) => t.from === from)
-    if (index !== -1) {
-      currentTransports.splice(index, 1)
-      if ((currentTransports.length = 0)) {
-        delete transports[to]
-      }
-    }
-  }
-
-  const targets = computed(() => Object.keys(transports))
-  const sources = computed(() =>
-    Object.entries(transports).flatMap(([_, ts]) => ts.map((t) => t.from))
-  )
 
   return readonly({
     open,
     close,
     transports,
-    targets,
-    sources,
-  })
+    getContentForTarget,
+  }) as Wormhole
 }
 
 export const wormhole = createWormhole()

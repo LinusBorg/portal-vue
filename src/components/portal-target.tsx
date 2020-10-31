@@ -38,12 +38,10 @@ export default defineComponent({
 
     const wormhole = useWormhole()
 
-    const allTransports = wormhole.transports
-
     // TODO: Allow to wrap sources' passengers with a custom slot
     const slotVnodes = computed<{ vnodes: VNode[]; vnodesFn: () => VNode[] }>(
       () => {
-        const transports = allTransports[props.name] ?? []
+        const transports = wormhole.getContentForTarget(props.name)
         const wrapperSlot = slots.wrapper
         const vnodes = props.multiple
           ? transports.flatMap((t) =>
@@ -66,7 +64,8 @@ export default defineComponent({
 
     watch(slotVnodes, ({ vnodes }) => {
       const hasContent = vnodes.length > 0
-      const sources = allTransports[props.name]?.map((t) => t.from)
+      const content = wormhole.transports.get(props.name)
+      const sources = content ? [...content.keys()] : []
       emit('change', { hasContent, sources })
     })
 

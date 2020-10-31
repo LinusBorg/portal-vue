@@ -3,17 +3,16 @@ import { default as Vue, VNode, ComponentOptions, Slot, Component } from 'vue'
 export interface StringBoolMap {
   [key: string]: boolean
 }
-
-export interface Transports {
-  [key: string]: Transport[]
-}
-
 export interface TransportInput {
   to: string
   from: string
   order?: number
   passengers: Slot
 }
+
+export type TransportsHub = Map<string, TransportsByTarget>
+
+export type TransportsByTarget = Map<string, Transport>
 
 export interface Transport {
   to: string
@@ -22,7 +21,7 @@ export interface Transport {
   passengers: Slot
 }
 
-export interface TransportVector {
+export interface TransportCloser {
   to: string
   from?: string
 }
@@ -47,25 +46,9 @@ export type PortalTargetProps = Partial<{
   transitionGroup: boolean
 }>
 
-export type Wormhole = DeepReadonly<{
-  open: (t: Transport) => void
-  close: (t: TransportVector) => void
-  transports: Transports
-  targets: string[]
-  sources: string[]
+export type Wormhole = Readonly<{
+  open: (t: TransportInput) => void
+  close: (t: TransportCloser) => void
+  getContentForTarget: (t: string) => Transport[]
+  transports: TransportsHub
 }>
-
-// https://stackoverflow.com/posts/49670389/revisions
-type DeepReadonly<T> = T extends (infer R)[]
-  ? DeepReadonlyArray<R>
-  : T extends Function
-  ? T
-  : T extends object
-  ? DeepReadonlyObject<T>
-  : T
-
-interface DeepReadonlyArray<T> extends ReadonlyArray<DeepReadonly<T>> {}
-
-type DeepReadonlyObject<T> = {
-  readonly [P in keyof T]: DeepReadonly<T[P]>
-}
