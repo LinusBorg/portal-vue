@@ -1,6 +1,6 @@
 import { Transports, Transport, TransportVector, Wormhole } from '@/types'
 import { inBrowser, stableSort } from '@/utils'
-import { reactive, readonly } from 'vue'
+import { computed, reactive, readonly } from 'vue'
 
 export function createWormhole(): Wormhole {
   const transports: Transports = reactive({})
@@ -20,7 +20,7 @@ export function createWormhole(): Wormhole {
     const newTransport = {
       to,
       from,
-      passengers, // TODO: markRaw?
+      passengers,
       order,
     } as Transport
 
@@ -54,10 +54,17 @@ export function createWormhole(): Wormhole {
     }
   }
 
+  const targets = computed(() => Object.keys(transports))
+  const sources = computed(() =>
+    Object.entries(transports).flatMap(([_, ts]) => ts.map((t) => t.from))
+  )
+
   return readonly({
     open,
     close,
     transports,
+    targets,
+    sources,
   }) as Wormhole // TODO: fix weird Readonly type issue
 }
 
