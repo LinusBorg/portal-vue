@@ -36,23 +36,18 @@ export function createWormhole(): Wormhole {
       (a: Transport, b: Transport) => a.order - b.order
     )
   }
-  function close(transport: TransportVector, force = false) {
+  function close(transport: TransportVector) {
     const { to, from } = transport
-    if (!to || (!from && force === false)) return
+    if (!to || !from) return
     const currentTransports = transports[to]
     if (!currentTransports) {
       return
     }
-
-    if (force) {
-      delete transports[to]
-    } else {
-      const index = currentTransports.findIndex((t) => t.from === from)
-      if (index !== -1) {
-        currentTransports.splice(index, 1)
-        if ((currentTransports.length = 0)) {
-          delete transports[to]
-        }
+    const index = currentTransports.findIndex((t) => t.from === from)
+    if (index !== -1) {
+      currentTransports.splice(index, 1)
+      if ((currentTransports.length = 0)) {
+        delete transports[to]
       }
     }
   }

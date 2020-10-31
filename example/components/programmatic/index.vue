@@ -50,14 +50,11 @@ export default defineComponent({
         passengers,
       })
     },
-    close(force = false) {
-      Wormhole.close(
-        {
-          to: 'programmatic-target',
-          from: force ? 'wrong-source' : 'programmatic-source',
-        },
-        force
-      )
+    close() {
+      Wormhole.close({
+        to: 'programmatic-target',
+        from: 'programmatic-source',
+      })
     },
     checkTarget() {
       const res = Wormhole.targets.includes('programmatic-target')
