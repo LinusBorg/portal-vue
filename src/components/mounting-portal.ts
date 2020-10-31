@@ -3,7 +3,6 @@ import {
   ComponentOptions,
   createApp,
   defineComponent,
-  Fragment,
   getCurrentInstance,
   h,
   onBeforeUnmount,
@@ -70,7 +69,7 @@ export default defineComponent({
 
     return () => {
       if (props.disabled && slots.default) {
-        return h(Fragment, slots.default)
+        return slots.default()
       } else {
         return null
       }
