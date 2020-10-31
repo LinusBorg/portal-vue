@@ -10,6 +10,9 @@ import {
 } from 'vue'
 import { useWormhole } from '@/composables/wormhole'
 
+type TransitionComponent = PropType<
+  ComponentOptions<any> | FunctionalComponent | string
+>
 export default defineComponent({
   name: 'portalTarget',
   props: {
@@ -17,9 +20,7 @@ export default defineComponent({
     name: { type: String, required: true },
     slotProps: { type: Object, default: () => ({}) },
     transition: {
-      type: [String, Object, Function] as PropType<
-        ComponentOptions<any> | FunctionalComponent | string
-      >,
+      type: [String, Object, Function] as TransitionComponent,
     },
     __parent: {
       type: Object as PropType<ComponentInternalInstance>,
