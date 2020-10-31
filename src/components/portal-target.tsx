@@ -45,7 +45,7 @@ export default defineComponent({
 
     const wormhole = useWormhole()
 
-    // TODO: Allow to wrap sources' passengers with a custom slot
+    // TODO: Allow to wrap sources' content with a custom slot
     const slotVnodes = computed<{ vnodes: VNode[]; vnodesFn: () => VNode[] }>(
       () => {
         const transports = wormhole.getContentForTarget(props.name)
@@ -53,15 +53,14 @@ export default defineComponent({
         const vnodes = props.multiple
           ? transports.flatMap((t) =>
               wrapperSlot
-                ? wrapperSlot(t.passengers(props.slotProps))
-                : t.passengers(props.slotProps)
+                ? wrapperSlot(t.content(props.slotProps))
+                : t.content(props.slotProps)
             )
           : wrapperSlot
           ? wrapperSlot(
-              transports[transports.length - 1]?.passengers(props.slotProps) ||
-                []
+              transports[transports.length - 1]?.content(props.slotProps) || []
             )
-          : transports[transports.length - 1]?.passengers(props.slotProps) || []
+          : transports[transports.length - 1]?.content(props.slotProps) || []
         return {
           vnodes,
           vnodesFn: () => vnodes, // just to make Vue happy. raw vnodes in a slot give a DEV warning

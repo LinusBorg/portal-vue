@@ -7,7 +7,7 @@ export interface TransportInput {
   to: string
   from: string
   order?: number
-  passengers: Slot
+  content: Slot
 }
 
 export type TransportsHub = Map<string, TransportsByTarget>
@@ -18,7 +18,7 @@ export interface Transport {
   to: string
   from: string
   order: number
-  passengers: Slot
+  content: Slot
 }
 
 export interface TransportCloser {

@@ -29,7 +29,7 @@ export function usePortal(props: PortalProps, slots: Slots) {
         to,
         from,
         order,
-        passengers: slots.default,
+        content: slots.default,
       })
     } else {
       clear()

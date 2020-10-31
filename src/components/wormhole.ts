@@ -14,8 +14,8 @@ export function createWormhole(): Wormhole {
   function open(transport: TransportInput) {
     if (!inBrowser) return
 
-    const { to, from, passengers, order = Infinity } = transport
-    if (!to || !from || !passengers) return
+    const { to, from, content, order = Infinity } = transport
+    if (!to || !from || !content) return
 
     if (!transports.has(to)) {
       transports.set(to, new Map())
@@ -25,7 +25,7 @@ export function createWormhole(): Wormhole {
     const newTransport = {
       to,
       from,
-      passengers,
+      content,
       order,
     } as Transport
 
