@@ -6,7 +6,7 @@ import TargetSwitch from './components/target-switch/target-switch.vue'
 import SourceSwitch from './components/source-switch/source-switch.vue'
 import Disabled from './components/disabled/index.vue'
 import ScopedSlots from './components/scoped-slots/index.vue'
-// import CompAsRoot from './components/comp-as-root/comp-as-root.vue'
+import CompAsRoot from './components/comp-as-root/comp-as-root.vue'
 import Programmatic from './components/programmatic/index.vue'
 // import RouterViewWithPortals from './components/router-view-with-portals/index.vue'
 // import RouterViewWithPortalsA from './components/router-view-with-portals/a.vue'
@@ -14,7 +14,7 @@ import Programmatic from './components/programmatic/index.vue'
 // import MountToExternal from './components/mount-to/mount-to-external.vue'
 import EmptyPortal from './components/empty-portal/index.vue'
 import DefaultSlotContent from './components/default-content-on-target/index.vue'
-// import Transitions from './components/transitions/transitions.vue'
+import Transitions from './components/transitions/transitions.vue'
 import Multiple from './components/multiple/multiple.vue'
 
 const routes: RouteRecordRaw[] = [
@@ -42,10 +42,10 @@ const routes: RouteRecordRaw[] = [
     path: '/scoped',
     component: ScopedSlots,
   },
-  // {
-  //   path: '/component-as-root-element',
-  //   component: CompAsRoot,
-  // },
+  {
+    path: '/component-as-root-element',
+    component: CompAsRoot,
+  },
   {
     path: '/empty',
     component: EmptyPortal,
@@ -66,10 +66,10 @@ const routes: RouteRecordRaw[] = [
     path: '/default-slot-content-for-target',
     component: DefaultSlotContent,
   },
-  // {
-  //   path: '/transitions',
-  //   component: Transitions,
-  // },
+  {
+    path: '/transitions',
+    component: Transitions,
+  },
   // {
   //   path: '/Mount-to-external-element',
   //   component: MountToExternal,

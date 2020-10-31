@@ -1,4 +1,5 @@
 import { createApp, defineComponent, h, Transition, TransitionGroup } from 'vue'
+import { useLink } from 'vue-router'
 
 import App from './components/App.vue'
 import PortalContainer from './components/portal-container.vue'
@@ -30,7 +31,7 @@ app.component('fade', (_, { slots }) => {
     {
       mode: 'out-in',
       name: 'fade',
-      appear: true,
+      // appear: true,
     },
     slots.default
   )
@@ -41,7 +42,7 @@ app.component('fadeGroup', (_, { slots }) => {
     TransitionGroup,
     {
       name: 'fade',
-      appear: true,
+      tag: 'div',
     },
     slots.default
   )
