@@ -8,11 +8,11 @@ module.exports = {
       'jest-transform-stub',
   },
   moduleNameMapper: {
-    '^vue$': 'vue/dist/vue.common',
+    '^vue$': 'vue/dist/vue.cjs',
     '^@/(.*)$': '<rootDir>/src/$1',
   },
   setupFiles: ['<rootDir>/tests/unit/setup.js'],
-  snapshotSerializers: ['jest-serializer-vue'],
+  // snapshotSerializers: ['jest-serializer-vue'],
   testMatch: [
     '**/tests/unit/**/*.spec.(js|jsx|ts|tsx)|**/__tests__/*.(js|jsx|ts|tsx)',
   ],
