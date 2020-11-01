@@ -13,11 +13,7 @@ import {
 } from 'vue'
 import { useWormhole } from '@/composables/wormhole'
 
-type TransitionComponent = PropType<
-  ComponentOptions<any> | FunctionalComponent | string
->
-
-export const PortalTargetContent: FunctionalComponent = (_, { slots }) => {
+const PortalTargetContent: FunctionalComponent = (_, { slots }) => {
   return slots.default?.()
 }
 

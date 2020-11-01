@@ -6,7 +6,7 @@ import {
   Wormhole,
 } from '@/types'
 import { inBrowser, stableSort } from '@/utils'
-import { computed, reactive, readonly } from 'vue'
+import { reactive, readonly } from 'vue'
 
 export function createWormhole(): Wormhole {
   const transports: TransportsHub = reactive(new Map())

@@ -1,5 +1,5 @@
 import Portal from './components/portal'
-import PortalTarget, { PortalTargetContent } from './components/portal-target'
+import PortalTarget from './components/portal-target'
 import MountingPortal from './components/mounting-portal'
 import { wormhole as defaultWormhole } from './wormhole'
 import { App } from 'vue'
@@ -33,7 +33,6 @@ export const Wormhole = defaultWormhole
 export {
   Portal,
   PortalTarget,
-  PortalTargetContent,
   MountingPortal,
   useWormhole,
   provideWormhole,
