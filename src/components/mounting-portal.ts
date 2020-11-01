@@ -1,12 +1,10 @@
 import {
-  Component,
   ComponentOptions,
   createApp,
   defineComponent,
   getCurrentInstance,
   h,
   onBeforeUnmount,
-  PropType,
 } from 'vue'
 import { usePortal } from './portal'
 import PortalTarget from './portal-target'
@@ -40,7 +38,6 @@ export default defineComponent({
     // Target
     multiple: { type: Boolean, default: false },
     targetSlotProps: { type: Object, default: () => ({}) },
-    transition: { type: [String, Object, Function] as PropType<Component> },
   },
   setup(props, { slots }) {
     const wormhole = useWormhole()
@@ -50,7 +47,6 @@ export default defineComponent({
       const targetProps = {
         multiple: props.multiple,
         name: props.to,
-        transition: props.transition,
         slotProps: props.targetSlotProps,
         __parent: getCurrentInstance()?.parent,
       }

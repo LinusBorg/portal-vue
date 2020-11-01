@@ -50,7 +50,7 @@ export function createWormhole(): Wormhole {
     if (!transportsForTarget) return []
 
     return stableSort(
-      [...(transportsForTarget?.values() || [])],
+      Array.from(transportsForTarget?.values() || []),
       (a: Transport, b: Transport) => a.order - b.order
     )
   }

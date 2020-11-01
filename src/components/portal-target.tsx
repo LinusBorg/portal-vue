@@ -17,10 +17,8 @@ type TransitionComponent = PropType<
   ComponentOptions<any> | FunctionalComponent | string
 >
 
-export const PortalTargetContent: FunctionalComponent<{
-  content: VNode | VNode[] | undefined
-}> = (props) => {
-  return props.content
+export const PortalTargetContent: FunctionalComponent = (_, { slots }) => {
+  return slots.default?.()
 }
 
 export default defineComponent({
@@ -29,9 +27,6 @@ export default defineComponent({
     multiple: { type: Boolean, default: false },
     name: { type: String, required: true },
     slotProps: { type: Object, default: () => ({}) },
-    transition: {
-      type: [String, Object, Function] as TransitionComponent,
-    },
     __parent: {
       type: Object as PropType<ComponentInternalInstance>,
     },
@@ -45,22 +40,16 @@ export default defineComponent({
 
     const wormhole = useWormhole()
 
-    // TODO: Allow to wrap sources' content with a custom slot
     const slotVnodes = computed<{ vnodes: VNode[]; vnodesFn: () => VNode[] }>(
       () => {
         const transports = wormhole.getContentForTarget(props.name)
         const wrapperSlot = slots.wrapper
-        const vnodes = props.multiple
-          ? transports.flatMap((t) =>
-              wrapperSlot
-                ? wrapperSlot(t.content(props.slotProps))
-                : t.content(props.slotProps)
+        const rawNodes = transports.map((t) => t.content(props.slotProps))
+        const vnodes = wrapperSlot
+          ? rawNodes.flatMap((nodes) =>
+              nodes.length ? wrapperSlot(nodes) : []
             )
-          : wrapperSlot
-          ? wrapperSlot(
-              transports[transports.length - 1]?.content(props.slotProps) || []
-            )
-          : transports[transports.length - 1]?.content(props.slotProps) || []
+          : rawNodes.flat(1)
         return {
           vnodes,
           vnodesFn: () => vnodes, // just to make Vue happy. raw vnodes in a slot give a DEV warning
@@ -76,20 +65,9 @@ export default defineComponent({
     })
 
     return () => {
-      const transition = props.transition
-        ? typeof props.transition === 'string'
-          ? resolveComponent(props.transition)
-          : props.transition
-        : undefined
       const hasContent = !!slotVnodes.value.vnodes.length
       if (hasContent) {
-        if (transition) {
-          return h(PortalTargetContent, {
-            content: h(transition, slotVnodes.value.vnodesFn),
-          })
-        } else if (slotVnodes.value.vnodes.length) {
-          return slotVnodes.value.vnodes
-        }
+        return h(PortalTargetContent, slotVnodes.value.vnodesFn)
       } else {
         slots.default?.()
       }

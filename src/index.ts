@@ -17,7 +17,7 @@ export interface PluginOptions {
   wormhole?: TWormhole
 }
 
-function install(app: App, options: PluginOptions = {}) {
+export function install(app: App, options: PluginOptions = {}) {
   app.component(options.portalName || 'Portal', Portal)
   app.component(options.portalTargetName || 'PortalTarget', PortalTarget)
   app.component(options.MountingPortalName || 'MountingPortal', MountingPortal)
@@ -26,10 +26,7 @@ function install(app: App, options: PluginOptions = {}) {
   app.provide(wormholeSymbol, wormhole)
 }
 
-export default {
-  install,
-}
-
+// alternative name for named import
 export const plugin = install
 export const Wormhole = defaultWormhole
 
