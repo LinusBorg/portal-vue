@@ -14,13 +14,8 @@
     "lib:build": "microbundle build --name PortalVue --tsconfig scripts/tsconfig.json",
     "lib:dev": "microbundle watch --no-compress --no-pkg-main -u src/index.ts -o dist/portal-vue.esm.js -f es --tsconfig scripts/tsconfig.json",
     "app:dev": "vite serve ./example",
-    "serve": "vue-cli-service serve example/main.ts",
-    "serve:prod": "vue-cli-service serve --mode production example/main.ts",
-    "roll": "ROLL=1 node ./scripts/build && yarn minify",
-    "minify": "minify dist/portal-vue.umd.js --out-file dist/portal-vue.umd.min.js",
     "lint": "eslint --fix './*.{js,ts}' 'src/**/*.{ts,tsx,vue}' 'example/**/*.{ts,tsx,vue}'",
-    "test": "yarn jest",
-    "test:unit": "vue-cli-service test:unit"
+    "test": "yarn jest"
   },
   "source": "src/index.ts",
   "main": "dist/portal-vue.js",
@@ -36,7 +31,6 @@
   "files": [
     "src",
     "dist",
-    "nuxt",
     "types"
   ],
   "peerDependencies": {
