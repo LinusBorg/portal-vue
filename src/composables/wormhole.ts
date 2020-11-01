@@ -1,4 +1,4 @@
-import { Wormhole } from '@/types'
+import { Wormhole } from '../types'
 import { inject, InjectionKey, provide } from 'vue'
 
 export const wormholeSymbol = Symbol('wormhole') as InjectionKey<Wormhole>
