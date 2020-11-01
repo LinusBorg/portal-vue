@@ -1,30 +1,25 @@
-import { default as Vue, VNode, PropOptions, VueConstructor, ComponentOptions } from 'vue';
+import { Slot, Component } from 'vue';
 export interface StringBoolMap {
     [key: string]: boolean;
-}
-export interface VMRegister {
-    [key: string]: Readonly<Array<Vue>>;
-}
-export interface Transports {
-    [key: string]: Transport[];
 }
 export interface TransportInput {
     to: string;
     from: string;
     order?: number;
-    passengers: Array<VNode | Function>;
+    content: Slot;
 }
+export declare type TransportsHub = Map<string, TransportsByTarget>;
+export declare type TransportsByTarget = Map<string, Transport>;
 export interface Transport {
     to: string;
     from: string;
     order: number;
-    passengers: ReadonlyArray<VNode | Function>;
+    content: Slot;
 }
-export interface TransportVector {
+export interface TransportCloser {
     to: string;
     from?: string;
 }
-export declare type PropWithComponent = VueConstructor<Vue> | ComponentOptions<Vue> | string;
 export declare type PortalProps = Partial<{
     disabled: boolean;
     name: string;
@@ -40,6 +35,12 @@ export declare type PortalTargetProps = Partial<{
     slim: boolean;
     slotProps: object;
     tag: string;
-    transition: PropOptions<PropWithComponent>;
+    transition: Component;
     transitionGroup: boolean;
+}>;
+export declare type Wormhole = Readonly<{
+    open: (t: TransportInput) => void;
+    close: (t: TransportCloser) => void;
+    getContentForTarget: (t: string) => Transport[];
+    transports: TransportsHub;
 }>;

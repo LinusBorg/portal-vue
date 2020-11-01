@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "target": "ES2019",
-    "module": "ES2020",
+    "target": "ESNext",
+    "module": "ESNext",
     "strict": true,
     "jsx": "preserve",
     "allowJs": true,
@@ -13,8 +13,6 @@
     "sourceMap": true,
     "baseUrl": ".",
     "types": ["node", "jest"],
-    //"declaration": true,
-    //"declarationDir": "types",
     "paths": {
       "@/*": ["src/*"],
       "portal-vue": ["./src/index"]

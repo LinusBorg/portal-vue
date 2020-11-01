@@ -1,6 +1,6 @@
 {
   "name": "portal-vue",
-  "version": "2.1.7",
+  "version": "3.0.0-alpha.0",
   "license": "MIT",
   "repository": "https://github.com/LinusBorg/portal-vue",
   "author": {
@@ -11,6 +11,8 @@
   "scripts": {
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
+    "lib:build": "microbundle build --name PortalVue",
+    "lib:dev": "microbundle watch --no-compress --no-pkg-main -u src/index.ts -o dist/portal-vue.esm.js -f es",
     "serve": "vue-cli-service serve example/main.ts",
     "serve:prod": "vue-cli-service serve --mode production example/main.ts",
     "roll": "ROLL=1 node ./scripts/build && yarn minify",
@@ -19,18 +21,23 @@
     "test": "yarn test:unit",
     "test:unit": "vue-cli-service test:unit"
   },
-  "main": "dist/portal-vue.umd.js",
+  "source": "src/index.ts",
+  "main": "dist/portal-vue.js",
   "module": "dist/portal-vue.esm.js",
-  "browser": "dist/portal-vue.common.js",
+  "esmodule": "dist/portal-vue.esm.modern.js",
+  "browser": {
+    "./esm": "dist/portal-vue.esm.js",
+    "./modern": "dist/portal-vue.esm.modern.js"
+  },
   "jsdelivr": "dist/portal-vue.umd.min.js",
   "unpkg": "dist/portal-vue.umd.min.js",
+  "types": "./types/index.d.ts",
   "files": [
     "src",
     "dist",
     "nuxt",
     "types"
   ],
-  "types": "./types/index.d.ts",
   "peerDependencies": {
     "vue": "^3.0.0-0"
   },
@@ -47,24 +54,14 @@
     "@vue/eslint-config-prettier": "^6.0.0",
     "@vue/eslint-config-typescript": "^7.0.0",
     "@vue/test-utils": "^2.0.0-0",
-    "babel-minify": "^0.5.0",
-    "clone-deep": "^4.0.1",
     "eslint": "^6.7.2",
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-vue": "^7.1.0",
     "lint-staged": "^10.4.2",
-    "merge": "^1.2.1",
+    "microbundle": "^0.12.4",
     "nanoid": "^3.1.13",
     "node-sass": "^4.9.2",
     "prettier-eslint": "^11.0.0",
-    "rollup": "2.32.1",
-    "rollup-plugin-analyzer": "^3.3.0",
-    "rollup-plugin-babel": "^4.0.3",
-    "rollup-plugin-commonjs": "^10.1.0",
-    "rollup-plugin-import-alias": "^1.0.5",
-    "rollup-plugin-node-resolve": "^5.2.0",
-    "rollup-plugin-replace": "^2.1.0",
-    "rollup-plugin-typescript2": "^0.28.0",
     "sass-loader": "^10.0.3",
     "typescript": "~3.9.3",
     "vue": "^3.0.0-0",

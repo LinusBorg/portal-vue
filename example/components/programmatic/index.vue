@@ -12,11 +12,6 @@
             >Clear content</a
           >
         </li>
-        <li class="controls--item">
-          <a href="#" class="controls--link" @click.prevent="checkTarget"
-            >has Target?</a
-          >
-        </li>
       </ul>
     </div>
     <div class="wrapper">
@@ -30,10 +25,7 @@
 <script lang="ts">
 import { defineComponent, h } from 'vue'
 
-const { Wormhole } =
-  process.env.NODE_ENV === 'production'
-    ? require('@/../dist/portal-vue.common.js')
-    : require('@/index')
+import { Wormhole } from 'portal-vue'
 
 export default defineComponent({
   data() {
@@ -41,13 +33,13 @@ export default defineComponent({
   },
   methods: {
     open() {
-      const passengers = () => [
+      const content = () => [
         h('p', 'Test-Text from the parent, sent with a button click'),
       ]
       Wormhole.open({
         to: 'programmatic-target',
         from: 'programmatic-source',
-        passengers,
+        content,
       })
     },
     close() {
@@ -55,10 +47,6 @@ export default defineComponent({
         to: 'programmatic-target',
         from: 'programmatic-source',
       })
-    },
-    checkTarget() {
-      const res = Wormhole.targets.includes('programmatic-target')
-      window.alert(`Does 'programmatic-target exist'? \n${res}`)
     },
   },
 })
