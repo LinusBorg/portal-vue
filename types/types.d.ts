@@ -1,4 +1,4 @@
-import { Slot, Component } from 'vue';
+import { Slot } from 'vue';
 export interface StringBoolMap {
     [key: string]: boolean;
 }
@@ -20,23 +20,17 @@ export interface TransportCloser {
     to: string;
     from?: string;
 }
-export declare type PortalProps = Partial<{
-    disabled: boolean;
-    name: string;
-    order: number;
-    slim: boolean;
-    slotProps: object;
-    tag: string;
+export interface PortalProps {
     to: string;
-}>;
+    name?: string;
+    disabled?: boolean;
+    order?: number;
+    slotProps?: Record<string, any>;
+}
 export declare type PortalTargetProps = Partial<{
     multiple: boolean;
     name: string;
-    slim: boolean;
     slotProps: object;
-    tag: string;
-    transition: Component;
-    transitionGroup: boolean;
 }>;
 export declare type Wormhole = Readonly<{
     open: (t: TransportInput) => void;

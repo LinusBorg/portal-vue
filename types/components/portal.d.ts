@@ -1,12 +1,5 @@
 import { Slots } from 'vue';
-export interface PortalProps {
-    disabled: boolean;
-    name: string;
-    order: number;
-    slim?: boolean;
-    slotProps: Record<string, any>;
-    to: string;
-}
+import { PortalProps } from '@/types';
 export declare function usePortal(props: PortalProps, slots: Slots): void;
 declare const _default: import("vue").DefineComponent<{
     disabled: {
@@ -18,10 +11,6 @@ declare const _default: import("vue").DefineComponent<{
     };
     order: {
         type: NumberConstructor;
-        default: number;
-    };
-    slim: {
-        type: BooleanConstructor;
     };
     slotProps: {
         type: ObjectConstructor;
@@ -36,15 +25,13 @@ declare const _default: import("vue").DefineComponent<{
 }>[] | null, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, Record<string, any>, string, import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<{
     disabled: boolean;
     name: string;
-    order: number;
-    slim: boolean;
     slotProps: Record<string, any>;
     to: string;
-} & {}>, {
+} & {
+    order?: number | undefined;
+}>, {
     disabled: boolean;
     name: string;
-    order: number;
-    slim: boolean;
     slotProps: Record<string, any>;
     to: string;
 }>;

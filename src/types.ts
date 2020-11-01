@@ -26,24 +26,18 @@ export interface TransportCloser {
   from?: string
 }
 
-export type PortalProps = Partial<{
-  disabled: boolean
-  name: string
-  order: number
-  slim: boolean
-  slotProps: object
-  tag: string
+export interface PortalProps {
   to: string
-}>
+  name?: string
+  disabled?: boolean
+  order?: number
+  slotProps?: Record<string, any>
+}
 
 export type PortalTargetProps = Partial<{
   multiple: boolean
   name: string
-  slim: boolean
   slotProps: object
-  tag: string
-  transition: Component
-  transitionGroup: boolean
 }>
 
 export type Wormhole = Readonly<{

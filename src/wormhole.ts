@@ -8,7 +8,7 @@ import {
 import { inBrowser, stableSort } from '@/utils'
 import { reactive, readonly } from 'vue'
 
-export function createWormhole(): Wormhole {
+export function createWormhole(asReadonly = true): Wormhole {
   const transports: TransportsHub = reactive(new Map())
 
   function open(transport: TransportInput) {
@@ -55,12 +55,13 @@ export function createWormhole(): Wormhole {
     )
   }
 
-  return readonly({
+  const wh: Wormhole = {
     open,
     close,
     transports,
     getContentForTarget,
-  }) as Wormhole
+  }
+  return asReadonly ? (readonly(wh) as Wormhole) : wh
 }
 
 export const wormhole = createWormhole()
