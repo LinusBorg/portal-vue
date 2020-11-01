@@ -11,8 +11,8 @@
   "scripts": {
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
-    "lib:build": "microbundle build --name PortalVue",
-    "lib:dev": "microbundle watch --no-compress --no-pkg-main -u src/index.ts -o dist/portal-vue.esm.js -f es",
+    "lib:build": "microbundle build --name PortalVue --tsconfig scripts/tsconfig.json",
+    "lib:dev": "microbundle watch --no-compress --no-pkg-main -u src/index.ts -o dist/portal-vue.esm.js -f es --tsconfig scripts/tsconfig.json",
     "app:dev": "vite serve ./example",
     "serve": "vue-cli-service serve example/main.ts",
     "serve:prod": "vue-cli-service serve --mode production example/main.ts",
@@ -75,5 +75,6 @@
       "eslint",
       "git add"
     ]
-  }
+  },
+  "dependencies": {}
 }
