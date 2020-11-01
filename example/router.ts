@@ -16,6 +16,7 @@ import EmptyPortal from './components/empty-portal/index.vue'
 import DefaultSlotContent from './components/default-content-on-target/index.vue'
 import Transitions from './components/transitions/transitions.vue'
 import Multiple from './components/multiple/multiple.vue'
+import WrapperSlot from './components/wrapper-slot/WrapperSlot.vue'
 
 const routes: RouteRecordRaw[] = [
   {
@@ -77,6 +78,10 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/multiple',
     component: Multiple,
+  },
+  {
+    path: '/wrapper-slot',
+    component: WrapperSlot,
   },
 ]
 
