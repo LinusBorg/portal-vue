@@ -13,11 +13,12 @@
     "docs:build": "vuepress build docs",
     "lib:build": "microbundle build --name PortalVue",
     "lib:dev": "microbundle watch --no-compress --no-pkg-main -u src/index.ts -o dist/portal-vue.esm.js -f es",
+    "app:dev": "vite serve ./example",
     "serve": "vue-cli-service serve example/main.ts",
     "serve:prod": "vue-cli-service serve --mode production example/main.ts",
     "roll": "ROLL=1 node ./scripts/build && yarn minify",
     "minify": "minify dist/portal-vue.umd.js --out-file dist/portal-vue.umd.min.js",
-    "lint": "vue-cli-service lint",
+    "lint": "eslint --fix './*.{js,ts}' 'src/**/*.{ts,tsx,vue}' 'example/**/*.{ts,tsx,vue}'",
     "test": "yarn test:unit",
     "test:unit": "vue-cli-service test:unit"
   },
@@ -45,11 +46,7 @@
     "@types/jest": "^24.0.15",
     "@typescript-eslint/eslint-plugin": "^4.6.0",
     "@typescript-eslint/parser": "^4.6.0",
-    "@vue/cli-plugin-babel": "^4.5.8",
-    "@vue/cli-plugin-eslint": "^4.5.8",
-    "@vue/cli-plugin-typescript": "^4.5.8",
-    "@vue/cli-plugin-unit-jest": "^4.5.8",
-    "@vue/cli-service": "^4.5.8",
+    "@vue/babel-preset-app": "^4.5.8",
     "@vue/compiler-sfc": "^3.0.2",
     "@vue/eslint-config-prettier": "^6.0.0",
     "@vue/eslint-config-typescript": "^7.0.0",
@@ -60,20 +57,22 @@
     "lint-staged": "^10.4.2",
     "microbundle": "^0.12.4",
     "nanoid": "^3.1.13",
-    "node-sass": "^4.9.2",
     "prettier-eslint": "^11.0.0",
+    "sass": "^1.28.0",
     "sass-loader": "^10.0.3",
     "typescript": "~3.9.3",
+    "vite": "^1.0.0-rc.8",
     "vue": "^3.0.0-0",
     "vue-router": "^4.0.0-0",
-    "vuepress": "1.7.1"
+    "vuepress": "1.7.1",
+    "yorkie": "^2.0.0"
   },
   "gitHooks": {
     "pre-commit": "lint-staged"
   },
   "lint-staged": {
     "*.{js,jsx,vue,ts,tsx}": [
-      "vue-cli-service lint",
+      "lint",
       "git add"
     ]
   }
