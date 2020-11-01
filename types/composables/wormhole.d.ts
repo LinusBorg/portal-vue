@@ -1,4 +1,4 @@
-import { Wormhole } from '@/types';
+import { Wormhole } from '../types';
 import { InjectionKey } from 'vue';
 export declare const wormholeSymbol: InjectionKey<Readonly<{
     open: (t: import("../types").TransportInput) => void;

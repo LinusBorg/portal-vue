@@ -1,5 +1,5 @@
 import Portal from './components/portal';
-import PortalTarget, { PortalTargetContent } from './components/portal-target';
+import PortalTarget from './components/portal-target';
 import MountingPortal from './components/mounting-portal';
 import { App } from 'vue';
 import { Wormhole as TWormhole } from './types';
@@ -18,4 +18,4 @@ export declare const Wormhole: Readonly<{
     getContentForTarget: (t: string) => import("./types").Transport[];
     transports: import("./types").TransportsHub;
 }>;
-export { Portal, PortalTarget, PortalTargetContent, MountingPortal, useWormhole, provideWormhole, TWormhole, };
+export { Portal, PortalTarget, MountingPortal, useWormhole, provideWormhole, TWormhole, };

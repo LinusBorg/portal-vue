@@ -1,7 +1,4 @@
-import { PropType, FunctionalComponent, ComponentInternalInstance, VNode } from 'vue';
-export declare const PortalTargetContent: FunctionalComponent<{
-    content?: VNode | VNode[] | undefined;
-}>;
+import { PropType, ComponentInternalInstance, VNode } from 'vue';
 declare const _default: import("vue").DefineComponent<{
     multiple: {
         type: BooleanConstructor;
