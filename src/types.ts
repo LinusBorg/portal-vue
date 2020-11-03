@@ -1,34 +1,36 @@
 import { default as Vue, VNode, ComponentOptions, Slot, Component } from 'vue'
 
+export type Name = string | symbol
+
 export interface StringBoolMap {
   [key: string]: boolean
 }
 export interface TransportInput {
-  to: string
-  from: string
+  to: Name
+  from: Name
   order?: number
   content: Slot
 }
 
-export type TransportsHub = Map<string, TransportsByTarget>
+export type TransportsHub = Map<Name, TransportsByTarget>
 
-export type TransportsByTarget = Map<string, Transport>
+export type TransportsByTarget = Map<Name, Transport>
 
 export interface Transport {
-  to: string
-  from: string
+  to: Name
+  from: Name
   order: number
   content: Slot
 }
 
 export interface TransportCloser {
-  to: string
-  from?: string
+  to: Name
+  from?: Name
 }
 
 export interface PortalProps {
-  to: string
-  name?: string
+  to: Name
+  name?: Name
   disabled?: boolean
   order?: number
   slotProps?: Record<string, any>
@@ -36,13 +38,13 @@ export interface PortalProps {
 
 export type PortalTargetProps = Partial<{
   multiple: boolean
-  name: string
+  name: Name
   slotProps: object
 }>
 
 export type Wormhole = Readonly<{
   open: (t: TransportInput) => void
   close: (t: TransportCloser) => void
-  getContentForTarget: (t: string) => Transport[]
+  getContentForTarget: (t: Name) => Transport[]
   transports: TransportsHub
 }>

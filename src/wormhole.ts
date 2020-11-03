@@ -4,6 +4,7 @@ import {
   Transport,
   TransportCloser,
   Wormhole,
+  Name,
 } from '@/types'
 import { inBrowser, stableSort } from '@/utils'
 import { reactive, readonly } from 'vue'
@@ -45,7 +46,7 @@ export function createWormhole(asReadonly = true): Wormhole {
     }
   }
 
-  function getContentForTarget(target: string) {
+  function getContentForTarget(target: Name) {
     const transportsForTarget = transports.get(target)
     if (!transportsForTarget) return []
 

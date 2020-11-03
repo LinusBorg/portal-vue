@@ -7,8 +7,7 @@ import {
   Slots,
   watch,
 } from 'vue'
-import { PortalProps } from '@/types'
-let _id = 1
+import { Name, PortalProps } from '@/types'
 
 export function usePortal(props: PortalProps, slots: Slots) {
   const wormhole = useWormhole()
@@ -27,7 +26,7 @@ export function usePortal(props: PortalProps, slots: Slots) {
     }
   }
 
-  function clear(target?: string) {
+  function clear(target?: Name) {
     wormhole.close({
       to: target ?? props.to,
       from: props.name,
@@ -67,7 +66,7 @@ export default defineComponent({
   name: 'portal',
   props: {
     disabled: { type: Boolean },
-    name: { type: String, default: () => String(_id++) },
+    name: { type: [String, Symbol], default: () => Symbol() },
     order: { type: Number },
     slotProps: { type: Object, default: () => ({}) },
     to: {
