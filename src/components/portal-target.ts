@@ -27,6 +27,7 @@ export default defineComponent({
       type: Object as PropType<ComponentInternalInstance>,
     },
   },
+  emits: ['change'],
   setup(props, { emit, slots }) {
     // TODO: validate if parent injection works
     // depends on MountingPortalTarget
