@@ -11,7 +11,10 @@
   "scripts": {
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
-    "lib:build": "microbundle build --name PortalVue --tsconfig scripts/tsconfig.json",
+    "lib:build": "yarn lib:build:dev && yarn lib:build:umd && yarn lib:build:esm-browser",
+    "lib:build:dev": "microbundle build --tsconfig scripts/tsconfig.json -f es,cjs --no-compress",
+    "lib:build:umd": "microbundle build --tsconfig scripts/tsconfig.json -f umd --no-compress --define process.env.NODE_ENV='production'",
+    "lib:build:esm-browser": "microbundle build --tsconfig scripts/tsconfig.json -f es --no-pkg-main -i src/index.ts -o dist/portal-vue.esm-browser.js --define process.env.NODE_ENV='production'",
     "lib:dev": "microbundle watch --no-compress --no-pkg-main -u src/index.ts -o dist/portal-vue.esm.js -f es --tsconfig scripts/tsconfig.json",
     "app:dev": "vite serve ./example",
     "lint": "eslint --fix './*.{js,ts}' 'src/**/*.{ts,tsx,vue}' 'example/**/*.{ts,tsx,vue}'",
