@@ -1,40 +1,41 @@
 import { Slot } from 'vue';
+export declare type Name = string | symbol;
 export interface StringBoolMap {
     [key: string]: boolean;
 }
 export interface TransportInput {
-    to: string;
-    from: string;
+    to: Name;
+    from: Name;
     order?: number;
     content: Slot;
 }
-export declare type TransportsHub = Map<string, TransportsByTarget>;
-export declare type TransportsByTarget = Map<string, Transport>;
+export declare type TransportsHub = Map<Name, TransportsByTarget>;
+export declare type TransportsByTarget = Map<Name, Transport>;
 export interface Transport {
-    to: string;
-    from: string;
+    to: Name;
+    from: Name;
     order: number;
     content: Slot;
 }
 export interface TransportCloser {
-    to: string;
-    from?: string;
+    to: Name;
+    from?: Name;
 }
 export interface PortalProps {
-    to: string;
-    name?: string;
+    to: Name;
+    name?: Name;
     disabled?: boolean;
     order?: number;
     slotProps?: Record<string, any>;
 }
 export declare type PortalTargetProps = Partial<{
     multiple: boolean;
-    name: string;
+    name: Name;
     slotProps: object;
 }>;
 export declare type Wormhole = Readonly<{
     open: (t: TransportInput) => void;
     close: (t: TransportCloser) => void;
-    getContentForTarget: (t: string) => Transport[];
+    getContentForTarget: (t: Name) => Transport[];
     transports: TransportsHub;
 }>;

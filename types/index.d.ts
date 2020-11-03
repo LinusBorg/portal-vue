@@ -15,7 +15,7 @@ export declare const plugin: typeof install;
 export declare const Wormhole: Readonly<{
     open: (t: import("./types").TransportInput) => void;
     close: (t: import("./types").TransportCloser) => void;
-    getContentForTarget: (t: string) => import("./types").Transport[];
+    getContentForTarget: (t: string | symbol) => import("./types").Transport[];
     transports: import("./types").TransportsHub;
 }>;
 export { Portal, PortalTarget, MountingPortal, useWormhole, provideWormhole, TWormhole, };

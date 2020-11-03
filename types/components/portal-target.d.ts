@@ -17,14 +17,14 @@ declare const _default: import("vue").DefineComponent<{
     };
 }, () => VNode<import("vue").RendererNode, import("vue").RendererElement, {
     [key: string]: any;
-}> | undefined, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, Record<string, any>, string, import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<{
+}> | undefined, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, "change"[], "change", import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<{
+    multiple: boolean;
     name: string;
     slotProps: Record<string, any>;
-    multiple: boolean;
 } & {
     __parent?: ComponentInternalInstance | undefined;
 }>, {
-    slotProps: Record<string, any>;
     multiple: boolean;
+    slotProps: Record<string, any>;
 }>;
 export default _default;

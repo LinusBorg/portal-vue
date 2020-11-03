@@ -37,23 +37,23 @@ declare const _default: import("vue").DefineComponent<{
 }, () => import("vue").VNode<import("vue").RendererNode, import("vue").RendererElement, {
     [key: string]: any;
 }>[] | null, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, Record<string, any>, string, import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<{
+    mountTo: string;
     disabled: boolean;
     name: string;
     order: number;
     slotProps: Record<string, any>;
+    tag: string;
     to: string;
     multiple: boolean;
-    mountTo: string;
-    tag: string;
     targetSlotProps: Record<string, any>;
 } & {}>, {
     disabled: boolean;
     name: string;
     order: number;
     slotProps: Record<string, any>;
+    tag: string;
     to: string;
     multiple: boolean;
-    tag: string;
     targetSlotProps: Record<string, any>;
 }>;
 export default _default;
