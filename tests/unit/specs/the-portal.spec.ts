@@ -4,7 +4,6 @@ import Portal from '@/components/portal'
 import { PortalProps } from '@/types'
 import { wormholeSymbol } from '@/composables/wormhole'
 import { createWormhole } from '@/wormhole'
-import { h, nextTick, ref } from 'vue'
 
 const createWormholeMock = () => {
   const wh = createWormhole(false)
