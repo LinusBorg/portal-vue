@@ -16,9 +16,9 @@ module.exports = {
   testMatch: [
     '**/tests/unit/**/*.spec.(js|jsx|ts|tsx)|**/__tests__/*.(js|jsx|ts|tsx)',
   ],
-  testPathIgnorePatterns: ['<rootDir>/example', '<rootDir>/src/main.js'],
-  coveragePathIgnorePatterns: ['<rootDir>/example', '<rootDir>/src/main.js'],
-  watchPathIgnorePatterns: ['<rootDir>/example', '<rootDir>/src/main.js'],
+  testPathIgnorePatterns: ['<rootDir>/example', '<rootDir>/sr/index.ts'],
+  coveragePathIgnorePatterns: ['<rootDir>/example', '<rootDir>/src/index.ts'],
+  watchPathIgnorePatterns: ['<rootDir>/example', '<rootDir>/src/index.ts'],
   globals: {
     'ts-jest': {
       babelConfig: true,
