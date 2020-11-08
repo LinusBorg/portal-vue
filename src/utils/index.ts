@@ -1,4 +1,33 @@
+import { watch } from 'vue'
+
 export const inBrowser = typeof window !== 'undefined'
+
+export const __DEV__ = process.env.NODE_ENV === 'production'
+
+export function warn(msg: string) {
+  console.log('[portal-vue]: ' + msg)
+}
+
+export function assertStaticProps(
+  component: string,
+  props: Record<string, any>,
+  propNames: string[]
+) {
+  propNames.forEach(
+    (name) => {
+      watch(
+        () => props[name],
+        () => {
+          warn(
+            `Prop '${name}' of component ${component} is static, but was dynamically changed by the parent.
+          This change will not have any effect.`
+          )
+        }
+      )
+    },
+    { flush: 'post' }
+  )
+}
 
 export function stableSort<T>(array: T[], compareFn: Function) {
   return array

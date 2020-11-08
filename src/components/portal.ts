@@ -76,6 +76,7 @@ export default defineComponent({
     },
   },
   setup(props, { slots }) {
+    __DEV__ && assertStaticProps('Portal', props, ['order', 'name'])
     usePortal(props, slots)
 
     return () => {
