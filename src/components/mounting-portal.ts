@@ -29,15 +29,12 @@ export default defineComponent({
       default: () => 'mounted_' + String(_id++),
     },
     order: { type: Number, default: 0 },
-    slotProps: { type: Object, default: () => ({}) },
     // name for the target
     to: {
       type: String,
       default: () => String(Math.round(Math.random() * 10000000)),
     },
 
-    // Target
-    multiple: { type: Boolean, default: false },
     targetSlotProps: { type: Object, default: () => ({}) },
   },
   setup(props, { slots }) {
@@ -57,9 +54,8 @@ export default defineComponent({
       const el = getTargetEl(props.mountTo)
 
       const targetProps = {
-        multiple: props.multiple,
+        multiple: true, // aways true, as for non-multiple portals, the native `Teleport` component is better suited.
         name: props.to,
-        slotProps: props.targetSlotProps,
         __parent: getCurrentInstance()?.parent,
       }
 
