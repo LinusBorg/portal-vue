@@ -45,6 +45,6 @@ export type PortalTargetProps = Partial<{
 export type Wormhole = Readonly<{
   open: (t: TransportInput) => void
   close: (t: TransportCloser) => void
-  getContentForTarget: (t: Name) => Transport[]
+  getContentForTarget: (t: Name, returnAll?: boolean) => Transport[]
   transports: TransportsHub
 }>
