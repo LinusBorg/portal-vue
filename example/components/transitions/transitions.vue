@@ -33,18 +33,26 @@
 
         <h4>Transition defined on the PortalTarget component</h4>
 
-        <portal-target name="target-transitions" transition="fade" />
+        <portal-target name="target-transitions">
+          <template #wrapper="nodes">
+            <transition name="fade" mode="out-in">
+              <component :is="nodes[0]" />
+            </transition>
+          </template>
+        </portal-target>
 
-        <portal-target
-          style="position: relative"
-          name="group-transition"
-          transition="fadeGroup"
-        />
+        <portal-target style="position: relative" name="group-transition">
+          <template #wrapper="nodes">
+            <transition-group name="fade">
+              <component :is="node" v-for="node in nodes" :key="node" />
+            </transition-group>
+          </template>
+        </portal-target>
       </container>
     </div>
 
     <portal to="source-transitions" name="source-transitions">
-      <transition name="fade" mode="out-in">
+      <transition name="fade" mode="out-in" appear>
         <div v-if="showSource === 'left'" key="SourceA" class="A__">
           This is A
         </div>
