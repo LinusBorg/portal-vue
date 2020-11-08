@@ -12,9 +12,11 @@
     </div>
   </div>
 </template>
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
   name: 'HappyPath',
   data: () => ({ text: 'Test3', show: false }),
-}
+})
 </script>

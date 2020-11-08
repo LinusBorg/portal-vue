@@ -8,7 +8,7 @@ import {
   wormholeSymbol,
 } from './composables/wormhole'
 import { Wormhole as TWormhole } from './types'
-import { wormhole as defaultWormhole } from './wormhole'
+import { createWormhole, wormhole as defaultWormhole } from './wormhole'
 
 export interface PluginOptions {
   portalName?: string
@@ -37,4 +37,5 @@ export {
   useWormhole,
   provideWormhole,
   TWormhole,
+  createWormhole,
 }
