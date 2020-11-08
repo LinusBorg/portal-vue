@@ -1,6 +1,6 @@
-import { createWormhole } from '@/wormhole'
+import { Slot, h } from 'vue'
 import { Wormhole } from '@/types'
-import { h, Slot } from 'vue'
+import { createWormhole } from '@/wormhole'
 
 const createSlotFn = () => ((() => h('div')) as unknown) as Slot
 

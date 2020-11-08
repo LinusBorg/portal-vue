@@ -1,8 +1,8 @@
 import Vue from 'vue'
-import { mount, createLocalVue } from '@vue/test-utils'
-import PortalVue from '@/index'
 import MountingPortal from '@/components/mounting-portal'
+import PortalVue from '@/index'
 import { Portal } from '@/index'
+import { createLocalVue, mount } from '@vue/test-utils'
 
 jest.mock('@/components/wormhole')
 const wormhole = require('@/components/wormhole').wormhole

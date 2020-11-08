@@ -1,17 +1,15 @@
 import {
-  defineComponent,
-  PropType,
-  h,
-  resolveComponent,
-  FunctionalComponent,
-  ComponentOptions,
   ComponentInternalInstance,
-  getCurrentInstance,
-  computed,
-  watch,
+  FunctionalComponent,
+  PropType,
   VNode,
+  computed,
+  defineComponent,
+  getCurrentInstance,
+  h,
+  watch,
 } from 'vue'
-import { useWormhole } from '@/composables/wormhole'
+import { useWormhole } from '../composables/wormhole'
 
 const PortalTargetContent: FunctionalComponent = (_, { slots }) => {
   return slots.default?.()

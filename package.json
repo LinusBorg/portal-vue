@@ -82,5 +82,12 @@
    "plugins": {
       "autoprefixer": {}
     }
+  },
+  "importSort": {
+    ".ts, .tsx": {
+      "parser": "typescript",
+      "style": "module-compact",
+      "options": {}
+    }
   }
 }

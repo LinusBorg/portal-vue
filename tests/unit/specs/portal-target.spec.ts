@@ -1,8 +1,8 @@
-import { h, nextTick, Slot } from 'vue'
+import { Slot, h, nextTick } from 'vue'
 import { mount } from '@vue/test-utils'
 import PortalTarget from '../../../src/components/portal-target'
-import { createWormhole, wormhole } from '../../../src/wormhole'
 import { wormholeSymbol } from '../../../src/composables/wormhole'
+import { createWormhole, wormhole } from '../../../src/wormhole'
 
 const createWormholeMock = () => {
   const wh = createWormhole(false)

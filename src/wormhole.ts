@@ -1,13 +1,13 @@
+import { reactive, readonly } from 'vue'
 import {
-  TransportsHub,
-  TransportInput,
+  Name,
   Transport,
   TransportCloser,
+  TransportInput,
+  TransportsHub,
   Wormhole,
-  Name,
-} from '@/types'
-import { inBrowser, stableSort } from '@/utils'
-import { reactive, readonly } from 'vue'
+} from './types'
+import { inBrowser, stableSort } from './utils'
 
 export function createWormhole(asReadonly = true): Wormhole {
   const transports: TransportsHub = reactive(new Map())

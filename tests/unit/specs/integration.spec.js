@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import { mount, createLocalVue } from '@vue/test-utils'
+import { createLocalVue, mount } from '@vue/test-utils'
 import PortalVue from '../../../src'
 import { Portal, PortalTarget, Wormhole } from '../../../src'
 

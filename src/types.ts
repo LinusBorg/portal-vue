@@ -1,4 +1,4 @@
-import { default as Vue, VNode, ComponentOptions, Slot, Component } from 'vue'
+import { Slot } from 'vue'
 
 export type Name = string | symbol
 

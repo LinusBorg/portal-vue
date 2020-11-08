@@ -1,9 +1,9 @@
+import Portal from '@/components/portal'
+import { wormholeSymbol } from '@/composables/wormhole'
+import { PortalProps } from '@/types'
+import { createWormhole } from '@/wormhole'
 import { mount } from '@vue/test-utils'
 import { createEl } from '../utils'
-import Portal from '@/components/portal'
-import { PortalProps } from '@/types'
-import { wormholeSymbol } from '@/composables/wormhole'
-import { createWormhole } from '@/wormhole'
 
 const createWormholeMock = () => {
   const wh = createWormhole(false)

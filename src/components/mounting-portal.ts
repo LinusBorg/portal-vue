@@ -6,10 +6,10 @@ import {
   h,
   onBeforeUnmount,
 } from 'vue'
+import { useWormhole, wormholeSymbol } from '../composables/wormhole'
+import { __DEV__, assertStaticProps, inBrowser } from '../utils'
 import { usePortal } from './portal'
 import PortalTarget from './portal-target'
-import { inBrowser } from '@/utils'
-import { useWormhole, wormholeSymbol } from '@/composables/wormhole'
 
 let _id = 0
 

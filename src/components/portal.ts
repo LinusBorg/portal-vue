@@ -1,13 +1,14 @@
-import { useWormhole } from '@/composables/wormhole'
 import {
+  Slots,
   defineComponent,
   onBeforeUnmount,
   onMounted,
   onUpdated,
-  Slots,
   watch,
 } from 'vue'
-import { Name, PortalProps } from '@/types'
+import { useWormhole } from '../composables/wormhole'
+import { Name, PortalProps } from '../types'
+import { __DEV__, assertStaticProps } from '../utils'
 
 export function usePortal(props: PortalProps, slots: Slots) {
   const wormhole = useWormhole()

@@ -12,5 +12,6 @@
   "cSpell.words": [
     "microbundle",
     "scripthost"
-  ]
+  ],
+  "sort-imports.default-sort-style": "module-compact"
 }
