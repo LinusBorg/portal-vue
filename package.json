@@ -26,7 +26,8 @@
   "esmodule": "dist/portal-vue.esm.modern.js",
   "browser": {
     "./esm": "dist/portal-vue.esm.js",
-    "./modern": "dist/portal-vue.esm.modern.js"
+    "./modern": "dist/portal-vue.esm.modern.js",
+    "./browser": "dist/portal-vue.esm-browser.js"
   },
   "jsdelivr": "dist/portal-vue.umd.min.js",
   "unpkg": "dist/portal-vue.umd.min.js",
