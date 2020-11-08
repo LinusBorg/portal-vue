@@ -1,4 +1,3 @@
-import Vue from 'vue'
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 
 import ToggleExample from './components/toggle/toggle-example.vue'
@@ -11,7 +10,7 @@ import Programmatic from './components/programmatic/index.vue'
 import RouterViewWithPortals from './components/router-view-with-portals/index.vue'
 import RouterViewWithPortalsA from './components/router-view-with-portals/a.vue'
 import RouterViewWithPortalsB from './components/router-view-with-portals/b.vue'
-// import MountToExternal from './components/mount-to/mount-to-external.vue'
+import MountToExternal from './components/mount-to/mount-to-external.vue'
 import EmptyPortal from './components/empty-portal/index.vue'
 import DefaultSlotContent from './components/default-content-on-target/index.vue'
 import Transitions from './components/transitions/transitions.vue'
@@ -71,10 +70,10 @@ const routes: RouteRecordRaw[] = [
     path: '/transitions',
     component: Transitions,
   },
-  // {
-  //   path: '/Mount-to-external-element',
-  //   component: MountToExternal,
-  // },
+  {
+    path: '/Mount-to-external-element',
+    component: MountToExternal,
+  },
   {
     path: '/multiple',
     component: Multiple,

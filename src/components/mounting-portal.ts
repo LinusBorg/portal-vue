@@ -1,3 +1,4 @@
+import { PortalTargetProps, Wormhole } from '@/types'
 import {
   ComponentOptions,
   createApp,
@@ -5,6 +6,7 @@ import {
   getCurrentInstance,
   h,
   onBeforeUnmount,
+  onMounted,
 } from 'vue'
 import { useWormhole, wormholeSymbol } from '../composables/wormhole'
 import { __DEV__, assertStaticProps, inBrowser } from '../utils'
@@ -28,7 +30,6 @@ export default defineComponent({
     },
     order: { type: Number, default: 0 },
     slotProps: { type: Object, default: () => ({}) },
-    tag: { type: String, default: 'DIV' },
     // name for the target
     to: {
       type: String,
@@ -40,7 +41,18 @@ export default defineComponent({
     targetSlotProps: { type: Object, default: () => ({}) },
   },
   setup(props, { slots }) {
+    __DEV__ &&
+      assertStaticProps('Portal', props, [
+        'mountTo',
+        'order',
+        'name',
+        'append',
+        'multiple',
+      ])
+
     const wormhole = useWormhole()
+    usePortal(props, slots)
+
     if (inBrowser) {
       const el = getTargetEl(props.mountTo)
 
@@ -51,17 +63,8 @@ export default defineComponent({
         __parent: getCurrentInstance()?.parent,
       }
 
-      const app = createApp({
-        // TODO: fix Component type error
-        render: () => h(PortalTarget as ComponentOptions, targetProps),
-      })
-      app.provide(wormholeSymbol, wormhole)
-      onBeforeUnmount(() => {
-        app.unmount(el)
-      })
+      mountPortalTarget(targetProps, wormhole, el)
     }
-
-    usePortal(props, slots)
 
     return () => {
       if (props.disabled && slots.default) {
@@ -72,6 +75,24 @@ export default defineComponent({
     }
   },
 })
+
+function mountPortalTarget(
+  targetProps: PortalTargetProps,
+  wormhole: Wormhole,
+  el: HTMLElement
+) {
+  const app = createApp({
+    // TODO: fix Component type error
+    render: () => h(PortalTarget as ComponentOptions, targetProps),
+  })
+
+  app.provide(wormholeSymbol, wormhole)
+
+  onMounted(() => app.mount(el))
+  onBeforeUnmount(() => {
+    app.unmount(el)
+  })
+}
 
 function getTargetEl(mountTo: string): HTMLElement {
   const el: HTMLElement | null = document.querySelector(mountTo)
