@@ -46,12 +46,19 @@ export function createWormhole(asReadonly = true): Wormhole {
     }
   }
 
-  function getContentForTarget(target: Name) {
+  function getContentForTarget(target: Name, returnAll?: boolean) {
     const transportsForTarget = transports.get(target)
     if (!transportsForTarget) return []
 
+    const content = Array.from(transportsForTarget?.values() || [])
+
+    if (!returnAll) {
+      // return Transport that was added last
+      return [content.pop()] as Transport[]
+    }
+    // return all Transports, sorted by their order property
     return stableSort(
-      Array.from(transportsForTarget?.values() || []),
+      content,
       (a: Transport, b: Transport) => a.order - b.order
     )
   }

@@ -2,7 +2,7 @@ import { Slot, h, nextTick } from 'vue'
 import { mount } from '@vue/test-utils'
 import PortalTarget from '../../../src/components/portal-target'
 import { wormholeSymbol } from '../../../src/composables/wormhole'
-import { createWormhole, wormhole } from '../../../src/wormhole'
+import { createWormhole } from '../../../src/wormhole'
 
 const createWormholeMock = () => {
   const wh = createWormhole(false)
@@ -61,14 +61,17 @@ describe('PortalTarget', () => {
         },
       }
     )
-
-    expect(wrapper.find('p.default')).toBe(true)
+    expect(wrapper.html()).toMatchSnapshot()
+    expect(wrapper.find('p.default').exists()).toBe(true)
   })
 
   it('emits change event', async () => {
     const { wrapper, wh } = createWrapper()
+
+    await nextTick()
+
     const content = generateSlotFn()
-    wormhole.open({
+    wh.open({
       to: 'target',
       from: 'source',
       content,
@@ -76,47 +79,11 @@ describe('PortalTarget', () => {
 
     await nextTick()
 
-    expect(wrapper.emitted<any>().change[0]).toMatchObject({
-      hasContent: true,
-      sources: ['source'],
-    })
-  })
-
-  /*
-
-  it('emits change event when multiple is true', function () {
-    const wrapper = createWrapper({ multiple: true })
-
-    const vNodes = Object.freeze([generateSlotFn()[0], generateSlotFn()[0]])
-    const newTransports = [
+    expect(wrapper.emitted<any>().change[0]).toMatchObject([
       {
-        to: 'target',
-        from: 'source',
-        passengers: vNodes,
+        hasContent: true,
+        sources: ['source'],
       },
-      {
-        to: 'target',
-        from: 'source2',
-        passengers: vNodes,
-      },
-    ]
-    Vue.set(Wormhole.transports, 'target', newTransports)
-    const newerTransports = newTransports.slice(0)
-    newerTransports.push({ to: 'target', from: 'source3', passengers: vNodes })
-
-    return wrapper.vm
-      .$nextTick()
-      .then(() => {
-        expect(wrapper.emitted().change[0][0]).toEqual(true)
-
-        Wormhole.transports['target'] = newerTransports
-
-        return wrapper.vm.$nextTick()
-      })
-      .then(() => {
-        expect(wrapper.emitted().change[1][0]).toEqual(true)
-      })
+    ])
   })
-
-  */
 })

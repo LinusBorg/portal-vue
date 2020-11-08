@@ -1,5 +1,4 @@
 import { Slot, h } from 'vue'
-import { Wormhole } from '@/types'
 import { createWormhole } from '@/wormhole'
 
 const createSlotFn = () => ((() => h('div')) as unknown) as Slot
@@ -68,7 +67,7 @@ describe('Wormhole', () => {
     ).toBeUndefined()
   })
 
-  it('returns content for target properly sorted', () => {
+  it('returns latest transport when not called with `returnAll`', () => {
     const wormhole = createWormhole()
     wormhole.open({
       from: 'test-portal1',
@@ -85,6 +84,27 @@ describe('Wormhole', () => {
     })
 
     const content = wormhole.getContentForTarget('target')
+    const order = content.map((t) => t.order)
+    expect(order).toMatchObject([1])
+  })
+
+  it('returns content for target properly sorted when multiple', () => {
+    const wormhole = createWormhole()
+    wormhole.open({
+      from: 'test-portal1',
+      to: 'target',
+      order: 2,
+      content: createSlotFn(),
+    })
+
+    wormhole.open({
+      from: 'test-portal2',
+      to: 'target',
+      order: 1,
+      content: createSlotFn(),
+    })
+
+    const content = wormhole.getContentForTarget('target', true)
     const order = content.map((t) => t.order)
     expect(order).toMatchObject([1, 2])
   })

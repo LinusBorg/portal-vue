@@ -17,8 +17,8 @@ export default defineComponent({
     }
   },
   methods: {
-    handleChange(newContent: Transport, oldContent: Transport) {
-      this.currentSource = newContent.from
+    handleChange({ sources }: { sources: string[] }) {
+      this.currentSource = sources[0]
     },
   },
 })

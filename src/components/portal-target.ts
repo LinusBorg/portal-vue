@@ -37,7 +37,10 @@ export default defineComponent({
 
     const slotVnodes = computed<{ vnodes: VNode[]; vnodesFn: () => VNode[] }>(
       () => {
-        const transports = wormhole.getContentForTarget(props.name)
+        const transports = wormhole.getContentForTarget(
+          props.name,
+          props.multiple
+        )
         const wrapperSlot = slots.wrapper
         const rawNodes = transports.map((t) => t.content(props.slotProps))
         const vnodes = wrapperSlot
@@ -64,7 +67,7 @@ export default defineComponent({
       if (hasContent) {
         return h(PortalTargetContent, slotVnodes.value.vnodesFn)
       } else {
-        slots.default?.()
+        return slots.default?.()
       }
     }
   },
