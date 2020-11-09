@@ -7,13 +7,14 @@
 
     <MountingPortal mountTo="#external-target" append v-if="showAuto">
       <p>Hello from an automatically generated Portal <i>and</i> Target</p>
+      <Test />
     </MountingPortal>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import Test from '../test-component.vue'
+import { defineComponent, inject } from 'vue'
+import Test from './Test.vue'
 export default defineComponent({
   // components: { Test }, // testing that `parent` option works
   data() {
@@ -21,6 +22,12 @@ export default defineComponent({
       showManual: false,
       showAuto: false,
     }
+  },
+  setup() {
+    console.log(inject('test'))
+  },
+  components: {
+    Test,
   },
   methods: {
     toggleManual() {

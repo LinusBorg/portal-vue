@@ -1,11 +1,8 @@
 import {
-  ComponentInternalInstance,
   FunctionalComponent,
-  PropType,
   VNode,
   computed,
   defineComponent,
-  getCurrentInstance,
   h,
   watch,
 } from 'vue'
@@ -21,18 +18,9 @@ export default defineComponent({
     multiple: { type: Boolean, default: false },
     name: { type: String, required: true },
     slotProps: { type: Object, default: () => ({}) },
-    __parent: {
-      type: Object as PropType<ComponentInternalInstance>,
-    },
   },
   emits: ['change'],
   setup(props, { emit, slots }) {
-    // TODO: validate if parent injection works
-    // depends on MountingPortalTarget
-    if (props.__parent) {
-      useParentInjector(props.__parent)
-    }
-
     const wormhole = useWormhole()
 
     const slotVnodes = computed<{ vnodes: VNode[]; vnodesFn: () => VNode[] }>(
@@ -72,8 +60,3 @@ export default defineComponent({
     }
   },
 })
-
-function useParentInjector(parent: ComponentInternalInstance) {
-  const vm = getCurrentInstance()
-  vm!.parent = parent
-}
