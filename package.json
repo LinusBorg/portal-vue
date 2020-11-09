@@ -8,18 +8,6 @@
     "url": "https://github.com/LinusBorg/"
   },
   "private": false,
-  "scripts": {
-    "lib:dev": "microbundle watch --tsconfig scripts/tsconfig.json --no-compress --no-pkg-main -u src/index.ts -o dist/portal-vue.esm.js -f es",
-    "app:dev": "vite serve ./example",
-    "lib:build": "yarn lib:build:dev && yarn lib:build:umd && yarn lib:build:esm-browser",
-    "lib:build:dev": "microbundle build --tsconfig scripts/tsconfig.json -f es,cjs --no-compress",
-    "lib:build:umd": "microbundle build --tsconfig scripts/tsconfig.json -f umd --no-compress --define process.env.NODE_ENV='production'",
-    "lib:build:esm-browser": "microbundle build --tsconfig scripts/tsconfig.json -f es --no-pkg-main -i src/index.ts -o dist/portal-vue.esm-browser.js --define process.env.NODE_ENV='production'",
-    "docs:dev": "vuepress dev docs",
-    "docs:build": "vuepress build docs",
-    "lint": "eslint --fix './*.{js,ts}' 'src/**/*.{ts,tsx,vue}' 'example/**/*.{ts,tsx,vue}'",
-    "test": "yarn jest"
-  },
   "source": "src/index.ts",
   "main": "dist/portal-vue.js",
   "module": "dist/portal-vue.esm.js",
@@ -37,6 +25,18 @@
     "dist",
     "types"
   ],
+  "scripts": {
+    "lib:dev": "microbundle watch --tsconfig scripts/tsconfig.json --no-compress --no-pkg-main -u src/index.ts -o dist/portal-vue.esm.js -f es",
+    "app:dev": "vite serve ./example",
+    "lib:build": "yarn lib:build:dev && yarn lib:build:umd && yarn lib:build:esm-browser",
+    "lib:build:dev": "microbundle build --tsconfig scripts/tsconfig.json -f es,cjs --no-compress",
+    "lib:build:umd": "microbundle build --tsconfig scripts/tsconfig.json -f umd --define process.env.NODE_ENV='production'",
+    "lib:build:esm-browser": "microbundle build --tsconfig scripts/tsconfig.json -f es --no-pkg-main -i src/index.ts -o dist/portal-vue.esm-browser.js --define process.env.NODE_ENV='production'",
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs",
+    "lint": "eslint --fix './*.{js,ts}' 'src/**/*.{ts,tsx,vue}' 'example/**/*.{ts,tsx,vue}'",
+    "test": "yarn jest"
+  },
   "peerDependencies": {
     "vue": "^3.0.0-0"
   },
