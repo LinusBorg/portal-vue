@@ -20,7 +20,6 @@ export default defineComponent({
   inheritAttrs: false,
   props: {
     mountTo: { type: String, required: true },
-
     // Portal
     disabled: { type: Boolean },
     // name for the portal
@@ -83,12 +82,13 @@ function mountPortalTarget(targetProps: PortalTargetProps, el: HTMLElement) {
       (getCurrentInstance() as ComponentInternalInstance & {
         provides: Record<string, any>
       }).provides ?? {}
-    app._context.provides = Object.create(provides)
+    Object.assign(app._context.provides, Object.create(provides))
   }
 
   onMounted(() => app.mount(el))
   onBeforeUnmount(() => {
     app.unmount(el)
+    el.parentNode!.removeChild(el)
   })
 }
 
@@ -100,5 +100,7 @@ function getTargetEl(mountTo: string): HTMLElement {
       `[portal-vue]: Mount Point '${mountTo}' not found in document`
     )
   }
-  return el
+  const _el = document.createElement('div')
+  el.append(_el)
+  return _el
 }
