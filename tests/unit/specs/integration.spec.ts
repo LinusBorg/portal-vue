@@ -120,7 +120,7 @@ describe('Integration Tests', () => {
     expect(pWrapper[1].text()).toBe('Content1')
   })
 
-  it.only('works with mountPortalTarget feature', async () => {
+  it('works with mountPortalTarget feature', async () => {
     const component = require('../resources/PortalWithMountedTarget.vue')
       .default
     const el = document.createElement('DIV')
