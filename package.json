@@ -64,10 +64,10 @@
     "ts-jest": "26.4.1",
     "typescript": "~3.9.3",
     "vite": "^1.0.0-rc.8",
+    "vitepress": "^0.7.4",
     "vue": "^3.0.0-0",
     "vue-jest": "^5.0.0-alpha.5",
     "vue-router": "^4.0.0-0",
-    "vuepress": "1.7.1",
     "yorkie": "^2.0.0"
   },
   "gitHooks": {
@@ -80,7 +80,7 @@
     ]
   },
   "postcss": {
-   "plugins": {
+    "plugins": {
       "autoprefixer": {}
     }
   },
