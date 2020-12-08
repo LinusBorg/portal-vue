@@ -120,32 +120,14 @@ describe('Integration Tests', () => {
     expect(pWrapper[1].text()).toBe('Content1')
   })
 
-  /*
-  it('MountingPortal sets parent of PortalTarget to its parent', async () => {
-    const spy = jest.fn()
-    const Component = {
-      template: `
-      <div>
-        <MountingPortal mountTo="#target" >
-          <Child />
-        </MountingPortal>
-      </div>
-      `,
-      components: {
-        Child: {
-          template: `<div />`,
-          created() {
-            spy(this.$parent.$parent)
-          },
-        },
-      },
-    }
-    const { wrapper } = mountScenario(Component)
+  it.only('works with mountPortalTarget feature', async () => {
+    const component = require('../resources/PortalWithMountedTarget.vue')
+      .default
+    const el = document.createElement('DIV')
+    el.id = 'external-target'
+    document.body.appendChild(el)
+    await mountScenario(component)
 
-    await Vue.nextTick()
-    const parent = spy.mock.calls[0][0]
-    expect(parent).toBeDefined()
-    expect(spy.mock.calls[0][0]).toBe(wrapper.vm)
+    expect(el.textContent).toBe('Test')
   })
-  */
 })

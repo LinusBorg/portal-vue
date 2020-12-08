@@ -1,5 +1,4 @@
 import { App } from 'vue'
-import MountingPortal from './components/mounting-portal'
 import Portal from './components/portal'
 import PortalTarget from './components/portal-target'
 import {
@@ -9,7 +8,7 @@ import {
 } from './composables/wormhole'
 import { Wormhole as TWormhole } from './types'
 import { createWormhole, wormhole as defaultWormhole } from './wormhole'
-
+export { mountPortalTarget } from './utils/mountPortalTarget'
 export interface PluginOptions {
   portalName?: string
   portalTargetName?: string
@@ -20,7 +19,6 @@ export interface PluginOptions {
 export function install(app: App, options: PluginOptions = {}) {
   app.component(options.portalName || 'Portal', Portal)
   app.component(options.portalTargetName || 'PortalTarget', PortalTarget)
-  app.component(options.MountingPortalName || 'MountingPortal', MountingPortal)
 
   const wormhole = options.wormhole ?? defaultWormhole
   app.provide(wormholeSymbol, wormhole)
@@ -33,7 +31,6 @@ export const Wormhole = defaultWormhole
 export {
   Portal,
   PortalTarget,
-  MountingPortal,
   useWormhole,
   provideWormhole,
   TWormhole,
