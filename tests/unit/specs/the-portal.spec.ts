@@ -3,7 +3,6 @@ import { wormholeSymbol } from '@/composables/wormhole'
 import { PortalProps } from '@/types'
 import { createWormhole } from '@/wormhole'
 import { mount } from '@vue/test-utils'
-import { createEl } from '../utils'
 
 const createWormholeMock = () => {
   const wh = createWormhole(false)
