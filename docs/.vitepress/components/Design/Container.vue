@@ -1,27 +1,26 @@
-
 <template>
   <div class="container" ref="cont">
-    <slot/>
+    <slot />
   </div>
 </template>
 
-<script>
-// @ts-nocheck
-export default {
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
   name: 'Container',
-}
+})
 </script>
 
-<style lang="stylus" scoped>
+<style scoped>
 .container {
   position: relative;
   display: flex;
   flex-direction: row;
   justify-items: space-around;
-
-  &.column {
-    flex-direction: column;
-    justify-items: flex-start;
-  }
+}
+container.column {
+  flex-direction: column;
+  justify-items: flex-start;
 }
 </style>

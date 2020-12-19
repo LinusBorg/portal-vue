@@ -8,7 +8,7 @@ module.exports = {
   markdown: {
     lineNumbers: true,
   },
-  chainWebpack: config => {
+  chainWebpack: (config) => {
     config.plugin('version-env').use(webpack.EnvironmentPlugin, [
       {
         VERSION: version,

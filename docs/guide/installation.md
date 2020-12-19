@@ -25,14 +25,20 @@ Then include the package in your application and install the plugin:
 
 ```javascript
 import PortalVue from 'portal-vue'
+import { createApp } from 'vue'
+import App from './App.vue'
 
-Vue.use(PortalVue)
+const app = createApp(App)
+
+app.use(PortalVue)
+
+app.mount('#app')
 ```
 
 ### CDN
 
 PortalVue is available through a couple of CDNs, I recommend
-<a href="hhtp://www.unpkg.com">unpkg.com</a>
+<a href="http://www.unpkg.com">unpkg.com</a>
 
 Just include the script tag _after_ the one of Vue.js
 
@@ -49,26 +55,12 @@ PortalVue provides a UMD [build](#builds) (`/dist/portal-vue.umd.min.js`) which 
 Unpkg and jsdelivr automatically give you this build. if you include it from another source, make sure to include the right one.
 :::
 
-### Nuxt Module
-
-:::tip Hint
-Only relevant for users of the [Nuxt](https://nuxtjs.org) framework
-:::
-
-First install from NPM, then add `portal-vue/nuxt` to modules section of `nuxt.config.js`
-
-```javascript
-{
-  modules: ['portal-vue/nuxt']
-}
-```
-
 ## Options
 
 When installing with `Vue.use()`, you can pass options to change the component names.
 
 ```javascript
-Vue.use(PortalVue, {
+app.use(PortalVue, {
   portalName: 'my-portal', // default: 'portal'
   portalTargetName: 'my-target', // default:'portal-target'
 })
@@ -83,18 +75,19 @@ If you don't want to register the components globally, don't do `Vue.use('Portal
 Instead, import the component(s) in those components that you need them in and register them locally:
 
 ```javascript
-import { Portal, PortalTarget, MountingPortal } from 'portal-vue'
+import { Portal, PortalTarget } from 'portal-vue'
 
 export default {
   components: {
     Portal,
     PortalTarget,
-    MountingPortal,
   },
 }
 ```
 
 ## Builds
+
+TODO: fix file names
 
 Portal-Vue ships in three different Builds.
 

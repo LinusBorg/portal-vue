@@ -1,9 +1,3 @@
----
-sidebar: auto
-pre: .installatoin,
-next: ./advanced
----
-
 # Getting Started with Portal-Vue
 
 ## What is PortalVue?
@@ -22,18 +16,24 @@ So if you are just looking for a solution to that one problem, have a look at my
 Install Package:
 
 ```bash
-npm install --save portal-vue
+npm install --save portal-vue@next
 
 # or with yarn
-yarn add portal-vue
+yarn add portal-vue@next
 ```
 
 Add it to your application:
 
-```javascript
+```js
 import PortalVue from 'portal-vue'
+import { createApp } from 'vue'
+import App from './App.vue'
 
-Vue.use(PortalVue)
+const app = createApp(App)
+
+app.use(PortalVue)
+
+app.mount('#app')
 ```
 
 For more detailed installation instructions, additional options and installation via CDN,
@@ -60,16 +60,16 @@ Also, the code of the Examples uses the Single-File-Component Format ("`.vue`" f
 
 <portal-target name="destination">
   <!--
-  This component can be located anwhere in your App.
+  This component can be located anywhere in your App.
   The slot content of the above portal component will be rendered here.
   -->
 </portal-target>
 ```
 
-<SplitDisplay>
+<!-- <SplitDisplay>
   <Examples-Basic slot="example"/>
   <<< @/docs/.vuepress/components/Examples/Basic.vue
-</SplitDisplay>
+</SplitDisplay> -->
 
 ### Enabling/Disabling the Portal
 
@@ -85,10 +85,10 @@ Also, the code of the Examples uses the Single-File-Component Format ("`.vue`" f
 </portal>
 ```
 
-<SplitDisplay>
+<!-- <SplitDisplay>
   <Examples-Disable slot="example"/>
   <<< @/docs/.vuepress/components/Examples/Disable.vue{3,11,16}
-</SplitDisplay>
+</SplitDisplay> -->
 
 ### Conditional rendering with v-if
 
@@ -108,10 +108,10 @@ Also, the code of the Examples uses the Single-File-Component Format ("`.vue`" f
 </portal>
 ```
 
-<SplitDisplay>
+<!-- <SplitDisplay>
   <Examples-Conditional slot="example"/>
   <<< @/docs/.vuepress/components/Examples/Conditional.vue{3,13}
-</SplitDisplay>
+</SplitDisplay> -->
 
 ### Multiple Portals, one Target
 
@@ -143,10 +143,10 @@ The order the content is rendered in can be adjusted through the `order` prop on
 
 **Live Example**
 
-<SplitDisplay>
+<!-- <SplitDisplay>
   <Examples-Multiple slot="example"/>
   <<< @/docs/.vuepress/components/Examples/Multiple.vue{6,12,17}
-</SplitDisplay>
+</SplitDisplay> -->
 
 ## Use Cases
 
