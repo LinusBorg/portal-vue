@@ -5,10 +5,10 @@
 PortalVue is a set of two components that allow you to render a component's template
 (or a part of it) anywhere in the document - even outside the part controlled by your Vue App!
 
-::: tip Alternative: VueSimplePortal
-`PortalVue` offers quite a lot of functionality allowing for some creative use cases. However, for the most common use case (render .e.g a modal at the end of `<body>`), most of that isn't required.
+::: tip What about Vue 3's `<teleport>`?
+Good question! For most scenario's, you might not even need `portal-vue`, since the new `<teleport>` component does it better than this library does (read: Without the [caveats](./caveats.md)).
 
-So if you are just looking for a solution to that one problem, have a look at my new second portal project, [`@linusborg/vue-simple-portal`](https://github.com/LinusBorg/vue-simple-portal)
+For an in-depth explanation, look [here](#) <!-- TODO: provide link -->
 :::
 
 ## Setup
@@ -128,25 +128,29 @@ The order the content is rendered in can be adjusted through the `order` prop on
   <p>some other content</p>
 </portal>
 
-<portal-target name="destination" multiple />
+<div class="some-wrapper">
+  <portal-target name="destination" multiple />
+</div>
 ```
 
 **Result**
 
 <!-- prettier-ignore -->
 ```html
-<div class="vue-portal-target">
+<div class="some-wrapper">
   <p>some other content</p>
   <p>some content</p>
 </div>
 ```
 
+<!--
 **Live Example**
 
-<!-- <SplitDisplay>
+<SplitDisplay>
   <Examples-Multiple slot="example"/>
   <<< @/docs/.vuepress/components/Examples/Multiple.vue{6,12,17}
-</SplitDisplay> -->
+</SplitDisplay> 
+-->
 
 ## Use Cases
 

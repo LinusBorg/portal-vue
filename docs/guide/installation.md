@@ -87,16 +87,15 @@ export default {
 
 ## Builds
 
-TODO: fix file names
-
-Portal-Vue ships in three different Builds.
+Portal-Vue ships in four different Builds.
 
 | Type           | File                    | Usage                                                    |
 | -------------- | ----------------------- | -------------------------------------------------------- |
 | UMD (minified) | `portal-vue.umd.min.js` | To be included in a browser                              |
 | UMD            | `portal-vue.umd.js`     | To be included in a browser. Non minified for debugging. |
 | ESM            | `portal-vue.esm.js`     | For usage with bundlers that _do_ support ESModules.     |
-| Commonjs       | `portal-vue.common.js`  | For usage with bundlers that don't support ESModule      |
+| ESM for Browsers            | `portal-vue.esm-browser.js`     | For usage directly in modern browsers.     |
+| Commonjs       | `portal-vue.js`  | For usage with bundlers that don't support ESModule      |
 
 _Notes_
 
@@ -116,6 +115,10 @@ Webpack 1 doesn't support commonjs, neither do some dev tools, like jest doesn't
 
 ### ESM
 
-Webpack >=2, rollup and parcel all can natively understand ESModules, so this is the best build to use with those bundlers.
+Webpack >=2, rollup, and parcel all can natively understand ESModules, so this is the best build to use with those bundlers.
 
 The ESM version is marked as the default export of `package.json` for consumers that understand the `"module"` field in `package.json` (which is true for all the aforementioned bundlers), so doing `import PortalVue from 'portal-vue'` will automatically give you the ESM build if the bundler supports it.
+
+### ESM for Browsers
+
+This is a special version of the ESM build with all development hints stripped out. It can be used directly in modern browsers that support `<script tyoe="module">` (read: pretty much everyone but IE).
