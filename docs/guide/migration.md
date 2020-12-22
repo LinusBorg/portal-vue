@@ -47,7 +47,7 @@ More info:
 
 Previously, this event emitted the actual old and new content of the portal, which means: arrays containing vnodes.
 
-There never was a real usacase for this, so we now only emit `true` or `false` depending on wether the component has content or not, which allowed us to drop a nice little bit of code.
+There never was a real usacase for this, so we now only emit `true` or `false` depending on whether the component has content or not, which allowed us to drop a nice little bit of code.
 
 ## Things we removed
 

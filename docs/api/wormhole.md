@@ -8,7 +8,7 @@ next: false
 
 The Wormhole is not a component, it's an object that connects the `<Portal>`s to their `<PortalTarget>`s.
 
-Usually, you will never need to use this object, but you _can_ use this object to programmatically send content to a `<PortalTarget>`, check weither a target exists, and other stuff.
+Usually, you will never need to use this object, but you _can_ use this object to programmatically send content to a `<PortalTarget>`, check whether a target exists, and other stuff.
 
 :::warning Public API
 The wormhole object exposes quite a few properties and methods. With regard to semver, only the properties and methods documented below are considered part of the public API.
@@ -125,7 +125,7 @@ Wormhole.hasSource('origin')
 ```
 
 ::: tip Server-Side Rendering
-For the reasons layed out in [the section about SSR](../guide/SSR.md), this method will aleways return `false` during Server-Side Rendering.
+For the reasons layed out in [the section about SSR](../guide/SSR.md), this method will always return `false` during Server-Side Rendering.
 Make sure to Read the linked section for more information.
 :::
 
@@ -143,7 +143,7 @@ Wormhole.hasTarget('destination')
 ```
 
 ::: tip Server-Side Rendering
-For the reasons layed out in [the section about SSR](../guide/SSR.md), this method will aleways return `false` during Server-Side Rendering.
+For the reasons layed out in [the section about SSR](../guide/SSR.md), this method will always return `false` during Server-Side Rendering.
 Make sure to Read the linked section for more information.
 :::
 
@@ -161,6 +161,6 @@ Wormhole.hasContentFor('destination')
 ```
 
 ::: tip Server-Side Rendering
-For the reasons layed out in [the section about SSR](../guide/SSR.md), this method will aleways return `false` during Server-Side Rendering.
+For the reasons layed out in [the section about SSR](../guide/SSR.md), this method will always return `false` during Server-Side Rendering.
 Make sure to Read the linked section for more information.
 :::
