@@ -32,7 +32,7 @@ Vue.use(PortalVue)
 ### CDN
 
 PortalVue is available through a couple of CDNs, I recommend
-<a href="hhtp://www.unpkg.com">unpkg.com</a>
+<a href="https://www.unpkg.com">unpkg.com</a>
 
 Just include the script tag _after_ the one of Vue.js
 
