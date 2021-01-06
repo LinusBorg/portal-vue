@@ -5,7 +5,7 @@ import { wormhole } from './wormhole'
 
 let _id = 1
 
-export default Vue.extend({
+export default /* #__PURE__ */ Vue.extend({
   name: 'portal',
   props: {
     disabled: { type: Boolean },

@@ -12,7 +12,7 @@ const transports: Transports = {}
 const targets: VMRegister = {}
 const sources: VMRegister = {}
 
-export const Wormhole = Vue.extend({
+export const Wormhole = /* #__PURE__ */ Vue.extend({
   data: () => ({
     transports,
     targets,
@@ -112,5 +112,5 @@ export const Wormhole = Vue.extend({
   },
 })
 
-const wormhole = new Wormhole(transports)
+const wormhole = /* #__PURE__ */ new Wormhole(transports)
 export { wormhole }

@@ -5,7 +5,7 @@ import { Transport, PropWithComponent } from '../types'
 
 import { wormhole } from '@/components/wormhole'
 
-export default Vue.extend({
+export default /* #__PURE__ */ Vue.extend({
   name: 'portalTarget',
   props: {
     multiple: { type: Boolean, default: false },
