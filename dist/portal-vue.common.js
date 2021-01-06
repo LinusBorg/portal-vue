@@ -1,6 +1,6 @@
 
  /*! 
-  * portal-vue © Thorsten Lünborg, 2019 
+  * portal-vue © Thorsten Lünborg, 2021 
   * 
   * Version: 2.1.7
   * 
