@@ -27,7 +27,7 @@ const portalProps = [
 
 const targetProps = ['multiple', 'transition']
 
-export default (Vue as withPortalTarget).extend({
+export default /* #__PURE__ */ (Vue as withPortalTarget).extend({
   name: 'MountingPortal',
   inheritAttrs: false,
   props: {

@@ -1,6 +1,6 @@
 
  /*! 
-  * portal-vue © Thorsten Lünborg, 2019 
+  * portal-vue © Thorsten Lünborg, 2021 
   * 
   * Version: 2.1.7
   * 
@@ -90,7 +90,9 @@
   var transports = {};
   var targets = {};
   var sources = {};
-  var Wormhole = Vue.extend({
+  var Wormhole =
+  /* #__PURE__ */
+  Vue.extend({
     data: function data() {
       return {
         transports: transports,
@@ -205,10 +207,13 @@
       }
     }
   });
-  var wormhole = new Wormhole(transports);
+  var wormhole =
+  /* #__PURE__ */
+  new Wormhole(transports);
 
   var _id = 1;
-  var Portal = Vue.extend({
+  var Portal = /* #__PURE__ */
+  Vue.extend({
     name: 'portal',
     props: {
       disabled: {
@@ -323,7 +328,8 @@
     }
   });
 
-  var PortalTarget = Vue.extend({
+  var PortalTarget = /* #__PURE__ */
+  Vue.extend({
     name: 'portalTarget',
     props: {
       multiple: {
@@ -440,7 +446,8 @@
   var _id$1 = 0;
   var portalProps = ['disabled', 'name', 'order', 'slim', 'slotProps', 'tag', 'to'];
   var targetProps = ['multiple', 'transition'];
-  var MountingPortal = Vue.extend({
+  var MountingPortal = /* #__PURE__ */
+  Vue.extend({
     name: 'MountingPortal',
     inheritAttrs: false,
     props: {
