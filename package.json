@@ -17,7 +17,8 @@
     "minify": "minify dist/portal-vue.umd.js --out-file dist/portal-vue.umd.min.js",
     "lint": "vue-cli-service lint",
     "test": "yarn test:unit",
-    "test:unit": "vue-cli-service test:unit"
+    "test:unit": "vue-cli-service test:unit",
+    "size": "size-limit"
   },
   "main": "dist/portal-vue.umd.js",
   "module": "dist/portal-vue.esm.js",
@@ -37,6 +38,7 @@
   "devDependencies": {
     "@babel/runtime-corejs2": "^7.1.5",
     "@linusborg/vue-ko-fi-button": "^0.1.0",
+    "@size-limit/preset-small-lib": "^4.9.1",
     "@types/jest": "^23.1.4",
     "@vue/cli-plugin-babel": "^3.1.0",
     "@vue/cli-plugin-eslint": "^3.1.0",
@@ -66,6 +68,7 @@
     "rollup-plugin-replace": "^2.1.0",
     "rollup-plugin-typescript2": "^0.18.0",
     "sass-loader": "^7.0.3",
+    "size-limit": "^4.9.1",
     "ts-jest": "^23.0.0",
     "typescript": "^3.0.0",
     "vue": "^2.6.7",
