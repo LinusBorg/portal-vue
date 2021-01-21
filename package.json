@@ -64,7 +64,7 @@
     "ts-jest": "26.4.1",
     "typescript": "~3.9.3",
     "vite": "^1.0.0-rc.13",
-    "vitepress": "^0.9.2",
+    "vitepress": "^0.11.3",
     "vue": "^3.0.4",
     "vue-jest": "^5.0.0-alpha.5",
     "vue-router": "^4.0.0-0",

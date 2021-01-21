@@ -1,5 +1,5 @@
 ---
-sidebar: auto
+# sidebar: auto
 prev: ./portal
 next: ./mounting-portal
 ---

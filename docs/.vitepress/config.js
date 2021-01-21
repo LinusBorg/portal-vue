@@ -16,10 +16,12 @@ module.exports = {
       {
         text: 'Guide',
         link: '/guide/getting-started',
+        activeMatch: '^/guide/'
       },
       {
         text: 'API',
         link: '/api/portal',
+        activeMatch: '^/api/'
       },
       {
         text: 'Docs for v2',

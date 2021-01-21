@@ -1,5 +1,4 @@
 ---
-sidebar: auto
 prev: ./advanced
 next: ./migration
 ---
@@ -10,23 +9,23 @@ Admittedly, portal-vue uses a little bit of trickery to do what it does. With th
 
 ## Local state lost when toggling `disabled`
 
-When toggling the `<portal>` component's `disabled` state, components in the portal slot are destroyed and re-created, which means any changes to their local state are lost.
+When toggling the `Portal` component's `disabled` state, components in the portal slot are destroyed and re-created, which means any changes to their local state are lost.
 
 If you need to persist state, use some sort of [state management](https://portal-vue-next-preview.netlify.com/)
 
 ## provide/inject
 
-Due to the way that Vue resolves provides from parent components, it will look for provided objects in the parent of `<portal-target>`, so any `provide`d objects of a parent of `<portal>` will not be available to components within a portal - but it will have access to those provided by parents of the `<portal-target>`.
+Due to the way that Vue resolves provides from parent components, it will look for provided objects in the parent of `PortalTarget`, so any `provide`d objects of a parent of `Portal` will not be available to components within a portal - but it will have access to those provided by parents of the `PortalTarget`.
 
-Also, when using `multiple` portals sending content to one `<portal-target>`, it would be unclear which `<portal>` component's injections should be used.
+Also, when using `multiple` portals sending content to one `PortalTarget`, it would be unclear which `Portal` component's injections should be used.
 
 ## `$parent`
 
-For the same reason, `this.$parent` will not give you the parent of the `<Portal>`, instead it will give you the `<PortalTarget>`, so code relying on `$parent` might break.
+For the same reason, `this.$parent` will not give you the parent of the `Portal`, instead it will give you the `PortalTarget`, so code relying on `$parent` might break.
 
-### [vue-router](https://router.vuejs.org)
+## [vue-router](https://router.vuejs.org)
 
-`<router-view>` internally walks the $parent chain to find out how many (if any) parent <router-view> components there are. Therefore `<router-view>` inside a `<portal>` will not be able to properly match its nested routes. See [#289](https://github.com/LinusBorg/portal-vue/issues/289) for discussion.
+`RouterView` internally walks the $parent chain to find out how many (if any) parent `RouterView` components there are. Therefore `RouterView` inside a `Portal` will not be able to properly match its nested routes. See [#289](https://github.com/LinusBorg/portal-vue/issues/289) for discussion.
 
 ## `$refs`
 
@@ -42,4 +41,4 @@ this.$nextTick().then(
 )
 ```
 
-The reason is that depending on the secnario, it _can_ take one tick for the content to be sent to the [Wormhole](../api/wormhole.md) (the middleman between `<Portal>` and `<PortalTarget>`), and another one to be picked up by the `<PortalTarget>`.
+The reason is that depending on the secnario, it _can_ take one tick for the content to be sent to the [Wormhole](../api/wormhole.md) (the middleman between `Portal` and `PortalTarget`), and another one to be picked up by the `PortalTarget`.

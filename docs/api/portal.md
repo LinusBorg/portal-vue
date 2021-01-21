@@ -1,12 +1,12 @@
 ---
-sidebar: auto
+# sidebar: auto
 prev: false
 next: ./portal-target
 ---
 
 # Portal Component
 
-Wrap any content that you want to render somewhere else in a `<Portal>` component.
+Wrap any content that you want to render somewhere else in a `Portal` component.
 
 ## Example usage
 
@@ -50,13 +50,13 @@ Instead, it will be rendered in place:
 
 ::: tip Fragment
 
-`Portal` now renders a fragment, which means it doesn't render a root node around its content. Thats a new features supported in Vue 3, and pretty useful here - no superfluous wrapper element anoymore!
+`Portal` now renders a fragment, which means it doesn't render a root node around its content. Thats a new features supported in Vue 3, and pretty useful here - no superfluous wrapper element anymore!
 
 ::::
 
 ::: warning Local component state
  
- When toggling between enabled/disabled state, components in the portal slot are destroyed and re-created, which means any changes to their local state are lost.</p>
+ When toggling between enabled/disabled state, components in the portal slot are destroyed and re-created, which means any changes to their local state are lost.
 
 :::
 ### `name`
@@ -65,9 +65,9 @@ Instead, it will be rendered in place:
 | -------- | -------- | --------------- |
 | `String` | no       | a random String |
 
-This optional prop can usually be left out, because `<Portal>` can generate a random string to provide an identifier for the source of the content being sent to the `<PortalTarget>`.
+This optional prop can usually be left out, because `Portal` can generate a random string to provide an identifier for the source of the content being sent to the `PortalTarget`.
 
-But it might be a good idea to name your `<Portal>` components so you can debug them easier if need would be.
+But it might be a good idea to name your `Portal` components so you can debug them easier if need would be.
 
 ### `order`
 
@@ -75,10 +75,10 @@ But it might be a good idea to name your `<Portal>` components so you can debug 
 | -------- | -------- | ------- |
 | `Number` | no\*     | 0       |
 
-This prop defines the order position in the output of the `<PortalTarget>`.
+This prop defines the order position in the output of the `PortalTarget`.
 
 ::: tip
-This prop is only useful when the Portal is sending content to a `<PortalTarget>` which has the `multiple` prop set.
+This prop is only useful when the Portal is sending content to a `PortalTarget` which has the `multiple` prop set.
 :::
 
 **Source**
@@ -108,11 +108,11 @@ This prop is only useful when the Portal is sending content to a `<PortalTarget>
 This prop is only useful if:
 
 - the `disabled` prop is `true`, **and**
-- the `<Portal>`'s slot content is a [Scoped Slot](https://vuejs.org/v2/guide/components.html#Scoped-Slots).
+- the `Portal`'s slot content is a [Scoped Slot](https://vuejs.org/v2/guide/components.html#Scoped-Slots).
 
 If that's the case, then the object you pass to `slotProps` is used to define the props that are passed to the scoped slot to display the content correctly in-place:
 
-It has a (more useful) counterpart in the `<portal-target>` component
+It has a (more useful) counterpart in the `PortalTarget` component
 
 **Source**
 
@@ -141,7 +141,7 @@ It has a (more useful) counterpart in the `<portal-target>` component
 | -------- | --------- | --------------- |
 | `String` | yes       | a random String |
 
-This defines the name of the `<PortalTarget>` component that the slot content should be rendered in.
+This defines the name of the `PortalTarget` component that the slot content should be rendered in.
 
 **Source**
 

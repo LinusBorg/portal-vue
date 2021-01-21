@@ -1,68 +1,158 @@
 ---
-sidebar: auto
+# sidebar: auto
 prev: ./caveats
 next: false
 ---
 
-# About 2.0.0
+<!-- 
 
-Version 2.0.0 doesn't introduce many new features, but some - and also, some breaking changes - some in the form of different behaviour, some in the form of removal of functionality we deem to not be worth their weight.
+TOC
 
-The core functionality of `<Portal>` and `<PortalTarget>` isn't affected by these changes. The two major areas that are affected are:
+- only supports Vue 3.
+- usefulness in light of <teleport> (-> link to extra page)
+- still has caveats
+- better size
+- less props as Vue 3 makes some unnecessary
+- MountingPortal dropped to save kB
+  - 90% of its use cases covered by <teleport>
+  - for 10%: use createPortalTarget()
 
-1. Rendering to a DOM element outside of your Vue app - in 1.0.0 this was done with the `targetEl` prop
-2. Sliming down the API of the `Wormhole` object, since it offered some APIs that - in our experience - offered little value in the end.
-3. Simplifying the transitions API
+-->
 
-## Things we added
+## Migrating from PortalVue 2
 
-### Source & Target registration & duplicate checks
+PortalVue 3 is a complete re-write in order to optimize the codebase with new things Vue 3 gives us, and in the process, work over the APIs and features a bit, cleaning up some cruft here and there.
 
-`<Portal>` and `<PortalTarget>` components now register themselves with the plugin (and unregister again when they are destroyed).
+From consumer's perspective, not too much has changed, so most use cases should just continue to work or need little adjusting to make them work again.
 
-That allows us to provide warnings if you try to create a component with a name that already exists.
+One notable exception is `<MountingPortal>`, which was dropped in this release and is replaced with a small utility function to mount a `PortalTarget` for a normal `Portal` (see *Changes* further down.)
 
-You can also check for this programmatically with [`Wormhole.hasSource() / .hasTarget()`](../api/wormhole.md#)
+### Sidenotes: Vue 3 & Teleport
 
-### MountingPortal
+One question developers already accustomed with Vue 3 will will likely have is:
 
-The new `<MountingPortal>` component is a wrapper around the normal `<Portal>`. It's job is to mount a `<PortalTarget>` for the `<Portal>` to send its content to.
+> "Do we actually still need this library? Vue 3 has `<Teleport>` now!"
 
-This job was previously solved through the `targetEl` prop on the `<Portal>` itself, but the functionality was insuffient and broke more easily.
+The honest answer is: You probably don't need this library anymore for the typical use cases like moving modals to `<body>` etc. But if you are moving content _within_ your app, from one component to another, then `<Teleport>` on its own is not a good choice, and you will likely still profit from using this library.
 
-[See API Docs for MountingPortal](../api/mounting-portal.md)
+One thing to note here is that PortalVue still does **not** use `<Teleport>`under the hood. The main reason for that decision is that there would be a lot more behavioral differences that might make migration harder if we re-built PortalVue 3 on top of `Teleport`.
 
-## Things we changed
+So think of PortalVue 3 as a kind of Migration release that should give you more or less the same behavior you had with PortalVue 2 in you Vue 2 apps, but also comes with most of the caveats that the previous versions had.
 
-### PortalTarget.transition
+We do plan to release another major version later (maybe even as a new, separate library), which *will* be built in top of `Teleport`, at which point you can migrate to the new version in your Vue 3 app at your own pace if you want to.
 
-Setting a Transition for the `<PortalTarget>` now requires a locally or globally registered [reusable transition component](https://vuejs.org/v2/guide/transitions.html#Reusable-Transitions), which simplifies the API and reduces code in the `<PortalTarget>` component itself, and allows developers to use their own transitions that follow the pattern from the docs very easily.
+## Migration Strategy
 
-More info:
+The bread-and-butter use case should be fairly easy to migrate, as the `Portal` and `PortalTarget` Components only lost a couple of props that are now no longer required in Vue 3, like `slim` (see below).
 
-- [Guide](./advanced.md#transitions)
-- [API Docs](../api/portal-target.md#transistion)
+Notable breaking changes that do need some revamping affect two use cases:
 
-### PortalTarget `@change` event
+1. Transitions defined on the `PortalTarget` side
+2. Removal of `MountingPortal`, which is now better solved with `Teleport`, save for one edge case (`multiple` prop) for which we will cover a migration path futher down.
 
-Previously, this event emitted the actual old and new content of the portal, which means: arrays containing vnodes.
+## List of Changes
 
-There never was a real usacase for this, so we now only emit `true` or `false` depending on whether the component has content or not, which allowed us to drop a nice little bit of code.
+### Installation
 
-## Things we removed
+As the global API of creating a Vue app and registering Plugins changed a bit, you also need to adapt your Plugin installation a bit.
 
-### Various Wormhole methods
+See the chapter on [Installation](./guide/installation.md) for further instructions.
+### Portal Component
 
-We removed the following methods:
+#### `slim` prop removed
 
-- `Wormhole.hasContentFor()`
-- `Wormhole.getSourceFor()`
-- `Wormhole.getContentFor()`
+In Vue 3, components no longer require a root element, so `slim` is no longer necessary. `Portal` will no longer render a root element, independent of the number of elements in its slot content.
 
-## Things we fixed
+If you need a wrapping element, wrap `<portal>` in an element yourself:
 
-### Various problems with `Portal.targetEl` prop
+```html
+<!-- Renders no element -->
+<portal to="someTarget"></portal>
 
-The implementation of the `targetEl` behaviour had various problems, i.e. overwriting existing portal-targets on the same element, no working when passed a discrete element, replacing the targeted mount element and so forth.
+<!-- Wrap it in an element if you need it encapsulated i.e. for styling -->
+<div>
+  <portal to="someTarget"></portal>
+</div>
+```
+### PortalTarget Component
 
-These isses are all fixed with the revamped bahaviour that's managed by the `<MountingPortal>` component now.
+#### `slim` prop removed
+
+In Vue 3, components no longer require a root element, so `slim` is no longer necessary. `Portal` will no longer render a root element, independent of the number of elements in its slot content.
+
+If you need a wrapping element, wrap `<portal>` in an element yourself:
+
+```html
+<!-- will not render its content in a root element -->
+<portal-target name="someTarget" />
+
+<!-- Wrap it in an element if you need it encapsulated i.e. for styling -->
+<div>
+  <portal-target name="someTarget" />
+</div>
+```
+
+#### New: `v-slot:wrapper`
+
+You can now pass an additional named slot to `PortalTarget` that can be used  to wrap the contents coming from multiple `Portal` in markup individually:
+
+```html
+<portal-target>
+<portal-target name="target">
+  <template v-slot:wrapper="nodes">
+    <div class="some fancy box styles">
+      <component :is="node" v-for="node in nodes" />
+    </div>
+  </template>
+</portal-target>
+```
+
+See: [PortalTarget API: Wrapper slot](./api/portal-target.md/#wrapper)
+
+#### `transition`, `transition-events` props removed.
+
+Instead of these props, you can now use the new `v-slot:wrapper` to wrap content in `<transition>` or `<transition-group>` components. [See the docs for more info here](./guide/advanced.md#portaltarget-transitions)
+
+### Removed: MountingPortal
+
+This component was removed. Depending on your use case, you have two alternative migration paths:
+
+1. You move content from one `Portal` only: Use Vue's own `Teleport` instead ([Teleport docs](https://v3.vuejs.org/api/built-in-components.html#teleport))
+2. You want to move content from multiple Places to the same mounted Portal: use `createPortalTarget()` utility function:
+
+```html
+<template>
+  <portal to="target-name">
+    <p>This is the content to move</p>
+  </portal>
+</template>
+
+<script>
+import { createPortalTarget } from 'portal-vue'
+
+export default {
+
+  created() {
+    createPortalTarget('#id-of-target-element', {
+      name: 'target-name'
+      // portal props
+    })
+  }
+}
+</script>
+```
+
+In practice, you would likely call this function somewhere more global once, so that all other `Portal`components can move content this single `PortalTarget`.
+
+<!-- TODO: Link to docs -->
+
+### Wormhole
+
+The wormhole is the connecting "store" between the `Portal` and `PortalTarget` components. in PortalVue 2, it was a singleton, which meant that all apps and libraries on one page shared the same namespace for `to=""` names.
+
+PortalVue 3 still provides a default instance to all components in an app when installing the plugin, but now you can optionally create your own instance and use that instead of the default one.
+
+[Read more here](./guide/installation.md#custom-wormhole-instance)
+
+
+### Testing

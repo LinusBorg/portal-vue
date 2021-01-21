@@ -1,5 +1,5 @@
 ---
-sidebar: auto
+# sidebar: auto
 prev: ./getting-started
 next: ./caveats
 ---
@@ -26,8 +26,8 @@ PortalVue can also be used with [Scoped Slots](https://vuejs.org/v2/guide/compon
 
 <!-- prettier-ignore -->
 ```html
-<portal to="destination">
-  <p slot-scope="{message}">{{message}}</p>
+<portal to="destination" v-slot="{ message }">
+  <p>{{message}}</p>
 </portal>
 
 <portal-target
@@ -76,7 +76,7 @@ However, if you use a `<portal-target>` for multiple `<portal>`s, you likely wan
 
 Transitions for Targets underwent a redesign in PortalVue `3.0`. The new syntax is admittedly a bit more verbose and has a hack-ish feel to it, but it's a valid use of Vue's v-slot syntax and was necessary to get rid of some nasty edge cases with target Transitions that we had in PortalVue `2.*`.
 
-Basically, you pass a transisiton to a slot named `wrapper` and get an array called `nodes` from its slot props.
+Basically, you pass a transition to a slot named `wrapper` and get an array called `nodes` from its slot props.
 
 You can the use Vue'S `<component :is="">` to turn those into the content of the transition.
 

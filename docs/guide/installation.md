@@ -1,5 +1,5 @@
 ---
-sidebar: auto
+# sidebar: auto
 prev: false
 next: ./getting-started
 ---
@@ -70,19 +70,37 @@ These options would make the components available globally as `<my-portal>` and 
 
 ## Using the components locally
 
-If you don't want to register the components globally, don't do `Vue.use('PortalVue')`
+If you don't want to register the components globally, you can import the components locally. But you still need to isntall the plugin. just pass `false`for the component options:
 
-Instead, import the component(s) in those components that you need them in and register them locally:
+```js
+app.use(PortalVue, {
+  portalName: false,
+  portalTargetName: false,
+})
+```
+
+then import the component(s) in those components that you need them in and register them locally, which also allows to rename them:
 
 ```javascript
 import { Portal, PortalTarget } from 'portal-vue'
 
 export default {
   components: {
-    Portal,
+    MyPortal: Portal,
     PortalTarget,
   },
 }
+```
+
+## Custom Wormhole instance
+
+If you potentially have more than one Vue app on a page, you can avoid name conflicts by creating your own wormhole instance just for your app. This also means that your app can't send content to `PortalTarget` components in other apps running in the page, so it's probably an edge case.
+
+```js
+import PortalVue, { createWormhole } from 'portal-vue'
+app.use(PortalVue, {
+  wormhole: createWormhole()
+})
 ```
 
 ## Builds

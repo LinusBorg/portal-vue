@@ -26,7 +26,6 @@ export function mountPortalTarget(
       (getCurrentInstance() as ComponentInternalInstance & {
         provides: Record<string, any>
       }).provides ?? {}
-    console.log(provides, Object.create(provides))
     app._context.provides = Object.create(provides)
     //Object.assign(app._context.provides, Object.create(provides))
   }
@@ -34,6 +33,7 @@ export function mountPortalTarget(
     app.mount(el)
   })
   onBeforeUnmount(() => {
-    app.unmount(el)
+    // @ts-expect-error - 3.0.4 erroneously extect an argument where none is necessary
+    app.unmount()
   })
 }

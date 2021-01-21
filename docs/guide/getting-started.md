@@ -1,3 +1,8 @@
+---
+# sidebar: auto
+prev: ./installation
+next: ./advanced
+---
 # Getting Started with Portal-Vue
 
 ## What is PortalVue?
@@ -5,8 +10,8 @@
 PortalVue is a set of two components that allow you to render a component's template
 (or a part of it) anywhere in the document - even outside the part controlled by your Vue App!
 
-::: tip What about Vue 3's `<teleport>`?
-Good question! For most scenario's, you might not even need `portal-vue`, since the new `<teleport>` component does it better than this library does (read: Without the [caveats](./caveats.md)).
+::: tip What about Vue 3's `Teleport`?
+Good question! For most scenario's, you might not even need `portal-vue`, since the new `Teleport` component does it better than this library does (read: Without the [caveats](./caveats.md)).
 
 For an in-depth explanation, look [here](#) <!-- TODO: provide link -->
 :::
@@ -115,9 +120,9 @@ Also, the code of the Examples uses the Single-File-Component Format ("`.vue`" f
 
 ### Multiple Portals, one Target
 
-The `<portal-target>` component has a `multiple` mode, which allows to render content from multiple `<portal>` components _at the same time_.
+The `PortalTarget` component has a `multiple` mode, which allows to render content from multiple `Portal` components _at the same time_.
 
-The order the content is rendered in can be adjusted through the `order` prop on the `<portal>` components:
+The order the content is rendered in can be adjusted through the `order` prop on the `Portal` components:
 
 <!-- prettier-ignore -->
 ```html
