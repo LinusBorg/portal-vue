@@ -4,13 +4,6 @@ sidebar: false
 
 <Hero />
 
-<div style="display: flex; justify-content: center; margin: 30px auto;">
-  <KoFiButton
-    username="linusborg"
-    title="Support me with a coffee?"
-    color="rgb(208,126,27)"
-  />
-</div>
 
 ## Usage example
 
@@ -24,7 +17,7 @@ sidebar: false
 
 <portal-target name="destination">
   <!--
-  This component can be located anwhere in your App
+  This component can be located anywhere in your App
   (i.e. right before the </body> tag, good for overlays).
   The slot content of the above portal component will be rendered here.
   -->

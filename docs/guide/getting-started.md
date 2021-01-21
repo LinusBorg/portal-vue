@@ -1,9 +1,8 @@
 ---
-sidebar: auto
-pre: .installatoin,
+# sidebar: auto
+prev: ./installation
 next: ./advanced
 ---
-
 # Getting Started with Portal-Vue
 
 ## What is PortalVue?
@@ -11,10 +10,10 @@ next: ./advanced
 PortalVue is a set of two components that allow you to render a component's template
 (or a part of it) anywhere in the document - even outside the part controlled by your Vue App!
 
-::: tip Alternative: VueSimplePortal
-`PortalVue` offers quite a lot of functionality allowing for some creative use cases. However, for the most common use case (render .e.g a modal at the end of `<body>`), most of that isn't required.
+::: tip What about Vue 3's `Teleport`?
+Good question! For most scenario's, you might not even need `portal-vue`, since the new `Teleport` component does it better than this library does (read: Without the [caveats](./caveats.md)).
 
-So if you are just looking for a solution to that one problem, have a look at my new second portal project, [`@linusborg/vue-simple-portal`](https://github.com/LinusBorg/vue-simple-portal)
+For an in-depth explanation, look [here](#) <!-- TODO: provide link -->
 :::
 
 ## Setup
@@ -22,18 +21,24 @@ So if you are just looking for a solution to that one problem, have a look at my
 Install Package:
 
 ```bash
-npm install --save portal-vue
+npm install --save portal-vue@next
 
 # or with yarn
-yarn add portal-vue
+yarn add portal-vue@next
 ```
 
 Add it to your application:
 
-```javascript
+```js
 import PortalVue from 'portal-vue'
+import { createApp } from 'vue'
+import App from './App.vue'
 
-Vue.use(PortalVue)
+const app = createApp(App)
+
+app.use(PortalVue)
+
+app.mount('#app')
 ```
 
 For more detailed installation instructions, additional options and installation via CDN,
@@ -60,16 +65,16 @@ Also, the code of the Examples uses the Single-File-Component Format ("`.vue`" f
 
 <portal-target name="destination">
   <!--
-  This component can be located anwhere in your App.
+  This component can be located anywhere in your App.
   The slot content of the above portal component will be rendered here.
   -->
 </portal-target>
 ```
 
-<SplitDisplay>
+<!-- <SplitDisplay>
   <Examples-Basic slot="example"/>
   <<< @/docs/.vuepress/components/Examples/Basic.vue
-</SplitDisplay>
+</SplitDisplay> -->
 
 ### Enabling/Disabling the Portal
 
@@ -85,10 +90,10 @@ Also, the code of the Examples uses the Single-File-Component Format ("`.vue`" f
 </portal>
 ```
 
-<SplitDisplay>
+<!-- <SplitDisplay>
   <Examples-Disable slot="example"/>
   <<< @/docs/.vuepress/components/Examples/Disable.vue{3,11,16}
-</SplitDisplay>
+</SplitDisplay> -->
 
 ### Conditional rendering with v-if
 
@@ -108,16 +113,16 @@ Also, the code of the Examples uses the Single-File-Component Format ("`.vue`" f
 </portal>
 ```
 
-<SplitDisplay>
+<!-- <SplitDisplay>
   <Examples-Conditional slot="example"/>
   <<< @/docs/.vuepress/components/Examples/Conditional.vue{3,13}
-</SplitDisplay>
+</SplitDisplay> -->
 
 ### Multiple Portals, one Target
 
-The `<portal-target>` component has a `multiple` mode, which allows to render content from multiple `<portal>` components _at the same time_.
+The `PortalTarget` component has a `multiple` mode, which allows to render content from multiple `Portal` components _at the same time_.
 
-The order the content is rendered in can be adjusted through the `order` prop on the `<portal>` components:
+The order the content is rendered in can be adjusted through the `order` prop on the `Portal` components:
 
 <!-- prettier-ignore -->
 ```html
@@ -128,25 +133,29 @@ The order the content is rendered in can be adjusted through the `order` prop on
   <p>some other content</p>
 </portal>
 
-<portal-target name="destination" multiple />
+<div class="some-wrapper">
+  <portal-target name="destination" multiple />
+</div>
 ```
 
 **Result**
 
 <!-- prettier-ignore -->
 ```html
-<div class="vue-portal-target">
+<div class="some-wrapper">
   <p>some other content</p>
   <p>some content</p>
 </div>
 ```
 
+<!--
 **Live Example**
 
 <SplitDisplay>
   <Examples-Multiple slot="example"/>
   <<< @/docs/.vuepress/components/Examples/Multiple.vue{6,12,17}
-</SplitDisplay>
+</SplitDisplay> 
+-->
 
 ## Use Cases
 

@@ -1,5 +1,5 @@
 ---
-sidebar: auto
+# sidebar: auto
 prev: ./portal
 next: ./mounting-portal
 ---
@@ -14,11 +14,15 @@ This component is an outlet for any content that was sent by a `<Portal>` compon
 <portal-target name="destination" />
 ```
 
-<p class="info">This is an abstract component which means it will not be visible in vue-devtools</p>
+::: tip Fragment
+
+  `PortalTarget` renders a Fragment now, which means: there is no wrapping element.
+
+:::
 
 ## Props API
 
-### `multiple` <Badge text="1.2.0+"/>
+### `multiple`
 
 When `multiple` is `true`, the portal will be able to receive and render content from multiple `<Portal>` component at the same time.
 
@@ -42,16 +46,9 @@ You should use the `order` prop on the `<Portal>` to define the order in which t
 
 <!-- prettier-ignore -->
 ```html
-<div class="vue-portal-target">
-  <p>some other content</p>
-  <p>some content</p>
-</div>
+<p>some other content</p>
+<p>some content</p>
 ```
-
-:::warning Usage with `slim`
-`multiple` may not behave as expected when its `<PortalTarget>` is also in `slim` mode because `slim` attempts to 
-assign the content's root node as the `<PortalTarget>`'s root node, thereby _only_ rendering the first of all incoming nodes.
-:::
 
 ### `name`
 
@@ -61,35 +58,7 @@ assign the content's root node as the `<PortalTarget>`'s root node, thereby _onl
 
 Defines the name of this portal-target. `<Portal>` components can send content to this instance by this name.
 
-### `slim`
-
-| Type      | Required | Default |
-| --------- | -------- | ------- |
-| `Boolean` | no       | `false` |
-
-When set to true, the component will check if the sent content has only one root node. If that is the case, the component will _not_ render a root node of its own but instead just return that single node.
-
-**Source**
-
-<!-- prettier-ignore -->
-```html {5}
-<portal to="destination"> <p>Only one content element</p> </portal>
-
-<portal-target name="destination" slim />
-```
-
-**Result**
-
-<!-- prettier-ignore -->
-```html
-<p>Only one content element</p>
-```
-
-:::warning BREAKING CHANGE IN 2.0.0
-When there's no content and `slim` is set, the target doesn't render an empty `<div>` anymore, it renders nothing (a comment node as a placeholder is rendered, to be precise).
-:::
-
-### `slotProps` <Badge text="1.3.0+"/>
+### `slotProps`
 
 | Type     | Required | Default |
 | -------- | -------- | ------- |
@@ -105,8 +74,8 @@ The `slotProps` object is used as props to render the scoped slot from a `<Porta
 
 <!-- prettier-ignore -->
 ```html {2,9}
-<portal to="destination">
-  <p slot-scope="props">This scoped slot content is so {{ props.state }}</p>
+<portal to="destination" v-slot="props" slot-props="{ state: 'nice!!' }">
+  <p>This scoped slot content is so {{ props.state }}</p>
 </portal>
 
 <portal-target name="destination" slot-props="{state: 'cool!'}" />
@@ -116,124 +85,14 @@ The `slotProps` object is used as props to render the scoped slot from a `<Porta
 
 <!-- prettier-ignore -->
 ```html
-<div class="vue-portal-target">
-  <p>This scoped slot content is so cool!</p>
-</div>
+<p>This scoped slot content is so cool!</p>
 ```
 
 It has a counterpart of the same name on the `<Portal>` component to pass props to the slot content when the `<Portal>` is disabled.
 
-### `tag`
-
-| Type     | Required | Default |
-| -------- | -------- | ------- |
-| `String` | no       | `'DIV'` |
-
-Defines the type of tag that should be rendered as a root component.
-
-**Source**
-
-<!-- prettier-ignore -->
-```html {3}
-<portal-target name="destination" tag="span" />
-```
-
-**Result**
-
-<!-- prettier-ignore -->
-```html {1}
-<span class="vue-portal-target">
-  <!-- any content from <Portal> component may be rendered here -->
-</span>
-```
-
-### `transition` <Badge text=" changed in 2.0.0+"/>
-
-| Type                    | Required | Default |
-| ----------------------- | -------- | ------- |
-| `Boolean|String|Object` | no       | none    |
-
-This property is used to configure a transition for the portal content. By default, it will render
-a `<transition-group>`, which will respect the `<PortalTarget>`'s [`tag`](#tag) property and will render instead of the
-plain wrapper element that is usually rendered.
-
-It accepts:
-
-- a `String` value: will render a globally registered component of this name.
-- a `Component`: will render `<transition-group>` with the object's content passed as props.
-
-Example with string:
-
-<!-- prettier-ignore -->
-```html {4}
-<portal-target
-  name="dest" 
-  slim
-  transition="fade">
-</portal-target>
-```
-
-Example with Component:
-
-<!-- prettier-ignore -->
-```html
-<portal-target 
-  name="dest" slim 
-  :transition="fadeTransition">
-</portal-target>
-```
-
-```javascript
-computed: {
-  fadeTransition() {
-    return {
-      functional: true,
-      render(h, context) {
-        return h('transition', { props: { name: 'fade', mode: 'out-in' } }, context.children)
-      }
-    }
-  },
-  globalTransitionComponent() {
-    // instead of creating the Transition component locally like above,
-    // you probably would like to re-use a component, that you registered
-    // either globally or locally.
-    return Vue.component('yourGloballyregisteredComponent')
-    // or
-    return this.$options.components('yourLocallyregisteredComponent')
-  }
-}
-```
-
-:::tip Resuable Transition components
-The Vue documentation has a [section about creating resusable transititions](https://vuejs.org/v2/guide/transitions.html#Reusable-Transitions) with components
-:::
-
-#### Slim Mode
-
-When [`slim`](#slim) is also specified, it will render a `<transition>` instead of a `<transition-group>`.
-
-### `transitionEvents` <Badge text="removed in 2.0.0" type="error"/>
-
-| Type     | Required | Default |
-| -------- | -------- | ------- |
-| `Object` | no       | none    |
-
- <p class="info">This property requires that the `transition` prop is defined as well.</p>
-
-Accepts an object whose keys match the transition component's events. Each key's value should be a callback function for the transition.
-
-<!-- prettier-ignore -->
-```html {4}
-<portal-target
-  name="dest"
-  transition="fade"
-  :transition-events="{ enter: handleEnter, leave: handleLeave }"
-></portal-target>
-```
-
 ## Slots API
 
-### Default slot <Badge text="1.1.0+"/>
+### Default slot
 
 Any existing slot content is rendered in case that no content from any source Portal is available.
 
@@ -252,14 +111,12 @@ Example:
 
 <!-- prettier-ignore -->
 ```html
-<span class="vue-portal-target">
-  <p>This is rendered when no other content is available.</p>
-</span>
+<p>This is rendered when no other content is available.</p>
 ```
 
-### Default scoped slot <Badge text="2.0.0+"/>
+### Default scoped slot
 
-If a scoped slot is provided, its content is rendered in case that no content from any source Portal is available. The scoped slot receives the [`slotProps`](#slotprops) prop as its argument.
+The default slot can also be scoped. The scoped slot receives the [`slotProps`](#slotprops) prop as its argument.
 
 Example:
 
@@ -267,8 +124,8 @@ Example:
 
 <!-- prettier-ignore -->
 ```html {1-3}
-<portal-target name="destination" :slotScope="{ message: 'Hi!' }">
-  <p slot-scope="props">
+<portal-target name="target" :slotScope="{ message: 'Hi!' }" v-slot="props">
+  <p>
     {{props.message}} This is rendered when no other content is available.
   </p>
 </portal-target>
@@ -278,18 +135,51 @@ Example:
 
 <!-- prettier-ignore -->
 ```html
-<div class="vue-portal-target">
-  <p>This is rendered when no other content is available.</p>
-</div>
+<p>This is rendered when no other content is available.</p>
 ```
 
-## Events API <Badge text="1.1.0+" type="warning"/>
+### `wrapper`
+
+This slot can be used to define markup that should wrap the content received from a `<portal>`. This is usually only useful in combination with [`multiple`](#multiple), as for content from a single portal, you can just wrap the `<portal-target>` as a whole.
+
+The slot receives an array as its only prop, which contains the raw vnodes representing the content sent from the source portal(s).
+
+These vnodes can be rendered with Vue's dynamic component syntax:
+
+`<component :is="node">`
+
+Example:
+
+**Source**
+<!-- prettier-ignore -->
+```html
+<portal-target name="target">
+  <template v-slot:wrapper="nodes">
+    <component :is="node" v-for="node in nodes" />
+  </template>
+</portal-target>
+```
+
+This slot is also useful to [add transitions (see advanced Guide)](../guide/advanced#transitions ).
+## Events API
 
 ### `change`
 
-Emitted everytime the component re-renders because the content from the `<Portal>` changed.
+Emitted every time the component re-renders because the content from the `<Portal>` changed.
 
-It receives two arguments, each is a `Boolean`, indicating the absense or presence of content for the target.
+It receives an object with two properties:
+
+```js
+{
+  hasContent: boolean,
+  sources: string[]
+}
+```
+
+|Property| type | description|
+|----------|---------|-----------------------------------------------------------------------|
+|hasContent|boolean  | indicated wether there is currently and content for the `PortalTarget`|
+|sources   | string[]| Array with the names of the portal(s) that sent content               |
 
 <!-- prettier-ignore -->
 ```html {4}
@@ -300,16 +190,10 @@ It receives two arguments, each is a `Boolean`, indicating the absense or presen
 <script>
   export default {
     methods: {
-      handleUpdate(newContent, oldContent) {
+      handleUpdate({ hasChanged, sources }) {
         // do something with the info.
       },
     },
   }
 </script>
 ```
-
-:::warning BREAKING CHANGE in 2.0.0
-The event now is simple `Boolean` values, indicating wether the target is/was empty or not.
-
-Previously, we emitted the old and new contents, but that code was too cumbersome for little value.
-:::

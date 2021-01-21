@@ -1,5 +1,5 @@
 ---
-sidebar: auto
+# sidebar: auto
 prev: ./getting-started
 next: ./caveats
 ---
@@ -20,40 +20,14 @@ The `to` prop of `<portal>` and the `name` prop of `<portal-target>` can be chan
   by changing the 'name', you can define which portal's content should be shown.
 </portal-target>
 ```
-
-## "Slim" - removing the wrapper
-
-Vue components always need a single root element. Since `<portal-target>` can't know in advance whether or not it will receive content with more than one root element, it will render a wrapper element around the content to provide a single root node.
-
-However, if you know that you will send content with a single root element only, you can use the `slim` prop to tell `<portal-target>` to render that element only and do without the wrapper element.
-
-This can be useful if `<portal-target>`s wrapper element is creating problems for your styling.
-
-<!-- prettier-ignore -->
-```html
-<portal to="destination">
-  <div>
-    <p>This content has a single root node (the div)</p>
-    <p>
-      Therefore, we can tell the PortalTarget to do without a root element of
-      its own
-    </p>
-  </div>
-</portal>
-
-<portal-target name="destination" slim />
-```
-
-The `slim` property also works on `<portal>` components when they are `disabled` (see [here](../api/portal.md#slim)).
-
 ## Scoped Slots <Badge text="1.3.0+" />
 
 PortalVue can also be used with [Scoped Slots](https://vuejs.org/v2/guide/components.html#Scoped-Slots)! This allows you to send a scoped slot to a PortalTarget, which can then provide props for the slot content:
 
 <!-- prettier-ignore -->
 ```html
-<portal to="destination">
-  <p slot-scope="{message}">{{message}}</p>
+<portal to="destination" v-slot="{ message }">
+  <p>{{message}}</p>
 </portal>
 
 <portal-target
@@ -66,12 +40,13 @@ PortalVue can also be used with [Scoped Slots](https://vuejs.org/v2/guide/compon
 
 <!-- prettier-ignore -->
 ```html
-<div class="vue-portal-target">
-  <p>Hello from the Target to You!</p>
-</div>
+<!-- rendered in the target location-->
+<p>Hello from the Target to You!</p>
 ```
 
 ## Transitions <Badge text="1.2.0+"/>
+
+### Portal Transitions 
 
 You can pass transitions to a `<portal>` without problems. It will behave just the same when the content is being rendered in the `<portal-target>`:
 
@@ -86,89 +61,52 @@ You can pass transitions to a `<portal>` without problems. It will behave just t
 ```
 
 However, if you use a `<portal-target>` for multiple `<portal>`s, you likely want to define the transition on the target end instead. This is also supported.
-
-::: warning
-This API underwent a significant change in the 2.0.0 release. Below, examples for both old and new syntax are given. Keep an eye on the version badges next to them.
-:::
-
-#### New Syntax <Badge text="2.0.0+" />
+#### PortalTarget Transitions <Badge text="3.0.0+" />
 
 <!-- prettier-ignore -->
 ```html
-<portal-target
-  transition="fade"
-/>
+<portal-target name="target">
+  <template v-slot:wrapper="nodes">
+    <transition name="fade" mode="out-in">
+      <component :is="nodes[0]" />
+    </transition>
+  </template>
+</portal-target>
 ```
 
-Here, the string `'fade'` would be expected to be the name of a globally registered component that wraps a `<transition>` component ([see Vue docs on reusable transitions](https://vuejs.org/v2/guide/transitions.html#Reusable-Transitions)). You can also pass a component options object or a constructor. We have [more examples](../api/portal-target.md#transition) in the API docs.
+Transitions for Targets underwent a redesign in PortalVue `3.0`. The new syntax is admittedly a bit more verbose and has a hack-ish feel to it, but it's a valid use of Vue's v-slot syntax and was necessary to get rid of some nasty edge cases with target Transitions that we had in PortalVue `2.*`.
 
-#### Old Syntax <Badge text=">=1.2 <2.0" type="warning" />
+Basically, you pass a transition to a slot named `wrapper` and get an array called `nodes` from its slot props.
+
+You can the use Vue'S `<component :is="">` to turn those into the content of the transition.
+
+Here's a second example, using a `<transition-group>` instead:
 
 <!-- prettier-ignore -->
 ```html
-<portal-target
-  :transition="{ name: 'fade'}"
-  :transition-events="{ enter: onEnterCallBack }"
-/>
+<portal-target name="target">
+  <template #wrapper="nodes">
+    <transition-group name="fade">
+      <component :is="node" v-for="node in nodes" :key="node" />
+    </transition-group>
+  </template>
+  </portal-target>
 ```
 
-One important behaviour to know is this:
+## Proper namespacing
 
-- When the PortalTarget would render only one content element, a `<transition>` is created.
-- When it would render multiple elements, the rendered root wrapper element will be turned into a `<transition-group>` component instead.
+In order to move content from `Portals` to `PortalTargets`, some intermediary state management is required to coordinate between the two. We call this the "wormhole".
 
-## Rendering outside of the Vue-App <Badge text="2.0.0+"/>
+In PortalVue `<=2.*`, this wormhole was a singleton instance, and as a consequence, the namespace for `to` and `name` properties was also global.
 
-If you want to render your content to a place outside of the control of your Vue app, Portal-Vue also got your covered. It gives you a special `<MountingPortal>` component that mounts a `<PortalTarget>` to any element in the DOM - you just define it with a normal DOM selector.
+In PortalVue `3.0` we still use a default wormhole, but now also support creating your own wormhole instance(s) and providing them to your portal components in different areas of your app - or different apps on the same page.
 
-It then provides the (auto-generated) name of the generated Target to its children through a scoped slot.
+This makes working with names a bit less prone to conflicts, especially when 3rd-party libraries that you are using in your projects also use portal-vue to move things around without you even knowing.
 
-<!-- prettier-ignore -->
-```html
-<div id="app">
-  <MountingPortal mountTo="#widget" name="source" append>
-    <p>Content for the Target</p>
-  </MountingPortal>
-<div>
+So how does it work?
 
-<script>
-  new Vue({el: '#app'})
-</script>
-<aside id="widget" class="widget-sidebar">
-  This Element is not controlled by our Vue-App,
-  but we can create a <portal-target> here with <MountingPortal>.
-</aside>
-```
+TODO: properly document using `createWormhole()`
 
-When `<MountingPortal>` is destroyed, it takes care of destroying the `<PortalTarget>`.
+## Rendering outside of the Vue-App <Badge text="3.0.0+"/>
 
-:::tip
-When the `append` prop is set, the Target will be mounted to as a child of the specified element instead of replacing it.
-
-This is great if you want to mount more than one PortalTarget there, for example.
-
-When `append` is used, `<MountingPortal>` will also remove the appended element when destroying the `<PortalTarget>`
-:::
-
-### `targetEl` - The Old Way <Badge type="warning" text="1.* only"/>
-
-<!-- prettier-ignore -->
-```html {3}
-<body>
-  <div id="app">
-    <portal name="" target-el="#widget">
-      <p>
-        PortalVue will dynamically mount an  instance of <portal-target>
-        in place of the Element with `id="widget"`,
-        and this paragraph will be rendered inside of it.
-      </p>
-    </portal>
-  </div>
-</body>
-```
-
-:::warning
-This feature had a couple of problems that were the trigger to revamp it for 2.0 as can be seen above.
-
-It was both a bit buggy and made the code harder to maintain, so we extracted it into a separate component for 2.0
-:::
+TODO: Introduce `createPortalTarget` and explain limited usage scenarios

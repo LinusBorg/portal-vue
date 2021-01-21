@@ -1,6 +1,6 @@
-<template lang="html">
-  <div class="split-container" ref="cont">
-    <resize-observer @notify="handleResize"/>
+<template>
+  <div class="split-container" ref="container">
+    <resize-observer @notify="handleResize" />
     <button
       class="split-tab-button"
       :class="isActive('example')"
@@ -25,63 +25,107 @@
     >
       Example+Code
     </button>
-    <div class="split" :class="column ? 'column' : ''">
-      <div
-        v-if="exampleVisible"
-        class="split-example"
-      >
+    <div class="split" :class="state.orientation">
+      <div v-if="exampleVisible" class="split-example">
         <keep-alive>
-          <slot name="example"/>
+          <slot name="example" />
         </keep-alive>
       </div>
-      <div
-        v-if="codeVisible"
-        class="split-code"
-      >
-        <slot/>
+      <div v-if="codeVisible" class="split-code">
+        <slot />
       </div>
     </div>
   </div>
 </template>
 
-<script>
-import Vue from 'vue'
+<script lang="ts">
+import {
+  defineComponent,
+  reactive,
+  onMounted,
+  nextTick,
+  computed,
+  PropType,
+  ref,
+} from 'vue'
 
-export default Vue.extend({
-  data() {
+type Display = 'example' | 'code' | 'both'
+type Orientation = 'horizontal' | 'vertical'
+
+export default defineComponent({
+  props: {
+    active: {
+      type: String as PropType<Display>,
+      default: 'example',
+    },
+  },
+  setup(props) {
+    const container = ref<HTMLElement>()
+    const state = reactive({
+      display: props.active,
+      orientation: 'horizontal' as Orientation,
+      width: Infinity,
+    })
+
+    const exampleVisible = computed(() =>
+      ['example', 'both'].includes(state.display)
+    )
+    const codeVisible = computed(() => ['code', 'both'].includes(state.display))
+
+    function isActive(type: string) {
+      return state.display === type ? 'split-tab-button-active' : ''
+    }
+    function setDisplay(value: Display) {
+      state.display = value
+    }
+    function handleResize() {
+      const el = container.value
+      if (el && el instanceof HTMLElement) {
+        const { width } = el.getBoundingClientRect()
+        state.width = width
+        if (width < 800) {
+          state.orientation = 'horizontal'
+        } else {
+          state.orientation = 'vertical'
+        }
+      }
+    }
+
+    onMounted(async () => {
+      await nextTick()
+      handleResize()
+    })
+    return {
+      container,
+      state,
+      codeVisible,
+      exampleVisible,
+      isActive,
+      setDisplay,
+      handleResize,
+    }
+  },
+  /*data() {
     return {
       display: this.active,
       column: false,
       width: Infinity,
     }
   },
-  props: {
-    active: {
-      type: String,
-      default: 'example',
-    },
-  },
   mounted() {
     this.$nextTick(this.handleResize)
   },
   computed: {
-    /**
-     * @return {boolean}
-     */
-    exampleVisible() {
+    exampleVisible(): boolean {
       return this.display === 'example' || this.display === 'both'
     },
-    /**
-     * @returns { boolean }
-     */
-    codeVisible() {
+    codeVisible(): boolean {
       return this.display === 'code' || this.display === 'both'
     },
   },
   methods: {
     handleResize() {
       const el = this.$refs.cont
-      console.log('yay', el)
       if (el && el instanceof HTMLElement) {
         const { width } = el.getBoundingClientRect()
         this.width = width
@@ -92,19 +136,13 @@ export default Vue.extend({
         }
       }
     },
-    /**
-     * @param {string} type
-     */
-    setDisplay(type) {
+    setDisplay(type: Display) {
       this.display = type
     },
-    /**
-     * @param {string} type
-     */
-    isActive(type) {
+    isActive(type: string) {
       return this.display === type ? 'split-tab-button-active' : ''
     },
-  },
+  },*/
 })
 </script>
 
@@ -141,7 +179,7 @@ export default Vue.extend({
   display: flex;
   margin: 0 -10px;
 
-  &.column {
+  &.horizontal {
     flex-direction: column;
 
     & > div {
