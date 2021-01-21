@@ -71,10 +71,10 @@ Also, the code of the Examples uses the Single-File-Component Format ("`.vue`" f
 </portal-target>
 ```
 
-<!-- <SplitDisplay>
+<!-- SplitDisplay>
   <Examples-Basic slot="example"/>
   <<< @/docs/.vuepress/components/Examples/Basic.vue
-</SplitDisplay> -->
+/SplitDisplay> -->
 
 ### Enabling/Disabling the Portal
 
@@ -90,7 +90,7 @@ Also, the code of the Examples uses the Single-File-Component Format ("`.vue`" f
 </portal>
 ```
 
-<!-- <SplitDisplay>
+<!-- SplitDisplay>
   <Examples-Disable slot="example"/>
   <<< @/docs/.vuepress/components/Examples/Disable.vue{3,11,16}
 </SplitDisplay> -->
@@ -113,7 +113,7 @@ Also, the code of the Examples uses the Single-File-Component Format ("`.vue`" f
 </portal>
 ```
 
-<!-- <SplitDisplay>
+<!-- SplitDisplay>
   <Examples-Conditional slot="example"/>
   <<< @/docs/.vuepress/components/Examples/Conditional.vue{3,13}
 </SplitDisplay> -->
@@ -151,7 +151,7 @@ The order the content is rendered in can be adjusted through the `order` prop on
 <!--
 **Live Example**
 
-<SplitDisplay>
+SplitDisplay>
   <Examples-Multiple slot="example"/>
   <<< @/docs/.vuepress/components/Examples/Multiple.vue{6,12,17}
 </SplitDisplay> 

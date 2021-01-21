@@ -43,7 +43,6 @@
     </div>
     <h1 class="h1">
       PortalVue
-      <!-- <Badge :text="$__VERSION__" type="tip" vertical="middle" /> -->
     </h1>
     <p style="text-align: center">
       A Vue component to render your component's template anywhere in the DOM.

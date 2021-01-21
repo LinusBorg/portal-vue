@@ -20,7 +20,7 @@ The `to` prop of `<portal>` and the `name` prop of `<portal-target>` can be chan
   by changing the 'name', you can define which portal's content should be shown.
 </portal-target>
 ```
-## Scoped Slots <Badge text="1.3.0+" />
+## Scoped Slots
 
 PortalVue can also be used with [Scoped Slots](https://vuejs.org/v2/guide/components.html#Scoped-Slots)! This allows you to send a scoped slot to a PortalTarget, which can then provide props for the slot content:
 
@@ -44,7 +44,7 @@ PortalVue can also be used with [Scoped Slots](https://vuejs.org/v2/guide/compon
 <p>Hello from the Target to You!</p>
 ```
 
-## Transitions <Badge text="1.2.0+"/>
+## Transitions
 
 ### Portal Transitions 
 
@@ -61,7 +61,7 @@ You can pass transitions to a `<portal>` without problems. It will behave just t
 ```
 
 However, if you use a `<portal-target>` for multiple `<portal>`s, you likely want to define the transition on the target end instead. This is also supported.
-#### PortalTarget Transitions <Badge text="3.0.0+" />
+#### PortalTarget Transitions
 
 <!-- prettier-ignore -->
 ```html
@@ -107,6 +107,6 @@ So how does it work?
 
 TODO: properly document using `createWormhole()`
 
-## Rendering outside of the Vue-App <Badge text="3.0.0+"/>
+## Rendering outside of the Vue-App
 
 TODO: Introduce `createPortalTarget` and explain limited usage scenarios
