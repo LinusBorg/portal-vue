@@ -109,7 +109,7 @@ The `slotProps` object is used as props to render the scoped slot from a `<Porta
   <p slot-scope="props">This scoped slot content is so {{ props.state }}</p>
 </portal>
 
-<portal-target name="destination" slot-props="{state: 'cool!'}" />
+<portal-target name="destination" :slot-props="{state: 'cool!'}" />
 ```
 
 **Result**
