@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PortalTarget renders slot content when no other content is available 1`] = `"<p class=\\"default\\">Test</p>"`;

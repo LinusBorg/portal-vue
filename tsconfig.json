@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
+    "target": "ES2019",
     "module": "ESNext",
     "strict": true,
     "jsx": "preserve",
@@ -23,6 +23,10 @@
     "src/**/*.ts",
     "src/**/*.tsx",
     "src/**/*.vue",
+    "docs/**/*.vue",
+    "docs/**/*.ts",
+    "docs/.vitepress/**/*.vue",
+    "docs/.vitepress/**/*.ts",
     "example/**/*.ts",
     "example/**/*.tsx",
     "example/**/*.vue",

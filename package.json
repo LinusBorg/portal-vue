@@ -8,18 +8,6 @@
     "url": "https://github.com/LinusBorg/"
   },
   "private": false,
-  "scripts": {
-    "lib:dev": "microbundle watch --tsconfig scripts/tsconfig.json --no-compress --no-pkg-main -u src/index.ts -o dist/portal-vue.esm.js -f es",
-    "app:dev": "vite serve ./example",
-    "lib:build": "yarn lib:build:dev && yarn lib:build:umd && yarn lib:build:esm-browser",
-    "lib:build:dev": "microbundle build --tsconfig scripts/tsconfig.json -f es,cjs --no-compress",
-    "lib:build:umd": "microbundle build --tsconfig scripts/tsconfig.json -f umd --no-compress --define process.env.NODE_ENV='production'",
-    "lib:build:esm-browser": "microbundle build --tsconfig scripts/tsconfig.json -f es --no-pkg-main -i src/index.ts -o dist/portal-vue.esm-browser.js --define process.env.NODE_ENV='production'",
-    "docs:dev": "vuepress dev docs",
-    "docs:build": "vuepress build docs",
-    "lint": "eslint --fix './*.{js,ts}' 'src/**/*.{ts,tsx,vue}' 'example/**/*.{ts,tsx,vue}'",
-    "test": "yarn jest"
-  },
   "source": "src/index.ts",
   "main": "dist/portal-vue.js",
   "module": "dist/portal-vue.esm.js",
@@ -37,15 +25,27 @@
     "dist",
     "types"
   ],
+  "scripts": {
+    "lib:dev": "microbundle watch --tsconfig scripts/tsconfig.json --no-compress --no-pkg-main -u src/index.ts -o dist/portal-vue.esm.js -f es",
+    "app:dev": "vite serve ./example",
+    "lib:build": "yarn lib:build:dev && yarn lib:build:umd && yarn lib:build:esm-browser",
+    "lib:build:dev": "microbundle build --tsconfig scripts/tsconfig.json -f es,cjs --no-compress",
+    "lib:build:umd": "microbundle build --tsconfig scripts/tsconfig.json -f umd --define process.env.NODE_ENV='production'",
+    "lib:build:esm-browser": "microbundle build --tsconfig scripts/tsconfig.json -f es --no-pkg-main -i src/index.ts -o dist/portal-vue.esm-browser.js --define process.env.NODE_ENV='production'",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "lint": "eslint --fix './*.{js,ts}' 'src/**/*.{ts,tsx,vue}' 'example/**/*.{ts,tsx,vue}'",
+    "test": "yarn jest"
+  },
   "peerDependencies": {
-    "vue": "^3.0.0-0"
+    "vue": "^3.0.4"
   },
   "devDependencies": {
     "@types/jest": "^24.0.15",
     "@typescript-eslint/eslint-plugin": "^4.6.0",
     "@typescript-eslint/parser": "^4.6.0",
     "@vue/babel-preset-app": "^4.5.8",
-    "@vue/compiler-sfc": "^3.0.2",
+    "@vue/compiler-sfc": "^3.0.4",
     "@vue/eslint-config-prettier": "^6.0.0",
     "@vue/eslint-config-typescript": "^7.0.0",
     "@vue/test-utils": "^2.0.0-0",
@@ -63,11 +63,11 @@
     "sass-loader": "^10.0.3",
     "ts-jest": "26.4.1",
     "typescript": "~3.9.3",
-    "vite": "^1.0.0-rc.8",
-    "vue": "^3.0.0-0",
+    "vite": "^2.0.0-beta.36",
+    "vitepress": "^0.11.4",
+    "vue": "^3.0.4",
     "vue-jest": "^5.0.0-alpha.5",
     "vue-router": "^4.0.0-0",
-    "vuepress": "1.7.1",
     "yorkie": "^2.0.0"
   },
   "gitHooks": {
@@ -80,7 +80,7 @@
     ]
   },
   "postcss": {
-   "plugins": {
+    "plugins": {
       "autoprefixer": {}
     }
   },

@@ -9,7 +9,7 @@ When using [Vue's SSR capabilities](https://ssr.vuejs.org), portal-vue can't wor
 
 ### Disabling the portal on the server
 
-For the aforementioned reasons, starting with <Badge text="2.1.2" />, content won't be cached in the Wormhole anymore when on the server. Consequently, the HTML rendered by the server won't contain any DOM nodes in place of any `<portal-target>`
+For the aforementioned reasons, starting with `2.1.2`, content won't be cached in the Wormhole anymore when on the server. Consequently, the HTML rendered by the server won't contain any DOM nodes in place of any `<portal-target>`
 
 ### Handling on the client
 

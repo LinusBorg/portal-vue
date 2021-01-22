@@ -1,13 +1,11 @@
 import {
-  ComponentInternalInstance,
   FunctionalComponent,
-  PropType,
   VNode,
   computed,
   defineComponent,
-  getCurrentInstance,
   h,
   watch,
+  createCommentVNode,
 } from 'vue'
 import { useWormhole } from '../composables/wormhole'
 
@@ -21,18 +19,9 @@ export default defineComponent({
     multiple: { type: Boolean, default: false },
     name: { type: String, required: true },
     slotProps: { type: Object, default: () => ({}) },
-    __parent: {
-      type: Object as PropType<ComponentInternalInstance>,
-    },
   },
   emits: ['change'],
   setup(props, { emit, slots }) {
-    // TODO: validate if parent injection works
-    // depends on MountingPortalTarget
-    if (props.__parent) {
-      useParentInjector(props.__parent)
-    }
-
     const wormhole = useWormhole()
 
     const slotVnodes = computed<{ vnodes: VNode[]; vnodesFn: () => VNode[] }>(
@@ -55,25 +44,34 @@ export default defineComponent({
       }
     )
 
-    watch(slotVnodes, ({ vnodes }) => {
-      const hasContent = vnodes.length > 0
-      const content = wormhole.transports.get(props.name)
-      const sources = content ? [...content.keys()] : []
-      emit('change', { hasContent, sources })
-    })
-
+    watch(
+      slotVnodes,
+      ({ vnodes }) => {
+        const hasContent = vnodes.length > 0
+        const content = wormhole.transports.get(props.name)
+        const sources = content ? [...content.keys()] : []
+        emit('change', { hasContent, sources })
+      },
+      { flush: 'post' }
+    )
     return () => {
       const hasContent = !!slotVnodes.value.vnodes.length
       if (hasContent) {
-        return h(PortalTargetContent, slotVnodes.value.vnodesFn)
+        return [
+          // this node is a necessary hack to force Vue to change the scoped-styles boundary
+          // TODO:  find less hacky solution
+          h('div', {
+            style: 'display: none',
+            key: '__portal-vue-hacky-scoped-slot-repair__',
+          }),
+          // we wrap the slot content in a functional component
+          // so that transitions in the slot can properly determine first render
+          // for `appear` behavior to work properly
+          h(PortalTargetContent, slotVnodes.value.vnodesFn),
+        ]
       } else {
         return slots.default?.()
       }
     }
   },
 })
-
-function useParentInjector(parent: ComponentInternalInstance) {
-  const vm = getCurrentInstance()
-  vm!.parent = parent
-}

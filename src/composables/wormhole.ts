@@ -8,8 +8,7 @@ export function useWormhole() {
 
   if (!wh) {
     throw new Error(`
-    [portal-vue]: Injection for 'wormhole' not found. 
-    Are you sure you installed the plugin with 'app.use(plugin)'?`)
+    [portal-vue]: Necessary Injection not found. Make sur you installed the plugin properly.`)
   }
 
   return wh

@@ -42,25 +42,31 @@
       </svg>
     </div>
     <h1 class="h1">
-      PortalVue
-      <Badge :text="$__VERSION__" type="tip" vertical="middle"/>
+      PortalVue 
+      <Badge>
+        {{ $site.customData.version }}
+      </Badge>
     </h1>
-    <p
-      style="text-align: center;"
-    >A Vue component to render your component's template anywhere in the DOM.</p>
+    <p style="text-align: center">
+      A Vue component <strong>for Vue 3</strong> to render your component's template anywhere in the DOM.
+    </p>
     <div class="box">
-      <router-link class="button" to="/guide/getting-started.html">Get started</router-link>
+      <a class="button" href="/guide/getting-started.html">
+        Get started
+      </a>
     </div>
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
   name: 'Hero',
-}
+})
 </script>
 
-<style scoped lang="stylus">
+<style scoped lang="postcss">
 @keyframes anim {
   0% {
     transform: translate(-50px) rotate(10deg);
@@ -71,11 +77,9 @@ export default {
   }
 }
 
-width = 45;
-
 .svg {
-  width: width vw;
-  height: (width / 2) vw;
+  width: 45vw;
+  height: calc(45vw / 2);
   margin: 0 auto;
 }
 

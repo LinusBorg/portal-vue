@@ -1,17 +1,18 @@
 <template>
   <div>
     <button @click="show = !show">Toggle v-if</button>
-    {{show}}
+    {{ show }}
     <Design-Container>
       <Design-Panel color="green" text="Source">
         <p>
-          The content below this paragraph is
-          rendered in the right/bottom (red) container by PortalVue
-          if the portal is actually rendered.
-          When it's removed again, the content in the red panel will be removed as well.
+          The content below this paragraph is rendered in the right/bottom (red)
+          container by PortalVue if the portal is actually rendered. When it's
+          removed again, the content in the red panel will be removed as well.
         </p>
         <Portal v-if="show" to="right-conditional">
-          <p class="red">This is content from the left/top container (green).</p>
+          <p class="red">
+            This is content from the left/top container (green).
+          </p>
         </Portal>
       </Design-Panel>
       <Design-Panel color="red" text="Target" left>
@@ -21,9 +22,11 @@
   </div>
 </template>
 <script>
-export default {
+import { defineComponent } from 'vue'
+
+export default defineComponent({
   data: () => ({
     show: true,
   }),
-}
+})
 </script>

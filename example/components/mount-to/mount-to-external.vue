@@ -5,22 +5,34 @@
     <!-- <button @click="toggleManual">toggle manual portal &amp; target</button> -->
     <!-- <button @click="target = ''">Unset targetEl</button> -->
 
-    <MountingPortal mountTo="#external-target" append v-if="showAuto">
+    <portal to="external-destination" append v-if="showAuto">
       <p>Hello from an automatically generated Portal <i>and</i> Target</p>
-    </MountingPortal>
+      <Test />
+    </portal>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import Test from '../test-component.vue'
+import Test from './Test.vue'
+import { mountPortalTarget } from 'portal-vue'
 export default defineComponent({
-  // components: { Test }, // testing that `parent` option works
   data() {
     return {
       showManual: false,
       showAuto: false,
     }
+  },
+  setup() {
+    mountPortalTarget(
+      {
+        name: 'external-destination',
+      },
+      '#external-target'
+    )
+  },
+  components: {
+    Test,
   },
   methods: {
     toggleManual() {

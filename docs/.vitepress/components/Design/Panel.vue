@@ -5,13 +5,16 @@
       class="text"
       :class="{ left: left }"
       :style="`color: ${color};`"
-    >{{ text.toUpperCase() }}</span>
-    <slot/>
+      >{{ text.toUpperCase() }}</span
+    >
+    <slot />
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
   props: {
     color: {
       type: String,
@@ -25,7 +28,7 @@ export default {
     },
   },
   computed: {
-    style() {
+    style(): Record<string, any> {
       const { color, order } = this
       return {
         'border-color': color,
@@ -33,10 +36,10 @@ export default {
       }
     },
   },
-}
+})
 </script>
 
-<style lang="stylus" scoped>
+<style lang="postcss" scoped>
 .panel {
   border: 1px solid #000;
   border-radius: 5px;
@@ -51,10 +54,9 @@ export default {
   position: absolute;
   top: 5px;
   right: 10px;
-
-  &.left {
-    right: auto;
-    left: 10px;
-  }
+}
+.text.left {
+  right: auto;
+  left: 10px;
 }
 </style>

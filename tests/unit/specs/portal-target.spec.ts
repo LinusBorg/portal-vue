@@ -49,7 +49,9 @@ describe('PortalTarget', () => {
 
     await nextTick()
 
-    expect(wrapper.html()).toBe('<div class="testnode"></div>')
+    expect(wrapper.html()).toBe(
+      '<div style="display: none;"></div><div class="testnode"></div>'
+    )
   })
 
   it('renders slot content when no other content is available', function () {
