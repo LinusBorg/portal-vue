@@ -42,10 +42,13 @@
       </svg>
     </div>
     <h1 class="h1">
-      PortalVue
+      PortalVue 
+      <Badge>
+        {{ $site.customData.version }}
+      </Badge>
     </h1>
     <p style="text-align: center">
-      A Vue component to render your component's template anywhere in the DOM.
+      A Vue component <strong>for Vue 3</strong> to render your component's template anywhere in the DOM.
     </p>
     <div class="box">
       <a class="button" href="/guide/getting-started.html">

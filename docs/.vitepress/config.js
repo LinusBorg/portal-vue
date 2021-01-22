@@ -1,8 +1,11 @@
-
+const { version } = require('../../package.json')
 module.exports = {
   title: 'Portal-Vue',
+  customData: {
+    version,
+  },
   description:
-    "A set of Vue 3 components to move your content anywhere in the DOM.",
+    'A set of Vue 3 components to move your content anywhere in the DOM.',
   themeConfig: {
     repo: 'linusborg/portal-vue',
     repoLabel: 'GitHub',
@@ -16,12 +19,12 @@ module.exports = {
       {
         text: 'Guide',
         link: '/guide/getting-started',
-        activeMatch: '^/guide/'
+        activeMatch: '^/guide/',
       },
       {
         text: 'API',
         link: '/api/portal',
-        activeMatch: '^/api/'
+        activeMatch: '^/api/',
       },
       {
         text: 'Docs for v2',
