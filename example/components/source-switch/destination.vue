@@ -1,13 +1,18 @@
 <template>
   <div>
-    <portal-target :name="source" @change="handleChange" transition="fade" />
+    <portal-target :name="source" @change="handleChange">
+      <template #wrapper="nodes">
+        <transition name="fade" mode="out-in">
+          <component :is="nodes[0]" />
+        </transition>
+      </template>
+    </portal-target>
     <p>The current source is named: {{ currentSource }}</p>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { Transport } from '@/types'
 
 export default defineComponent({
   props: ['source'],
@@ -18,7 +23,7 @@ export default defineComponent({
   },
   methods: {
     handleChange({ sources }: { sources: string[] }) {
-      this.currentSource = sources[0]
+      // this.currentSource = sources[0]
     },
   },
 })

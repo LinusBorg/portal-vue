@@ -41,13 +41,15 @@
           </template>
         </portal-target>
 
-        <portal-target style="position: relative" name="group-transition">
-          <template #wrapper="nodes">
-            <transition-group name="fade">
-              <component :is="node" v-for="node in nodes" :key="node" />
-            </transition-group>
-          </template>
-        </portal-target>
+        <div style="position: relative">
+          <portal-target name="group-transition">
+            <template #wrapper="nodes">
+              <transition-group name="fade">
+                <component :is="node" v-for="node in nodes" :key="node" />
+              </transition-group>
+            </template>
+          </portal-target>
+        </div>
       </container>
     </div>
 

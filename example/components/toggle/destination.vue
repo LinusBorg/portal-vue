@@ -8,11 +8,15 @@
       in their original context. <br />Hint: When the source component is
       removed, then the target's content below disappears as well.
     </p>
-    <portal-target
-      name="toggle-destination"
-      transition="fadeGroup"
-      tag="ul"
-    ></portal-target>
+    <ul>
+      <portal-target name="toggle-destination">
+        <template v-slot:wrapper="nodes">
+          <fade-group>
+            <component v-for="node in nodes" :is="node" :key="node" />
+          </fade-group>
+        </template>
+      </portal-target>
+    </ul>
   </container>
 </template>
 
