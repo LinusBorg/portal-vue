@@ -6,7 +6,7 @@ import {
   useWormhole,
   wormholeSymbol,
 } from './composables/wormhole'
-import { Wormhole as TWormhole } from './types'
+import type { Wormhole as TWormhole } from './types'
 import { createWormhole, wormhole as defaultWormhole } from './wormhole'
 export { mountPortalTarget } from './utils/mountPortalTarget'
 export interface PluginOptions {
