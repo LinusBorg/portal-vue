@@ -5,7 +5,6 @@ import {
   defineComponent,
   h,
   watch,
-  createCommentVNode,
 } from 'vue'
 import { useWormhole } from '../composables/wormhole'
 
