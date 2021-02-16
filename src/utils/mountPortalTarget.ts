@@ -1,4 +1,4 @@
-import { PortalTargetProps } from '@/types'
+import { PortalTargetProps } from '../types'
 import {
   ComponentInternalInstance,
   ComponentOptions,

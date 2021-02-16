@@ -12,7 +12,7 @@
     "esModuleInterop": true,
     "sourceMap": true,
     "baseUrl": ".",
-    "types": ["node", "jest"],
+    "types": ["node", "jest", "vite/client"],
     "paths": {
       "@/*": ["src/*"],
       "portal-vue": ["./src/index"]

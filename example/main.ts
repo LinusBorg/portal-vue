@@ -1,5 +1,5 @@
 import { createApp, h, Transition, TransitionGroup } from 'vue'
-import { install as PortalVuePlugin } from 'portal-vue'
+import PortalVuePlugin from 'portal-vue'
 import App from './components/App.vue'
 import PortalContainer from './components/portal-container.vue'
 import router from './router'

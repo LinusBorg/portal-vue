@@ -1,6 +1,6 @@
 # PortalVue
 
-> A Portal Component for Vuejs, to render DOM outside of a component, anywhere in the document.
+> A Portal Component for Vue 3, to render DOM outside of a component, anywhere in the document.
 
 <!-- markdownlint-disable MD033 -->
 <p style="tex-align: center">
@@ -13,9 +13,9 @@
 </a>
 <p>
 
-For more detailed documentation and additional Information, [please visit the docs](https://portal-vue.linusb.org).
+For more detailed documentation and additional Information, [please visit the docs](https://next.portal-vue.linusb.org).
 
-> Looking for version 1.\*? [Docs for version 1 are here](https://v1.portal-vue.linusb.org)
+> Looking for the version for Vue 2.\*? [Docs for version 1 are here](https://v2.portal-vue.linusb.org)
 
 ## Installation
 

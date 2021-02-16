@@ -1,7 +1,9 @@
 /.circleci
 /.vscode
-/example
 /docs
-/public
+/example
 /scripts
 /tests
+/types
+netlify.toml
+TODO.md

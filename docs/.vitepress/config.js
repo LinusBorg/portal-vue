@@ -41,9 +41,9 @@ module.exports = {
 function getGuideSidebar() {
   return [
     { text: 'Getting Started', link: '/guide/getting-started' },
-    { text: 'Migrating from 2.0', link: '/guide/migration' },
     { text: 'Advanced Usage', link: '/guide/advanced' },
     { text: 'Caveats', link: '/guide/caveats' },
+    { text: 'Migrating from 2.0', link: '/guide/migration' },
   ]
 }
 function getApiSidebar() {

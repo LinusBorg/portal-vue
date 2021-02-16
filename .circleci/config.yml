@@ -2,7 +2,7 @@ version: 2
 defaults: &defaults
   working_directory: ~/project/portal-vue
   docker:
-    - image: circleci/node:12.19.0
+    - image: circleci/node:14.15.4
 jobs:
   install_deps:
     <<: *defaults
