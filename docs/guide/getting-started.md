@@ -44,6 +44,26 @@ app.mount('#app')
 For more detailed installation instructions, additional options and installation via CDN,
 see the [Installation](./installation.md) section of the documentation.
 
+## Browser Support
+
+This project is build for modern Javascript, sind Vue itself also targets modern browsers. It supports all browsers that also support ES Modules - those are:
+
+* Chrome >=61
+* Firefox >=60
+* Safari >=11
+* Edge >=16
+
+If you need to support older browsers for some reason, make sure to include `node_modules/portal-vue/dist` in the list of files that you transpile with babel.
+
+Vue CLI offers a dedicated option for this with [`transpileDependencies`](https://cli.vuejs.org/config/#transpiledependencies)
+
+```js
+// vue.config.js
+module.exports = {
+  transpileDependencies: ['portal-vue']
+}
+```
+
 ## Usage
 
 :::tip About the examples
