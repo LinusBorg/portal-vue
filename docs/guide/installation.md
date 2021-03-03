@@ -63,7 +63,7 @@ First install from NPM, then add `portal-vue/nuxt` to modules section of `nuxt.c
 }
 ```
 
-### Quasar use
+### Quasar (installing globally)
 
 :::tip Hint
 Only relevant for users of the [Quasar](https://quasar.dev) framework
@@ -81,6 +81,7 @@ export default({ Vue }) => {
 and finally add 'portal' to the boot array in quasar.conf.js
 
 ```javascript
+  ...
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     // https://quasar.dev/quasar-cli/boot-files
@@ -88,6 +89,7 @@ and finally add 'portal' to the boot array in quasar.conf.js
       'aBunchOfOtherBits',
       'portal'
     ],
+  ...
 ```
 
 ## Options
