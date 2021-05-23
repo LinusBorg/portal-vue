@@ -22,9 +22,6 @@ export default Vue.extend({
     return {
       transports: wormhole.transports,
       firstRender: true,
-
-      // Buffers children for suspension, see the children method
-      childrenBuffer: null as VNode[] | null,
     }
   },
   created() {
@@ -73,9 +70,15 @@ export default Vue.extend({
   methods: {
     // can't be a computed prop because it has to "react" to $slot changes.
     children(): VNode[] {
-      if (!this.suspended || this.childrenBuffer == null) {
-        // Recalculate children if not suspended or if the buffer is empty
-        this.childrenBuffer =
+      const self = this.children as (() => VNode[]) & {
+        // Caches last calculated children to enable suspension
+        //  Stored on method instead of in the data object to avoid infinite render loops
+        childrenCache: VNode[] | null
+      }
+
+      if (!this.suspended || self.childrenCache == null) {
+        // Recalculate children only if the cache is empty or if not suspended
+        self.childrenCache =
           this.passengers.length !== 0
             ? this.passengers
             : this.$scopedSlots.default
@@ -83,7 +86,7 @@ export default Vue.extend({
             : this.$slots.default || []
       }
 
-      return this.childrenBuffer
+      return self.childrenCache
     },
     // can't be a computed prop because it has to "react" to this.children().
     noWrapper() {
