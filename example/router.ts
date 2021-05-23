@@ -11,6 +11,9 @@ import Programmatic from './components/programmatic/index.vue'
 import RouterViewWithPortals from './components/router-view-with-portals/index.vue'
 import RouterViewWithPortalsA from './components/router-view-with-portals/a.vue'
 import RouterViewWithPortalsB from './components/router-view-with-portals/b.vue'
+import SuspendedRouterViewWithPortals from './components/suspended-router-view-with-portals/index.vue'
+import SuspendedRouterViewWithPortalsA from './components/suspended-router-view-with-portals/a.vue'
+import SuspendedRouterViewWithPortalsB from './components/suspended-router-view-with-portals/b.vue'
 import MountToExternal from './components/mount-to/mount-to-external.vue'
 import EmptyPortal from './components/empty-portal/index.vue'
 import DefaultSlotContent from './components/default-content-on-target/index.vue'
@@ -62,6 +65,14 @@ const routes = [
     children: [
       { path: 'a', component: RouterViewWithPortalsA },
       { path: 'b', component: RouterViewWithPortalsB },
+    ],
+  },
+  {
+    path: '/suspended-router-view-with-portals',
+    component: SuspendedRouterViewWithPortals,
+    children: [
+      { path: 'a', component: SuspendedRouterViewWithPortalsA },
+      { path: 'b', component: SuspendedRouterViewWithPortalsB },
     ],
   },
   {
