@@ -16,11 +16,15 @@ export default Vue.extend({
     transition: { type: [String, Object, Function] } as PropOptions<
       PropWithComponent
     >,
+    suspended: { type: Boolean, default: false },
   },
   data() {
     return {
       transports: wormhole.transports,
       firstRender: true,
+
+      // Buffers children for suspension, see the children method
+      childrenBuffer: null as VNode[] | null,
     }
   },
   created() {
@@ -69,11 +73,17 @@ export default Vue.extend({
   methods: {
     // can't be a computed prop because it has to "react" to $slot changes.
     children(): VNode[] {
-      return this.passengers.length !== 0
-        ? this.passengers
-        : this.$scopedSlots.default
-        ? (this.$scopedSlots.default(this.slotProps) as VNode[])
-        : this.$slots.default || []
+      if (!this.suspended || this.childrenBuffer == null) {
+        // Recalculate children if not suspended or if the buffer is empty
+        this.childrenBuffer =
+          this.passengers.length !== 0
+            ? this.passengers
+            : this.$scopedSlots.default
+            ? (this.$scopedSlots.default(this.slotProps) as VNode[])
+            : this.$slots.default || []
+      }
+
+      return this.childrenBuffer
     },
     // can't be a computed prop because it has to "react" to this.children().
     noWrapper() {
