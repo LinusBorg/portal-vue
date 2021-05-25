@@ -16,6 +16,7 @@ export default Vue.extend({
     transition: { type: [String, Object, Function] } as PropOptions<
       PropWithComponent
     >,
+    suspended: { type: Boolean, default: false },
   },
   data() {
     return {
@@ -29,9 +30,6 @@ export default Vue.extend({
     })
   },
   watch: {
-    ownTransports() {
-      this.$emit('change', this.children().length > 0)
-    },
     name(newVal, oldVal) {
       /**
        * TODO
@@ -69,11 +67,29 @@ export default Vue.extend({
   methods: {
     // can't be a computed prop because it has to "react" to $slot changes.
     children(): VNode[] {
-      return this.passengers.length !== 0
-        ? this.passengers
-        : this.$scopedSlots.default
-        ? (this.$scopedSlots.default(this.slotProps) as VNode[])
-        : this.$slots.default || []
+      const self = this.children as (() => VNode[]) & {
+        // Caches last calculated children to enable suspension
+        //  Stored on method instead of in the data object to avoid infinite render loops
+        childrenCache: VNode[] | null
+      }
+
+      if (!this.suspended || self.childrenCache == null) {
+        const initialCaching = self.childrenCache == null
+
+        // Recalculate children only if the cache is empty or if not suspended
+        self.childrenCache =
+          this.passengers.length !== 0
+            ? this.passengers
+            : this.$scopedSlots.default
+            ? (this.$scopedSlots.default(this.slotProps) as VNode[])
+            : this.$slots.default || []
+
+        if (!initialCaching) {
+          this.$emit('change', self.childrenCache.length > 0)
+        }
+      }
+
+      return self.childrenCache
     },
     // can't be a computed prop because it has to "react" to this.children().
     noWrapper() {
