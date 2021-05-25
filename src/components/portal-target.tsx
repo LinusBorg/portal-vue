@@ -30,9 +30,6 @@ export default Vue.extend({
     })
   },
   watch: {
-    ownTransports() {
-      this.$emit('change', this.children().length > 0)
-    },
     name(newVal, oldVal) {
       /**
        * TODO
@@ -77,6 +74,8 @@ export default Vue.extend({
       }
 
       if (!this.suspended || self.childrenCache == null) {
+        const initialCaching = self.childrenCache == null
+
         // Recalculate children only if the cache is empty or if not suspended
         self.childrenCache =
           this.passengers.length !== 0
@@ -84,6 +83,10 @@ export default Vue.extend({
             : this.$scopedSlots.default
             ? (this.$scopedSlots.default(this.slotProps) as VNode[])
             : this.$slots.default || []
+
+        if (!initialCaching) {
+          this.$emit('change', self.childrenCache.length > 0)
+        }
       }
 
       return self.childrenCache
