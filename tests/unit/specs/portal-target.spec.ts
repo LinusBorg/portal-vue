@@ -50,7 +50,8 @@ describe('PortalTarget', () => {
     await nextTick()
 
     expect(wrapper.html()).toBe(
-      '<div style="display: none;"></div><div class="testnode"></div>'
+      `<div style="display: none;"></div>
+<div class="testnode"></div>`
     )
   })
 
@@ -59,7 +60,7 @@ describe('PortalTarget', () => {
       {},
       {
         slots: {
-          default: `<p class="default">Test</p>`,
+          default: h('p', { class: 'default' }, 'Test'),
         },
       }
     )

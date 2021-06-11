@@ -76,7 +76,8 @@ describe('Integration Tests', () => {
     await wrapper.setData({ disabled: true })
 
     const portalP = await portal.find('p')
-    expect(target.find('p').exists()).toBe(false)
+    // empty component, root element is comment node
+    expect(target.vm.$el).toEqual(document.createComment(''))
     expect(portalP.exists() && portalP.text()).toBe('Test')
   })
   it('Portal: Disabled with Scoped Slot', async () => {
@@ -91,12 +92,14 @@ describe('Integration Tests', () => {
     const { wrapper, portals, targets } = await mountScenario(component, {})
 
     expect(targets[0].find('p').text()).toBe('Content')
-    expect(targets[1].find('p').exists()).toBe(false)
+    // empty component, root element is comment node
+    expect(targets[1].vm.$el).toEqual(document.createComment(''))
 
     await wrapper.setData({ target: 'target2' })
 
     expect(targets[1].find('p').text()).toBe('Content')
-    expect(targets[0].find('p').exists()).toBe(false)
+    // empty component, root element is comment node
+    expect(targets[0].vm.$el).toEqual(document.createComment(''))
   })
 
   it('Target: Default content', async () => {
