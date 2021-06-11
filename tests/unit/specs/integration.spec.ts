@@ -1,6 +1,6 @@
 import { App, ComponentOptions, nextTick } from 'vue'
 import { mount } from '@vue/test-utils'
-import { PluginOptions, plugin as PortalPlugin } from '../../../src'
+import { PluginOptions, install as PortalPlugin } from '../../../src'
 import { createWormhole } from '../../../src'
 
 const curriedPlugin = (options: PluginOptions = {}) => {

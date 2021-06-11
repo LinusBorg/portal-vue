@@ -2,7 +2,7 @@ import { watch } from 'vue'
 
 export const inBrowser = typeof window !== 'undefined'
 
-export const __DEV__ = import.meta.env.DEV
+export const __DEV__ = process.env.NODE_ENV === 'development'
 
 export function warn(msg: string) {
   console.log('[portal-vue]: ' + msg)

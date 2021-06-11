@@ -33,7 +33,6 @@ export function mountPortalTarget(
     app.mount(el)
   })
   onBeforeUnmount(() => {
-    // @ts-expect-error - 3.0.4 erroneously extect an argument where none is necessary
     app.unmount()
   })
 }

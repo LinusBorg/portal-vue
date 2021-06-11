@@ -8,6 +8,7 @@
     "checkJs": true,
     "importHelpers": true,
     "moduleResolution": "node",
+    "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "sourceMap": true,

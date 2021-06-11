@@ -1,9 +1,16 @@
 import path from 'path'
 import vue from '@vitejs/plugin-vue'
-console.log('config')
+import { version } from '../package.json'
+
 export default {
-  alias: {
-    'portal-vue': path.join(__dirname, '../src/index.ts'),
+  define: {
+    'process.env.PORTAL_VUE_VERSION': JSON.stringify(version),
+    'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+  },
+  resolve: {
+    alias: {
+      'portal-vue': path.join(__dirname, '../src/index.ts'),
+    },
   },
   plugins: [vue()],
 }

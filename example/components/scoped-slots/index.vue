@@ -21,7 +21,7 @@
           :disabled="scopedSlot"
           :slot-props="{ message: 'Message for local!!' }"
         >
-          <template #default="{ message }" slot="default">
+          <template #default="{ message }">
             <p>
               This content was created with a scoped Slot.<br />
               When Portal is disabled, this paragraph is rendered in the left

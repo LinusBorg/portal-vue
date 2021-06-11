@@ -6,7 +6,8 @@ import { version } from './package.json'
 
 export default defineConfig({
   define: {
-    __VERSION__: version,
+    'process.env.PORTAL_VUE_VERSION': JSON.stringify(version),
+    'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
   },
   plugins: [
     vue(),

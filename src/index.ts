@@ -28,7 +28,7 @@ export default function install(app: App, options: PluginOptions = {}) {
 
 export const Wormhole = defaultWormhole
 
-export const version = __VERSION__
+export const version = process.env.PORTAL_VUE_VERSION
 
 export {
   install,
