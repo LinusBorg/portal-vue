@@ -21,7 +21,7 @@ export default defineConfig({
       // into your library
       external: ['vue'],
       output: {
-        entryFileNames: `portal-vue.[format].development.js`,
+        entryFileNames: `portal-vue.[format].dev.js`,
         banner: `
         /**
          *  Copyright ${new Date(Date.now()).getFullYear()} Thorsten Luenborg 
