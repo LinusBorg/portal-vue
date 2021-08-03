@@ -13,6 +13,7 @@ const PortalTargetContent: FunctionalComponent = (_, { slots }) => {
 }
 
 export default defineComponent({
+  compatConfig: { MODE: 3 },
   name: 'portalTarget',
   props: {
     multiple: { type: Boolean, default: false },

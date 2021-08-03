@@ -65,6 +65,7 @@ export function usePortal(props: PortalProps, slots: Slots) {
 }
 
 export default defineComponent({
+  compatConfig: { MODE: 3 },
   name: 'portal',
   props: {
     disabled: { type: Boolean },
