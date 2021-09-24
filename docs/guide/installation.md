@@ -63,6 +63,35 @@ First install from NPM, then add `portal-vue/nuxt` to modules section of `nuxt.c
 }
 ```
 
+### Quasar (installing globally)
+
+:::tip Hint
+Only relevant for users of the [Quasar](https://quasar.dev) framework
+:::
+
+First install from NPM, then add a file at src/boot/portal.js with the following contents:
+
+```javascript
+import PortalVue from 'portal-vue'
+export default({ Vue }) => {
+  Vue.use(PortalVue)
+}
+```
+
+and finally add 'portal' to the boot array in quasar.conf.js
+
+```javascript
+  ...
+    // app boot file (/src/boot)
+    // --> boot files are part of "main.js"
+    // https://quasar.dev/quasar-cli/boot-files
+    boot: [
+      'aBunchOfOtherBits',
+      'portal'
+    ],
+  ...
+```
+
 ## Options
 
 When installing with `Vue.use()`, you can pass options to change the component names.
