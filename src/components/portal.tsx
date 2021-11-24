@@ -13,7 +13,7 @@ export default Vue.extend({
     order: { type: Number, default: 0 },
     slim: { type: Boolean },
     slotProps: { type: Object, default: () => ({}) },
-    tag: { type: String, default: 'DIV' },
+    tag: { type: String, default: 'div' },
     to: {
       type: String,
       default: () => String(Math.round(Math.random() * 10000000)),
