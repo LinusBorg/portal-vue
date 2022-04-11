@@ -77,6 +77,7 @@ You can also define all props for the `<PortalTarget>` on the `<MountingPortal>`
 - `name` is not used, instead use `to`
 - `tag` is called `targetTag`
 - `slotProps` is called `targetSlotProps`
+- `slim` is called `targetSlim`
 
 Props working the same:
 
