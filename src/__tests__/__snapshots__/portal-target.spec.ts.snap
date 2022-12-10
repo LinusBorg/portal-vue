@@ -1,0 +1,5 @@
+// Vitest Snapshot v1
+
+exports[`PortalTarget > renders slot content when no other content is available 1`] = `"<p class=\\"default\\">Test</p>"`;
+
+exports[`PortalTarget renders slot content when no other content is available 1`] = `"<p class=\\"default\\">Test</p>"`;

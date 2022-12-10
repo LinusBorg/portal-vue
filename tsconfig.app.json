@@ -1,0 +1,24 @@
+{
+  "extends": "@vue/tsconfig/tsconfig.web.json",
+  "include": [
+    "src/env.d.ts",
+    "src/**/*",
+    "src/**/*.vue",
+    "example/**/*",
+    "example/**/*.vue"
+  ],
+  "exclude": ["src/**/__tests__/*"],
+  "compilerOptions": {
+    "target": "ES2019",
+    "composite": true,
+    "outDir": "dist",
+    "allowJs": true,
+    "baseUrl": ".",
+    "rootDir": "src",
+    "lib": ["ES2019", "DOM", "DOM.Iterable"],
+    "paths": {
+      "@/*": ["./src/*"],
+      "portal-vue": ["src/index.ts"]
+    }
+  }
+}

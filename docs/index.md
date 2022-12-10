@@ -1,5 +1,6 @@
 ---
 sidebar: false
+outline: false
 ---
 
 <Hero />

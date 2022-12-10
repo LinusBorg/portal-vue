@@ -1,0 +1,69 @@
+name: 'ci'
+on:
+  push:
+    branches:
+      - '**'
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read # to fetch code (actions/checkout)
+
+jobs:
+  build-and-typecheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+
+      - name: Set node version to 14.19
+        uses: actions/setup-node@v3
+        with:
+          node-version: 14.19
+          cache: 'pnpm'
+
+      - run: pnpm install
+
+      - name: Run Vite build & vue-tsc
+        run: pnpm run build
+ 
+  unit-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+
+      - name: Set node version to 14.19
+        uses: actions/setup-node@v3
+        with:
+          node-version: 14.19
+          cache: 'pnpm'
+
+      - run: pnpm install
+
+      - name: Run unit tests
+        run: pnpm run test
+  
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+
+      - name: Set node version to 14.19
+        uses: actions/setup-node@v3
+        with:
+          node-version: 14.19
+          cache: 'pnpm'
+
+      - run: pnpm install
+
+      - name: Lint codebase
+        run: pnpm run lint

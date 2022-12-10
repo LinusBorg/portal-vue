@@ -1,5 +1,8 @@
-@import 'variables';
+:root {
+  --vue-color: rgb(66, 185, 131);
+  --red: rgb(135, 29, 29);
 
+}
 html {
   font-family: sans-serif;
   padding: 0;
@@ -24,19 +27,19 @@ body {
   display: block;
   border-radius: 5px;
   padding: 5px;
-  color: $vueColor;
+  color: var(--vue-color);
   background-color: white;
-  border: 2px solid $vueColor;
+  border: 2px solid var(--vue-color);
 }
 .controls--link:hover {
   color: white;
-  background-color: $vueColor;
-  border: 2px solid $vueColor;
+  background-color: var(--vue-color);
+    border: 2px solid var(--vue-color);
 }
 .controls--link-active {
   color: white;
-  background-color: $vueColor;
-  border: 2px solid $vueColor;
+  background-color: var(--vue-color);
+    border: 2px solid var(--vue-color);
 }
 
 .wrapper {

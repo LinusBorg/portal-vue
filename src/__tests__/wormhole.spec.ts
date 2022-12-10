@@ -1,7 +1,8 @@
+import { describe, it, expect } from 'vitest'
 import { Slot, h } from 'vue'
 import { createWormhole } from '@/wormhole'
 
-const createSlotFn = () => ((() => h('div')) as unknown) as Slot
+const createSlotFn = () => (() => h('div')) as unknown as Slot
 
 describe('Wormhole', () => {
   it('correctly adds content on send', () => {

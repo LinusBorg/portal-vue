@@ -1,14 +1,15 @@
+import { describe, it, expect, vi } from 'vitest'
 import Portal from '@/components/portal'
 import { wormholeSymbol } from '@/composables/wormhole'
-import { PortalProps } from '@/types'
+import type { PortalProps } from '@/types'
 import { createWormhole } from '@/wormhole'
 import { mount } from '@vue/test-utils'
 
 const createWormholeMock = () => {
   const wh = createWormhole(false)
 
-  const open = jest.spyOn(wh, 'open')
-  const close = jest.spyOn(wh, 'close')
+  vi.spyOn(wh, 'open')
+  vi.spyOn(wh, 'close')
 
   return wh
 }
@@ -28,7 +29,7 @@ function createWrapper(props: Partial<PortalProps> = {}, options = {}) {
       },
       global: {
         provide: {
-          [(wormholeSymbol as unknown) as string]: wormholeMock,
+          [wormholeSymbol as unknown as string]: wormholeMock,
         },
         ...options,
       },
@@ -40,7 +41,7 @@ describe('Portal', function () {
   it('renders nothing/a Fragment', function () {
     // expect(wrapper.$refs.portal.$el.nodeName).to.equal('#comment')
     const { wrapper } = createWrapper()
-    expect(wrapper.html()).toBe(`<!---->`)
+    expect(wrapper.html()).toBe('')
   })
 
   it('calls Wormhole.open with right content', function () {

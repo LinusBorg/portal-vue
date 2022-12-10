@@ -1,25 +1,25 @@
+/// <reference types="vitest" />
 import path from 'path'
+import { fileURLToPath, URL } from 'node:url'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import ts from 'rollup-plugin-typescript2'
 import { version } from './package.json'
 
 export default defineConfig({
-  define: {
-    'process.env.PORTAL_VUE_VERSION': JSON.stringify(version),
-    'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+  test: {
+    environment: 'jsdom',
+    // setupFiles: ['./tests/setup.ts'],
   },
-  plugins: [
-    vue(),
-    {
-      apply: 'build' as const,
-      ...ts({
-        tsconfig: './tsconfig.build.json',
-        useTsconfigDeclarationDir: true,
-      }),
+  define: {
+    __PORTAL_VUE_VERSION__: JSON.stringify(version),
+    __NODE_ENV__: JSON.stringify(process.env.NODE_ENV),
+  },
+  resolve: {
+    alias: {
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
-  ],
-  esbuild: false,
+  },
+  plugins: [vue()],
   build: {
     lib: {
       entry: path.resolve(__dirname, 'src/index.ts'),

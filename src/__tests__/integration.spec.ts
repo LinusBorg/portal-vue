@@ -1,7 +1,9 @@
-import { App, ComponentOptions, nextTick } from 'vue'
+import { describe, it, expect, beforeEach } from 'vitest'
+import type { App, ComponentOptions } from 'vue'
+import { nextTick } from 'vue'
 import { mount } from '@vue/test-utils'
-import { PluginOptions, install as PortalPlugin } from '../../../src'
-import { createWormhole } from '../../../src'
+import { type PluginOptions, install as PortalPlugin } from '..'
+import { createWormhole } from '..'
 
 const curriedPlugin = (options: PluginOptions = {}) => {
   const wormhole = createWormhole()
@@ -45,7 +47,7 @@ describe('Integration Tests', () => {
   })
 
   it('Happy Path (Simplest scenario)', async () => {
-    const component = require('../resources/HappyPath.vue').default
+    const component = (await import('./resources/HappyPath.vue')).default
     const { wrapper, target } = await mountScenario(component)
 
     const pArray = await target.findAll('p')
@@ -59,7 +61,7 @@ describe('Integration Tests', () => {
   })
 
   it('Scoped Slot (Happy Path)', async () => {
-    const component = require('../resources/ScopedSlot.vue').default
+    const component = (await import('./resources/ScopedSlot.vue')).default
     const { target } = await mountScenario(component)
 
     const p = await target.find('p')
@@ -67,7 +69,7 @@ describe('Integration Tests', () => {
   })
 
   it('Portal: Disabled', async () => {
-    const component = require('../resources/PortalDisabled.vue').default
+    const component = (await import('./resources/PortalDisabled.vue')).default
     const { wrapper, portal, target } = await mountScenario(component)
 
     const p = await target.find('p')
@@ -81,15 +83,17 @@ describe('Integration Tests', () => {
     expect(portalP.exists() && portalP.text()).toBe('Test')
   })
   it('Portal: Disabled with Scoped Slot', async () => {
-    const component = require('../resources/PortalDisabledScoped.vue').default
+    const component = (await import('./resources/PortalDisabledScoped.vue'))
+      .default
     const { portal } = await mountScenario(component)
 
     expect(portal.find('p').text()).toBe('Hi!')
   })
 
   it('Portal: Switch Target', async () => {
-    const component = require('../resources/PortalSwitchTarget.vue').default
-    const { wrapper, portals, targets } = await mountScenario(component, {})
+    const component = (await import('./resources/PortalSwitchTarget.vue'))
+      .default
+    const { wrapper, targets } = await mountScenario(component, {})
 
     expect(targets[0].find('p').text()).toBe('Content')
     // empty component, root element is comment node
@@ -103,7 +107,8 @@ describe('Integration Tests', () => {
   })
 
   it('Target: Default content', async () => {
-    const component = require('../resources/TargetDefaultContent.vue').default
+    const component = (await import('./resources/TargetDefaultContent.vue'))
+      .default
     const { wrapper, target } = await mountScenario(component)
 
     expect(target.find('p').text()).toBe('Portal Content')
@@ -114,7 +119,7 @@ describe('Integration Tests', () => {
   })
 
   it('Target: Multiple Portals', async () => {
-    const component = require('../resources/TargetMultiple.vue').default
+    const component = (await import('./resources/TargetMultiple.vue')).default
     const { target } = await mountScenario(component)
 
     const pWrapper = await target.findAll('p')
@@ -124,7 +129,7 @@ describe('Integration Tests', () => {
   })
 
   it('works with mountPortalTarget feature', async () => {
-    const component = require('../resources/PortalWithMountedTarget.vue')
+    const component = (await import('./resources/PortalWithMountedTarget.vue'))
       .default
     const el = document.createElement('DIV')
     el.id = 'external-target'

@@ -48,7 +48,7 @@ The bread-and-butter use case should be fairly easy to migrate, as the `Portal` 
 Notable breaking changes that do need some revamping affect two use cases:
 
 1. Transitions defined on the `PortalTarget` side
-2. Removal of `MountingPortal`, which is now better solved with `Teleport`, save for one edge case (`multiple` prop) for which we will cover a migration path futher down.
+2. Removal of `MountingPortal`, which is now better solved with `Teleport`, save for one edge case (`multiple` prop) for which we will cover a migration path further down.
 
 ## List of Changes
 
@@ -56,7 +56,7 @@ Notable breaking changes that do need some revamping affect two use cases:
 
 As the global API of creating a Vue app and registering Plugins changed a bit, you also need to adapt your Plugin installation a bit.
 
-See the chapter on [Installation](./guide/installation.md) for further instructions.
+See the chapter on [Installation](./installation.md) for further instructions.
 ### Portal Component
 
 #### `slim` prop removed
@@ -107,11 +107,11 @@ You can now pass an additional named slot to `PortalTarget` that can be used  to
 </portal-target>
 ```
 
-See: [PortalTarget API: Wrapper slot](./api/portal-target.md/#wrapper)
+See: [PortalTarget API: Wrapper slot](../api/portal-target.md#wrapper)
 
 #### `transition`, `transition-events` props removed.
 
-Instead of these props, you can now use the new `v-slot:wrapper` to wrap content in `<transition>` or `<transition-group>` components. [See the docs for more info here](./guide/advanced.md#portaltarget-transitions)
+Instead of these props, you can now use the new `v-slot:wrapper` to wrap content in `<transition>` or `<transition-group>` components. [See the docs for more info here](./advanced.md#portaltarget-transitions)
 
 ### Removed: MountingPortal
 
@@ -152,7 +152,7 @@ The wormhole is the connecting "store" between the `Portal` and `PortalTarget` c
 
 PortalVue 3 still provides a default instance to all components in an app when installing the plugin, but now you can optionally create your own instance and use that instead of the default one.
 
-[Read more here](./guide/installation.md#custom-wormhole-instance)
+[Read more here](./installation.md#custom-wormhole-instance)
 
 
 ### Testing

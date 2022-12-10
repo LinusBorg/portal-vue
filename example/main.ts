@@ -4,7 +4,7 @@ import App from './components/App.vue'
 import PortalContainer from './components/portal-container.vue'
 import router from './router'
 
-import './styles/index.scss'
+import './styles/index.css'
 
 const app = createApp(App)
 

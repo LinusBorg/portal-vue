@@ -41,4 +41,4 @@ this.$nextTick().then(
 )
 ```
 
-The reason is that depending on the scenario, it _can_ take one tick for the content to be sent to the [Wormhole](../api/wormhole.md) (the middleman between `Portal` and `PortalTarget`), and another one to be picked up by the `PortalTarget`.
+The reason is that depending on the scenario, it _can_ take one tick for the content to be sent to the Wormhole (the middleman between `Portal` and `PortalTarget`), and another one to be picked up by the `PortalTarget`.

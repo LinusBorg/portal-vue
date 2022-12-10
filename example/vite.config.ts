@@ -4,8 +4,8 @@ import { version } from '../package.json'
 
 export default {
   define: {
-    'process.env.PORTAL_VUE_VERSION': JSON.stringify(version),
-    'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+    __PORTAL_VUE_VERSION__: JSON.stringify(version),
+    __NODE_ENV__: JSON.stringify(process.env.NODE_ENV),
   },
   resolve: {
     alias: {

@@ -1,39 +1,24 @@
 import path from 'path'
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
+import { defineConfig, mergeConfig } from 'vite'
 import { version } from './package.json'
+import baseConfig from './vite.config'
 
-export default defineConfig({
-  define: {
-    'process.env.PORTAL_VUE_VERSION': JSON.stringify(version),
-    'process.env.NODE_ENV': '"development"',
-  },
-  plugins: [vue()],
-  build: {
-    minify: false,
-    emptyOutDir: false,
-    lib: {
-      entry: path.resolve(__dirname, 'src/index.ts'),
-      name: 'PortalVue',
+export default mergeConfig(
+  baseConfig,
+  defineConfig({
+    define: {
+      __PORTAL_VUE_VERSION__: JSON.stringify(version),
+      __NODE_ENV__: '"development"',
     },
-    rollupOptions: {
-      // make sure to externalize deps that shouldn't be bundled
-      // into your library
-      external: ['vue'],
-      output: {
-        entryFileNames: `portal-vue.[format].dev.js`,
-        banner: `
-        /**
-         *  Copyright ${new Date(Date.now()).getFullYear()} Thorsten Luenborg 
-         *  @license MIT
-         */`,
-        // Provide global variables to use in the UMD build
-        // for externalized deps
-        exports: 'named',
-        globals: {
-          vue: 'Vue',
-        },
+    build: {
+      minify: false,
+      emptyOutDir: false,
+      lib: {
+        entry: path.resolve(__dirname, 'src/index.ts'),
+        name: 'PortalVue',
+        fileName: (format) =>
+          `portal-vue.[format].dev.${format === 'es' ? 'mjs' : 'js'}`,
       },
     },
-  },
-})
+  })
+)

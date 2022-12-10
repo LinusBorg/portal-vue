@@ -1,7 +1,6 @@
-import { PortalTargetProps } from '../types'
+import type { PortalTargetProps } from '../types'
 import {
-  ComponentInternalInstance,
-  ComponentOptions,
+  type ComponentInternalInstance,
   createApp,
   getCurrentInstance,
   h,
@@ -15,17 +14,19 @@ export function mountPortalTarget(
   el: HTMLElement | string
 ) {
   const app = createApp({
-    // TODO: fix Component type error
-    render: () => h(PortalTarget as ComponentOptions, targetProps),
+    // @ts-expect-error no idea why h() doesn't like this import
+    render: () => h(PortalTarget, targetProps),
   })
 
   if (!targetProps.multiple) {
     // this is hacky as it relies on internals, but works.
     // TODO: can we get rid of this by somehow properly replacing the target's .parent?
     const provides =
-      (getCurrentInstance() as ComponentInternalInstance & {
-        provides: Record<string, any>
-      }).provides ?? {}
+      (
+        getCurrentInstance() as ComponentInternalInstance & {
+          provides: Record<string, any>
+        }
+      ).provides ?? {}
     app._context.provides = Object.create(provides)
     //Object.assign(app._context.provides, Object.create(provides))
   }

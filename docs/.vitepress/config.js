@@ -1,21 +1,30 @@
+const { defineConfig } = require('vitepress')
 const { version } = require('../../package.json')
-module.exports = {
+
+module.exports = defineConfig({
   title: 'Portal-Vue',
-  customData: {
-    version,
-  },
   description:
     'A set of Vue 3 components to move your content anywhere in the DOM.',
+
   themeConfig: {
+    socialLinks: [
+      {
+        icon: 'github',
+        link: 'https://github.co/linusborg/portal-vue',
+      },
+    ],
+    siteTitle: 'Portal-Vue',
     repo: 'linusborg/portal-vue',
     repoLabel: 'GitHub',
-    docsDir: 'docs',
-    docsBranch: 'next',
-    editLinks: true,
-    editLinkText: 'Help improve these docs!',
-    lastUpdated: 'Last Updated',
+
+    outline: 'deep',
+    outlineTitle: 'On this page',
+    editLink: {
+      pattern: 'https://github.com/linusborg/portal-vue/edit/docs/:path',
+      text: 'Edit this page on GitHub',
+    },
+    lastUpdatedText: 'Last Updated',
     nav: [
-      { text: 'Installation', link: '/guide/installation' },
       {
         text: 'Guide',
         link: '/guide/getting-started',
@@ -32,14 +41,20 @@ module.exports = {
       },
     ],
     sidebar: {
-      '/guide/': getGuideSidebar(),
-      '/api/': getApiSidebar(),
+      '/guide/': [{ text: 'Guide', items: getGuideSidebar() }],
+      '/api/': [{ text: 'API', items: getApiSidebar() }],
     },
   },
-}
+  vite: {
+    define: {
+      __PORTAL_VUE_VERSION__: JSON.stringify(version),
+    },
+  },
+})
 
 function getGuideSidebar() {
   return [
+    { text: 'Installation', link: '/guide/installation' },
     { text: 'Getting Started', link: '/guide/getting-started' },
     { text: 'Advanced Usage', link: '/guide/advanced' },
     { text: 'Caveats', link: '/guide/caveats' },

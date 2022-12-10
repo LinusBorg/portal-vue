@@ -22,8 +22,8 @@ export default defineComponent({
     }
   },
   methods: {
-    handleChange({ sources }: { sources: string[] }) {
-      // this.currentSource = sources[0]
+    handleChange({ sources: _sources }: { sources: string[] }) {
+      // this.currentSource = _sources[0]
     },
   },
 })
