@@ -8,7 +8,6 @@ import { version } from './package.json'
 export default defineConfig({
   test: {
     environment: 'jsdom',
-    // setupFiles: ['./tests/setup.ts'],
   },
   define: {
     __PORTAL_VUE_VERSION__: JSON.stringify(version),
@@ -21,6 +20,7 @@ export default defineConfig({
   },
   plugins: [vue()],
   build: {
+    sourcemap: true,
     lib: {
       entry: path.resolve(__dirname, 'src/index.ts'),
       name: 'PortalVue',
