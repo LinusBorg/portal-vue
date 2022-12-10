@@ -44,7 +44,7 @@
     <h1 class="h1">
       PortalVue 
       <Badge>
-        {{ $site.customData.version }}
+        {{ version }}
       </Badge>
     </h1>
     <p style="text-align: center">
@@ -59,11 +59,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-
-export default defineComponent({
-  name: 'Hero',
-})
+export default { name: 'Hero' }
+</script>
+<script lang="ts" setup>
+const version = __PORTAL_VUE_VERSION__
 </script>
 
 <style scoped lang="postcss">
