@@ -24,6 +24,7 @@
 </template>
 
 <script lang="ts">
+/*eslint-disable vue/no-reserved-component-names*/
 import { defineComponent } from 'vue'
 export default defineComponent({
   name: 'Source',
