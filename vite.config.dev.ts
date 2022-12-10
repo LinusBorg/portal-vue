@@ -7,6 +7,10 @@ import baseConfig from './vite.config'
 export default mergeConfig(
   baseConfig,
   defineConfig({
+    define: {
+      __PORTAL_VUE_VERSION__: JSON.stringify(version),
+      __NODE_ENV__: '"development"',
+    },
     build: {
       minify: false,
       emptyOutDir: false,
@@ -22,8 +26,8 @@ export default mergeConfig(
 
 const old = defineConfig({
   define: {
-    'process.env.PORTAL_VUE_VERSION': JSON.stringify(version),
-    'process.env.NODE_ENV': '"development"',
+    __PORTAL_VUE_VERSION__: JSON.stringify(version),
+    __NODE_ENV__: '"development"',
   },
   plugins: [vue()],
   build: {

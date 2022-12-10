@@ -1,4 +1,4 @@
-import { Slot } from 'vue'
+import type { Slot } from 'vue'
 
 export type Name = string | symbol
 

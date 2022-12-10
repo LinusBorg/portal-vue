@@ -1,7 +1,6 @@
 import type { PortalTargetProps } from '../types'
 import {
   type ComponentInternalInstance,
-  type ComponentOptions,
   createApp,
   getCurrentInstance,
   h,
@@ -15,8 +14,8 @@ export function mountPortalTarget(
   el: HTMLElement | string
 ) {
   const app = createApp({
-    // TODO: fix Component type error
-    render: () => h(PortalTarget as ComponentOptions, targetProps),
+    // @ts-expect-error no idea why h() doesn't like this import
+    render: () => h(PortalTarget, targetProps),
   })
 
   if (!targetProps.multiple) {
