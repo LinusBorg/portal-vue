@@ -19,10 +19,10 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v2
 
-      - name: Set node version to 14.18
+      - name: Set node version to 14.19
         uses: actions/setup-node@v3
         with:
-          node-version: 14.18
+          node-version: 14.19
           cache: 'pnpm'
 
       - run: pnpm install
@@ -38,10 +38,10 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v2
 
-      - name: Set node version to 14.18
+      - name: Set node version to 14.19
         uses: actions/setup-node@v3
         with:
-          node-version: 14.18
+          node-version: 14.19
           cache: 'pnpm'
 
       - run: pnpm install
@@ -57,10 +57,10 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v2
 
-      - name: Set node version to 14.18
+      - name: Set node version to 14.19
         uses: actions/setup-node@v3
         with:
-          node-version: 14.18
+          node-version: 14.19
           cache: 'pnpm'
 
       - run: pnpm install
