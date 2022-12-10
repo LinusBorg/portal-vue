@@ -24,9 +24,7 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss" scoped>
-@import '../styles/variables';
-
+<style lang="postcss" scoped>
 .header {
   padding: 5px;
   padding-left: 15px;
@@ -40,16 +38,15 @@ export default defineComponent({
   border-radius: 2px;
   margin: 15px;
   margin-top: 30px;
-  // padding: 15px;
 }
 
 .item.source {
-  border-color: $vueColor;
+  border-color: var(--vue-color);
   border-width: 2px;
 }
 
 .item.destination {
   border-width: 2px;
-  border-color: $red;
+  border-color: var(--red);
 }
 </style>

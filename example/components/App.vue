@@ -25,9 +25,7 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss">
-@import '../styles/variables';
-
+<style lang="postcss">
 .main-container {
   display: flex;
   height: 100vh;
@@ -36,7 +34,7 @@ export default defineComponent({
 .sidebar {
   padding: 10px;
   flex: 0 0 300px;
-  border-right: 3px solid $vueColor;
+  border-right: 3px solid var(--vue-color);
 }
 
 .viewport {
