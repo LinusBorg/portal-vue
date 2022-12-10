@@ -1,4 +1,4 @@
 [build]
   ignore = "./scripts/docs-check.sh"
   publish = "docs/.vitepress/dist"
-  command = "yarn docs:build"
+  command = "pnpm docs:build"
