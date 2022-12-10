@@ -6,7 +6,7 @@
     "release": true
   },
   "hooks": {
-    "before:init": ["pnpm lint", "pnpm test"],
+    "before:init": ["pnpm lint", "pnpm test:ci"],
     "after:bump": ["pnpm build"],
     "after:release": ["echo 🥳 Successfully released ${name} v${version}."]
   }
