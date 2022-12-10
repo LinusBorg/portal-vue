@@ -15,7 +15,7 @@
 
 For more detailed documentation and additional Information, [please visit the docs](https://next.portal-vue.linusb.org).
 
-> Looking for the version for Vue 2.\*? [Docs for version 1 are here](https://v2.portal-vue.linusb.org)
+> Looking for the version for Vue 2.\*? [Docs for PortalVue 2.*, compatible with Vue 2, are here](https://v2.portal-vue.linusb.org)
 
 ## Installation
 
