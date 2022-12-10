@@ -1,7 +1,7 @@
-import { PortalTargetProps } from '../types'
+import type { PortalTargetProps } from '../types'
 import {
-  ComponentInternalInstance,
-  ComponentOptions,
+  type ComponentInternalInstance,
+  type ComponentOptions,
   createApp,
   getCurrentInstance,
   h,
@@ -23,9 +23,11 @@ export function mountPortalTarget(
     // this is hacky as it relies on internals, but works.
     // TODO: can we get rid of this by somehow properly replacing the target's .parent?
     const provides =
-      (getCurrentInstance() as ComponentInternalInstance & {
-        provides: Record<string, any>
-      }).provides ?? {}
+      (
+        getCurrentInstance() as ComponentInternalInstance & {
+          provides: Record<string, any>
+        }
+      ).provides ?? {}
     app._context.provides = Object.create(provides)
     //Object.assign(app._context.provides, Object.create(provides))
   }

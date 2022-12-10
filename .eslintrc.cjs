@@ -3,9 +3,17 @@ module.exports = {
   env: {
     node: true,
   },
-  extends: ['plugin:vue/vue3-essential', '@vue/prettier', '@vue/typescript'],
+  extends: ['@linusborg/eslint-config'],
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
   },
+  overrides: [
+    {
+      files: ['*.cjs', '*.js', '*.mjs', '*.cts', '*.ts', '*.mts'],
+      env: {
+        node: true,
+      },
+    },
+  ],
 }

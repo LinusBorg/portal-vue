@@ -3,11 +3,7 @@
   "compilerOptions": {
     "declaration": true,
     "declarationDir": "types",
-    "rootDir": "src",
+    "rootDir": "src"
   },
-  "include":  [
-    "src/**/*.ts",
-    "src/**/*.tsx",
-    "src/**/*.vue",
-  ],
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue"]
 }

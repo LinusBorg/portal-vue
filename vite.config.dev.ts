@@ -1,9 +1,26 @@
 import path from 'path'
-import { defineConfig } from 'vite'
+import { defineConfig, mergeConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { version } from './package.json'
+import baseConfig from './vite.config'
 
-export default defineConfig({
+export default mergeConfig(
+  baseConfig,
+  defineConfig({
+    build: {
+      minify: false,
+      emptyOutDir: false,
+      lib: {
+        entry: path.resolve(__dirname, 'src/index.ts'),
+        name: 'PortalVue',
+        fileName: (format) =>
+          `portal-vue.[format].dev.${format === 'es' ? 'mjs' : 'js'}`,
+      },
+    },
+  })
+)
+
+const old = defineConfig({
   define: {
     'process.env.PORTAL_VUE_VERSION': JSON.stringify(version),
     'process.env.NODE_ENV': '"development"',
@@ -21,7 +38,7 @@ export default defineConfig({
       // into your library
       external: ['vue'],
       output: {
-        entryFileNames: `portal-vue.[format].dev.js`,
+        entryFileNames: `portal-vue.[format].dev`,
         banner: `
         /**
          *  Copyright ${new Date(Date.now()).getFullYear()} Thorsten Luenborg 

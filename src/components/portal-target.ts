@@ -1,6 +1,6 @@
 import {
-  FunctionalComponent,
-  VNode,
+  type FunctionalComponent,
+  type VNode,
   computed,
   defineComponent,
   h,

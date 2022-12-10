@@ -1,14 +1,15 @@
-import { Slot, h, nextTick } from 'vue'
+import { describe, it, expect, vi } from 'vitest'
+import { type Slot, h, nextTick } from 'vue'
 import { mount } from '@vue/test-utils'
-import PortalTarget from '../../../src/components/portal-target'
-import { wormholeSymbol } from '../../../src/composables/wormhole'
-import { createWormhole } from '../../../src/wormhole'
+import PortalTarget from '../components/portal-target'
+import { wormholeSymbol } from '../composables/wormhole'
+import { createWormhole } from '../wormhole'
 
 const createWormholeMock = () => {
   const wh = createWormhole(false)
 
-  const open = jest.spyOn(wh, 'open')
-  const close = jest.spyOn(wh, 'close')
+  vi.spyOn(wh, 'open')
+  vi.spyOn(wh, 'close')
 
   return wh
 }
@@ -25,7 +26,7 @@ function createWrapper(props = {}, options = {}) {
       } as any,
       global: {
         provide: {
-          [(wormholeSymbol as unknown) as string]: wh,
+          [wormholeSymbol as unknown as string]: wh,
         },
       },
       ...options,

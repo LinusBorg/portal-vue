@@ -1,5 +1,5 @@
 import {
-  Slots,
+  type Slots,
   defineComponent,
   onBeforeUnmount,
   onMounted,
@@ -7,7 +7,7 @@ import {
   watch,
 } from 'vue'
 import { useWormhole } from '../composables/wormhole'
-import { Name, PortalProps } from '../types'
+import type { Name, PortalProps } from '../types'
 import { __DEV__, assertStaticProps, inBrowser } from '../utils'
 
 export function usePortal(props: PortalProps, slots: Slots) {

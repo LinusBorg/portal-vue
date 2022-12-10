@@ -1,38 +1,14 @@
 {
-  "compilerOptions": {
-    "target": "ES2019",
-    "module": "ESNext",
-    "strict": true,
-    "jsx": "preserve",
-    "allowJs": true,
-    "checkJs": true,
-    "importHelpers": true,
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
-    "sourceMap": true,
-    "baseUrl": ".",
-    "types": ["node", "jest", "vite/client"],
-    "paths": {
-      "@/*": ["src/*"],
-      "portal-vue": ["./src/index"]
+  "files": [],
+  "references": [
+    {
+      "path": "./tsconfig.config.json"
     },
-    "lib": ["es2019", "dom", "dom.iterable", "ScriptHost"]
-  },
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx",
-    "src/**/*.vue",
-    "docs/**/*.vue",
-    "docs/**/*.ts",
-    "docs/.vitepress/**/*.vue",
-    "docs/.vitepress/**/*.ts",
-    "example/**/*.ts",
-    "example/**/*.tsx",
-    "example/**/*.vue",
-    "tests/**/*.ts",
-    "tests/**/*.tsx"
-  ],
-  "exclude": ["node_modules"]
+    {
+      "path": "./tsconfig.app.json"
+    },
+    {
+      "path": "./tsconfig.vitest.json"
+    }
+  ]
 }

@@ -1,5 +1,5 @@
 import { reactive, readonly } from 'vue'
-import {
+import type {
   Name,
   Transport,
   TransportCloser,

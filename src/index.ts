@@ -1,4 +1,4 @@
-import { App } from 'vue'
+import type { App } from 'vue'
 import Portal from './components/portal'
 import PortalTarget from './components/portal-target'
 import {
@@ -28,7 +28,7 @@ export default function install(app: App, options: PluginOptions = {}) {
 
 export const Wormhole = defaultWormhole
 
-export const version = process.env.PORTAL_VUE_VERSION
+export const version = __PORTAL_VUE_VERSION__
 
 export {
   install,
