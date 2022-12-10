@@ -83,6 +83,7 @@
       ]
     }
   },
+  "packageManager": "pnpm@7.18.1",
   "gitHooks": {
     "pre-commit": "lint-staged"
   },
