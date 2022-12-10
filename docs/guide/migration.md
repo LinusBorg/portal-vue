@@ -107,7 +107,7 @@ You can now pass an additional named slot to `PortalTarget` that can be used  to
 </portal-target>
 ```
 
-See: [PortalTarget API: Wrapper slot](../api/portal-target.md/#wrapper)
+See: [PortalTarget API: Wrapper slot](../api/portal-target.md#wrapper)
 
 #### `transition`, `transition-events` props removed.
 

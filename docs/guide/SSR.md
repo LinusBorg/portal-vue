@@ -2,7 +2,7 @@
 
 When using [Vue's SSR capabilities](https://ssr.vuejs.org), portal-vue can't work reliably for a couple of reasons:
 
-1. The internal Store (the [Wormhole](../api/wormhole.md)) that's caching vnodes and connecting `<portal>` components to their `<portal-target>` counterparts, is a singleton. As such, changes to the Wormhole persist between requests, leading to all sorts of problems.
+1. The internal Store (the "Wormhole") that's caching vnodes and connecting `<portal>` components to their `<portal-target>` counterparts, is a singleton. As such, changes to the Wormhole persist between requests, leading to all sorts of problems.
 2. In SSR, Vue renders the page directly to a string, there are not reactive updates applied. Consequently, a `<portal-target>` appearing before a `<portal>` will render an empty div on the server whereas it will render the sent content on the client, resulting in a hydration vdom mismatch error, while a `<portal-target>` _following_ a `<portal>` would technically work.
 
 ## Solutions
