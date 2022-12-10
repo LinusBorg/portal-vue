@@ -1,0 +1,13 @@
+{
+  "git": {
+    "commitMessage": "chore: release v${version}"
+  },
+  "github": {
+    "release": true
+  },
+  "hooks": {
+    "before:init": ["pnpm lint", "pnpm test"],
+    "after:bump": ["pnpm build"],
+    "after:release": ["echo 🥳 Successfully released ${name} v${version}."]
+  }
+}
