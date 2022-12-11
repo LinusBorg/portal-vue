@@ -12,14 +12,16 @@
   "jsdelivr": "dist/portal-vue.umd.js",
   "unpkg": "dist/portal-vue.umd.js",
   "module": "dist/portal-vue.mjs",
-  "types": "dist/index.d.ts",
+  "types": "types/index.d.ts",
   "exports": {
     "./package.json": "./package.json",
     ".": {
+      "types": "./types/index.d.ts",
       "import": "./dist/portal-vue.mjs",
       "require": "./dist/portal-vue.umd.js"
     },
     "./dev": {
+      "types": "./types/index.d.ts",
       "import": "./dist/portal-vue.es.dev.mjs",
       "require": "./dist/portal-vue.umd.dev.js"
     },
