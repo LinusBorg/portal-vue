@@ -1,6 +1,6 @@
 # PortalVue
 
-> A Portal Component for Vuejs, to render DOM outside of a component, anywhere in the document.
+> A Portal Component for Vue 2, to render DOM outside of a component, anywhere in the document.
 
 <!-- markdownlint-disable MD033 -->
 <p style="tex-align: center">
@@ -13,18 +13,19 @@
 </a>
 <p>
 
-For more detailed documentation and additional Information, [please visit the docs](https://portal-vue.linusb.org).
+For more detailed documentation and additional Information, [please visit the docs](https://v2.portal-vue.linusb.org).
 
-> Looking for version 1.\*? [Docs for version 1 are here](https://v1.portal-vue.linusb.org)
+> Looking for the version compatible with Vue 3? -> portal-vue.linusb.org
+
 
 ## Installation
 
 ```bash
-npm i portal-vue
+npm i portal-vue@2
 
 # or
 
-yarn add portal-vue
+yarn add portal-vue@2
 ```
 
 ```javascript

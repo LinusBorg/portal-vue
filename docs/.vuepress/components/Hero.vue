@@ -47,7 +47,7 @@
     </h1>
     <p
       style="text-align: center;"
-    >A Vue component to render your component's template anywhere in the DOM.</p>
+    >A Vue 2 component to render your component's template anywhere in the DOM.</p>
     <div class="box">
       <router-link class="button" to="/guide/getting-started.html">Get started</router-link>
     </div>

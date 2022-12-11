@@ -17,15 +17,19 @@ PortalVue is a set of two components that allow you to render a component's temp
 So if you are just looking for a solution to that one problem, have a look at my new second portal project, [`@linusborg/vue-simple-portal`](https://github.com/LinusBorg/vue-simple-portal)
 :::
 
+::: warning Vue 2 / Vue 3
+You are currently viewing the docs for Portal-Vue 2.x, which is only compatible with Vue 2.x. If you are using Vue 3, please see [Portal-Vue 3](https://portal-vue.linusb.org)
+:::
+
 ## Setup
 
 Install Package:
 
 ```bash
-npm install --save portal-vue
+npm install --save portal-vue@2
 
 # or with yarn
-yarn add portal-vue
+yarn add portal-vue@2
 ```
 
 Add it to your application:
