@@ -25,6 +25,8 @@
       "import": "./dist/portal-vue.es.dev.mjs",
       "require": "./dist/portal-vue.umd.dev.js"
     },
+    "./dist/portal-vue.es.js": "./dist/portal-vue.mjs",
+    "./dist/portal-vue.es.dev.js": "./dist/portal-vue.es.dev.mjs",
     "./*": "./*"
   },
   "files": [
