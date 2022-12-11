@@ -92,6 +92,22 @@ export default {
 }
 ```
 
+## Typescript
+
+Portal-Vue 3 comes with full TS support. if you register the component globally, you need to tell your Vue IDE Extension (Volar) about them by adding a d.ts. file declaring these globally registered components:
+
+```ts
+declare module 'vue' {  // Vue 3
+    export interface GlobalComponents {
+      Portal: typeof import('portal-vue')['Portal']
+      PortalTarget: typeof import('portal-vue')['PortalTarget']
+    }
+  }
+  
+  export {}
+```
+
+Don't forget to `"include"` this file in your tsconfig.
 ## Custom Wormhole instance
 
 If you potentially have more than one Vue app on a page, you can avoid name conflicts by creating your own wormhole instance just for your app. This also means that your app can't send content to `PortalTarget` components in other apps running in the page, so it's probably an edge case.
@@ -109,11 +125,9 @@ Portal-Vue ships in four different Builds.
 
 | Type           | File                    | Usage                                                    |
 | -------------- | ----------------------- | -------------------------------------------------------- |
-| UMD (minified) | `portal-vue.umd.min.js` | To be included in a browser                              |
-| UMD            | `portal-vue.umd.js`     | To be included in a browser. Non minified for debugging. |
-| ESM            | `portal-vue.esm.js`     | For usage with bundlers that _do_ support ESModules.     |
-| ESM for Browsers            | `portal-vue.esm-browser.js`     | For usage directly in modern browsers.     |
-| Commonjs       | `portal-vue.js`  | For usage with bundlers that don't support ESModule      |
+| UMD (minified) | `portal-vue.umd.js` | To be included in a browser                              |
+| UMD            | `portal-vue.umd.dev.js`     | To be included in a browser. Non minified for debugging. |
+| ESM            | `portal-vue.esm.mjs`     | For usage with bundlers that _do_ support ESModules.     |
 
 _Notes_
 
@@ -125,18 +139,9 @@ When including Portal-vue from a CDN, make sure you get one of the of UMD builds
 
 If you include it from other sources directly in your HTML, make sure to import `portal-vue/dist/portal-vue.umd.min.js`
 
-### Commonjs
-
-This is the default main file of the package.
-
-Webpack 1 doesn't support commonjs, neither do some dev tools, like jest doesn't either. So this is a sensible default to use.
-
 ### ESM
 
 Webpack >=2, rollup, and parcel all can natively understand ESModules, so this is the best build to use with those bundlers.
 
 The ESM version is marked as the default export of `package.json` for consumers that understand the `"module"` field in `package.json` (which is true for all the aforementioned bundlers), so doing `import PortalVue from 'portal-vue'` will automatically give you the ESM build if the bundler supports it.
 
-### ESM for Browsers
-
-This is a special version of the ESM build with all development hints stripped out. It can be used directly in modern browsers that support `<script tyoe="module">` (read: pretty much everyone but IE).
