@@ -6,6 +6,6 @@
     "outDir": "dist",
     "rootDir": "src"
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue", "src/env.d.ts"],
+  "include": ["src/**/*", "src/**/*.vue", "src/env.d.ts"],
   "exclude": ["src/__tests__/**/*"]
 }

@@ -2,6 +2,5 @@
   "useTabs": false,
   "singleQuote": true,
   "trailingComma": "es5",
-  "semi": false,
-  "workbench.iconTheme": "material-icon-theme"
+  "semi": false
 }

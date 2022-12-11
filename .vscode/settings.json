@@ -1,17 +1,5 @@
 {
-  "editor.formatOnSave": true,
-
-  "markdownlint.ignore": ["docs/**"],
-
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
-  },
-  "todo-tree.tree.showBadges": true,
-
-  "vetur.experimental.templateInterpolationService": true,
-  "cSpell.words": [
-    "microbundle",
-    "scripthost"
-  ],
-  "sort-imports.default-sort-style": "module-compact"
+  }
 }
