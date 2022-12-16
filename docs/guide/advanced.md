@@ -66,7 +66,7 @@ However, if you use a `<portal-target>` for multiple `<portal>`s, you likely wan
 <!-- prettier-ignore -->
 ```html
 <portal-target name="target">
-  <template v-slot:wrapper="nodes">
+  <template v-slot:default="nodes">
     <transition name="fade" mode="out-in">
       <component :is="nodes[0]" />
     </transition>
@@ -85,7 +85,7 @@ Here's a second example, using a `<transition-group>` instead:
 <!-- prettier-ignore -->
 ```html
 <portal-target name="target">
-  <template #wrapper="nodes">
+  <template #default="nodes">
     <transition-group name="fade">
       <component :is="node" v-for="node in nodes" :key="node" />
     </transition-group>
