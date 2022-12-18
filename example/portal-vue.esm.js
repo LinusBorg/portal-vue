@@ -1,1 +1,0 @@
-../dist/portal-vue.esm.js
