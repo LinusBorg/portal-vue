@@ -43,7 +43,7 @@
 
         <div style="position: relative">
           <portal-target name="group-transition">
-            <template #wrapper="nodes">
+            <template #sourceWrapper="nodes">
               <transition-group name="fade">
                 <component :is="node" v-for="node in nodes" :key="node" />
               </transition-group>

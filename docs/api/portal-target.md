@@ -138,29 +138,116 @@ Example:
 <p>This is rendered when no other content is available.</p>
 ```
 
-### `wrapper`
+### `v-slot:sourceWrapper`
+
+This Slot allows to wrap each individual item from a portal (or `multiple` portals) in additional markup. The slot receives an array of `VNodes`:
+
+```html
+<portal to="wrapped-target">
+  <p>Some inline content</p>
+  <p>Some more content</p>
+</portal>
+
+<portal to="wrapped-target">
+  <p>Some content from a second portal</p>
+</portal>
+
+<div class="flex">
+  <portal-vue to="wrapped-target" multiple>
+    <template v-slot:item-wrapper="nodes">
+      <div class="flex-item">
+        <component v-for="node in nodes" :is="node" />
+      </div>
+    </template>
+  </portal-vue>
+</div>
+```
+
+**Result**
+
+```html
+<div class="flex">
+  <div class="flex-item"> <!-- content from first portal wrapped together -->
+    <p>Some inline content</p>
+    <p>Some more content</p>
+  </div>
+  <div class="flex-item"> <!-- content from second portal in a second wrapper -->
+    <p>Some content from a second portal</p>
+  </div>
+    
+</div>
+```
+
+### `v-slot:itemWrapper`
 
 This slot can be used to define markup that should wrap the content received from a `<portal>`. This is usually only useful in combination with [`multiple`](#multiple), as for content from a single portal, you can just wrap the `<portal-target>` as a whole.
 
-The slot receives an array as its only prop, which contains the raw vnodes representing the content sent from the source portal(s).
-
-These vnodes can be rendered with Vue's dynamic component syntax:
+The slot receives a single vnode as its only prop. These vnodes can be rendered with Vue's dynamic component syntax:
 
 `<component :is="node">`
 
-Example:
-
-**Source**
-<!-- prettier-ignore -->
 ```html
-<portal-target name="target">
-  <template v-slot:wrapper="nodes">
-    <component :is="node" v-for="node in nodes" />
+<portal to="wrapped-target">
+  <p>Some inline content</p>
+  <p>Some more content</p>
+</portal>
+
+<portal to="wrapped-target">
+  <p>Some content from a second portal</p>
+</portal>
+
+<div class="flex">
+  <portal-vue to="wrapped-target" multiple>
+    <template v-slot:item-wrapper="node">
+      <div class="flex-item"> <!-- will be applied around each individual <p> !! -->
+        <component :is="node" />
+      </div>
+    </template>
+  </portal-vue>
+</div>
+```
+
+**Result**
+
+```html
+<div class="flex">
+  <div class="flex-item">
+    <p>Some inline content</p>
+  </div>
+  <div class="flex-item">
+    <p>Some more content</p>
+  </div>
+  <div class="flex-item">
+    <p>Some content from a second portal</p>
+  </div>
+    
+</div>
+```
+
+### `v-slot:outerWrapper`
+
+This slot is similar to `itemWrapper`, but it will be called only once, and receive *all* vnodes in an array. That allows you to wrap all received content in a shared wrapper element.
+
+Usually, this slot is not very useful as you can instead just put the wrapper around the `<portal-target>`itself. But it's useful for transition groups which would otherwie conflict with the `<portal-target>`'s own root element:
+
+```html
+<portal-target name="wrapped-with-transition-group" multiple>
+  <template v-slot:outer-wrapper="{ nodes }">
+    <transition-group name="fade">
+      <component v-for="node in nodes" :is="node">
+    </transition-group
   </template>
 </portal-target>
 ```
 
-This slot is also useful to [add transitions (see advanced Guide)](../guide/advanced#transitions ).
+### `v-slot:wrapper` <Badge type="warning">deprecated</Badge>
+
+::: warn This feature is deprecated. Do not use.
+
+This slot has been deprecated in version `3.1` when we introduced to additional slots, in order to provide more clarity in naming. Please use `v-slot:sourceWrapper` instead, which works 100% the same as `v-slot:wrapper` did - or check out the new `v-slot:sourceWrapper` and `v-slot:outerWrapper` slots.
+
+:::
+
 ## Events API
 
 ### `change`

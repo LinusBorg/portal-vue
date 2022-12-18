@@ -1,4 +1,4 @@
-import { reactive, readonly } from 'vue'
+import { reactive, readonly, type VNode } from 'vue'
 import type {
   Name,
   Transport,
@@ -26,7 +26,7 @@ export function createWormhole(asReadonly = true): Wormhole {
     const newTransport = {
       to,
       from,
-      content,
+      content: (...args) => ([] as VNode[]).concat(content(...args)),
       order,
     } as Transport
 
