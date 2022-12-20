@@ -50,10 +50,4 @@ Vue.use(PortalVue)
 
 ## Nuxt module
 
-Add `portal-vue/nuxt` to modules section of `nuxt.config.js`
-
-```javascript
-{
-  modules: ['portal-vue/nuxt']
-}
-```
+v3 does not yet have a nuxt module integration. PRs welcome.
