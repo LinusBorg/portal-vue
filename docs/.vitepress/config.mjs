@@ -1,7 +1,12 @@
-const { defineConfig } = require('vitepress')
-const { version } = require('../../package.json')
+import { readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import { defineConfig } from 'vitepress'
 
-module.exports = defineConfig({
+const file = fileURLToPath(new URL('../../package.json', import.meta.url));
+const json = readFileSync(file, 'utf8');
+const pkg = JSON.parse(json);
+
+export default defineConfig({
   title: 'Portal-Vue',
   description:
     'A set of Vue 3 components to move your content anywhere in the DOM.',
@@ -47,7 +52,7 @@ module.exports = defineConfig({
   },
   vite: {
     define: {
-      __PORTAL_VUE_VERSION__: JSON.stringify(version),
+      __PORTAL_VUE_VERSION__: JSON.stringify(pkg.version),
     },
   },
 })
