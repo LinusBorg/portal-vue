@@ -10,7 +10,7 @@ module.exports = defineConfig({
     socialLinks: [
       {
         icon: 'github',
-        link: 'https://github.co/linusborg/portal-vue',
+        link: 'https://github.com/linusborg/portal-vue',
       },
     ],
     siteTitle: 'Portal-Vue',
