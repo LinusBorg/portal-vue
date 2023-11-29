@@ -1,5 +1,0 @@
-// Vitest Snapshot v1
-
-exports[`Portal > renders locally when \`disabled\` prop is true 1`] = `"<span class=\\"test-span\\">Test</span>"`;
-
-exports[`Portal renders locally when \`disabled\` prop is true 1`] = `"<span class=\\"test-span\\">Test</span>"`;

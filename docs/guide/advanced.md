@@ -61,12 +61,13 @@ You can pass transitions to a `<portal>` without problems. It will behave just t
 ```
 
 However, if you use a `<portal-target>` for multiple `<portal>`s, you likely want to define the transition on the target end instead. This is also supported.
+
 #### PortalTarget Transitions
 
 <!-- prettier-ignore -->
 ```html
 <portal-target name="target">
-  <template v-slot:default="nodes">
+  <template v-slot:outerWrapper="nodes">
     <transition name="fade" mode="out-in">
       <component :is="nodes[0]" />
     </transition>
@@ -76,7 +77,7 @@ However, if you use a `<portal-target>` for multiple `<portal>`s, you likely wan
 
 Transitions for Targets underwent a redesign in PortalVue `3.0`. The new syntax is admittedly a bit more verbose and has a hack-ish feel to it, but it's a valid use of Vue's v-slot syntax and was necessary to get rid of some nasty edge cases with target Transitions that we had in PortalVue `2.*`.
 
-Basically, you pass a transition to a slot named `wrapper` and get an array called `nodes` from its slot props.
+Basically, you pass a transition to a [slot named `outerWrapper`](../api/portal-target.md#v-slot-outerwrapper) and get an array called `nodes` from its slot props.
 
 You can the use Vue'S `<component :is="">` to turn those into the content of the transition.
 
@@ -85,7 +86,7 @@ Here's a second example, using a `<transition-group>` instead:
 <!-- prettier-ignore -->
 ```html
 <portal-target name="target">
-  <template #default="nodes">
+  <template #outerWrapper="nodes">
     <transition-group name="fade">
       <component :is="node" v-for="node in nodes" :key="node" />
     </transition-group>

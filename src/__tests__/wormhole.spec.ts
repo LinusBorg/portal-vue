@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { Slot, h } from 'vue'
+import { type Slot, h } from 'vue'
 import { createWormhole } from '@/wormhole'
 
 const createSlotFn = () => (() => h('div')) as unknown as Slot
@@ -32,7 +32,10 @@ describe('Wormhole', () => {
 
     wormhole.open(content)
     expect(wormhole.transports.get('target')?.get('test-portal')).toMatchObject(
-      content
+      {
+        ...content,
+        content: expect.any(Function),
+      }
     )
 
     wormhole.close({

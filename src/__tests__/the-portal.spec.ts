@@ -76,6 +76,8 @@ describe('Portal', function () {
   it('renders locally when `disabled` prop is true', () => {
     const { wrapper } = createWrapper({ disabled: true })
     expect(wrapper.find('span').exists()).toBe(true)
-    expect(wrapper.html()).toMatchSnapshot()
+    expect(wrapper.html()).toMatchInlineSnapshot(
+      '"<span class=\\"test-span\\">Test</span>"'
+    )
   })
 })

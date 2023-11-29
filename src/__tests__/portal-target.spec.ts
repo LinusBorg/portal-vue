@@ -1,5 +1,5 @@
-import { describe, it, expect, vi } from 'vitest'
-import { type Slot, h, nextTick } from 'vue'
+import { describe, it, test, expect, vi } from 'vitest'
+import { type Slot, h, nextTick, type VNode } from 'vue'
 import { mount } from '@vue/test-utils'
 import PortalTarget from '../components/portal-target'
 import { wormholeSymbol } from '../composables/wormhole'
@@ -35,7 +35,7 @@ function createWrapper(props = {}, options = {}) {
 }
 
 function generateSlotFn(text = '') {
-  return (() => h('div', { class: 'testnode' }, text) as unknown) as Slot
+  return (() => [h('div', { class: 'testnode' }, text) as unknown]) as Slot
 }
 
 describe('PortalTarget', () => {
@@ -50,22 +50,26 @@ describe('PortalTarget', () => {
 
     await nextTick()
 
-    expect(wrapper.html()).toBe(
-      `<div style="display: none;"></div>
-<div class="testnode"></div>`
+    expect(wrapper.html()).toMatchInlineSnapshot(
+      `
+      "<div style=\\"display: none;\\"></div>
+      <div class=\\"testnode\\"></div>"
+    `
     )
   })
 
-  it('renders slot content when no other content is available', function () {
+  it('renders default slot content when no other content is available', function () {
     const { wrapper } = createWrapper(
       {},
       {
         slots: {
-          default: h('p', { class: 'default' }, 'Test'),
+          default: () => [h('p', { class: 'default' }, 'Test')],
         },
       }
     )
-    expect(wrapper.html()).toMatchSnapshot()
+    expect(wrapper.html()).toMatchInlineSnapshot(
+      '"<p class=\\"default\\">Test</p>"'
+    )
     expect(wrapper.find('p.default').exists()).toBe(true)
   })
 
@@ -89,5 +93,122 @@ describe('PortalTarget', () => {
         sources: ['source'],
       },
     ])
+  })
+
+  describe('Wrapper slots', () => {
+    test('v-slot:itemWrapper', async () => {
+      const { wrapper, wh } = createWrapper(
+        {
+          multiple: true,
+        },
+        {
+          slots: {
+            itemWrapper: (nodes: VNode[]) => [
+              h('div', { class: 'itemWrapper' }, nodes),
+            ],
+          },
+        }
+      )
+      wh.open({
+        from: 'source1',
+        to: 'target',
+        content: () => [
+          h('div', { class: 'testnode' }, 'source1-1'),
+          h('div', { class: 'testnode' }, 'source1-2'),
+        ],
+      })
+      wh.open({
+        from: 'source2',
+        to: 'target',
+        content: generateSlotFn('source2'),
+      })
+
+      await nextTick()
+
+      expect(wrapper.html()).toMatchInlineSnapshot(`
+        "<div style=\\"display: none;\\"></div>
+        <div class=\\"itemWrapper\\">
+          <div class=\\"testnode\\">source1-1</div>
+        </div>
+        <div class=\\"itemWrapper\\">
+          <div class=\\"testnode\\">source1-2</div>
+        </div>
+        <div class=\\"itemWrapper\\">
+          <div class=\\"testnode\\">source2</div>
+        </div>"
+      `)
+    })
+
+    test('v-slot:sourceWrapper', async () => {
+      const { wrapper, wh } = createWrapper(
+        {
+          multiple: true,
+        },
+        {
+          slots: {
+            sourceWrapper: (nodes: VNode[]) => [
+              h('div', { class: 'sourceWrapper' }, nodes),
+            ],
+          },
+        }
+      )
+      wh.open({
+        from: 'source1',
+        to: 'target',
+        content: generateSlotFn('source1'),
+      })
+      wh.open({
+        from: 'source2',
+        to: 'target',
+        content: generateSlotFn('source2'),
+      })
+
+      await nextTick()
+
+      expect(wrapper.html()).toMatchInlineSnapshot(`
+        "<div style=\\"display: none;\\"></div>
+        <div class=\\"sourceWrapper\\">
+          <div class=\\"testnode\\">source1</div>
+        </div>
+        <div class=\\"sourceWrapper\\">
+          <div class=\\"testnode\\">source2</div>
+        </div>"
+      `)
+    })
+
+    test('v-slot:outerWrapper', async () => {
+      const { wrapper, wh } = createWrapper(
+        {
+          multiple: true,
+        },
+        {
+          slots: {
+            outerWrapper: (nodes: VNode[]) => [
+              h('div', { class: 'outerWrapper' }, nodes),
+            ],
+          },
+        }
+      )
+      wh.open({
+        from: 'source1',
+        to: 'target',
+        content: generateSlotFn('source1'),
+      })
+      wh.open({
+        from: 'source2',
+        to: 'target',
+        content: generateSlotFn('source2'),
+      })
+
+      await nextTick()
+
+      expect(wrapper.html()).toMatchInlineSnapshot(`
+        "<div style=\\"display: none;\\"></div>
+        <div class=\\"outerWrapper\\">
+          <div class=\\"testnode\\">source1</div>
+          <div class=\\"testnode\\">source2</div>
+        </div>"
+      `)
+    })
   })
 })

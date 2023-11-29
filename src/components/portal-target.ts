@@ -1,10 +1,9 @@
 import {
   type FunctionalComponent,
   type VNode,
-  computed,
   defineComponent,
   h,
-  watch,
+  onMounted,
 } from 'vue'
 import { useWormhole } from '../composables/wormhole'
 
@@ -23,39 +22,36 @@ export default defineComponent({
   emits: ['change'],
   setup(props, { emit, slots }) {
     const wormhole = useWormhole()
+    let mounted = false
+    const slotVnodes = () => {
+      const transports = wormhole.getContentForTarget(
+        props.name,
+        props.multiple
+      )
+      const sourceWrapperSlot = slots.sourceWrapper ?? slots.wrapper
+      let vnodes = transports
+        .map((t) => {
+          const content = t
+            .content(props.slotProps)
+            .map((vnode) => slots.itemWrapper?.(vnode)[0] ?? vnode)
+          return sourceWrapperSlot ? sourceWrapperSlot(content) : content
+        })
+        .flat(1)
+      vnodes = slots.outerWrapper ? slots.outerWrapper(vnodes) : vnodes
+      mounted && emitSlotChange(vnodes)
+      return vnodes
+    }
 
-    const slotVnodes = computed<{ vnodes: VNode[]; vnodesFn: () => VNode[] }>(
-      () => {
-        const transports = wormhole.getContentForTarget(
-          props.name,
-          props.multiple
-        )
-        const wrapperSlot = slots.wrapper
-        const rawNodes = transports.map((t) => t.content(props.slotProps))
-        const vnodes = wrapperSlot
-          ? rawNodes.flatMap((nodes) =>
-              nodes.length ? wrapperSlot(nodes) : []
-            )
-          : rawNodes.flat(1)
-        return {
-          vnodes,
-          vnodesFn: () => vnodes, // just to make Vue happy. raw vnodes in a slot give a DEV warning
-        }
-      }
-    )
-
-    watch(
-      slotVnodes,
-      ({ vnodes }) => {
-        const hasContent = vnodes.length > 0
-        const content = wormhole.transports.get(props.name)
-        const sources = content ? [...content.keys()] : []
-        emit('change', { hasContent, sources })
-      },
-      { flush: 'post' }
-    )
+    const emitSlotChange = (vnodes: VNode[]) => {
+      const hasContent = vnodes.length > 0
+      const content = wormhole.transports.get(props.name)
+      const sources = content ? [...content.keys()] : []
+      emit('change', { hasContent, sources })
+    }
+    onMounted(() => (mounted = true))
     return () => {
-      const hasContent = !!slotVnodes.value.vnodes.length
+      const vnodes = slotVnodes()
+      const hasContent = !!vnodes.length
       if (hasContent) {
         return [
           // this node is a necessary hack to force Vue to change the scoped-styles boundary
@@ -67,7 +63,7 @@ export default defineComponent({
           // we wrap the slot content in a functional component
           // so that transitions in the slot can properly determine first render
           // for `appear` behavior to work properly
-          h(PortalTargetContent, slotVnodes.value.vnodesFn),
+          h(PortalTargetContent, () => vnodes),
         ]
       } else {
         return slots.default?.()
