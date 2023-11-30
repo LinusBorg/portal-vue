@@ -43,7 +43,7 @@
     "types:check": "vue-tsc --noEmit -p tsconfig.app.json",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
-    "lint": "eslint --fix './*.{js,ts}' 'src/**/*.{ts,tsx,vue}' 'example/**/*.{ts,tsx,vue}'",
+    "lint": "eslint --cache --fix './*.{js,ts}' 'src/**/*.{ts,tsx,vue}' 'example/**/*.{ts,tsx,vue}'",
     "test": "vitest",
     "test:ci": "vitest --run",
     "release": "release-it"
